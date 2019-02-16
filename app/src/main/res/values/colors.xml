@@ -4,5 +4,20 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="color_wlasciciel">#c90000</color>
+    <color name="color_admin">#c90000</color>
+    <color name="color_jradmin">#ff6363</color>
+    <color name="color_moderator">#00c900</color>
+    <color name="color_pomocnik">#0000c9</color>
+    <color name="color_budowniczy">#63ffff</color>
+    <color name="color_sponsor">#ffff63</color>
+    <color name="color_kozak">#ff6363</color>
+    <color name="color_kasyniarz">#f0f0f0</color>
+    <color name="color_supervip">#63ff63</color>
+    <color name="color_kontovip">#ffc900</color>
+    <color name="color_dziewczyna">#ff63ff</color>
+    <color name="color_chlopak">#c900c9</color>
+    <color name="color_nolife">#00c9c9</color>
+    <color name="color_stalygracz">#00c9c9</color>
     <color name="color_gracz">#c9c9c9</color>
 </resources>

@@ -3,10 +3,13 @@ package pl.piotrskiba.angularowo.adapters;
 import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -72,6 +75,66 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
 
         holder.mPlayerName.setText(player.getUsername());
         holder.mPlayerRank.setText(player.getRank());
+
+        int color_id = 0;
+
+        switch(player.getRank()){
+            case "wlasciciel":
+                color_id = R.color.color_wlasciciel;
+                break;
+            case "admin":
+                color_id = R.color.color_admin;
+                break;
+            case "jradmin":
+                color_id = R.color.color_jradmin;
+                break;
+            case "moderator":
+                color_id = R.color.color_moderator;
+                break;
+            case "pomocnik":
+                color_id = R.color.color_pomocnik;
+                break;
+            case "budowniczy":
+                color_id = R.color.color_budowniczy;
+                break;
+            case "sponsor":
+                color_id = R.color.color_sponsor;
+                break;
+            case "kozak":
+                color_id = R.color.color_kozak;
+                break;
+            case "kasyniarz":
+                color_id = R.color.color_kasyniarz;
+                break;
+            case "supervip":
+                color_id = R.color.color_supervip;
+                break;
+            case "kontovip":
+                color_id = R.color.color_kontovip;
+                break;
+            case "dziewczyna":
+                color_id = R.color.color_dziewczyna;
+                break;
+            case "chlopak":
+                color_id = R.color.color_chlopak;
+                break;
+            case "nolife":
+                color_id = R.color.color_nolife;
+                break;
+            case "stalygracz":
+                color_id = R.color.color_stalygracz;
+                break;
+            default:
+                color_id = R.color.color_gracz;
+                break;
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            ((LinearLayout) holder.mPlayerAvatar.getParent()).setBackground(context.getResources().getDrawable(color_id));
+        }
+        else{
+            ((LinearLayout) holder.mPlayerAvatar.getParent()).setBackgroundDrawable(context.getResources().getDrawable(color_id));
+        }
     }
 
     @Override
