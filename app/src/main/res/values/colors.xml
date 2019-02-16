@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#673AB7</color>
+    <color name="colorPrimaryDark">#512DA8</color>
+    <color name="colorAccent">#FF5722</color>
+    <color name="colorText">#e0e0e0</color>
+    <color name="colorBackground">#7f7f7f</color>
 
-    <color name="color_wlasciciel">#c90000</color>
-    <color name="color_admin">#c90000</color>
-    <color name="color_jradmin">#ff6363</color>
-    <color name="color_moderator">#00c900</color>
-    <color name="color_pomocnik">#0000c9</color>
-    <color name="color_budowniczy">#63ffff</color>
-    <color name="color_sponsor">#ffff63</color>
-    <color name="color_kozak">#ff6363</color>
-    <color name="color_kasyniarz">#f0f0f0</color>
-    <color name="color_supervip">#63ff63</color>
-    <color name="color_kontovip">#ffc900</color>
-    <color name="color_dziewczyna">#ff63ff</color>
-    <color name="color_chlopak">#c900c9</color>
-    <color name="color_nolife">#00c9c9</color>
-    <color name="color_stalygracz">#00c9c9</color>
-    <color name="color_gracz">#c9c9c9</color>
+    <color name="color_wlasciciel">#4e1919</color>
+    <color name="color_admin">#4e1919</color>
+    <color name="color_jradmin">#693333</color>
+    <color name="color_moderator">#194e19</color>
+    <color name="color_pomocnik">#19194e</color>
+    <color name="color_budowniczy">#336969</color>
+    <color name="color_sponsor">#696933</color>
+    <color name="color_kozak">#693333</color>
+    <color name="color_kasyniarz">#717171</color>
+    <color name="color_supervip">#336933</color>
+    <color name="color_kontovip">#694e19</color>
+    <color name="color_dziewczyna">#693369</color>
+    <color name="color_chlopak">#4e194e</color>
+    <color name="color_nolife">#194e4e</color>
+    <color name="color_stalygracz">#194e4e</color>
+    <color name="color_gracz">#4e4e4e</color>
 </resources>

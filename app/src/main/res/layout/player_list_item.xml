@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="@dimen/player_list_item_padding"
-    android:layout_marginBottom="@dimen/player_list_item_padding"
+    android:layout_marginBottom="@dimen/player_list_item_margin"
     android:background="@color/color_gracz"
     android:orientation="horizontal">
 
