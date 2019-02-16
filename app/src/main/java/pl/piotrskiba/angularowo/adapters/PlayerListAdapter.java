@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.piotrskiba.angularowo.R;
@@ -98,7 +101,24 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
     }
 
     public void setPlayerList(PlayerList playerList){
-        this.playerList = playerList;
+        List<Player> sorted = new ArrayList<>();
+        String[] ranks_team = context.getResources().getStringArray(R.array.ranks_team);
+        String[] ranks_other = context.getResources().getStringArray(R.array.ranks_other);
+
+        for(String rank : ranks_team) {
+            for (Player player : playerList.getPlayers()) {
+                if(player.getRank().equals(rank))
+                    sorted.add(player);
+            }
+        }
+        for(String rank : ranks_other) {
+            for (Player player : playerList.getPlayers()) {
+                if(player.getRank().equals(rank))
+                    sorted.add(player);
+            }
+        }
+
+        this.playerList = new PlayerList(sorted);
         notifyDataSetChanged();
     }
 }
