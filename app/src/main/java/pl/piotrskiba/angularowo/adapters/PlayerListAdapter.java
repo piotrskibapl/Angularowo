@@ -20,14 +20,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.piotrskiba.angularowo.R;
-import pl.piotrskiba.angularowo.models.MojangPlayer;
 import pl.piotrskiba.angularowo.models.Player;
 import pl.piotrskiba.angularowo.models.PlayerList;
-import pl.piotrskiba.angularowo.network.MojangAPIClient;
-import pl.piotrskiba.angularowo.network.MojangAPIInterface;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.PlayerViewHolder> {
 
@@ -53,25 +47,14 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
     public void onBindViewHolder(@NonNull PlayerViewHolder holder, int position) {
         Player player = playerList.getPlayers().get(position);
 
-        MojangAPIInterface serverAPIInterface = MojangAPIClient.getRetrofitInstance().create(MojangAPIInterface.class);
-        serverAPIInterface.getPlayer(player.getUsername()).enqueue(new Callback<MojangPlayer>() {
-            @Override
-            public void onResponse(Call<MojangPlayer> call, Response<MojangPlayer> response) {
-                if(response.isSuccessful()) {
-                    MojangPlayer mojangPlayer = response.body();
-                    if(mojangPlayer != null) {
-                        Glide.with(context)
-                                .load("https://crafatar.com/avatars/" + response.body().getId() + "?size=100")
-                                .into(holder.mPlayerAvatar);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<MojangPlayer> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
+        if(!player.getUuid().equals("null")) {
+            Glide.with(context)
+                    .load("https://crafatar.com/avatars/" + player.getUuid() + "?size=100")
+                    .into(holder.mPlayerAvatar);
+        }
+        else{
+            holder.mPlayerAvatar.setImageDrawable(context.getResources().getDrawable(R.drawable.default_avatar));
+        }
 
         holder.mPlayerName.setText(player.getUsername());
         holder.mPlayerRank.setText(player.getRank());
