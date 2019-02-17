@@ -55,13 +55,14 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<PlayerList> call, Response<PlayerList> response) {
                 if(response.isSuccessful() && response.body() != null) {
                     adapter.setPlayerList(response.body());
-                    mSwipeRefreshLayout.setRefreshing(false);
                 }
+                mSwipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
             public void onFailure(Call<PlayerList> call, Throwable t) {
                 t.printStackTrace();
+                mSwipeRefreshLayout.setRefreshing(false);
             }
         });
     }
