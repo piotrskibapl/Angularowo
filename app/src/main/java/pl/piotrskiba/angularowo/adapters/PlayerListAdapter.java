@@ -159,16 +159,14 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
         String[] ranks_team = context.getResources().getStringArray(R.array.ranks_team);
         String[] ranks_other = context.getResources().getStringArray(R.array.ranks_other);
 
-        for(String rank : ranks_team) {
-            if(!playerList.getPlayers().isEmpty()) {
+        if(playerList.getPlayers() != null && !playerList.getPlayers().isEmpty()) {
+            for (String rank : ranks_team) {
                 for (Player player : playerList.getPlayers()) {
                     if (player.getRank().equals(rank))
                         sorted.add(player);
                 }
             }
-        }
-        for(String rank : ranks_other) {
-            if(!playerList.getPlayers().isEmpty()) {
+            for (String rank : ranks_other) {
                 for (Player player : playerList.getPlayers()) {
                     if (player.getRank().equals(rank))
                         sorted.add(player);
