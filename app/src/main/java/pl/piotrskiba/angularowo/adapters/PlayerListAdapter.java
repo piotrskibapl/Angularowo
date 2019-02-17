@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -48,7 +47,7 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
     public void onBindViewHolder(@NonNull PlayerViewHolder holder, int position) {
         Player player = playerList.getPlayers().get(position);
 
-        if(!player.getUuid().equals("null")) {
+        if(player.getUuid() != null) {
             Glide.with(context)
                     .load("https://crafatar.com/avatars/" + player.getUuid() + "?size=100")
                     .into(holder.mPlayerAvatar);
@@ -161,7 +160,7 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
         String[] ranks_other = context.getResources().getStringArray(R.array.ranks_other);
 
         for(String rank : ranks_team) {
-            if(playerList.getPlayers().size() > 0) {
+            if(!playerList.getPlayers().isEmpty()) {
                 for (Player player : playerList.getPlayers()) {
                     if (player.getRank().equals(rank))
                         sorted.add(player);
@@ -169,7 +168,7 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
             }
         }
         for(String rank : ranks_other) {
-            if(playerList.getPlayers().size() > 0) {
+            if(!playerList.getPlayers().isEmpty()) {
                 for (Player player : playerList.getPlayers()) {
                     if (player.getRank().equals(rank))
                         sorted.add(player);

@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         serverAPIInterface.getPlayers(ServerAPIClient.API_KEY).enqueue(new Callback<PlayerList>() {
             @Override
             public void onResponse(Call<PlayerList> call, Response<PlayerList> response) {
-                if(response.isSuccessful()) {
+                if(response.isSuccessful() && response.body() != null) {
                     adapter.setPlayerList(response.body());
                     mSwipeRefreshLayout.setRefreshing(false);
                 }
