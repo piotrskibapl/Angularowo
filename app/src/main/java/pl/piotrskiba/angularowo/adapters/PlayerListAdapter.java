@@ -2,6 +2,7 @@ package pl.piotrskiba.angularowo.adapters;
 
 import android.content.Context;
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Build;
@@ -113,11 +114,16 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            ((LinearLayout) holder.mPlayerAvatar.getParent()).setBackground(context.getResources().getDrawable(color_id));
+            ((ConstraintLayout) holder.mPlayerAvatar.getParent()).setBackground(context.getResources().getDrawable(color_id));
         }
         else{
-            ((LinearLayout) holder.mPlayerAvatar.getParent()).setBackgroundDrawable(context.getResources().getDrawable(color_id));
+            ((ConstraintLayout) holder.mPlayerAvatar.getParent()).setBackgroundDrawable(context.getResources().getDrawable(color_id));
         }
+
+        if(player.isVanished())
+            holder.mPlayerVanishIcon.setVisibility(View.VISIBLE);
+        else
+            holder.mPlayerVanishIcon.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -138,6 +144,9 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
 
         @BindView(R.id.tv_player_rank)
         TextView mPlayerRank;
+
+        @BindView(R.id.iv_vanish_status)
+        ImageView mPlayerVanishIcon;
 
         public PlayerViewHolder(View itemView) {
             super(itemView);
