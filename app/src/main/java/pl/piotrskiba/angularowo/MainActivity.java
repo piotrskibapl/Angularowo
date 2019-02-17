@@ -7,6 +7,7 @@ import android.util.Log;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.piotrskiba.angularowo.adapters.PlayerListAdapter;
@@ -21,6 +22,9 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.rv_players)
     RecyclerView mPlayerList;
+
+    @BindView(R.id.swiperefresh)
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +41,21 @@ public class MainActivity extends AppCompatActivity {
         final PlayerListAdapter adapter = new PlayerListAdapter(this);
         mPlayerList.setAdapter(adapter);
 
+        loadPlayerList(adapter);
+
+        mSwipeRefreshLayout.setOnRefreshListener(() -> loadPlayerList(adapter));
+    }
+
+    private void loadPlayerList(PlayerListAdapter adapter){
+        mSwipeRefreshLayout.setRefreshing(true);
+
         ServerAPIInterface serverAPIInterface = ServerAPIClient.getRetrofitInstance().create(ServerAPIInterface.class);
         serverAPIInterface.getPlayers(ServerAPIClient.API_KEY).enqueue(new Callback<PlayerList>() {
             @Override
             public void onResponse(Call<PlayerList> call, Response<PlayerList> response) {
                 if(response.isSuccessful()) {
                     adapter.setPlayerList(response.body());
+                    mSwipeRefreshLayout.setRefreshing(false);
                 }
             }
 
