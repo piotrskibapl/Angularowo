@@ -19,6 +19,10 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.alimuzaffar.lib.pin.PinEntryEditText;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+
+import java.io.IOException;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -50,29 +54,34 @@ public class LoginActivity extends AppCompatActivity {
                 serverAPIInterface.registerDevice(ServerAPIClient.API_KEY, pin).enqueue(new Callback<AccessToken>() {
                     @Override
                     public void onResponse(Call<AccessToken> call, Response<AccessToken> response) {
-                        AccessToken accessToken = response.body();
+                        if (response.body() != null) {
+                            AccessToken accessToken = response.body();
 
-                        if (accessToken != null) {
-                            if (response.code() == 200) {
-                                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                                editor.putString(getString(R.string.pref_key_nickname), accessToken.getUsername());
+                            editor.putString(getString(R.string.pref_key_nickname), accessToken.getUsername());
                                 editor.putString(getString(R.string.pref_key_access_token), accessToken.getAccessToken());
 
-                                editor.commit();
+                            editor.commit();
 
-                                finish();
-                            } else {
+                            finish();
+                        }
+                        else if(response.errorBody() != null) {
+                            Gson gson = new Gson();
+                            TypeAdapter<AccessToken> adapter = gson.getAdapter(AccessToken.class);
+                            try {
+                                AccessToken accessToken = adapter.fromJson(response.errorBody().string());
+
                                 if (accessToken.getMessage().equals(getString(R.string.login_api_response_code_not_found))) {
                                     Snackbar.make(mCoordinatorLayout, getString(R.string.login_error_code_not_found), Snackbar.LENGTH_LONG).show();
                                 } else if (accessToken.getMessage().equals(getString(R.string.login_api_response_code_expired))) {
                                     Snackbar.make(mCoordinatorLayout, getString(R.string.login_error_code_expired), Snackbar.LENGTH_LONG).show();
                                 }
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
-                        }
-                        else{
-                            Snackbar.make(mCoordinatorLayout, getString(R.string.login_error_unknown), Snackbar.LENGTH_LONG).show();
                         }
                     }
 
