@@ -15,6 +15,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.inputmethod.InputMethodManager;
 
 import com.alimuzaffar.lib.pin.PinEntryEditText;
 import com.google.android.material.snackbar.Snackbar;
@@ -42,6 +43,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onPinEntered(CharSequence str) {
                 String pin = str.toString();
 
+                accessTokenPeet.setText("");
+                closeKeyboard();
+
                 ServerAPIInterface serverAPIInterface = ServerAPIClient.getRetrofitInstance().create(ServerAPIInterface.class);
                 serverAPIInterface.registerDevice(ServerAPIClient.API_KEY, pin).enqueue(new Callback<AccessToken>() {
                     @Override
@@ -62,33 +66,35 @@ public class LoginActivity extends AppCompatActivity {
                             } else {
                                 if (accessToken.getMessage().equals(getString(R.string.login_api_response_code_not_found))) {
                                     Snackbar.make(mCoordinatorLayout, getString(R.string.login_error_code_not_found), Snackbar.LENGTH_LONG).show();
-                                    accessTokenPeet.setText("");
                                 } else if (accessToken.getMessage().equals(getString(R.string.login_api_response_code_expired))) {
                                     Snackbar.make(mCoordinatorLayout, getString(R.string.login_error_code_expired), Snackbar.LENGTH_LONG).show();
-                                    accessTokenPeet.setText("");
                                 }
                             }
                         }
                         else{
                             Snackbar.make(mCoordinatorLayout, getString(R.string.login_error_unknown), Snackbar.LENGTH_LONG).show();
-                            accessTokenPeet.setText("");
                         }
                     }
 
                     @Override
                     public void onFailure(Call<AccessToken> call, Throwable t) {
                         Snackbar.make(mCoordinatorLayout, getString(R.string.login_error_unknown), Snackbar.LENGTH_LONG).show();
-                        accessTokenPeet.setText("");
                     }
                 });
             }
         });
     }
 
+    private void closeKeyboard(){
+        InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if(getCurrentFocus() != null) {
+            inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+
     @Override
     public void onBackPressed() {
         // do nothing
-        super.onBackPressed();
     }
 
 
