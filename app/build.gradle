@@ -50,6 +50,18 @@ dependencies {
 
     // Firebase
     implementation 'com.google.firebase:firebase-core:16.0.1'
+
+    // PinEntryEditText
+    dependencies {
+        implementation ('com.alimuzaffar.lib:pinentryedittext:2.0.6') {
+            // Exclude is only needed if you already have
+            // androidx.appcompat as a dependency in your app.
+            exclude group: 'androidx.appcompat', module: 'appcompat'
+        }
+    }
+
+    // Snackbar
+    implementation 'com.android.support:design:28.0.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Angularowo</string>
+
+    <string name="pref_key_nickname" translatable="false">nickname</string>
+    <string name="pref_key_access_token" translatable="false">access_token</string>
+
+    <string name="login_header">Witaj!</string>
+    <string name="login_description">Aby korzystać z aplikacji, musisz powiązać ją ze swoim kontem w grze.\nPoniżej wpisz swój kod dostępu.\nKod dostępu uzyskasz wpisując komendę /android w grze.</string>
+
+    <string name="login_api_response_code_not_found" translatable="false">code not found</string>
+    <string name="login_api_response_code_expired" translatable="false">code expired</string>
+
+    <string name="login_error_code_not_found">Podany kod jest nieprawidłowy.</string>
+    <string name="login_error_code_expired">Podany kod jest prawidłowy, jednak skończyła się jego ważność. Wpisz komendę /android ponownie.</string>
+    <string name="login_error_unknown">Wystąpił nieznany błąd. Spróbuj ponownie później.</string>
 </resources>
