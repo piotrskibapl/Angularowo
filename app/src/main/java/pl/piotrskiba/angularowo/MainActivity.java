@@ -42,10 +42,10 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
-        PlayerListFragment playerListFragment = new PlayerListFragment();
+        MainScreenFragment mainScreenFragment = new MainScreenFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .add(R.id.fragment_container, playerListFragment)
+                .add(R.id.fragment_container, mainScreenFragment)
                 .commit();
 
         setSupportActionBar(mToolbar);
@@ -55,12 +55,26 @@ public class MainActivity extends AppCompatActivity {
 
         mNavigationView.setNavigationItemSelectedListener(
                 menuItem -> {
-                    menuItem.setChecked(true);
+                    if(!menuItem.isChecked()) {
+                        if (menuItem.getItemId() == R.id.nav_main_screen) {
+                            fragmentManager.beginTransaction()
+                                    .replace(R.id.fragment_container, mainScreenFragment)
+                                    .commit();
+                        }
+                        else if(menuItem.getItemId() == R.id.nav_player_list){
+                            PlayerListFragment playerListFragment = new PlayerListFragment();
+                            fragmentManager.beginTransaction()
+                                    .replace(R.id.fragment_container, playerListFragment)
+                                    .commit();
+                        }
+
+                        menuItem.setChecked(true);
+                    }
                     mDrawerLayout.closeDrawers();
 
                     return true;
                 });
-        mNavigationView.setCheckedItem(R.id.nav_player_list);
+        mNavigationView.setCheckedItem(R.id.nav_main_screen);
     }
 
     @Override

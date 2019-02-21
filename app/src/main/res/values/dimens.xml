@@ -13,4 +13,9 @@
     <dimen name="login_pin_text_size">20sp</dimen>
     <dimen name="login_pin_padding">40dp</dimen>
     <dimen name="login_pin_margin_top">60dp</dimen>
+
+    <!-- fragment_main_screen.xml -->
+    <dimen name="greeting_text_size">24sp</dimen>
+    <dimen name="greeting_margin">24dp</dimen>
+    <dimen name="body_width">120dp</dimen>
 </resources>

@@ -14,5 +14,9 @@
     <string name="login_error_code_expired">Podany kod jest prawidłowy, jednak skończyła się jego ważność. Wpisz komendę /android ponownie.</string>
     <string name="login_error_unknown">Wystąpił nieznany błąd. Spróbuj ponownie później.</string>
 
-    <string name="player_list">Lista graczy</string>
+    <string name="main_screen">Strona główna</string>
+    <string name="player_list">Lista graczy online</string>
+
+    <!-- fragment_main_screen.xml -->
+    <string name="greeting">Witaj, %1$s!</string>
 </resources>

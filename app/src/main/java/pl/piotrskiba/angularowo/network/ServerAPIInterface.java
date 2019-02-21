@@ -1,6 +1,7 @@
 package pl.piotrskiba.angularowo.network;
 
 import pl.piotrskiba.angularowo.models.AccessToken;
+import pl.piotrskiba.angularowo.models.DetailedPlayer;
 import pl.piotrskiba.angularowo.models.PlayerList;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -13,4 +14,7 @@ public interface ServerAPIInterface {
 
     @GET("register_device.php")
     Call<AccessToken> registerDevice(@Query("api_key") String api_key, @Query("user_code") String user_code);
+
+    @GET("get_player_info.php")
+    Call<DetailedPlayer> getPlayerInfo(@Query("api_key") String api_key, @Query("username") String username);
 }
