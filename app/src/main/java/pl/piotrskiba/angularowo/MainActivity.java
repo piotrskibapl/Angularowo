@@ -6,34 +6,18 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import butterknife.BindView;
+import androidx.fragment.app.FragmentManager;
 import butterknife.ButterKnife;
-import pl.piotrskiba.angularowo.adapters.PlayerListAdapter;
-import pl.piotrskiba.angularowo.models.PlayerList;
-import pl.piotrskiba.angularowo.network.ServerAPIClient;
-import pl.piotrskiba.angularowo.network.ServerAPIInterface;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
-
-    @BindView(R.id.rv_players)
-    RecyclerView mPlayerList;
-
-    @BindView(R.id.swiperefresh)
-    SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ButterKnife.bind(this);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         if(!sharedPreferences.contains(getString(R.string.pref_key_access_token))){
@@ -41,39 +25,12 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
-        ButterKnife.bind(this);
+        PlayerListFragment playerListFragment = new PlayerListFragment();
 
-        mPlayerList.setHasFixedSize(true);
+        FragmentManager fragmentManager = getSupportFragmentManager();
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        mPlayerList.setLayoutManager(layoutManager);
-
-        final PlayerListAdapter adapter = new PlayerListAdapter(this);
-        mPlayerList.setAdapter(adapter);
-
-        loadPlayerList(adapter);
-
-        mSwipeRefreshLayout.setOnRefreshListener(() -> loadPlayerList(adapter));
-    }
-
-    private void loadPlayerList(PlayerListAdapter adapter){
-        mSwipeRefreshLayout.setRefreshing(true);
-
-        ServerAPIInterface serverAPIInterface = ServerAPIClient.getRetrofitInstance().create(ServerAPIInterface.class);
-        serverAPIInterface.getPlayers(ServerAPIClient.API_KEY).enqueue(new Callback<PlayerList>() {
-            @Override
-            public void onResponse(Call<PlayerList> call, Response<PlayerList> response) {
-                if(response.isSuccessful() && response.body() != null) {
-                    adapter.setPlayerList(response.body());
-                }
-                mSwipeRefreshLayout.setRefreshing(false);
-            }
-
-            @Override
-            public void onFailure(Call<PlayerList> call, Throwable t) {
-                t.printStackTrace();
-                mSwipeRefreshLayout.setRefreshing(false);
-            }
-        });
+        fragmentManager.beginTransaction()
+                .add(R.id.fragment_container, playerListFragment)
+                .commit();
     }
 }

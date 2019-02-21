@@ -1,0 +1,76 @@
+package pl.piotrskiba.angularowo;
+
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import pl.piotrskiba.angularowo.adapters.PlayerListAdapter;
+import pl.piotrskiba.angularowo.models.PlayerList;
+import pl.piotrskiba.angularowo.network.ServerAPIClient;
+import pl.piotrskiba.angularowo.network.ServerAPIInterface;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class PlayerListFragment extends Fragment {
+
+    @BindView(R.id.rv_players)
+    RecyclerView mPlayerList;
+
+    @BindView(R.id.swiperefresh)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
+    public PlayerListFragment(){
+
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_player_list, container, false);
+
+        ButterKnife.bind(this, view);
+
+        final PlayerListAdapter adapter = new PlayerListAdapter(getContext());
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        mPlayerList.setAdapter(adapter);
+        mPlayerList.setLayoutManager(layoutManager);
+        mPlayerList.setHasFixedSize(true);
+
+        loadPlayerList(adapter);
+
+        mSwipeRefreshLayout.setOnRefreshListener(() -> loadPlayerList(adapter));
+
+        return view;
+    }
+
+    private void loadPlayerList(PlayerListAdapter adapter){
+        mSwipeRefreshLayout.setRefreshing(true);
+
+        ServerAPIInterface serverAPIInterface = ServerAPIClient.getRetrofitInstance().create(ServerAPIInterface.class);
+        serverAPIInterface.getPlayers(ServerAPIClient.API_KEY).enqueue(new Callback<PlayerList>() {
+            @Override
+            public void onResponse(Call<PlayerList> call, Response<PlayerList> response) {
+                if(response.isSuccessful() && response.body() != null) {
+                    adapter.setPlayerList(response.body());
+                }
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onFailure(Call<PlayerList> call, Throwable t) {
+                t.printStackTrace();
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
+    }
+}
