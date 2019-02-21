@@ -1,6 +1,7 @@
 package pl.piotrskiba.angularowo;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,6 +27,9 @@ import java.io.IOException;
 
 public class LoginActivity extends AppCompatActivity {
 
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+
     @BindView(R.id.coordinatorLayout)
     CoordinatorLayout mCoordinatorLayout;
 
@@ -39,6 +43,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
+        setSupportActionBar(mToolbar);
 
         context = this;
 
