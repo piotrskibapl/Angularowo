@@ -82,9 +82,11 @@ public class MainScreenFragment extends Fragment {
                 if(response.isSuccessful() && response.body() != null){
                     DetailedPlayer player = response.body();
 
-                    Glide.with(getContext())
-                            .load(BASE_BODY_URL + player.getUuid())
-                            .into(mPlayerBodyImageView);
+                    if(player.getUuid() != null && getContext() != null) {
+                        Glide.with(getContext())
+                                .load(BASE_BODY_URL + player.getUuid())
+                                .into(mPlayerBodyImageView);
+                    }
                 }
             }
 

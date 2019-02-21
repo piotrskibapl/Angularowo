@@ -16,6 +16,7 @@
         android:id="@+id/iv_player_body"
         android:layout_width="@dimen/body_width"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/default_body" />
 
 </LinearLayout>
