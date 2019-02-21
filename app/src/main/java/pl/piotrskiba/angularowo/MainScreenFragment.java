@@ -34,6 +34,8 @@ public class MainScreenFragment extends Fragment {
     @BindView(R.id.iv_player_body)
     ImageView mPlayerBodyImageView;
 
+    private String username;
+
     public MainScreenFragment(){
 
     }
@@ -46,32 +48,50 @@ public class MainScreenFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        String username = sharedPreferences.getString(getString(R.string.pref_key_nickname), null);
+        username = sharedPreferences.getString(getString(R.string.pref_key_nickname), null);
 
         if(username != null){
-            mGreetingTextView.setText(getString(R.string.greeting, username));
-
-            ServerAPIInterface serverAPIInterface = ServerAPIClient.getRetrofitInstance().create(ServerAPIInterface.class);
-            serverAPIInterface.getPlayerInfo(ServerAPIClient.API_KEY, username).enqueue(new Callback<DetailedPlayer>() {
-
-                @Override
-                public void onResponse(Call<DetailedPlayer> call, Response<DetailedPlayer> response) {
-                    if(response.isSuccessful() && response.body() != null){
-                        DetailedPlayer player = response.body();
-
-                        Glide.with(getContext())
-                                .load(BASE_BODY_URL + player.getUuid())
-                                .into(mPlayerBodyImageView);
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<DetailedPlayer> call, Throwable t) {
-
-                }
-            });
+            populateUi();
         }
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        if(username == null) {
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+            String username = sharedPreferences.getString(getString(R.string.pref_key_nickname), null);
+            if(username != null){
+                this.username = username;
+                populateUi();
+            }
+        }
+
+        super.onResume();
+    }
+
+    private void populateUi(){
+        mGreetingTextView.setText(getString(R.string.greeting, username));
+
+        ServerAPIInterface serverAPIInterface = ServerAPIClient.getRetrofitInstance().create(ServerAPIInterface.class);
+        serverAPIInterface.getPlayerInfo(ServerAPIClient.API_KEY, username).enqueue(new Callback<DetailedPlayer>() {
+
+            @Override
+            public void onResponse(Call<DetailedPlayer> call, Response<DetailedPlayer> response) {
+                if(response.isSuccessful() && response.body() != null){
+                    DetailedPlayer player = response.body();
+
+                    Glide.with(getContext())
+                            .load(BASE_BODY_URL + player.getUuid())
+                            .into(mPlayerBodyImageView);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DetailedPlayer> call, Throwable t) {
+
+            }
+        });
     }
 }
