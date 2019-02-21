@@ -13,4 +13,6 @@
     <string name="login_error_code_not_found">Podany kod jest nieprawidłowy.</string>
     <string name="login_error_code_expired">Podany kod jest prawidłowy, jednak skończyła się jego ważność. Wpisz komendę /android ponownie.</string>
     <string name="login_error_unknown">Wystąpił nieznany błąd. Spróbuj ponownie później.</string>
+
+    <string name="player_list">Lista graczy</string>
 </resources>
