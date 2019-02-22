@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="default_padding">4dp</dimen>
-    <dimen name="default_margin">4dp</dimen>
+    <dimen name="padding_default">8dp</dimen>
+    <dimen name="margin_default">8dp</dimen>
+    <dimen name="margin_small">4dp</dimen>
 
     <dimen name="username_text_size">16sp</dimen>
     <dimen name="rank_text_size">12sp</dimen>

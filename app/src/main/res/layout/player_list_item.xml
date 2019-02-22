@@ -4,15 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/default_padding"
-    android:layout_marginBottom="@dimen/default_margin"
+    android:padding="@dimen/padding_default"
+    android:layout_marginBottom="@dimen/margin_small"
     android:background="@color/color_gracz">
 
     <ImageView
         android:id="@+id/iv_player_avatar"
         android:layout_width="@dimen/avatar_size"
         android:layout_height="@dimen/avatar_size"
-        android:layout_margin="@dimen/default_margin"
         android:src="@drawable/default_avatar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,8 +20,8 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        android:paddingStart="@dimen/padding_default"
+        android:paddingEnd="@dimen/padding_default"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,7 +47,6 @@
         android:id="@+id/iv_vanish_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin"
         android:src="@drawable/ic_vanished"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
