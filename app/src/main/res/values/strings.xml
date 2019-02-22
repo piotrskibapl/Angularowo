@@ -19,4 +19,5 @@
 
     <!-- fragment_main_screen.xml -->
     <string name="greeting">Witaj, %1$s!</string>
+    <string name="playercount">%1$d graczy online</string>
 </resources>

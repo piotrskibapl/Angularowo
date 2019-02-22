@@ -3,11 +3,15 @@ package pl.piotrskiba.angularowo.network;
 import pl.piotrskiba.angularowo.models.AccessToken;
 import pl.piotrskiba.angularowo.models.DetailedPlayer;
 import pl.piotrskiba.angularowo.models.PlayerList;
+import pl.piotrskiba.angularowo.models.ServerStatus;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface ServerAPIInterface {
+
+    @GET("get_server_status.php")
+    Call<ServerStatus> getServerStatus(@Query("api_key") String api_key);
 
     @GET("get_online_players.php")
     Call<PlayerList> getPlayers(@Query("api_key") String api_key);

@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.piotrskiba.angularowo.models.DetailedPlayer;
+import pl.piotrskiba.angularowo.models.ServerStatus;
 import pl.piotrskiba.angularowo.network.ServerAPIClient;
 import pl.piotrskiba.angularowo.network.ServerAPIInterface;
 import retrofit2.Call;
@@ -30,6 +31,9 @@ public class MainScreenFragment extends Fragment {
 
     @BindView(R.id.tv_greeting)
     TextView mGreetingTextView;
+
+    @BindView(R.id.tv_playercount)
+    TextView mPlayerCountTextView;
 
     @BindView(R.id.iv_player_body)
     ImageView mPlayerBodyImageView;
@@ -75,6 +79,22 @@ public class MainScreenFragment extends Fragment {
         mGreetingTextView.setText(getString(R.string.greeting, username));
 
         ServerAPIInterface serverAPIInterface = ServerAPIClient.getRetrofitInstance().create(ServerAPIInterface.class);
+        serverAPIInterface.getServerStatus(ServerAPIClient.API_KEY).enqueue(new Callback<ServerStatus>() {
+            @Override
+            public void onResponse(Call<ServerStatus> call, Response<ServerStatus> response) {
+                if(response.isSuccessful() && response.body() != null){
+                    ServerStatus server = response.body();
+
+                    mPlayerCountTextView.setText(getString(R.string.playercount, server.getPlayerCount()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ServerStatus> call, Throwable t) {
+
+            }
+        });
+
         serverAPIInterface.getPlayerInfo(ServerAPIClient.API_KEY, username).enqueue(new Callback<DetailedPlayer>() {
 
             @Override
