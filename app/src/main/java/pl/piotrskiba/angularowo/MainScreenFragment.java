@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.piotrskiba.angularowo.models.DetailedPlayer;
@@ -28,6 +29,9 @@ import retrofit2.Response;
 public class MainScreenFragment extends Fragment {
 
     private final static String BASE_BODY_URL = "https://crafatar.com/renders/body/";
+
+    @BindView(R.id.swiperefresh)
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     @BindView(R.id.tv_greeting)
     TextView mGreetingTextView;
@@ -58,6 +62,8 @@ public class MainScreenFragment extends Fragment {
             populateUi();
         }
 
+        mSwipeRefreshLayout.setOnRefreshListener(() -> populateUi());
+
         return view;
     }
 
@@ -76,6 +82,8 @@ public class MainScreenFragment extends Fragment {
     }
 
     private void populateUi(){
+        mSwipeRefreshLayout.setRefreshing(true);
+
         mGreetingTextView.setText(getString(R.string.greeting, username));
 
         ServerAPIInterface serverAPIInterface = ServerAPIClient.getRetrofitInstance().create(ServerAPIInterface.class);
@@ -87,11 +95,12 @@ public class MainScreenFragment extends Fragment {
 
                     mPlayerCountTextView.setText(getString(R.string.playercount, server.getPlayerCount()));
                 }
+                mSwipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
             public void onFailure(Call<ServerStatus> call, Throwable t) {
-
+                mSwipeRefreshLayout.setRefreshing(false);
             }
         });
 
@@ -108,11 +117,12 @@ public class MainScreenFragment extends Fragment {
                                 .into(mPlayerBodyImageView);
                     }
                 }
+                mSwipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
             public void onFailure(Call<DetailedPlayer> call, Throwable t) {
-
+                mSwipeRefreshLayout.setRefreshing(false);
             }
         });
     }
