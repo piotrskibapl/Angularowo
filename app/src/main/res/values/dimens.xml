@@ -17,6 +17,7 @@
 
     <!-- fragment_main_screen.xml -->
     <dimen name="greeting_text_size">24sp</dimen>
-    <dimen name="greeting_margin">24dp</dimen>
+    <dimen name="section_margin">24dp</dimen>
     <dimen name="body_width">120dp</dimen>
+    <dimen name="playerinfo_values_text_sizes">24sp</dimen>
 </resources>

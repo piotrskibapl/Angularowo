@@ -20,4 +20,7 @@
     <!-- fragment_main_screen.xml -->
     <string name="greeting">Witaj, %1$s!</string>
     <string name="playercount">%1$d graczy online</string>
+    <string name="balance_title">Stan konta:</string>
+    <string name="balance_format">$%1$d</string>
+    <string name="island_level_title">Poziom wyspy:</string>
 </resources>
