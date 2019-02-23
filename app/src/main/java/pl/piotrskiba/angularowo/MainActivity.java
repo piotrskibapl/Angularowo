@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         MainScreenFragment mainScreenFragment = new MainScreenFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .add(R.id.fragment_container, mainScreenFragment)
+                .replace(R.id.fragment_container, mainScreenFragment)
                 .commit();
 
         setSupportActionBar(mToolbar);

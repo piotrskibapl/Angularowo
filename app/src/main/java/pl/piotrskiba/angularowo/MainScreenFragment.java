@@ -42,6 +42,12 @@ public class MainScreenFragment extends Fragment {
     @BindView(R.id.iv_player_body)
     ImageView mPlayerBodyImageView;
 
+    @BindView(R.id.tv_balance)
+    TextView mPlayerBalanceTextView;
+
+    @BindView(R.id.tv_islandlevel)
+    TextView mPlayerIslandLevelTextView;
+
     private String username;
 
     public MainScreenFragment(){
@@ -90,7 +96,7 @@ public class MainScreenFragment extends Fragment {
         serverAPIInterface.getServerStatus(ServerAPIClient.API_KEY).enqueue(new Callback<ServerStatus>() {
             @Override
             public void onResponse(Call<ServerStatus> call, Response<ServerStatus> response) {
-                if(response.isSuccessful() && response.body() != null){
+                if(response.isSuccessful() && response.body() != null && getContext() != null){
                     ServerStatus server = response.body();
 
                     mPlayerCountTextView.setText(getString(R.string.playercount, server.getPlayerCount()));
@@ -115,6 +121,9 @@ public class MainScreenFragment extends Fragment {
                         Glide.with(getContext())
                                 .load(BASE_BODY_URL + player.getUuid())
                                 .into(mPlayerBodyImageView);
+
+                        mPlayerBalanceTextView.setText(getString(R.string.balance_format, (int)player.getBalance()));
+                        mPlayerIslandLevelTextView.setText(String.valueOf(player.getIslandLevel()));
                     }
                 }
                 mSwipeRefreshLayout.setRefreshing(false);
