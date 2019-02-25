@@ -20,16 +20,21 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.piotrskiba.angularowo.R;
+import pl.piotrskiba.angularowo.interfaces.PlayerClickListener;
 import pl.piotrskiba.angularowo.models.Player;
 import pl.piotrskiba.angularowo.models.PlayerList;
+import pl.piotrskiba.angularowo.utils.RankUtils;
 
 public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.PlayerViewHolder> {
 
     private Context context;
     private PlayerList playerList;
 
-    public PlayerListAdapter(Context context){
+    private PlayerClickListener mClickListener;
+
+    public PlayerListAdapter(Context context, PlayerClickListener clickListener){
         this.context = context;
+        this.mClickListener = clickListener;
     }
 
     @NonNull
@@ -59,58 +64,7 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
         holder.mPlayerName.setText(player.getUsername());
         holder.mPlayerRank.setText(player.getRank());
 
-        int color_id = 0;
-
-        switch(player.getRank()){
-            case "wlasciciel":
-                color_id = R.color.color_wlasciciel;
-                break;
-            case "admin":
-                color_id = R.color.color_admin;
-                break;
-            case "jradmin":
-                color_id = R.color.color_jradmin;
-                break;
-            case "moderator":
-                color_id = R.color.color_moderator;
-                break;
-            case "pomocnik":
-                color_id = R.color.color_pomocnik;
-                break;
-            case "budowniczy":
-                color_id = R.color.color_budowniczy;
-                break;
-            case "sponsor":
-                color_id = R.color.color_sponsor;
-                break;
-            case "kozak":
-                color_id = R.color.color_kozak;
-                break;
-            case "kasyniarz":
-                color_id = R.color.color_kasyniarz;
-                break;
-            case "supervip":
-                color_id = R.color.color_supervip;
-                break;
-            case "kontovip":
-                color_id = R.color.color_kontovip;
-                break;
-            case "dziewczyna":
-                color_id = R.color.color_dziewczyna;
-                break;
-            case "chlopak":
-                color_id = R.color.color_chlopak;
-                break;
-            case "nolife":
-                color_id = R.color.color_nolife;
-                break;
-            case "stalygracz":
-                color_id = R.color.color_stalygracz;
-                break;
-            default:
-                color_id = R.color.color_gracz;
-                break;
-        }
+        int color_id = RankUtils.getRankColorId(player.getRank());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             ((ConstraintLayout) holder.mPlayerAvatar.getParent()).setBackground(context.getResources().getDrawable(color_id));
@@ -133,7 +87,7 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
             return 0;
     }
 
-    class PlayerViewHolder extends RecyclerView.ViewHolder{
+    class PlayerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.iv_player_avatar)
         ImageView mPlayerAvatar;
@@ -151,6 +105,14 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
             super(itemView);
 
             ButterKnife.bind(this, itemView);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int pos = getAdapterPosition();
+            mClickListener.onPlayerClick(playerList.getPlayers().get(pos));
         }
     }
 

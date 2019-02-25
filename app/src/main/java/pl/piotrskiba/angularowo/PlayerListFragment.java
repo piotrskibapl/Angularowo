@@ -1,5 +1,6 @@
 package pl.piotrskiba.angularowo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.piotrskiba.angularowo.adapters.PlayerListAdapter;
+import pl.piotrskiba.angularowo.interfaces.PlayerClickListener;
+import pl.piotrskiba.angularowo.models.Player;
 import pl.piotrskiba.angularowo.models.PlayerList;
 import pl.piotrskiba.angularowo.network.ServerAPIClient;
 import pl.piotrskiba.angularowo.network.ServerAPIInterface;
@@ -21,7 +24,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PlayerListFragment extends Fragment {
+public class PlayerListFragment extends Fragment implements PlayerClickListener {
 
     @BindView(R.id.rv_players)
     RecyclerView mPlayerList;
@@ -40,7 +43,7 @@ public class PlayerListFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
-        final PlayerListAdapter adapter = new PlayerListAdapter(getContext());
+        final PlayerListAdapter adapter = new PlayerListAdapter(getContext(), this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         mPlayerList.setAdapter(adapter);
         mPlayerList.setLayoutManager(layoutManager);
@@ -72,5 +75,12 @@ public class PlayerListFragment extends Fragment {
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         });
+    }
+
+    @Override
+    public void onPlayerClick(Player clickedPlayer) {
+        Intent intent = new Intent(getContext(), PlayerDetailsActivity.class);
+        intent.putExtra(Constants.EXTRA_PLAYER, clickedPlayer);
+        startActivity(intent);
     }
 }

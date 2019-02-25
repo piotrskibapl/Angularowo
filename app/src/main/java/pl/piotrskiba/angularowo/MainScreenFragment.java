@@ -3,7 +3,6 @@ package pl.piotrskiba.angularowo;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +26,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainScreenFragment extends Fragment {
-
-    private final static String BASE_BODY_URL = "https://crafatar.com/renders/body/";
 
     @BindView(R.id.swiperefresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
@@ -119,12 +116,12 @@ public class MainScreenFragment extends Fragment {
 
                     if(player.getUuid() != null && getContext() != null) {
                         Glide.with(getContext())
-                                .load(BASE_BODY_URL + player.getUuid())
+                                .load(Constants.BASE_BODY_URL + player.getUuid())
                                 .into(mPlayerBodyImageView);
-
-                        mPlayerBalanceTextView.setText(getString(R.string.balance_format, (int)player.getBalance()));
-                        mPlayerIslandLevelTextView.setText(String.valueOf(player.getIslandLevel()));
                     }
+
+                    mPlayerBalanceTextView.setText(getString(R.string.balance_format, (int)player.getBalance()));
+                    mPlayerIslandLevelTextView.setText(String.valueOf(player.getIslandLevel()));
                 }
                 mSwipeRefreshLayout.setRefreshing(false);
             }

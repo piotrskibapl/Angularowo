@@ -1,6 +1,8 @@
 package pl.piotrskiba.angularowo.models;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
 
     private final String username;
     private final String uuid;

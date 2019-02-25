@@ -23,4 +23,7 @@
     <string name="balance_title">Stan konta:</string>
     <string name="balance_format">$%1$d</string>
     <string name="island_level_title">Poziom wyspy:</string>
+
+    <!-- activity_player_details.xml -->
+    <string name="player_info">Informacje o graczu</string>
 </resources>
