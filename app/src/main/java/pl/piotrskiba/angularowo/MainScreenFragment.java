@@ -86,15 +86,17 @@ public class MainScreenFragment extends Fragment {
 
         // subscribe to player's individual Firebase topic
         if(this.username != null){
-            FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_PLAYER_TOPIC_PREFIX + this.username)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putBoolean(getString(R.string.pref_key_subscribed_to_player_topic), true);
-                            editor.apply();
-                        }
-                    });
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+            if(!sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_player_topic))) {
+                FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_PLAYER_TOPIC_PREFIX + this.username)
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putBoolean(getString(R.string.pref_key_subscribed_to_player_topic), true);
+                                editor.apply();
+                            }
+                        });
+            }
         }
 
         super.onResume();
