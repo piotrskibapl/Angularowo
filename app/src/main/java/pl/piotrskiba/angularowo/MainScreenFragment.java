@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -72,13 +73,28 @@ public class MainScreenFragment extends Fragment {
 
     @Override
     public void onResume() {
-        if(username == null) {
+
+        if(this.username == null){
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
             String username = sharedPreferences.getString(getString(R.string.pref_key_nickname), null);
+
             if(username != null){
                 this.username = username;
                 populateUi();
             }
+        }
+
+        // subscribe to player's individual Firebase topic
+        if(this.username != null){
+            FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_PLAYER_TOPIC_PREFIX + this.username)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putBoolean(getString(R.string.pref_key_subscribed_to_player_topic), true);
+                            editor.apply();
+                        }
+                    });
         }
 
         super.onResume();
@@ -122,6 +138,20 @@ public class MainScreenFragment extends Fragment {
 
                     mPlayerBalanceTextView.setText(getString(R.string.balance_format, (int)player.getBalance()));
                     mPlayerIslandLevelTextView.setText(String.valueOf(player.getIslandLevel()));
+
+                    // subscribe to player's rank Firebase topic
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                    String rank = sharedPreferences.getString(getString(R.string.pref_key_rank), null);
+                    if(!player.getRank().equals(rank)){
+                        if(rank != null){
+                            FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_RANK_TOPIC_PREFIX + rank);
+                        }
+                        FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_RANK_TOPIC_PREFIX + player.getRank());
+
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString(getString(R.string.pref_key_rank), player.getRank());
+                        editor.apply();
+                    }
                 }
                 mSwipeRefreshLayout.setRefreshing(false);
             }
