@@ -168,7 +168,7 @@ public class MainScreenFragment extends Fragment {
                         }
                     }
                     else{
-                        if(sharedPreferences.getBoolean(getString(R.string.pref_key_subscribed_to_new_reports), false)){
+                        if(sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_new_reports)) && sharedPreferences.getBoolean(getString(R.string.pref_key_subscribed_to_new_reports), false)){
                             FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_NEW_REPORTS_TOPIC)
                                     .addOnCompleteListener(task -> {
                                         SharedPreferences.Editor editor = sharedPreferences.edit();
