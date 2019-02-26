@@ -1,8 +1,10 @@
 package pl.piotrskiba.angularowo.interfaces;
 
+import android.view.View;
+
 import pl.piotrskiba.angularowo.models.Player;
 
 public interface PlayerClickListener {
 
-    void onPlayerClick(Player clickedPlayer);
+    void onPlayerClick(View view, Player clickedPlayer);
 }

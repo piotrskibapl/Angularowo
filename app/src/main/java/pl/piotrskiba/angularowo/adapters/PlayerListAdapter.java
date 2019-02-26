@@ -112,7 +112,7 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
         @Override
         public void onClick(View view) {
             int pos = getAdapterPosition();
-            mClickListener.onPlayerClick(playerList.getPlayers().get(pos));
+            mClickListener.onPlayerClick(view, playerList.getPlayers().get(pos));
         }
     }
 

@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -150,5 +151,15 @@ public class PlayerDetailsActivity extends AppCompatActivity implements SwipeRef
             Player player = (Player) parentIntent.getSerializableExtra(Constants.EXTRA_PLAYER);
             loadDetailedPlayerData(player);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                supportFinishAfterTransition();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

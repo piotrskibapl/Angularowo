@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -78,9 +80,16 @@ public class PlayerListFragment extends Fragment implements PlayerClickListener 
     }
 
     @Override
-    public void onPlayerClick(Player clickedPlayer) {
+    public void onPlayerClick(View view, Player clickedPlayer) {
         Intent intent = new Intent(getContext(), PlayerDetailsActivity.class);
         intent.putExtra(Constants.EXTRA_PLAYER, clickedPlayer);
-        startActivity(intent);
+        if(getActivity() != null) {
+            ActivityOptionsCompat options = ActivityOptionsCompat.
+                    makeSceneTransitionAnimation(getActivity(), view, getString(R.string.player_banner_transition_name));
+            startActivity(intent, options.toBundle());
+        }
+        else {
+            startActivity(intent);
+        }
     }
 }

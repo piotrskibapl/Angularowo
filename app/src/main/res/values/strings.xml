@@ -26,4 +26,5 @@
 
     <!-- activity_player_details.xml -->
     <string name="player_info">Informacje o graczu</string>
+    <string name="player_banner_transition_name" translatable="false">player_banner</string>
 </resources>
