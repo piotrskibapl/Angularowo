@@ -40,4 +40,21 @@ public class RankUtils {
                 return R.color.color_gracz;
         }
     }
+
+    public static boolean isStaffRank(String rank){
+        switch(rank){
+            case "wlasciciel":
+                return true;
+            case "admin":
+                return true;
+            case "jradmin":
+                return true;
+            case "moderator":
+                return true;
+            case "pomocnik":
+                return true;
+            default:
+                return false;
+        }
+    }
 }

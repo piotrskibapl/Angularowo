@@ -22,6 +22,7 @@ import pl.piotrskiba.angularowo.models.DetailedPlayer;
 import pl.piotrskiba.angularowo.models.ServerStatus;
 import pl.piotrskiba.angularowo.network.ServerAPIClient;
 import pl.piotrskiba.angularowo.network.ServerAPIInterface;
+import pl.piotrskiba.angularowo.utils.RankUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -153,6 +154,28 @@ public class MainScreenFragment extends Fragment {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString(getString(R.string.pref_key_rank), player.getRank());
                         editor.apply();
+                    }
+
+                    // check subscription for new reports
+                    if(RankUtils.isStaffRank(player.getRank())){
+                        if(!sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_new_reports))){
+                            FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_NEW_REPORTS_TOPIC)
+                                    .addOnCompleteListener(task -> {
+                                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                                        editor.putBoolean(getString(R.string.pref_key_subscribed_to_new_reports), true);
+                                        editor.apply();
+                            });
+                        }
+                    }
+                    else{
+                        if(sharedPreferences.getBoolean(getString(R.string.pref_key_subscribed_to_new_reports), false)){
+                            FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_NEW_REPORTS_TOPIC)
+                                    .addOnCompleteListener(task -> {
+                                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                                        editor.putBoolean(getString(R.string.pref_key_subscribed_to_new_reports), false);
+                                        editor.apply();
+                                    });
+                        }
                     }
                 }
                 mSwipeRefreshLayout.setRefreshing(false);
