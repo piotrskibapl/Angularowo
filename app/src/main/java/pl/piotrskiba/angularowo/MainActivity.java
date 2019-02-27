@@ -67,8 +67,10 @@ public class MainActivity extends AppCompatActivity {
                                     .replace(R.id.fragment_container, playerListFragment)
                                     .commit();
                         }
-
-                        menuItem.setChecked(true);
+                        else if(menuItem.getItemId() == R.id.nav_settings){
+                            Intent intent = new Intent(this, SettingsActivity.class);
+                            startActivity(intent);
+                        }
                     }
                     mDrawerLayout.closeDrawers();
 
