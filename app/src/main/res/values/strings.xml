@@ -1,11 +1,16 @@
 <resources>
     <string name="app_name">Angularowo</string>
 
+    <!-- preferences -->
     <string name="pref_key_nickname" translatable="false">nickname</string>
     <string name="pref_key_rank" translatable="false">rank</string>
     <string name="pref_key_access_token" translatable="false">access_token</string>
     <string name="pref_key_subscribed_to_player_topic" translatable="false">player_topic_subscribed</string>
     <string name="pref_key_subscribed_to_new_reports" translatable="false">new_reports_subscribed</string>
+
+    <string name="pref_category_notifications">Powiadomienia</string>
+    <string name="pref_title_subscribed_to_new_reports">Nowe zgłoszenia</string>
+    <string name="pref_summary_subscribed_to_new_reports">Otrzymuj powiadomienia o nowych zgłoszeniach na serwerze</string>
 
     <string name="login_header">Witaj!</string>
     <string name="login_description">Aby korzystać z aplikacji, musisz powiązać ją ze swoim kontem w grze.\nPoniżej wpisz swój kod dostępu.\nKod dostępu uzyskasz wpisując komendę /android w grze.</string>

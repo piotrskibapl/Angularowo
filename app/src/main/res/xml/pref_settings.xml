@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/pref_category_notifications"
+        android:icon="@drawable/ic_notifications">
+        <CheckBoxPreference
+            android:key="@string/pref_key_subscribed_to_new_reports"
+            android:title="@string/pref_title_subscribed_to_new_reports"
+            android:summary="@string/pref_summary_subscribed_to_new_reports"
+            android:defaultValue="true" />
+    </PreferenceCategory>
+</PreferenceScreen>
