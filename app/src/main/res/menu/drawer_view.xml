@@ -9,6 +9,9 @@
         <item
             android:id="@+id/nav_player_list"
             android:title="@string/player_list" />
+        <item
+            android:id="@+id/nav_last_bans"
+            android:title="@string/last_bans" />
     </group>
     <group
         android:id="@+id/nav_group2">

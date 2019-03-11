@@ -66,8 +66,12 @@ public class MainActivity extends AppCompatActivity {
                             fragmentManager.beginTransaction()
                                     .replace(R.id.fragment_container, playerListFragment)
                                     .commit();
-                        }
-                        else if(menuItem.getItemId() == R.id.nav_settings){
+                        } else if (menuItem.getItemId() == R.id.nav_last_bans) {
+                            BanListFragment banListFragment = new BanListFragment();
+                            fragmentManager.beginTransaction()
+                                    .replace(R.id.fragment_container, banListFragment)
+                                    .commit();
+                        } else if (menuItem.getItemId() == R.id.nav_settings) {
                             Intent intent = new Intent(this, SettingsActivity.class);
                             startActivity(intent);
                         }
