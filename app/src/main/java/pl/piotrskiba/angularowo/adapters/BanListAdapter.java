@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -14,10 +16,21 @@ import butterknife.ButterKnife;
 import pl.piotrskiba.angularowo.R;
 import pl.piotrskiba.angularowo.models.Ban;
 import pl.piotrskiba.angularowo.models.BanList;
+import pl.piotrskiba.angularowo.models.MojangProfile;
+import pl.piotrskiba.angularowo.network.MojangAPIClient;
+import pl.piotrskiba.angularowo.network.MojangAPIInterface;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BanListAdapter extends RecyclerView.Adapter<BanListAdapter.BanViewHolder> {
 
+    private Context context;
     private BanList banList;
+
+    public BanListAdapter(Context context){
+        this.context = context;
+    }
 
     @NonNull
     @Override
@@ -36,6 +49,27 @@ public class BanListAdapter extends RecyclerView.Adapter<BanListAdapter.BanViewH
 
         holder.mPlayerName.setText(ban.getUsername());
         holder.mBanReason.setText(ban.getReason());
+
+        MojangAPIInterface mojangAPIInterface = MojangAPIClient.getRetrofitInstance().create(MojangAPIInterface.class);
+        mojangAPIInterface.getProfile(ban.getUsername()).enqueue(new Callback<MojangProfile>() {
+            @Override
+            public void onResponse(Call<MojangProfile> call, Response<MojangProfile> response) {
+                if(response.isSuccessful() && response.body() != null) {
+                    Glide.with(context)
+                            .load("https://crafatar.com/avatars/" + response.body().getId() + "?size=100")
+                            .into(holder.mPlayerAvatar);
+                }
+                else{
+                    holder.mPlayerAvatar.setImageDrawable(context.getResources().getDrawable(R.drawable.default_avatar));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MojangProfile> call, Throwable t) {
+                t.printStackTrace();
+                holder.mPlayerAvatar.setImageDrawable(context.getResources().getDrawable(R.drawable.default_avatar));
+            }
+        });
     }
 
     @Override

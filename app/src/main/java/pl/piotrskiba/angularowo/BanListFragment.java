@@ -41,11 +41,11 @@ public class BanListFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
-        final BanListAdapter adapter = new BanListAdapter();
+        final BanListAdapter adapter = new BanListAdapter(getContext());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         mBanList.setAdapter(adapter);
         mBanList.setLayoutManager(layoutManager);
-        mBanList.setHasFixedSize(true);
+        mBanList.setHasFixedSize(false);
 
         loadBanList(adapter);
 
