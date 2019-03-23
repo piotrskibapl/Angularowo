@@ -7,6 +7,7 @@
     <dimen name="username_text_size">16sp</dimen>
     <dimen name="rank_text_size">12sp</dimen>
     <dimen name="avatar_size">48dp</dimen>
+    <dimen name="ban_icon_size">24dp</dimen>
 
     <dimen name="login_header_text_size">32sp</dimen>
     <dimen name="login_header_margin_top">24dp</dimen>

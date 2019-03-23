@@ -48,7 +48,22 @@ public class BanListAdapter extends RecyclerView.Adapter<BanListAdapter.BanViewH
         Ban ban = banList.getBanList().get(position);
 
         holder.mPlayerName.setText(ban.getUsername());
-        holder.mBanReason.setText(ban.getReason());
+
+        String reason = ban.getReason().toLowerCase();
+        if(ban.getType().equals(Ban.TYPE_BAN)){
+            holder.mBanType.setImageResource(R.drawable.ic_ban);
+            if(reason.contains(":"))
+                reason = reason.split(":")[0];
+            holder.mBanReason.setText(context.getString(R.string.ban_description_format, reason));
+        }
+        else if(ban.getType().equals(Ban.TYPE_MUTE)){
+            holder.mBanType.setImageResource(R.drawable.ic_mute);
+            holder.mBanReason.setText(context.getString(R.string.mute_description_format, reason));
+        }
+        else if(ban.getType().equals(Ban.TYPE_WARNING)){
+            holder.mBanType.setImageResource(R.drawable.ic_warning);
+            holder.mBanReason.setText(context.getString(R.string.warn_description_format, reason));
+        }
 
         MojangAPIInterface mojangAPIInterface = MojangAPIClient.getRetrofitInstance().create(MojangAPIInterface.class);
         mojangAPIInterface.getProfile(ban.getUsername()).enqueue(new Callback<MojangProfile>() {

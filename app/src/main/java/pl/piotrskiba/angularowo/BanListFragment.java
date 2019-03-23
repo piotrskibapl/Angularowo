@@ -45,7 +45,7 @@ public class BanListFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         mBanList.setAdapter(adapter);
         mBanList.setLayoutManager(layoutManager);
-        mBanList.setHasFixedSize(false);
+        mBanList.setHasFixedSize(true);
 
         loadBanList(adapter);
 

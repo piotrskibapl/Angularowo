@@ -6,6 +6,10 @@ import java.io.Serializable;
 
 public class Ban implements Serializable {
 
+    public final static String TYPE_BAN = "Ban";
+    public final static String TYPE_MUTE = "Wyciszenie";
+    public final static String TYPE_WARNING = "Ostrzeżenie";
+
     @SerializedName("name")
     private final String username;
     private final String reason;
