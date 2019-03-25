@@ -10,6 +10,8 @@ public class RankUtils {
                 return R.color.color_wlasciciel;
             case "admin":
                 return R.color.color_admin;
+            case "viceadmin":
+                return R.color.color_viceadmin;
             case "jradmin":
                 return R.color.color_jradmin;
             case "moderator":
@@ -20,10 +22,18 @@ public class RankUtils {
                 return R.color.color_budowniczy;
             case "sponsor":
                 return R.color.color_sponsor;
+            case "hrabia":
+                return R.color.color_hrabia;
+            case "legenda":
+                return R.color.color_legenda;
+            case "duchowny":
+                return R.color.color_duchowny;
             case "kozak":
                 return R.color.color_kozak;
             case "kasyniarz":
                 return R.color.color_kasyniarz;
+            case "eventowiec":
+                return R.color.color_eventowiec;
             case "supervip":
                 return R.color.color_supervip;
             case "kontovip":
@@ -46,6 +56,8 @@ public class RankUtils {
             case "wlasciciel":
                 return true;
             case "admin":
+                return true;
+            case "viceadmin":
                 return true;
             case "jradmin":
                 return true;

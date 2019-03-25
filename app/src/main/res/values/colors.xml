@@ -6,13 +6,18 @@
 
     <color name="color_wlasciciel">#4e1919</color>
     <color name="color_admin">#4e1919</color>
+    <color name="color_viceadmin">#4e1919</color>
     <color name="color_jradmin">#693333</color>
     <color name="color_moderator">#194e19</color>
     <color name="color_pomocnik">#19194e</color>
     <color name="color_budowniczy">#336969</color>
     <color name="color_sponsor">#696933</color>
+    <color name="color_hrabia">#336969</color>
+    <color name="color_legenda">#696933</color>
+    <color name="color_duchowny">#693369</color>
     <color name="color_kozak">#693333</color>
     <color name="color_kasyniarz">#717171</color>
+    <color name="color_eventowiec">#336933</color>
     <color name="color_supervip">#336933</color>
     <color name="color_kontovip">#694e19</color>
     <color name="color_dziewczyna">#693369</color>
