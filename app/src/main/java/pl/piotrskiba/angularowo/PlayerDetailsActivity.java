@@ -15,10 +15,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -83,8 +84,11 @@ public class PlayerDetailsActivity extends AppCompatActivity implements SwipeRef
     private void loadDetailedPlayerData(Player player){
         mSwipeRefreshLayout.setRefreshing(true);
 
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String access_token = sharedPreferences.getString(getString(R.string.pref_key_access_token), null);
+
         ServerAPIInterface serverAPIInterface = ServerAPIClient.getRetrofitInstance().create(ServerAPIInterface.class);
-        serverAPIInterface.getPlayerInfo(ServerAPIClient.API_KEY, player.getUsername()).enqueue(new Callback<DetailedPlayer>() {
+        serverAPIInterface.getPlayerInfo(ServerAPIClient.API_KEY, player.getUsername(), access_token).enqueue(new Callback<DetailedPlayer>() {
 
             @Override
             public void onResponse(Call<DetailedPlayer> call, Response<DetailedPlayer> response) {

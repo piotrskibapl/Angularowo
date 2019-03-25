@@ -1,7 +1,9 @@
 package pl.piotrskiba.angularowo;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.piotrskiba.angularowo.adapters.PlayerListAdapter;
+import pl.piotrskiba.angularowo.interfaces.InvalidAccessTokenResponseListener;
 import pl.piotrskiba.angularowo.interfaces.PlayerClickListener;
 import pl.piotrskiba.angularowo.models.Player;
 import pl.piotrskiba.angularowo.models.PlayerList;
@@ -33,6 +36,8 @@ public class PlayerListFragment extends Fragment implements PlayerClickListener 
 
     @BindView(R.id.swiperefresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
+
+    private InvalidAccessTokenResponseListener listener;
 
     public PlayerListFragment(){
 
@@ -61,12 +66,18 @@ public class PlayerListFragment extends Fragment implements PlayerClickListener 
     private void loadPlayerList(PlayerListAdapter adapter){
         mSwipeRefreshLayout.setRefreshing(true);
 
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String access_token = sharedPreferences.getString(getString(R.string.pref_key_access_token), null);
+
         ServerAPIInterface serverAPIInterface = ServerAPIClient.getRetrofitInstance().create(ServerAPIInterface.class);
-        serverAPIInterface.getPlayers(ServerAPIClient.API_KEY).enqueue(new Callback<PlayerList>() {
+        serverAPIInterface.getPlayers(ServerAPIClient.API_KEY, access_token).enqueue(new Callback<PlayerList>() {
             @Override
             public void onResponse(Call<PlayerList> call, Response<PlayerList> response) {
                 if(response.isSuccessful() && response.body() != null) {
                     adapter.setPlayerList(response.body());
+                }
+                else if(response.code() == 401){
+                    listener.onInvalidAccessTokenResponseReceived();
                 }
                 mSwipeRefreshLayout.setRefreshing(false);
             }
@@ -91,5 +102,9 @@ public class PlayerListFragment extends Fragment implements PlayerClickListener 
         else {
             startActivity(intent);
         }
+    }
+
+    public void setInvalidAccessTokenResponseListener(InvalidAccessTokenResponseListener listener){
+        this.listener = listener;
     }
 }

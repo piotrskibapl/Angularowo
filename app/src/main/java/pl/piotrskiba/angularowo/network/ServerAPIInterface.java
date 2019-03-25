@@ -12,17 +12,17 @@ import retrofit2.http.Query;
 public interface ServerAPIInterface {
 
     @GET("get_server_status.php")
-    Call<ServerStatus> getServerStatus(@Query("api_key") String api_key);
+    Call<ServerStatus> getServerStatus(@Query("api_key") String api_key, @Query("access_token") String access_token);
 
     @GET("get_online_players.php")
-    Call<PlayerList> getPlayers(@Query("api_key") String api_key);
+    Call<PlayerList> getPlayers(@Query("api_key") String api_key, @Query("access_token") String access_token);
 
     @GET("get_ban_list.php")
-    Call<BanList> getBanList(@Query("api_key") String api_key, @Query("type") String type);
+    Call<BanList> getBanList(@Query("api_key") String api_key, @Query("type") String type, @Query("access_token") String access_token);
 
     @GET("register_device.php")
     Call<AccessToken> registerDevice(@Query("api_key") String api_key, @Query("user_code") String user_code);
 
     @GET("get_player_info.php")
-    Call<DetailedPlayer> getPlayerInfo(@Query("api_key") String api_key, @Query("username") String username);
+    Call<DetailedPlayer> getPlayerInfo(@Query("api_key") String api_key, @Query("username") String username, @Query("access_token") String access_token);
 }

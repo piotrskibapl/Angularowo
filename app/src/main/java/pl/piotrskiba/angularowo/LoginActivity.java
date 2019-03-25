@@ -71,6 +71,7 @@ public class LoginActivity extends AppCompatActivity {
 
                             editor.commit();
 
+                            setResult(Constants.RESULT_CODE_SUCCESS);
                             finish();
                         }
                         else if(response.errorBody() != null) {

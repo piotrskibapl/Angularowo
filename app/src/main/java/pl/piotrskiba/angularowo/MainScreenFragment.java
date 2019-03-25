@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import pl.piotrskiba.angularowo.interfaces.InvalidAccessTokenResponseListener;
 import pl.piotrskiba.angularowo.models.DetailedPlayer;
 import pl.piotrskiba.angularowo.models.ServerStatus;
 import pl.piotrskiba.angularowo.network.ServerAPIClient;
@@ -49,8 +50,9 @@ public class MainScreenFragment extends Fragment {
 
     private String username;
 
-    public MainScreenFragment(){
+    private InvalidAccessTokenResponseListener listener;
 
+    public MainScreenFragment(){
     }
 
     @Nullable
@@ -108,8 +110,11 @@ public class MainScreenFragment extends Fragment {
 
         mGreetingTextView.setText(getString(R.string.greeting, username));
 
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String access_token = sharedPreferences.getString(getString(R.string.pref_key_access_token), null);
+
         ServerAPIInterface serverAPIInterface = ServerAPIClient.getRetrofitInstance().create(ServerAPIInterface.class);
-        serverAPIInterface.getServerStatus(ServerAPIClient.API_KEY).enqueue(new Callback<ServerStatus>() {
+        serverAPIInterface.getServerStatus(ServerAPIClient.API_KEY, access_token).enqueue(new Callback<ServerStatus>() {
             @Override
             public void onResponse(Call<ServerStatus> call, Response<ServerStatus> response) {
                 if(response.isSuccessful() && response.body() != null && getContext() != null){
@@ -117,16 +122,21 @@ public class MainScreenFragment extends Fragment {
 
                     mPlayerCountTextView.setText(getString(R.string.playercount, server.getPlayerCount()));
                 }
+                else if(response.code() == 401){
+                    listener.onInvalidAccessTokenResponseReceived();
+                }
                 mSwipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
             public void onFailure(Call<ServerStatus> call, Throwable t) {
                 mSwipeRefreshLayout.setRefreshing(false);
+
+
             }
         });
 
-        serverAPIInterface.getPlayerInfo(ServerAPIClient.API_KEY, username).enqueue(new Callback<DetailedPlayer>() {
+        serverAPIInterface.getPlayerInfo(ServerAPIClient.API_KEY, username, access_token).enqueue(new Callback<DetailedPlayer>() {
 
             @Override
             public void onResponse(Call<DetailedPlayer> call, Response<DetailedPlayer> response) {
@@ -178,6 +188,10 @@ public class MainScreenFragment extends Fragment {
                         }
                     }
                 }
+                else if(response.code() == 401){
+                    listener.onInvalidAccessTokenResponseReceived();
+                }
+
                 mSwipeRefreshLayout.setRefreshing(false);
             }
 
@@ -186,5 +200,9 @@ public class MainScreenFragment extends Fragment {
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         });
+    }
+
+    public void setInvalidAccessTokenResponseListener(InvalidAccessTokenResponseListener listener){
+        this.listener = listener;
     }
 }
