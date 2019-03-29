@@ -10,10 +10,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.piotrskiba.angularowo.R;
+import pl.piotrskiba.angularowo.interfaces.BanClickListener;
 import pl.piotrskiba.angularowo.models.Ban;
 import pl.piotrskiba.angularowo.models.BanList;
 import pl.piotrskiba.angularowo.models.MojangProfile;
@@ -28,8 +30,11 @@ public class BanListAdapter extends RecyclerView.Adapter<BanListAdapter.BanViewH
     private Context context;
     private BanList banList;
 
-    public BanListAdapter(Context context){
+    private BanClickListener mClickListener;
+
+    public BanListAdapter(Context context, BanClickListener listener){
         this.context = context;
+        this.mClickListener = listener;
     }
 
     @NonNull
@@ -95,10 +100,13 @@ public class BanListAdapter extends RecyclerView.Adapter<BanListAdapter.BanViewH
             return 0;
     }
 
-    class BanViewHolder extends RecyclerView.ViewHolder {
+    public class BanViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        @BindView(R.id.main_layout)
+        ConstraintLayout mMainLayout;
 
         @BindView(R.id.iv_player_avatar)
-        ImageView mPlayerAvatar;
+        public ImageView mPlayerAvatar;
 
         @BindView(R.id.tv_player_name)
         TextView mPlayerName;
@@ -113,6 +121,16 @@ public class BanListAdapter extends RecyclerView.Adapter<BanListAdapter.BanViewH
             super(itemView);
 
             ButterKnife.bind(this, itemView);
+
+            itemView.setOnClickListener(this);
+
+            mMainLayout.setTag(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int pos = getAdapterPosition();
+            mClickListener.onBanClick(view, banList.getBanList().get(pos));
         }
     }
 

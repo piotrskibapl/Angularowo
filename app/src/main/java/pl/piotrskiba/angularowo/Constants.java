@@ -5,7 +5,8 @@ public class Constants {
     public final static String BASE_BODY_URL = "https://crafatar.com/renders/body/";
 
     public final static String EXTRA_PLAYER = "extra_player";
-    public final static String EXTRA_INVALID_ACCESS_TOKEN_RESPONSE_LISTENER = "extra_invalid_access_token_response_listener";
+    public final static String EXTRA_BAN = "extra_ban";
+    public final static String EXTRA_BITMAP = "extra_bitmap";
 
     public final static int REQUEST_CODE_REGISTER = 1100;
 

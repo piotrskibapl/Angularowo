@@ -39,6 +39,10 @@
     <string name="player_info">Informacje o graczu</string>
     <string name="player_banner_transition_name" translatable="false">player_banner</string>
 
+    <!-- activity_ban_details.xml -->
+    <string name="ban_info">Informacje o banie</string>
+    <string name="ban_banner_transition_name" translatable="false">ban_banner</string>
+
     <!-- BanListAdapter -->
     <string name="ban_description_format">Zbanowany za %1$s</string>
     <string name="warn_description_format">Ostrzeżony za %1$s</string>

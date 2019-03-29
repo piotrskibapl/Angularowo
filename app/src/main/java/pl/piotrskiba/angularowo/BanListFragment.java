@@ -1,6 +1,11 @@
 package pl.piotrskiba.angularowo;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -10,6 +15,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,7 +23,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.piotrskiba.angularowo.adapters.BanListAdapter;
+import pl.piotrskiba.angularowo.interfaces.BanClickListener;
 import pl.piotrskiba.angularowo.interfaces.InvalidAccessTokenResponseListener;
+import pl.piotrskiba.angularowo.models.Ban;
 import pl.piotrskiba.angularowo.models.BanList;
 import pl.piotrskiba.angularowo.network.ServerAPIClient;
 import pl.piotrskiba.angularowo.network.ServerAPIInterface;
@@ -25,7 +33,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BanListFragment extends Fragment {
+public class BanListFragment extends Fragment implements BanClickListener {
 
     @BindView(R.id.rv_bans)
     RecyclerView mBanList;
@@ -46,7 +54,7 @@ public class BanListFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
-        final BanListAdapter adapter = new BanListAdapter(getContext());
+        final BanListAdapter adapter = new BanListAdapter(getContext(), this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         mBanList.setAdapter(adapter);
         mBanList.setLayoutManager(layoutManager);
@@ -88,5 +96,23 @@ public class BanListFragment extends Fragment {
 
     public void setInvalidAccessTokenResponseListener(InvalidAccessTokenResponseListener listener){
         this.listener = listener;
+    }
+
+    @Override
+    public void onBanClick(View view, Ban clickedBan) {
+        BanListAdapter.BanViewHolder banViewHolder = (BanListAdapter.BanViewHolder) view.getTag();
+        Bitmap avatarBitmap = ((BitmapDrawable) banViewHolder.mPlayerAvatar.getDrawable()).getBitmap();
+
+        Intent intent = new Intent(getContext(), BanDetailsActivity.class);
+        intent.putExtra(Constants.EXTRA_BAN, clickedBan);
+        intent.putExtra(Constants.EXTRA_BITMAP, avatarBitmap);
+        if(getActivity() != null) {
+            ActivityOptionsCompat options = ActivityOptionsCompat.
+                    makeSceneTransitionAnimation(getActivity(), view, getString(R.string.ban_banner_transition_name));
+            startActivity(intent, options.toBundle());
+        }
+        else {
+            startActivity(intent);
+        }
     }
 }
