@@ -41,6 +41,10 @@
 
     <!-- activity_ban_details.xml -->
     <string name="ban_info">Informacje o banie</string>
+    <string name="ban_reason">Powód:</string>
+    <string name="ban_banner">Administrator:</string>
+    <string name="ban_start_date">Data nałożenia:</string>
+    <string name="ban_end_date">Wygasa:</string>
     <string name="ban_banner_transition_name" translatable="false">ban_banner</string>
 
     <!-- BanListAdapter -->

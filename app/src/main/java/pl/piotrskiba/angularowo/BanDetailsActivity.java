@@ -9,8 +9,13 @@ import pl.piotrskiba.angularowo.models.Ban;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class BanDetailsActivity extends AppCompatActivity {
 
@@ -29,8 +34,22 @@ public class BanDetailsActivity extends AppCompatActivity {
     @BindView(R.id.iv_ban_type)
     ImageView mBanTypeImageView;
 
+    //
+
     @BindView(R.id.tv_ban_type)
     TextView mBanTypeTextView;
+
+    @BindView(R.id.tv_ban_description_full)
+    TextView mBanFullReason;
+
+    @BindView(R.id.tv_ban_banner)
+    TextView mBanBanner;
+
+    @BindView(R.id.tv_ban_start_date)
+    TextView mBanStartDate;
+
+    @BindView(R.id.tv_ban_end_date)
+    TextView mBanEndDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,5 +98,16 @@ public class BanDetailsActivity extends AppCompatActivity {
         }
 
         mBanTypeTextView.setText(ban.getType());
+        mBanBanner.setText(ban.getBanner());
+        mBanFullReason.setText(ban.getReason());
+
+        Date start = new Date((long) ban.getBanTime()*1000);
+        Date end = new Date((long) ban.getExpireDate()*1000);
+
+        String pattern = "dd.MM.yyyy HH:mm";
+        DateFormat df = new SimpleDateFormat(pattern);
+
+        mBanStartDate.setText(df.format(start));
+        mBanEndDate.setText(df.format(end));
     }
 }

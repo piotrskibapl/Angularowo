@@ -20,7 +20,7 @@ public class Ban implements Serializable {
     private final float expireDate;
     private final String type;
 
-    public Ban(String username, String reason, String banner, long banTime, long expireDate, String type){
+    public Ban(String username, String reason, String banner, float banTime, float expireDate, String type){
         this.username = username;
         this.reason = reason;
         this.banner = banner;
