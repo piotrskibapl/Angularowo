@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -109,5 +110,15 @@ public class BanDetailsActivity extends AppCompatActivity {
 
         mBanStartDate.setText(df.format(start));
         mBanEndDate.setText(df.format(end));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                supportFinishAfterTransition();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
