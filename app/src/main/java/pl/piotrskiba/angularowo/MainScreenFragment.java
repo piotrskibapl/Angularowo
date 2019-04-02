@@ -1,6 +1,9 @@
 package pl.piotrskiba.angularowo;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -14,11 +17,18 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import pl.piotrskiba.angularowo.adapters.BanListAdapter;
+import pl.piotrskiba.angularowo.interfaces.BanClickListener;
 import pl.piotrskiba.angularowo.interfaces.InvalidAccessTokenResponseListener;
+import pl.piotrskiba.angularowo.models.Ban;
+import pl.piotrskiba.angularowo.models.BanList;
 import pl.piotrskiba.angularowo.models.DetailedPlayer;
 import pl.piotrskiba.angularowo.models.ServerStatus;
 import pl.piotrskiba.angularowo.network.ServerAPIClient;
@@ -28,7 +38,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainScreenFragment extends Fragment {
+public class MainScreenFragment extends Fragment implements BanClickListener {
 
     @BindView(R.id.swiperefresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
@@ -48,9 +58,17 @@ public class MainScreenFragment extends Fragment {
     @BindView(R.id.tv_islandlevel)
     TextView mPlayerIslandLevelTextView;
 
+    @BindView(R.id.tv_last_bans_title)
+    TextView mLastBansTitleTextView;
+
+    @BindView(R.id.rv_bans)
+    RecyclerView mBanList;
+
     private String username;
 
     private InvalidAccessTokenResponseListener listener;
+
+    private BanListAdapter mBanListAdapter;
 
     public MainScreenFragment(){
     }
@@ -64,6 +82,12 @@ public class MainScreenFragment extends Fragment {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         username = sharedPreferences.getString(getString(R.string.pref_key_nickname), null);
+
+        mBanListAdapter = new BanListAdapter(getContext(), this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        mBanList.setAdapter(mBanListAdapter);
+        mBanList.setLayoutManager(layoutManager);
+        mBanList.setHasFixedSize(true);
 
         if(username != null){
             populateUi();
@@ -200,9 +224,74 @@ public class MainScreenFragment extends Fragment {
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         });
+
+        loadBanList(mBanListAdapter);
+    }
+
+    private void loadBanList(BanListAdapter adapter){
+        mSwipeRefreshLayout.setRefreshing(true);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String access_token = sharedPreferences.getString(getString(R.string.pref_key_access_token), null);
+
+        ServerAPIInterface serverAPIInterface = ServerAPIClient.getRetrofitInstance().create(ServerAPIInterface.class);
+        serverAPIInterface.getBanList(ServerAPIClient.API_KEY, Constants.BAN_TYPES, username, access_token).enqueue(new Callback<BanList>() {
+            @Override
+            public void onResponse(Call<BanList> call, Response<BanList> response) {
+                if(response.isSuccessful() && response.body() != null) {
+                    adapter.setBanList(response.body());
+                    if(!response.body().getBanList().isEmpty())
+                        showLastBans();
+                }
+                else if(response.code() == 401){
+                    listener.onInvalidAccessTokenResponseReceived();
+                    hideLastBans();
+                }
+                else{
+                    hideLastBans();
+                }
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onFailure(Call<BanList> call, Throwable t) {
+                t.printStackTrace();
+                mSwipeRefreshLayout.setRefreshing(false);
+                hideLastBans();
+            }
+        });
+    }
+
+    private void showLastBans(){
+        mLastBansTitleTextView.setVisibility(View.VISIBLE);
+        mBanList.setVisibility(View.VISIBLE);
+    }
+    private void hideLastBans(){
+        mLastBansTitleTextView.setVisibility(View.VISIBLE);
+        mBanList.setVisibility(View.VISIBLE);
     }
 
     public void setInvalidAccessTokenResponseListener(InvalidAccessTokenResponseListener listener){
         this.listener = listener;
+    }
+
+    @Override
+    public void onBanClick(View view, Ban clickedBan) {
+        BanListAdapter.BanViewHolder banViewHolder = (BanListAdapter.BanViewHolder) view.getTag();
+
+        Intent intent = new Intent(getContext(), BanDetailsActivity.class);
+        intent.putExtra(Constants.EXTRA_BAN, clickedBan);
+        if(banViewHolder.mPlayerAvatar.getDrawable() != null) {
+            Bitmap avatarBitmap = ((BitmapDrawable) banViewHolder.mPlayerAvatar.getDrawable()).getBitmap();
+            intent.putExtra(Constants.EXTRA_BITMAP, avatarBitmap);
+        }
+        if(getActivity() != null) {
+            ActivityOptionsCompat options = ActivityOptionsCompat.
+                    makeSceneTransitionAnimation(getActivity(), view, getString(R.string.ban_banner_transition_name));
+            startActivity(intent, options.toBundle());
+        }
+        else {
+            startActivity(intent);
+        }
     }
 }
