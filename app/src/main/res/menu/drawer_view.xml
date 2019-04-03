@@ -12,6 +12,9 @@
         <item
             android:id="@+id/nav_last_bans"
             android:title="@string/last_bans" />
+        <item
+            android:id="@+id/nav_free_ranks"
+            android:title="@string/free_ranks" />
     </group>
     <group
         android:id="@+id/nav_group2">

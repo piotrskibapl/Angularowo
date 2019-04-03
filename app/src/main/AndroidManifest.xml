@@ -14,6 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:appComponentFactory">
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-7790074991647252~4144564614"/>
         <activity android:name=".BanDetailsActivity"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".SettingsActivity" />

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
 
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.appcompat.widget.Toolbar;
@@ -37,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
+
+        MobileAds.initialize(this, Constants.ADMOB_APP_ID);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         if(!sharedPreferences.contains(getString(R.string.pref_key_access_token))){
@@ -80,6 +83,11 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
                             banListFragment.setInvalidAccessTokenResponseListener(this);
                             fragmentManager.beginTransaction()
                                     .replace(R.id.fragment_container, banListFragment)
+                                    .commit();
+                        } else if (menuItem.getItemId() == R.id.nav_free_ranks) {
+                            FreeRanksFragment freeRanksFragment = new FreeRanksFragment();
+                            fragmentManager.beginTransaction()
+                                    .replace(R.id.fragment_container, freeRanksFragment)
                                     .commit();
                         } else if (menuItem.getItemId() == R.id.nav_settings) {
                             Intent intent = new Intent(this, SettingsActivity.class);

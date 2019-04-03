@@ -64,6 +64,9 @@ dependencies {
             exclude group: 'androidx.appcompat', module: 'appcompat'
         }
     }
+
+    // AdMob
+    implementation 'com.google.android.gms:play-services-ads:17.2.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

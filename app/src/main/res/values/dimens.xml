@@ -27,4 +27,9 @@
     <!-- activity_ban_details.xml -->
     <dimen name="label_text_size">12sp</dimen>
     <dimen name="content_text_size">20sp</dimen>
+
+    <!-- free_rank_list_item.xml -->
+    <dimen name="free_rank_image_height">140dp</dimen>
+    <dimen name="reward_title_text_size">20sp</dimen>
+    <dimen name="reward_description_text_size">12sp</dimen>
 </resources>
