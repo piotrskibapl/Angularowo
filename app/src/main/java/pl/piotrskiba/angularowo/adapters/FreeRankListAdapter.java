@@ -14,11 +14,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.piotrskiba.angularowo.R;
+import pl.piotrskiba.angularowo.interfaces.FreeRankClickListener;
 import pl.piotrskiba.angularowo.models.Reward;
 
 public class FreeRankListAdapter extends RecyclerView.Adapter<FreeRankListAdapter.FreeRankViewHolder> {
 
     private List<Reward> mRewardList;
+
+    private FreeRankClickListener mClickListener;
+
+    public FreeRankListAdapter(FreeRankClickListener listener){
+        mClickListener = listener;
+    }
 
     @NonNull
     @Override
@@ -48,7 +55,7 @@ public class FreeRankListAdapter extends RecyclerView.Adapter<FreeRankListAdapte
             return mRewardList.size();
     }
 
-    public class FreeRankViewHolder extends RecyclerView.ViewHolder {
+    public class FreeRankViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.reward_image)
         ImageView mRewardImage;
@@ -63,6 +70,13 @@ public class FreeRankListAdapter extends RecyclerView.Adapter<FreeRankListAdapte
             super(itemView);
 
             ButterKnife.bind(this, itemView);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            mClickListener.onFreeRankClick(view, mRewardList.get(getAdapterPosition()));
         }
     }
 

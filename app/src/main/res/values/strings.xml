@@ -53,4 +53,9 @@
     <string name="ban_description_format">Zbanowany za %1$s</string>
     <string name="warn_description_format">Ostrzeżony za %1$s</string>
     <string name="mute_description_format">Wyciszony za %1$s</string>
+
+    <!-- fragment_free_rank.xml -->
+    <string name="no_ads">Brak reklam</string>
+    <string name="no_ads_description">Nie znaleziono żadnych reklam. Nagrodę możesz odebrać tylko co określony czas, podany w opisie nagrody.</string>
+    <string name="button_dismiss">Zamknij</string>
 </resources>

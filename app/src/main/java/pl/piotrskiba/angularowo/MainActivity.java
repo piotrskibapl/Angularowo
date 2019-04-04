@@ -2,15 +2,21 @@ package pl.piotrskiba.angularowo;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
 
+import com.google.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.reward.RewardItem;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.appcompat.widget.Toolbar;
@@ -21,7 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.piotrskiba.angularowo.interfaces.InvalidAccessTokenResponseListener;
 
-public class MainActivity extends AppCompatActivity implements InvalidAccessTokenResponseListener {
+public class MainActivity extends AppCompatActivity implements InvalidAccessTokenResponseListener, RewardedVideoAdListener {
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -32,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
     @BindView(R.id.nav_view)
     NavigationView mNavigationView;
 
+    private RewardedVideoAd mRewardedVideoAd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +48,9 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
         ButterKnife.bind(this);
 
         MobileAds.initialize(this, Constants.ADMOB_APP_ID);
+
+        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
+        mRewardedVideoAd.setRewardedVideoAdListener(this);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         if(!sharedPreferences.contains(getString(R.string.pref_key_access_token))){
@@ -86,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
                                     .commit();
                         } else if (menuItem.getItemId() == R.id.nav_free_ranks) {
                             FreeRanksFragment freeRanksFragment = new FreeRanksFragment();
+                            freeRanksFragment.setRewardedVideoAd(mRewardedVideoAd);
                             fragmentManager.beginTransaction()
                                     .replace(R.id.fragment_container, freeRanksFragment)
                                     .commit();
@@ -126,5 +138,52 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
                 populateUi();
             }
         }
+    }
+
+    @Override
+    public void onRewardedVideoAdLoaded() {
+        mRewardedVideoAd.show();
+    }
+
+    @Override
+    public void onRewardedVideoAdOpened() {
+
+    }
+
+    @Override
+    public void onRewardedVideoStarted() {
+
+    }
+
+    @Override
+    public void onRewardedVideoAdClosed() {
+
+    }
+
+    @Override
+    public void onRewarded(RewardItem rewardItem) {
+
+    }
+
+    @Override
+    public void onRewardedVideoAdLeftApplication() {
+
+    }
+
+    @Override
+    public void onRewardedVideoAdFailedToLoad(int i) {
+        if(i == 3) {
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.no_ads)
+                    .setMessage(R.string.no_ads_description)
+
+                    .setPositiveButton(R.string.button_dismiss, null)
+                    .show();
+        }
+    }
+
+    @Override
+    public void onRewardedVideoCompleted() {
+
     }
 }
