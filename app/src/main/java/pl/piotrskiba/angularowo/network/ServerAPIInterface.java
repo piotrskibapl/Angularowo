@@ -25,4 +25,7 @@ public interface ServerAPIInterface {
 
     @GET("get_player_info.php")
     Call<DetailedPlayer> getPlayerInfo(@Query("api_key") String api_key, @Query("username") String username, @Query("access_token") String access_token);
+
+    @GET("redeem_ad_prize.php")
+    Call<Void> redeemAdPrize(@Query("api_key") String api_key, @Query("prize") String prize, @Query("access_token") String access_token);
 }

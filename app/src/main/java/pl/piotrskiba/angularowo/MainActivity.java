@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -26,6 +27,11 @@ import androidx.fragment.app.FragmentManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.piotrskiba.angularowo.interfaces.InvalidAccessTokenResponseListener;
+import pl.piotrskiba.angularowo.network.ServerAPIClient;
+import pl.piotrskiba.angularowo.network.ServerAPIInterface;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements InvalidAccessTokenResponseListener, RewardedVideoAdListener {
 
@@ -162,7 +168,28 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
 
     @Override
     public void onRewarded(RewardItem rewardItem) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String access_token = sharedPreferences.getString(getString(R.string.pref_key_access_token), null);
 
+        Context context = this;
+
+        ServerAPIInterface serverAPIInterface = ServerAPIClient.getRetrofitInstance().create(ServerAPIInterface.class);
+        serverAPIInterface.redeemAdPrize(ServerAPIClient.API_KEY, rewardItem.getType(), access_token).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                new AlertDialog.Builder(context)
+                        .setTitle(R.string.prize_redeemed)
+                        .setMessage(R.string.prize_redeemed_description)
+
+                        .setPositiveButton(R.string.button_dismiss, null)
+                        .show();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override

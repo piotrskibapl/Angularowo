@@ -57,5 +57,7 @@
     <!-- fragment_free_rank.xml -->
     <string name="no_ads">Brak reklam</string>
     <string name="no_ads_description">Nie znaleziono żadnych reklam. Nagrodę możesz odebrać tylko co określony czas, podany w opisie nagrody.</string>
+    <string name="prize_redeemed">Nagroda przyznana!</string>
+    <string name="prize_redeemed_description">Twoja nagroda została przyznana - aby ją odebrać, wpisz komendę /aktywuj w grze.</string>
     <string name="button_dismiss">Zamknij</string>
 </resources>
