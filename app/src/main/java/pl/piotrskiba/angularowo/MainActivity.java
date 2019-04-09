@@ -6,14 +6,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
 
-import com.google.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
@@ -45,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
     NavigationView mNavigationView;
 
     private RewardedVideoAd mRewardedVideoAd;
+
+    boolean waitingForLogin = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,8 +131,11 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
 
     @Override
     public void onInvalidAccessTokenResponseReceived() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivityForResult(intent, Constants.REQUEST_CODE_REGISTER);
+        if(!waitingForLogin) {
+            waitingForLogin = true;
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivityForResult(intent, Constants.REQUEST_CODE_REGISTER);
+        }
     }
 
     @Override
@@ -140,6 +143,7 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == Constants.REQUEST_CODE_REGISTER){
+            waitingForLogin = false;
             if(resultCode == Constants.RESULT_CODE_SUCCESS){
                 populateUi();
             }
