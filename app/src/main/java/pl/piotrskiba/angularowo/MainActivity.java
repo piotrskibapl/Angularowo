@@ -22,6 +22,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
+import androidx.multidex.MultiDex;
+import androidx.multidex.MultiDexApplication;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.piotrskiba.angularowo.interfaces.InvalidAccessTokenResponseListener;
@@ -45,6 +47,12 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
     private RewardedVideoAd mRewardedVideoAd;
 
     boolean waitingForLogin = false;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(newBase);
+        MultiDex.install(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
