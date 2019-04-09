@@ -109,7 +109,12 @@ public class BanDetailsActivity extends AppCompatActivity {
         DateFormat df = new SimpleDateFormat(pattern);
 
         mBanStartDate.setText(df.format(start));
-        mBanEndDate.setText(df.format(end));
+        if(ban.getExpireDate() == 0){
+            mBanEndDate.setText(getString(R.string.ban_expiration_never));
+        }
+        else {
+            mBanEndDate.setText(df.format(end));
+        }
     }
 
     @Override
