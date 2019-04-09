@@ -37,9 +37,15 @@
     <string name="island_level_title">Poziom wyspy:</string>
     <string name="last_player_bans">Twoje aktywne kary:</string>
 
+    <!-- fragment_player_list.xml -->
+    <string name="actionbar_title_player_list">Lista graczy online</string>
+
     <!-- activity_player_details.xml -->
     <string name="player_info">Informacje o graczu</string>
     <string name="player_banner_transition_name" translatable="false">player_banner</string>
+
+    <!-- fragment_ban_list.xml -->
+    <string name="actionbar_title_ban_list">Ostatnie bany</string>
 
     <!-- activity_ban_details.xml -->
     <string name="ban_info">Informacje o banie</string>
@@ -56,6 +62,7 @@
     <string name="mute_description_format">Wyciszony za %1$s</string>
 
     <!-- fragment_free_rank.xml -->
+    <string name="actionbar_title_free_ranks">Darmowe rangi</string>
     <string name="no_ads">Brak reklam</string>
     <string name="no_ads_description">Nie znaleziono żadnych reklam. Nagrodę możesz odebrać tylko co określony czas, podany w opisie nagrody.</string>
     <string name="prize_redeemed">Nagroda przyznana!</string>

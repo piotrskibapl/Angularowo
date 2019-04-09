@@ -12,6 +12,8 @@ import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -51,6 +53,9 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
         list.add(new Reward(R.drawable.default_avatar_female, "Dziewczyna", "Ranga Dziewczyna na 3 dni", "ca-app-pub-7790074991647252/7392015807"));
 
         adapter.setRewardList(list);
+
+        ActionBar actionbar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        actionbar.setTitle(R.string.actionbar_title_free_ranks);
 
         return view;
     }

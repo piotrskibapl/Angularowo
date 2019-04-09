@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
@@ -59,6 +61,9 @@ public class PlayerListFragment extends Fragment implements PlayerClickListener 
         loadPlayerList(adapter);
 
         mSwipeRefreshLayout.setOnRefreshListener(() -> loadPlayerList(adapter));
+
+        ActionBar actionbar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        actionbar.setTitle(R.string.actionbar_title_player_list);
 
         return view;
     }

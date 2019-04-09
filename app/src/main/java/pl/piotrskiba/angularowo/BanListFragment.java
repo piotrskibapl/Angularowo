@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -60,6 +62,9 @@ public class BanListFragment extends Fragment implements BanClickListener {
         loadBanList(adapter);
 
         mSwipeRefreshLayout.setOnRefreshListener(() -> loadBanList(adapter));
+
+        ActionBar actionbar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        actionbar.setTitle(R.string.actionbar_title_ban_list);
 
         return view;
     }

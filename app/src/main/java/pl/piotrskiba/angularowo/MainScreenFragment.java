@@ -17,6 +17,8 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -226,6 +228,9 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
         });
 
         loadBanList(mBanListAdapter);
+
+        ActionBar actionbar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        actionbar.setTitle(R.string.app_name);
     }
 
     private void loadBanList(BanListAdapter adapter){
