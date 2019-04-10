@@ -16,7 +16,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ProgressBar;
 
 import com.alimuzaffar.lib.pin.PinEntryEditText;
 import com.google.android.material.snackbar.Snackbar;
@@ -55,6 +57,13 @@ public class LoginActivity extends AppCompatActivity {
 
                 accessTokenPeet.setText("");
                 closeKeyboard();
+
+                // show loading snackbar
+                Snackbar snackbar = Snackbar.make(mCoordinatorLayout, getString(R.string.logging_in), Snackbar.LENGTH_INDEFINITE);
+                ViewGroup contentLay = (ViewGroup) snackbar.getView().findViewById(R.id.snackbar_text).getParent();
+                ProgressBar item = new ProgressBar(context);
+                contentLay.addView(item,0);
+                snackbar.show();
 
                 ServerAPIInterface serverAPIInterface = ServerAPIClient.getRetrofitInstance().create(ServerAPIInterface.class);
                 serverAPIInterface.registerDevice(ServerAPIClient.API_KEY, pin).enqueue(new Callback<AccessToken>() {
