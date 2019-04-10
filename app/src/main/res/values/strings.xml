@@ -39,6 +39,7 @@
 
     <!-- fragment_player_list.xml -->
     <string name="actionbar_title_player_list">Lista graczy online</string>
+    <string name="error_no_players">Aktualnie nie ma nikogo na serwerze.</string>
 
     <!-- activity_player_details.xml -->
     <string name="player_info">Informacje o graczu</string>

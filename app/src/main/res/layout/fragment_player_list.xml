@@ -5,10 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_players"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
+        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_players"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/errorTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/error_text_size"
+            android:textAlignment="center"
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/error_margin"
+            android:layout_marginStart="@dimen/margin_default"
+            android:layout_marginEnd="@dimen/margin_default" />
+    </FrameLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,6 +39,9 @@ public class PlayerListFragment extends Fragment implements PlayerClickListener 
 
     @BindView(R.id.swiperefresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
+
+    @BindView(R.id.errorTextView)
+    TextView mErrorTextView;
 
     private InvalidAccessTokenResponseListener listener;
 
@@ -79,7 +83,13 @@ public class PlayerListFragment extends Fragment implements PlayerClickListener 
             @Override
             public void onResponse(Call<PlayerList> call, Response<PlayerList> response) {
                 if(response.isSuccessful() && response.body() != null) {
-                    adapter.setPlayerList(response.body());
+                    if(response.body().getPlayers().size() > 0) {
+                        adapter.setPlayerList(response.body());
+                        showDefaultLayout();
+                    }
+                    else {
+                        showNoPlayersLayout();
+                    }
                 }
                 else if(response.code() == 401){
                     listener.onInvalidAccessTokenResponseReceived();
@@ -111,5 +121,15 @@ public class PlayerListFragment extends Fragment implements PlayerClickListener 
 
     public void setInvalidAccessTokenResponseListener(InvalidAccessTokenResponseListener listener){
         this.listener = listener;
+    }
+
+    private void showDefaultLayout(){
+        mErrorTextView.setVisibility(View.GONE);
+        mPlayerList.setVisibility(View.VISIBLE);
+    }
+    private void showNoPlayersLayout(){
+        mErrorTextView.setVisibility(View.VISIBLE);
+        mPlayerList.setVisibility(View.GONE);
+        mErrorTextView.setText(R.string.error_no_players);
     }
 }
