@@ -28,8 +28,6 @@ public class RankUtils {
                 return R.color.color_legenda;
             case "duchowny":
                 return R.color.color_duchowny;
-            case "kozak":
-                return R.color.color_kozak;
             case "pro":
                 return R.color.color_pro;
             case "noob":
