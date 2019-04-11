@@ -166,64 +166,68 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
 
             @Override
             public void onResponse(Call<DetailedPlayer> call, Response<DetailedPlayer> response) {
-                if(response.isSuccessful() && response.body() != null){
-                    DetailedPlayer player = response.body();
+                if(isAdded()) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        DetailedPlayer player = response.body();
 
-                    if(player.getUuid() != null && getContext() != null) {
-                        Glide.with(getContext())
-                                .load(Constants.BASE_BODY_URL + player.getUuid())
-                                .into(mPlayerBodyImageView);
-                    }
-
-                    mPlayerBalanceTextView.setText(getString(R.string.balance_format, (int)player.getBalance()));
-                    mPlayerIslandLevelTextView.setText(String.valueOf(player.getIslandLevel()));
-
-                    // subscribe to player's rank Firebase topic
-                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-                    String rank = sharedPreferences.getString(getString(R.string.pref_key_rank), null);
-                    if(!player.getRank().equals(rank)){
-                        if(rank != null){
-                            FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_RANK_TOPIC_PREFIX + rank);
+                        if (player.getUuid() != null && getContext() != null) {
+                            Glide.with(getContext())
+                                    .load(Constants.BASE_BODY_URL + player.getUuid())
+                                    .into(mPlayerBodyImageView);
                         }
-                        FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_RANK_TOPIC_PREFIX + player.getRank());
 
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString(getString(R.string.pref_key_rank), player.getRank());
-                        editor.apply();
+                        mPlayerBalanceTextView.setText(getString(R.string.balance_format, (int) player.getBalance()));
+                        mPlayerIslandLevelTextView.setText(String.valueOf(player.getIslandLevel()));
+
+                        if (player.getRank() != null) {
+                            // subscribe to player's rank Firebase topic
+                            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                            String rank = sharedPreferences.getString(getString(R.string.pref_key_rank), null);
+                            if (!player.getRank().equals(rank)) {
+                                if (rank != null) {
+                                    FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_RANK_TOPIC_PREFIX + rank);
+                                }
+                                FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_RANK_TOPIC_PREFIX + player.getRank());
+
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString(getString(R.string.pref_key_rank), player.getRank());
+                                editor.apply();
+                            }
+
+                            // check subscription for new reports
+                            if (RankUtils.isStaffRank(player.getRank())) {
+                                if (!sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_new_reports))) {
+                                    FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_NEW_REPORTS_TOPIC)
+                                            .addOnCompleteListener(task -> {
+                                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                                editor.putBoolean(getString(R.string.pref_key_subscribed_to_new_reports), true);
+                                                editor.apply();
+                                            });
+                                }
+                            } else {
+                                if (sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_new_reports)) && sharedPreferences.getBoolean(getString(R.string.pref_key_subscribed_to_new_reports), false)) {
+                                    FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_NEW_REPORTS_TOPIC)
+                                            .addOnCompleteListener(task -> {
+                                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                                editor.putBoolean(getString(R.string.pref_key_subscribed_to_new_reports), false);
+                                                editor.apply();
+                                            });
+                                }
+                            }
+                        }
+                    } else if (response.code() == 401) {
+                        listener.onInvalidAccessTokenResponseReceived();
                     }
 
-                    // check subscription for new reports
-                    if(RankUtils.isStaffRank(player.getRank())){
-                        if(!sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_new_reports))){
-                            FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_NEW_REPORTS_TOPIC)
-                                    .addOnCompleteListener(task -> {
-                                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                                        editor.putBoolean(getString(R.string.pref_key_subscribed_to_new_reports), true);
-                                        editor.apply();
-                            });
-                        }
-                    }
-                    else{
-                        if(sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_new_reports)) && sharedPreferences.getBoolean(getString(R.string.pref_key_subscribed_to_new_reports), false)){
-                            FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_NEW_REPORTS_TOPIC)
-                                    .addOnCompleteListener(task -> {
-                                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                                        editor.putBoolean(getString(R.string.pref_key_subscribed_to_new_reports), false);
-                                        editor.apply();
-                                    });
-                        }
-                    }
+                    mSwipeRefreshLayout.setRefreshing(false);
                 }
-                else if(response.code() == 401){
-                    listener.onInvalidAccessTokenResponseReceived();
-                }
-
-                mSwipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
             public void onFailure(Call<DetailedPlayer> call, Throwable t) {
-                mSwipeRefreshLayout.setRefreshing(false);
+                if(isAdded()) {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
             }
         });
 
@@ -243,26 +247,27 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
         serverAPIInterface.getBanList(ServerAPIClient.API_KEY, Constants.ACTIVE_BAN_TYPES, username, access_token).enqueue(new Callback<BanList>() {
             @Override
             public void onResponse(Call<BanList> call, Response<BanList> response) {
-                if(response.isSuccessful() && response.body() != null) {
-                    adapter.setBanList(response.body());
-                    if(!response.body().getBanList().isEmpty())
-                        showLastBans();
+                if(isAdded()) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        adapter.setBanList(response.body());
+                        if (!response.body().getBanList().isEmpty())
+                            showLastBans();
+                    } else if (response.code() == 401) {
+                        listener.onInvalidAccessTokenResponseReceived();
+                        hideLastBans();
+                    } else {
+                        hideLastBans();
+                    }
+                    mSwipeRefreshLayout.setRefreshing(false);
                 }
-                else if(response.code() == 401){
-                    listener.onInvalidAccessTokenResponseReceived();
-                    hideLastBans();
-                }
-                else{
-                    hideLastBans();
-                }
-                mSwipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
             public void onFailure(Call<BanList> call, Throwable t) {
-                t.printStackTrace();
-                mSwipeRefreshLayout.setRefreshing(false);
-                hideLastBans();
+                if(isAdded()) {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    hideLastBans();
+                }
             }
         });
     }

@@ -82,25 +82,26 @@ public class PlayerListFragment extends Fragment implements PlayerClickListener 
         serverAPIInterface.getPlayers(ServerAPIClient.API_KEY, access_token).enqueue(new Callback<PlayerList>() {
             @Override
             public void onResponse(Call<PlayerList> call, Response<PlayerList> response) {
-                if(response.isSuccessful() && response.body() != null) {
-                    if(response.body().getPlayers().size() > 0) {
-                        adapter.setPlayerList(response.body());
-                        showDefaultLayout();
+                if(isAdded()) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        if (response.body().getPlayers().size() > 0) {
+                            adapter.setPlayerList(response.body());
+                            showDefaultLayout();
+                        } else {
+                            showNoPlayersLayout();
+                        }
+                    } else if (response.code() == 401) {
+                        listener.onInvalidAccessTokenResponseReceived();
                     }
-                    else {
-                        showNoPlayersLayout();
-                    }
+                    mSwipeRefreshLayout.setRefreshing(false);
                 }
-                else if(response.code() == 401){
-                    listener.onInvalidAccessTokenResponseReceived();
-                }
-                mSwipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
             public void onFailure(Call<PlayerList> call, Throwable t) {
-                t.printStackTrace();
-                mSwipeRefreshLayout.setRefreshing(false);
+                if(isAdded()) {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
             }
         });
     }

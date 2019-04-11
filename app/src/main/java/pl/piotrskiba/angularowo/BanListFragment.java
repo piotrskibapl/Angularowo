@@ -79,19 +79,21 @@ public class BanListFragment extends Fragment implements BanClickListener {
         serverAPIInterface.getBanList(ServerAPIClient.API_KEY, Constants.BAN_TYPES, null, access_token).enqueue(new Callback<BanList>() {
             @Override
             public void onResponse(Call<BanList> call, Response<BanList> response) {
-                if(response.isSuccessful() && response.body() != null) {
-                    adapter.setBanList(response.body());
+                if(isAdded()) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        adapter.setBanList(response.body());
+                    } else if (response.code() == 401) {
+                        listener.onInvalidAccessTokenResponseReceived();
+                    }
+                    mSwipeRefreshLayout.setRefreshing(false);
                 }
-                else if(response.code() == 401){
-                    listener.onInvalidAccessTokenResponseReceived();
-                }
-                mSwipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
             public void onFailure(Call<BanList> call, Throwable t) {
-                t.printStackTrace();
-                mSwipeRefreshLayout.setRefreshing(false);
+                if(isAdded()) {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
             }
         });
     }
