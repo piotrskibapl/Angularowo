@@ -16,6 +16,8 @@
     <color name="color_legenda">#696933</color>
     <color name="color_duchowny">#693369</color>
     <color name="color_kozak">#693333</color>
+    <color name="color_pro">#19194e</color>
+    <color name="color_noob">#19194e</color>
     <color name="color_kasyniarz">#717171</color>
     <color name="color_eventowiec">#336933</color>
     <color name="color_supervip">#336933</color>

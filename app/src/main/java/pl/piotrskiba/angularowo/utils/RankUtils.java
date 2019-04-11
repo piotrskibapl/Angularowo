@@ -30,6 +30,10 @@ public class RankUtils {
                 return R.color.color_duchowny;
             case "kozak":
                 return R.color.color_kozak;
+            case "pro":
+                return R.color.color_pro;
+            case "noob":
+                return R.color.color_noob;
             case "kasyniarz":
                 return R.color.color_kasyniarz;
             case "eventowiec":
