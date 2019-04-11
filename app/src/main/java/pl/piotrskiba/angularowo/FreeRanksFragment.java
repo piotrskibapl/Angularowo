@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
@@ -27,6 +28,9 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
 
     @BindView(R.id.rv_free_ranks)
     RecyclerView mFreeRankList;
+
+    @BindView(R.id.pb_loading)
+    ProgressBar mLoadingIndicator;
 
     private RewardedVideoAd mRewardedVideoAd;
 
@@ -62,11 +66,21 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
 
     @Override
     public void onFreeRankClick(View view, Reward clickedReward) {
-        loadRewardedVideoAd(clickedReward.getAdId());
+        if(mLoadingIndicator.getVisibility() != View.VISIBLE) {
+            showLoadingIndicator();
+            loadRewardedVideoAd(clickedReward.getAdId());
+        }
     }
 
     private void loadRewardedVideoAd(String adId) {
         mRewardedVideoAd.loadAd(adId, new AdRequest.Builder().build());
+    }
+
+    private void showLoadingIndicator(){
+        mLoadingIndicator.setVisibility(View.VISIBLE);
+    }
+    public void hideLoadingIndicator(){
+        mLoadingIndicator.setVisibility(View.GONE);
     }
 
     public void setRewardedVideoAd(RewardedVideoAd ad){

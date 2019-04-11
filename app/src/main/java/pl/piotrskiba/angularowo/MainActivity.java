@@ -44,6 +44,8 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
     @BindView(R.id.nav_view)
     NavigationView mNavigationView;
 
+    FreeRanksFragment freeRanksFragment;
+
     private RewardedVideoAd mRewardedVideoAd;
 
     boolean waitingForLogin = false;
@@ -84,6 +86,15 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
                 .replace(R.id.fragment_container, mainScreenFragment)
                 .commit();
 
+        PlayerListFragment playerListFragment = new PlayerListFragment();
+        playerListFragment.setInvalidAccessTokenResponseListener(this);
+
+        BanListFragment banListFragment = new BanListFragment();
+        banListFragment.setInvalidAccessTokenResponseListener(this);
+
+        freeRanksFragment = new FreeRanksFragment();
+        freeRanksFragment.setRewardedVideoAd(mRewardedVideoAd);
+
         setSupportActionBar(mToolbar);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
@@ -98,20 +109,14 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
                                     .commit();
                         }
                         else if(menuItem.getItemId() == R.id.nav_player_list){
-                            PlayerListFragment playerListFragment = new PlayerListFragment();
-                            playerListFragment.setInvalidAccessTokenResponseListener(this);
                             fragmentManager.beginTransaction()
                                     .replace(R.id.fragment_container, playerListFragment)
                                     .commit();
                         } else if (menuItem.getItemId() == R.id.nav_last_bans) {
-                            BanListFragment banListFragment = new BanListFragment();
-                            banListFragment.setInvalidAccessTokenResponseListener(this);
                             fragmentManager.beginTransaction()
                                     .replace(R.id.fragment_container, banListFragment)
                                     .commit();
                         } else if (menuItem.getItemId() == R.id.nav_free_ranks) {
-                            FreeRanksFragment freeRanksFragment = new FreeRanksFragment();
-                            freeRanksFragment.setRewardedVideoAd(mRewardedVideoAd);
                             fragmentManager.beginTransaction()
                                     .replace(R.id.fragment_container, freeRanksFragment)
                                     .commit();
@@ -160,6 +165,7 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
 
     @Override
     public void onRewardedVideoAdLoaded() {
+        freeRanksFragment.hideLoadingIndicator();
         mRewardedVideoAd.show();
     }
 
@@ -211,6 +217,7 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
 
     @Override
     public void onRewardedVideoAdFailedToLoad(int i) {
+        freeRanksFragment.hideLoadingIndicator();
         if(i == 3) {
             new AlertDialog.Builder(this)
                     .setTitle(R.string.no_ads)
