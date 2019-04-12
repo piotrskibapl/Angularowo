@@ -12,8 +12,6 @@ public class RankUtils {
                 return R.color.color_admin;
             case "viceadmin":
                 return R.color.color_viceadmin;
-            case "jradmin":
-                return R.color.color_jradmin;
             case "moderator":
                 return R.color.color_moderator;
             case "pomocnik":
@@ -60,8 +58,6 @@ public class RankUtils {
             case "admin":
                 return true;
             case "viceadmin":
-                return true;
-            case "jradmin":
                 return true;
             case "moderator":
                 return true;
