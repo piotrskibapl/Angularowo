@@ -9,14 +9,14 @@
         <item>budowniczy</item>
     </string-array>
     <string-array name="ranks_other">
-        <item>sponsor</item>
+        <item>eventowiec</item>
         <item>hrabia</item>
+        <item>kasyniarz</item>
+        <item>sponsor</item>
         <item>legenda</item>
         <item>duchowny</item>
         <item>pro</item>
         <item>noob</item>
-        <item>kasyniarz</item>
-        <item>eventowiec</item>
         <item>supervip</item>
         <item>kontovip</item>
         <item>chlopak</item>
