@@ -4,6 +4,10 @@
     <PreferenceCategory
         android:title="@string/pref_category_notifications"
         android:icon="@drawable/ic_notifications">
-
+        <CheckBoxPreference
+            android:key="@string/pref_key_subscribed_to_events"
+            android:title="@string/pref_title_subscribed_to_events"
+            android:summary="@string/pref_summary_subscribed_to_events"
+            android:defaultValue="true" />
     </PreferenceCategory>
 </PreferenceScreen>

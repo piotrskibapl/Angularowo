@@ -64,5 +64,13 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
                 FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_NEW_REPORTS_TOPIC);
             }
         }
+        else if(s.equals(getString(R.string.pref_key_subscribed_to_events))){
+            if(sharedPreferences.getBoolean(getString(R.string.pref_key_subscribed_to_events), false)) {
+                FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_NEW_EVENT_TOPIC);
+            }
+            else{
+                FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_NEW_EVENT_TOPIC);
+            }
+        }
     }
 }

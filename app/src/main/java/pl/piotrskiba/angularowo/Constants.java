@@ -17,6 +17,7 @@ public class Constants {
     public final static String FIREBASE_PLAYER_TOPIC_PREFIX = "player_";
     public final static String FIREBASE_RANK_TOPIC_PREFIX = "rank_";
     public final static String FIREBASE_NEW_REPORTS_TOPIC = "new_reports";
+    public final static String FIREBASE_NEW_EVENT_TOPIC = "new_event";
 
     public final static String BAN_TYPES = "ban,warning,mute";
     public final static String ACTIVE_BAN_TYPES = "ban,warning";

@@ -9,5 +9,10 @@
             android:title="@string/pref_title_subscribed_to_new_reports"
             android:summary="@string/pref_summary_subscribed_to_new_reports"
             android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="@string/pref_key_subscribed_to_events"
+            android:title="@string/pref_title_subscribed_to_events"
+            android:summary="@string/pref_summary_subscribed_to_events"
+            android:defaultValue="true" />
     </PreferenceCategory>
 </PreferenceScreen>

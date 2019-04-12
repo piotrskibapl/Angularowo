@@ -128,6 +128,21 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
             }
         }
 
+        // subscribe to new events Firebase topic
+        if(this.username != null){
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+            if(!sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_events))) {
+                FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_NEW_EVENT_TOPIC)
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putBoolean(getString(R.string.pref_key_subscribed_to_events), true);
+                                editor.apply();
+                            }
+                        });
+            }
+        }
+
         super.onResume();
     }
 
