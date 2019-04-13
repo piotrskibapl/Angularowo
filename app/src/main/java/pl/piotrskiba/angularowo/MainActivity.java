@@ -195,12 +195,14 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
         serverAPIInterface.redeemAdPrize(ServerAPIClient.API_KEY, rewardItem.getType(), access_token).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                new AlertDialog.Builder(context)
-                        .setTitle(R.string.prize_redeemed)
-                        .setMessage(R.string.prize_redeemed_description)
+                if(!isFinishing()) {
+                    new AlertDialog.Builder(context)
+                            .setTitle(R.string.prize_redeemed)
+                            .setMessage(R.string.prize_redeemed_description)
 
-                        .setPositiveButton(R.string.button_dismiss, null)
-                        .show();
+                            .setPositiveButton(R.string.button_dismiss, null)
+                            .show();
+                }
             }
 
             @Override
