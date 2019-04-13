@@ -124,13 +124,13 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
         if(playerList.getPlayers() != null && !playerList.getPlayers().isEmpty()) {
             for (String rank : ranks_team) {
                 for (Player player : playerList.getPlayers()) {
-                    if (player.getRank().equals(rank))
+                    if (player.getRank()!= null && player.getRank().equals(rank))
                         sorted.add(player);
                 }
             }
             for (String rank : ranks_other) {
                 for (Player player : playerList.getPlayers()) {
-                    if (player.getRank().equals(rank))
+                    if (player.getRank()!= null && player.getRank().equals(rank))
                         sorted.add(player);
                 }
             }
