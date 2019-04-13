@@ -119,10 +119,12 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
             if(!sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_player_topic))) {
                 FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_PLAYER_TOPIC_PREFIX + this.username)
                         .addOnCompleteListener(task -> {
-                            if (task.isSuccessful()) {
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putBoolean(getString(R.string.pref_key_subscribed_to_player_topic), true);
-                                editor.apply();
+                            if(isAdded()) {
+                                if (task.isSuccessful()) {
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putBoolean(getString(R.string.pref_key_subscribed_to_player_topic), true);
+                                    editor.apply();
+                                }
                             }
                         });
             }
@@ -134,10 +136,12 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
             if(!sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_events))) {
                 FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_NEW_EVENT_TOPIC)
                         .addOnCompleteListener(task -> {
-                            if (task.isSuccessful()) {
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putBoolean(getString(R.string.pref_key_subscribed_to_events), true);
-                                editor.apply();
+                            if(isAdded()) {
+                                if (task.isSuccessful()) {
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putBoolean(getString(R.string.pref_key_subscribed_to_events), true);
+                                    editor.apply();
+                                }
                             }
                         });
             }
