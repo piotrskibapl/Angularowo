@@ -23,7 +23,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.multidex.MultiDex;
-import androidx.multidex.MultiDexApplication;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.piotrskiba.angularowo.interfaces.InvalidAccessTokenResponseListener;
@@ -44,7 +43,15 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
     @BindView(R.id.nav_view)
     NavigationView mNavigationView;
 
+    MainScreenFragment mainScreenFragment;
+    PlayerListFragment playerListFragment;
+    BanListFragment banListFragment;
     FreeRanksFragment freeRanksFragment;
+
+    private final static String TAG_MAIN_FRAGMENT = "fragment_main";
+    private final static String TAG_PLAYER_LIST_FRAGMENT = "fragment_player_list";
+    private final static String TAG_BAN_LIST_FRAGMENT = "fragment_ban_list";
+    private final static String TAG_FREE_RANKS_FRAGMENT = "fragment_free_ranks";
 
     private RewardedVideoAd mRewardedVideoAd;
 
@@ -74,26 +81,53 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
             startActivityForResult(intent, Constants.REQUEST_CODE_REGISTER);
         }
         else {
+            if(savedInstanceState == null)
+                setupMainFragment();
+
             populateUi();
         }
     }
 
-    private void populateUi(){
+    private void setupMainFragment(){
         MainScreenFragment mainScreenFragment = new MainScreenFragment();
         mainScreenFragment.setInvalidAccessTokenResponseListener(this);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, mainScreenFragment)
+                .replace(R.id.fragment_container, mainScreenFragment, TAG_MAIN_FRAGMENT)
                 .commit();
+    }
 
-        PlayerListFragment playerListFragment = new PlayerListFragment();
+    private void initializeFragments(){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        mainScreenFragment = (MainScreenFragment) fragmentManager.findFragmentByTag(TAG_MAIN_FRAGMENT);
+        playerListFragment = (PlayerListFragment) fragmentManager.findFragmentByTag(TAG_PLAYER_LIST_FRAGMENT);
+        banListFragment = (BanListFragment) fragmentManager.findFragmentByTag(TAG_BAN_LIST_FRAGMENT);
+        freeRanksFragment = (FreeRanksFragment) fragmentManager.findFragmentByTag(TAG_FREE_RANKS_FRAGMENT);
+
+        if(mainScreenFragment == null) {
+            mainScreenFragment = new MainScreenFragment();
+        }
+        mainScreenFragment.setInvalidAccessTokenResponseListener(this);
+
+        if(playerListFragment == null) {
+            playerListFragment = new PlayerListFragment();
+        }
         playerListFragment.setInvalidAccessTokenResponseListener(this);
 
-        BanListFragment banListFragment = new BanListFragment();
+        if(banListFragment == null) {
+            banListFragment = new BanListFragment();
+        }
         banListFragment.setInvalidAccessTokenResponseListener(this);
 
-        freeRanksFragment = new FreeRanksFragment();
+        if(freeRanksFragment == null) {
+            freeRanksFragment = new FreeRanksFragment();
+        }
         freeRanksFragment.setRewardedVideoAd(mRewardedVideoAd);
+    }
+
+    private void populateUi(){
+        initializeFragments();
 
         setSupportActionBar(mToolbar);
         ActionBar actionbar = getSupportActionBar();
@@ -103,22 +137,23 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
         mNavigationView.setNavigationItemSelectedListener(
                 menuItem -> {
                     if(!menuItem.isChecked()) {
+                        FragmentManager fragmentManager = getSupportFragmentManager();
                         if (menuItem.getItemId() == R.id.nav_main_screen) {
                             fragmentManager.beginTransaction()
-                                    .replace(R.id.fragment_container, mainScreenFragment)
+                                    .replace(R.id.fragment_container, mainScreenFragment, TAG_MAIN_FRAGMENT)
                                     .commit();
                         }
                         else if(menuItem.getItemId() == R.id.nav_player_list){
                             fragmentManager.beginTransaction()
-                                    .replace(R.id.fragment_container, playerListFragment)
+                                    .replace(R.id.fragment_container, playerListFragment, TAG_PLAYER_LIST_FRAGMENT)
                                     .commit();
                         } else if (menuItem.getItemId() == R.id.nav_last_bans) {
                             fragmentManager.beginTransaction()
-                                    .replace(R.id.fragment_container, banListFragment)
+                                    .replace(R.id.fragment_container, banListFragment, TAG_BAN_LIST_FRAGMENT)
                                     .commit();
                         } else if (menuItem.getItemId() == R.id.nav_free_ranks) {
                             fragmentManager.beginTransaction()
-                                    .replace(R.id.fragment_container, freeRanksFragment)
+                                    .replace(R.id.fragment_container, freeRanksFragment, TAG_FREE_RANKS_FRAGMENT)
                                     .commit();
                         } else if (menuItem.getItemId() == R.id.nav_settings) {
                             Intent intent = new Intent(this, SettingsActivity.class);
@@ -158,6 +193,7 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
         if(requestCode == Constants.REQUEST_CODE_REGISTER){
             waitingForLogin = false;
             if(resultCode == Constants.RESULT_CODE_SUCCESS){
+                setupMainFragment();
                 populateUi();
             }
         }
