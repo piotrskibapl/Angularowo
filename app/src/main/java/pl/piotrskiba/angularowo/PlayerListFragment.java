@@ -2,6 +2,7 @@ package pl.piotrskiba.angularowo;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -57,7 +59,19 @@ public class PlayerListFragment extends Fragment implements PlayerClickListener 
         ButterKnife.bind(this, view);
 
         final PlayerListAdapter adapter = new PlayerListAdapter(getContext(), this);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+
+        RecyclerView.LayoutManager layoutManager;
+        int display_mode = getResources().getConfiguration().orientation;
+        if (display_mode == Configuration.ORIENTATION_PORTRAIT) {
+            layoutManager = new LinearLayoutManager(getContext());
+        }
+        else {
+            layoutManager = new GridLayoutManager(getContext(), 2);
+
+            int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.margin_small);
+            mPlayerList.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
+        }
+
         mPlayerList.setAdapter(adapter);
         mPlayerList.setLayoutManager(layoutManager);
         mPlayerList.setHasFixedSize(true);
