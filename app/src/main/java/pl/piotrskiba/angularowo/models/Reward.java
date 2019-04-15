@@ -1,23 +1,24 @@
 package pl.piotrskiba.angularowo.models;
 
-import android.graphics.Bitmap;
+import com.google.gson.annotations.SerializedName;
 
 public class Reward {
 
-    private final int imageResource;
+    @SerializedName("image")
+    private final String imageUrl;
     private final String title;
     private final String description;
     private final String adId;
 
-    public Reward(int imageResource, String title, String description, String adId){
-        this.imageResource = imageResource;
+    public Reward(String imageUrl, String title, String description, String adId){
+        this.imageUrl = imageUrl;
         this.title = title;
         this.description = description;
         this.adId = adId;
     }
 
-    public int getImageResource() {
-        return imageResource;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
     public String getTitle() {

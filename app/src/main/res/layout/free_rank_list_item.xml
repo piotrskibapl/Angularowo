@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/reward_image"
         android:layout_width="match_parent"
         android:layout_height="@dimen/free_rank_image_height"
-        android:padding="@dimen/padding_default"
-        android:adjustViewBounds="true"
-        android:scaleType="centerInside"/>
+        android:padding="@dimen/padding_big"
+        android:scaleType="fitCenter"/>
 
     <TextView
         android:id="@+id/reward_title"

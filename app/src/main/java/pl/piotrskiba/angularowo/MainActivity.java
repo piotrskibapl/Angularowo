@@ -124,6 +124,7 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
             freeRanksFragment = new FreeRanksFragment();
         }
         freeRanksFragment.setRewardedVideoAd(mRewardedVideoAd);
+        freeRanksFragment.setInvalidAccessTokenResponseListener(this);
     }
 
     private void populateUi(){

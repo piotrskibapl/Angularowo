@@ -1,6 +1,8 @@
 package pl.piotrskiba.angularowo;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +24,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.piotrskiba.angularowo.adapters.FreeRankListAdapter;
 import pl.piotrskiba.angularowo.interfaces.FreeRankClickListener;
+import pl.piotrskiba.angularowo.interfaces.InvalidAccessTokenResponseListener;
 import pl.piotrskiba.angularowo.models.Reward;
+import pl.piotrskiba.angularowo.models.RewardList;
+import pl.piotrskiba.angularowo.network.ServerAPIClient;
+import pl.piotrskiba.angularowo.network.ServerAPIInterface;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class FreeRanksFragment extends Fragment implements FreeRankClickListener {
 
@@ -33,6 +42,10 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
     ProgressBar mLoadingIndicator;
 
     private RewardedVideoAd mRewardedVideoAd;
+
+    private InvalidAccessTokenResponseListener listener;
+
+    private ArrayList<Reward> mRewards = new ArrayList<>();
 
     public FreeRanksFragment(){
 
@@ -45,18 +58,43 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
 
         ButterKnife.bind(this, view);
 
-        final FreeRankListAdapter adapter = new FreeRankListAdapter(this);
+        final FreeRankListAdapter adapter = new FreeRankListAdapter(getContext(), this);
+        adapter.setRewardList(mRewards);
+
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         mFreeRankList.setAdapter(adapter);
         mFreeRankList.setLayoutManager(layoutManager);
         mFreeRankList.setHasFixedSize(true);
 
-        ArrayList<Reward> list = new ArrayList<>();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String access_token = sharedPreferences.getString(getString(R.string.pref_key_access_token), null);
 
-        list.add(new Reward(R.drawable.default_avatar, "Chłopak", "Ranga Chłopak na 3 dni", "ca-app-pub-7790074991647252/6832708642"));
-        list.add(new Reward(R.drawable.default_avatar_female, "Dziewczyna", "Ranga Dziewczyna na 3 dni", "ca-app-pub-7790074991647252/7392015807"));
+        showLoadingIndicator();
 
-        adapter.setRewardList(list);
+        ServerAPIInterface serverAPIInterface = ServerAPIClient.getRetrofitInstance().create(ServerAPIInterface.class);
+        serverAPIInterface.getAdCampaigns(ServerAPIClient.API_KEY, access_token).enqueue(new Callback<RewardList>() {
+            @Override
+            public void onResponse(Call<RewardList> call, Response<RewardList> response) {
+                if(isAdded()) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        RewardList rewardList = response.body();
+                        for (Reward reward: rewardList.getRewards()) {
+                            mRewards.add(reward);
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                    else if (response.code() == 401) {
+                        listener.onInvalidAccessTokenResponseReceived();
+                    }
+                    hideLoadingIndicator();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RewardList> call, Throwable t) {
+                hideLoadingIndicator();
+            }
+        });
 
         ActionBar actionbar = ((AppCompatActivity)getActivity()).getSupportActionBar();
         actionbar.setTitle(R.string.actionbar_title_free_ranks);
@@ -85,5 +123,9 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
 
     public void setRewardedVideoAd(RewardedVideoAd ad){
         mRewardedVideoAd = ad;
+    }
+
+    public void setInvalidAccessTokenResponseListener(InvalidAccessTokenResponseListener listener){
+        this.listener = listener;
     }
 }

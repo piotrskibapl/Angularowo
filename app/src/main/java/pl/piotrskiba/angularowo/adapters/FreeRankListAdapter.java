@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -19,11 +21,13 @@ import pl.piotrskiba.angularowo.models.Reward;
 
 public class FreeRankListAdapter extends RecyclerView.Adapter<FreeRankListAdapter.FreeRankViewHolder> {
 
-    private List<Reward> mRewardList;
-
+    private Context context;
     private FreeRankClickListener mClickListener;
 
-    public FreeRankListAdapter(FreeRankClickListener listener){
+    private List<Reward> mRewardList;
+
+    public FreeRankListAdapter(Context context, FreeRankClickListener listener){
+        this.context = context;
         mClickListener = listener;
     }
 
@@ -42,7 +46,11 @@ public class FreeRankListAdapter extends RecyclerView.Adapter<FreeRankListAdapte
     public void onBindViewHolder(@NonNull FreeRankViewHolder holder, int position) {
         Reward reward = mRewardList.get(position);
 
-        holder.mRewardImage.setImageResource(reward.getImageResource());
+        Glide.with(context)
+                .load(reward.getImageUrl())
+                .centerInside()
+                .into(holder.mRewardImage);
+
         holder.mRewardTitle.setText(reward.getTitle());
         holder.mRewardDescription.setText(reward.getDescription());
     }
