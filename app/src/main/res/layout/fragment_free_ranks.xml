@@ -7,6 +7,16 @@
         android:id="@+id/rv_free_ranks"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+    <TextView
+        android:id="@+id/errorTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/error_text_size"
+        android:textAlignment="center"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/error_margin"
+        android:layout_marginStart="@dimen/margin_default"
+        android:layout_marginEnd="@dimen/margin_default" />
     <ProgressBar
         android:id="@+id/pb_loading"
         android:layout_width="@dimen/progressbar_size"

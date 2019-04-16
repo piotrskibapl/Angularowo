@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
@@ -39,6 +40,9 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
 
     @BindView(R.id.rv_free_ranks)
     RecyclerView mFreeRankList;
+
+    @BindView(R.id.errorTextView)
+    TextView mErrorTextView;
 
     @BindView(R.id.pb_loading)
     ProgressBar mLoadingIndicator;
@@ -80,10 +84,17 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
                 if(isAdded()) {
                     if (response.isSuccessful() && response.body() != null) {
                         RewardList rewardList = response.body();
-                        for (Reward reward: rewardList.getRewards()) {
-                            mRewards.add(reward);
+                        if(rewardList.getRewards() != null && rewardList.getRewards().size() > 0) {
+                            showDefaultLayout();
+                            mRewards.clear();
+                            for (Reward reward : rewardList.getRewards()) {
+                                mRewards.add(reward);
+                            }
+                            adapter.notifyDataSetChanged();
                         }
-                        adapter.notifyDataSetChanged();
+                        else{
+                            showNoRewardsLayout();
+                        }
                     }
                     else if (response.code() == 401) {
                         listener.onInvalidAccessTokenResponseReceived();
@@ -121,6 +132,16 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
 
     private void loadRewardedVideoAd(String adId) {
         mRewardedVideoAd.loadAd(adId, new AdRequest.Builder().build());
+    }
+
+    private void showDefaultLayout(){
+        mErrorTextView.setVisibility(View.GONE);
+        mFreeRankList.setVisibility(View.VISIBLE);
+    }
+    private void showNoRewardsLayout(){
+        mErrorTextView.setVisibility(View.VISIBLE);
+        mFreeRankList.setVisibility(View.GONE);
+        mErrorTextView.setText(R.string.no_rewards_found);
     }
 
     private void showLoadingIndicator(){

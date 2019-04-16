@@ -31,7 +31,7 @@
     <string name="main_screen">Strona główna</string>
     <string name="player_list">Lista graczy online</string>
     <string name="last_bans">Ostatnie bany</string>
-    <string name="free_ranks">Odbierz darmową rangę</string>
+    <string name="free_ranks">Odbierz darmowe nagrody</string>
     <string name="settings">Ustawienia</string>
 
     <!-- fragment_main_screen.xml -->
@@ -68,7 +68,8 @@
     <string name="mute_description_format">Wyciszony za %1$s</string>
 
     <!-- fragment_free_rank.xml -->
-    <string name="actionbar_title_free_ranks">Darmowe rangi</string>
+    <string name="actionbar_title_free_ranks">Darmowe nagrody</string>
+    <string name="no_rewards_found">Aktualnie nie masz żadnych nagród do odebrania.</string>
     <string name="no_ads">Brak reklam</string>
     <string name="no_ads_description">Nie znaleziono żadnych reklam. Spróbuj ponownie za kilka godzin.</string>
     <string name="prize_redeemed">Nagroda przyznana!</string>
