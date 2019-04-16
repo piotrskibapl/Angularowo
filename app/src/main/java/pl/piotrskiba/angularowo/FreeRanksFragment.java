@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.piotrskiba.angularowo.adapters.FreeRankListAdapter;
@@ -38,14 +39,14 @@ import retrofit2.Response;
 
 public class FreeRanksFragment extends Fragment implements FreeRankClickListener {
 
+    @BindView(R.id.swiperefresh)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
     @BindView(R.id.rv_free_ranks)
     RecyclerView mFreeRankList;
 
     @BindView(R.id.errorTextView)
     TextView mErrorTextView;
-
-    @BindView(R.id.pb_loading)
-    ProgressBar mLoadingIndicator;
 
     private RewardedVideoAd mRewardedVideoAd;
 
@@ -72,10 +73,36 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
         mFreeRankList.setLayoutManager(layoutManager);
         mFreeRankList.setHasFixedSize(true);
 
+        loadRewards(adapter);
+
+        ActionBar actionbar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        actionbar.setTitle(R.string.actionbar_title_free_ranks);
+
+        mSwipeRefreshLayout.setOnRefreshListener(() -> loadRewards(adapter));
+
+        return view;
+    }
+
+    @Override
+    public void onFreeRankClick(View view, Reward clickedReward) {
+        if(getContext() != null && !mSwipeRefreshLayout.isRefreshing()) {
+            new AlertDialog.Builder(getContext())
+                    .setTitle(R.string.ad_question)
+                    .setMessage(R.string.ad_question_description)
+                    .setPositiveButton(R.string.button_yes, (dialogInterface, i) -> {
+                        showLoadingIndicator();
+                        loadRewardedVideoAd(clickedReward.getAdId());
+                    })
+                    .setNegativeButton(R.string.button_no, null)
+                    .show();
+        }
+    }
+
+    private void loadRewards(FreeRankListAdapter adapter){
+        showLoadingIndicator();
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         String access_token = sharedPreferences.getString(getString(R.string.pref_key_access_token), null);
-
-        showLoadingIndicator();
 
         ServerAPIInterface serverAPIInterface = ServerAPIClient.getRetrofitInstance().create(ServerAPIInterface.class);
         serverAPIInterface.getAdCampaigns(ServerAPIClient.API_KEY, access_token).enqueue(new Callback<RewardList>() {
@@ -108,26 +135,6 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
                 hideLoadingIndicator();
             }
         });
-
-        ActionBar actionbar = ((AppCompatActivity)getActivity()).getSupportActionBar();
-        actionbar.setTitle(R.string.actionbar_title_free_ranks);
-
-        return view;
-    }
-
-    @Override
-    public void onFreeRankClick(View view, Reward clickedReward) {
-        if(getContext() != null && mLoadingIndicator.getVisibility() != View.VISIBLE) {
-            new AlertDialog.Builder(getContext())
-                    .setTitle(R.string.ad_question)
-                    .setMessage(R.string.ad_question_description)
-                    .setPositiveButton(R.string.button_yes, (dialogInterface, i) -> {
-                        showLoadingIndicator();
-                        loadRewardedVideoAd(clickedReward.getAdId());
-                    })
-                    .setNegativeButton(R.string.button_no, null)
-                    .show();
-        }
     }
 
     private void loadRewardedVideoAd(String adId) {
@@ -145,10 +152,10 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
     }
 
     private void showLoadingIndicator(){
-        mLoadingIndicator.setVisibility(View.VISIBLE);
+        mSwipeRefreshLayout.setRefreshing(true);
     }
     public void hideLoadingIndicator(){
-        mLoadingIndicator.setVisibility(View.GONE);
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     public void setRewardedVideoAd(RewardedVideoAd ad){
