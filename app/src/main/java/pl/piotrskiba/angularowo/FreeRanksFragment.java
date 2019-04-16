@@ -1,5 +1,6 @@
 package pl.piotrskiba.angularowo;
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -104,9 +106,16 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
 
     @Override
     public void onFreeRankClick(View view, Reward clickedReward) {
-        if(mLoadingIndicator.getVisibility() != View.VISIBLE) {
-            showLoadingIndicator();
-            loadRewardedVideoAd(clickedReward.getAdId());
+        if(getContext() != null && mLoadingIndicator.getVisibility() != View.VISIBLE) {
+            new AlertDialog.Builder(getContext())
+                    .setTitle(R.string.ad_question)
+                    .setMessage(R.string.ad_question_description)
+                    .setPositiveButton(R.string.button_yes, (dialogInterface, i) -> {
+                        showLoadingIndicator();
+                        loadRewardedVideoAd(clickedReward.getAdId());
+                    })
+                    .setNegativeButton(R.string.button_no, null)
+                    .show();
         }
     }
 
