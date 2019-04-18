@@ -54,6 +54,8 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
 
     private ArrayList<Reward> mRewards = new ArrayList<>();
 
+    private FreeRankListAdapter mFreeRankListAdapter;
+
     public FreeRanksFragment(){
 
     }
@@ -65,20 +67,20 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
 
         ButterKnife.bind(this, view);
 
-        final FreeRankListAdapter adapter = new FreeRankListAdapter(getContext(), this);
-        adapter.setRewardList(mRewards);
+        mFreeRankListAdapter = new FreeRankListAdapter(getContext(), this);
+        mFreeRankListAdapter.setRewardList(mRewards);
 
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
-        mFreeRankList.setAdapter(adapter);
+        mFreeRankList.setAdapter(mFreeRankListAdapter);
         mFreeRankList.setLayoutManager(layoutManager);
         mFreeRankList.setHasFixedSize(true);
 
-        loadRewards(adapter);
+        loadRewards();
 
         ActionBar actionbar = ((AppCompatActivity)getActivity()).getSupportActionBar();
         actionbar.setTitle(R.string.actionbar_title_free_ranks);
 
-        mSwipeRefreshLayout.setOnRefreshListener(() -> loadRewards(adapter));
+        mSwipeRefreshLayout.setOnRefreshListener(() -> loadRewards());
 
         return view;
     }
@@ -98,7 +100,7 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
         }
     }
 
-    private void loadRewards(FreeRankListAdapter adapter){
+    public void loadRewards(){
         showLoadingIndicator();
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
@@ -117,7 +119,7 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
                             for (Reward reward : rewardList.getRewards()) {
                                 mRewards.add(reward);
                             }
-                            adapter.notifyDataSetChanged();
+                            mFreeRankListAdapter.notifyDataSetChanged();
                         }
                         else{
                             showNoRewardsLayout();

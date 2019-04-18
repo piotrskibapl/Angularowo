@@ -239,6 +239,8 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
 
                             .setPositiveButton(R.string.button_dismiss, null)
                             .show();
+
+                    freeRanksFragment.loadRewards();
                 }
             }
 
