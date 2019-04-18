@@ -219,18 +219,34 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
                                 if (!sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_new_reports))) {
                                     FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_NEW_REPORTS_TOPIC)
                                             .addOnCompleteListener(task -> {
-                                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                                editor.putBoolean(getString(R.string.pref_key_subscribed_to_new_reports), true);
-                                                editor.apply();
+                                                if(isAdded()) {
+                                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                                    editor.putBoolean(getString(R.string.pref_key_subscribed_to_new_reports), true);
+                                                    editor.apply();
+                                                }
+                                                else if(getActivity() != null){
+                                                    SharedPreferences sharedPreferences1 = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+                                                    SharedPreferences.Editor editor = sharedPreferences1.edit();
+                                                    editor.putBoolean(getString(R.string.pref_key_subscribed_to_new_reports), true);
+                                                    editor.apply();
+                                                }
                                             });
                                 }
                             } else {
                                 if (sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_new_reports)) && sharedPreferences.getBoolean(getString(R.string.pref_key_subscribed_to_new_reports), false)) {
                                     FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_NEW_REPORTS_TOPIC)
                                             .addOnCompleteListener(task -> {
-                                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                                editor.putBoolean(getString(R.string.pref_key_subscribed_to_new_reports), false);
-                                                editor.apply();
+                                                if(isAdded()) {
+                                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                                    editor.putBoolean(getString(R.string.pref_key_subscribed_to_new_reports), false);
+                                                    editor.apply();
+                                                }
+                                                else if(getActivity() != null){
+                                                    SharedPreferences sharedPreferences1 = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+                                                    SharedPreferences.Editor editor = sharedPreferences1.edit();
+                                                    editor.putBoolean(getString(R.string.pref_key_subscribed_to_new_reports), false);
+                                                    editor.apply();
+                                                }
                                             });
                                 }
                             }

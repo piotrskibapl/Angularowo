@@ -109,7 +109,7 @@ public class PlayerDetailsActivity extends AppCompatActivity implements SwipeRef
     }
 
     private void populatePlayer(Player player){
-        if(player.getUuid() != null) {
+        if(!isFinishing() && player.getUuid() != null) {
             Glide.with(this)
                     .load("https://crafatar.com/avatars/" + player.getUuid() + "?size=100")
                     .into(mPlayerAvatar);
