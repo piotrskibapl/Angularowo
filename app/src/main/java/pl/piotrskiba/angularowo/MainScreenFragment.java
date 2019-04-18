@@ -36,6 +36,7 @@ import pl.piotrskiba.angularowo.models.DetailedPlayer;
 import pl.piotrskiba.angularowo.models.ServerStatus;
 import pl.piotrskiba.angularowo.network.ServerAPIClient;
 import pl.piotrskiba.angularowo.network.ServerAPIInterface;
+import pl.piotrskiba.angularowo.utils.GlideUtils;
 import pl.piotrskiba.angularowo.utils.RankUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -193,6 +194,7 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
                         if (player.getUuid() != null && getContext() != null) {
                             Glide.with(getContext())
                                     .load(Constants.BASE_BODY_URL + player.getUuid())
+                                    .signature(new IntegerVersionSignature(GlideUtils.getSignatureVersionNumber(1)))
                                     .into(mPlayerBodyImageView);
                         }
 

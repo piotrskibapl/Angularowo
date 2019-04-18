@@ -23,6 +23,7 @@ import pl.piotrskiba.angularowo.models.DetailedPlayer;
 import pl.piotrskiba.angularowo.models.Player;
 import pl.piotrskiba.angularowo.network.ServerAPIClient;
 import pl.piotrskiba.angularowo.network.ServerAPIInterface;
+import pl.piotrskiba.angularowo.utils.GlideUtils;
 import pl.piotrskiba.angularowo.utils.RankUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -112,10 +113,12 @@ public class PlayerDetailsActivity extends AppCompatActivity implements SwipeRef
         if(!isFinishing() && player.getUuid() != null) {
             Glide.with(this)
                     .load("https://crafatar.com/avatars/" + player.getUuid() + "?size=100")
+                    .signature(new IntegerVersionSignature(GlideUtils.getSignatureVersionNumber(5)))
                     .into(mPlayerAvatar);
 
             Glide.with(this)
                     .load(Constants.BASE_BODY_URL + player.getUuid())
+                    .signature(new IntegerVersionSignature(GlideUtils.getSignatureVersionNumber(5)))
                     .into(mPlayerBodyImageView);
         }
         else{

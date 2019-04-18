@@ -8,13 +8,11 @@
     <dimen name="section_margin">24dp</dimen>
     <dimen name="error_margin">60dp</dimen>
     <dimen name="error_text_size">20sp</dimen>
-    <dimen name="progressbar_size">48dp</dimen>
 
     <!-- player_list_item.xml, ban_list_item.xml -->
     <dimen name="username_text_size">16sp</dimen>
     <dimen name="rank_text_size">12sp</dimen>
     <dimen name="avatar_size">48dp</dimen>
-    <dimen name="ban_icon_size">24dp</dimen>
 
     <!-- activity_login.xml -->
     <dimen name="login_header_text_size">32sp</dimen>

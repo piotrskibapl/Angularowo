@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import pl.piotrskiba.angularowo.IntegerVersionSignature;
 import pl.piotrskiba.angularowo.R;
 import pl.piotrskiba.angularowo.interfaces.BanClickListener;
 import pl.piotrskiba.angularowo.models.Ban;
@@ -22,6 +23,7 @@ import pl.piotrskiba.angularowo.models.BanList;
 import pl.piotrskiba.angularowo.models.MojangProfile;
 import pl.piotrskiba.angularowo.network.MojangAPIClient;
 import pl.piotrskiba.angularowo.network.MojangAPIInterface;
+import pl.piotrskiba.angularowo.utils.GlideUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -78,6 +80,7 @@ public class BanListAdapter extends RecyclerView.Adapter<BanListAdapter.BanViewH
                 if(response.isSuccessful() && response.body() != null) {
                     Glide.with(context)
                             .load("https://crafatar.com/avatars/" + response.body().getId() + "?size=100")
+                            .signature(new IntegerVersionSignature(GlideUtils.getSignatureVersionNumber(5)))
                             .into(holder.mPlayerAvatar);
                 }
                 else{

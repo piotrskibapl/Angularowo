@@ -16,9 +16,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import pl.piotrskiba.angularowo.IntegerVersionSignature;
 import pl.piotrskiba.angularowo.R;
 import pl.piotrskiba.angularowo.interfaces.FreeRankClickListener;
 import pl.piotrskiba.angularowo.models.Reward;
+import pl.piotrskiba.angularowo.utils.GlideUtils;
 
 public class FreeRankListAdapter extends RecyclerView.Adapter<FreeRankListAdapter.FreeRankViewHolder> {
 
@@ -50,6 +52,7 @@ public class FreeRankListAdapter extends RecyclerView.Adapter<FreeRankListAdapte
         Glide.with(context)
                 .load(reward.getImageUrl())
                 .centerInside()
+                .signature(new IntegerVersionSignature(GlideUtils.getSignatureVersionNumber(5)))
                 .into(holder.mRewardImage);
 
         holder.mRewardTitle.setText(reward.getTitle());

@@ -19,10 +19,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import pl.piotrskiba.angularowo.IntegerVersionSignature;
 import pl.piotrskiba.angularowo.R;
 import pl.piotrskiba.angularowo.interfaces.PlayerClickListener;
 import pl.piotrskiba.angularowo.models.Player;
 import pl.piotrskiba.angularowo.models.PlayerList;
+import pl.piotrskiba.angularowo.utils.GlideUtils;
 import pl.piotrskiba.angularowo.utils.RankUtils;
 
 public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.PlayerViewHolder> {
@@ -55,6 +57,7 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
         if(player.getUuid() != null) {
             Glide.with(context)
                     .load("https://crafatar.com/avatars/" + player.getUuid() + "?size=100")
+                    .signature(new IntegerVersionSignature(GlideUtils.getSignatureVersionNumber(5)))
                     .into(holder.mPlayerAvatar);
         }
         else{
