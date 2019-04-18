@@ -57,6 +57,8 @@
             android:id="@+id/tv_ban_description_full"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="@dimen/padding_default"
+            android:paddingEnd="@dimen/padding_default"
             android:textSize="@dimen/content_text_size"
             android:textAlignment="center"/>
 

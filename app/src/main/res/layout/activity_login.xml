@@ -30,6 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/login_description_margin_top"
+            android:padding="@dimen/padding_default"
             android:textAlignment="center"
             android:text="@string/login_description" />
 
