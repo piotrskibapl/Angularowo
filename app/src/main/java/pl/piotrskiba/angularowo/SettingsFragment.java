@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 
 import androidx.preference.PreferenceFragmentCompat;
+
 import pl.piotrskiba.angularowo.utils.RankUtils;
 
 public class SettingsFragment extends PreferenceFragmentCompat {

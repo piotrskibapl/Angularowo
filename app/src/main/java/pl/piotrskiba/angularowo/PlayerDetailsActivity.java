@@ -1,20 +1,5 @@
 package pl.piotrskiba.angularowo;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import pl.piotrskiba.angularowo.models.DetailedPlayer;
-import pl.piotrskiba.angularowo.models.Player;
-import pl.piotrskiba.angularowo.network.ServerAPIClient;
-import pl.piotrskiba.angularowo.network.ServerAPIInterface;
-import pl.piotrskiba.angularowo.utils.RankUtils;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -25,7 +10,23 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.bumptech.glide.Glide;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import pl.piotrskiba.angularowo.models.DetailedPlayer;
+import pl.piotrskiba.angularowo.models.Player;
+import pl.piotrskiba.angularowo.network.ServerAPIClient;
+import pl.piotrskiba.angularowo.network.ServerAPIInterface;
+import pl.piotrskiba.angularowo.utils.RankUtils;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PlayerDetailsActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 

@@ -1,17 +1,5 @@
 package pl.piotrskiba.angularowo;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import pl.piotrskiba.angularowo.models.AccessToken;
-import pl.piotrskiba.angularowo.network.ServerAPIClient;
-import pl.piotrskiba.angularowo.network.ServerAPIInterface;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,12 +8,25 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+
 import com.alimuzaffar.lib.pin.PinEntryEditText;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 
 import java.io.IOException;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import pl.piotrskiba.angularowo.models.AccessToken;
+import pl.piotrskiba.angularowo.network.ServerAPIClient;
+import pl.piotrskiba.angularowo.network.ServerAPIInterface;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
