@@ -85,6 +85,7 @@ public class BanListAdapter extends RecyclerView.Adapter<BanListAdapter.BanViewH
                         Glide.with(context)
                                 .load(UrlUtils.buildAvatarUrl(response.body().getId(), true))
                                 .signature(new IntegerVersionSignature(GlideUtils.getSignatureVersionNumber(5)))
+                                .placeholder(R.drawable.default_avatar)
                                 .into(holder.mPlayerAvatar);
                     }
                 }

@@ -115,11 +115,13 @@ public class PlayerDetailsActivity extends AppCompatActivity implements SwipeRef
             Glide.with(this)
                     .load(UrlUtils.buildAvatarUrl(player.getUuid(), true))
                     .signature(new IntegerVersionSignature(GlideUtils.getSignatureVersionNumber(5)))
+                    .placeholder(R.drawable.default_body)
                     .into(mPlayerAvatar);
 
             Glide.with(this)
                     .load(UrlUtils.buildBodyUrl(player.getUuid(), true))
                     .signature(new IntegerVersionSignature(GlideUtils.getSignatureVersionNumber(5)))
+                    .placeholder(R.drawable.default_body)
                     .into(mPlayerBodyImageView);
         }
         else{

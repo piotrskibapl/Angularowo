@@ -196,6 +196,7 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
                             Glide.with(getContext())
                                     .load(UrlUtils.buildBodyUrl(player.getUuid(), true))
                                     .signature(new IntegerVersionSignature(GlideUtils.getSignatureVersionNumber(1)))
+                                    .placeholder(R.drawable.default_body)
                                     .into(mPlayerBodyImageView);
                         }
 

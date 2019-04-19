@@ -59,6 +59,7 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
             Glide.with(context)
                     .load(UrlUtils.buildAvatarUrl(player.getUuid(), true))
                     .signature(new IntegerVersionSignature(GlideUtils.getSignatureVersionNumber(5)))
+                    .placeholder(R.drawable.default_avatar)
                     .into(holder.mPlayerAvatar);
         }
         else{
