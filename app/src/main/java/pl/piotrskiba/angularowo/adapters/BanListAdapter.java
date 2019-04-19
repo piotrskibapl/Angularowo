@@ -24,6 +24,7 @@ import pl.piotrskiba.angularowo.models.MojangProfile;
 import pl.piotrskiba.angularowo.network.MojangAPIClient;
 import pl.piotrskiba.angularowo.network.MojangAPIInterface;
 import pl.piotrskiba.angularowo.utils.GlideUtils;
+import pl.piotrskiba.angularowo.utils.UrlUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -82,7 +83,7 @@ public class BanListAdapter extends RecyclerView.Adapter<BanListAdapter.BanViewH
                 if(holder.getAdapterPosition() == position) {
                     if (response.isSuccessful() && response.body() != null) {
                         Glide.with(context)
-                                .load("https://crafatar.com/avatars/" + response.body().getId() + "?size=100")
+                                .load(UrlUtils.buildAvatarUrl(response.body().getId(), true))
                                 .signature(new IntegerVersionSignature(GlideUtils.getSignatureVersionNumber(5)))
                                 .into(holder.mPlayerAvatar);
                     }

@@ -4,8 +4,6 @@ public class Constants {
 
     public final static String ADMOB_APP_ID = "ca-app-pub-7790074991647252~4144564614";
 
-    public final static String BASE_BODY_URL = "https://crafatar.com/renders/body/";
-
     public final static String EXTRA_PLAYER = "extra_player";
     public final static String EXTRA_BAN = "extra_ban";
     public final static String EXTRA_BITMAP = "extra_bitmap";

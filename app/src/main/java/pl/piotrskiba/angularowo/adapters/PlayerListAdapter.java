@@ -26,6 +26,7 @@ import pl.piotrskiba.angularowo.models.Player;
 import pl.piotrskiba.angularowo.models.PlayerList;
 import pl.piotrskiba.angularowo.utils.GlideUtils;
 import pl.piotrskiba.angularowo.utils.RankUtils;
+import pl.piotrskiba.angularowo.utils.UrlUtils;
 
 public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.PlayerViewHolder> {
 
@@ -56,7 +57,7 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
 
         if(player.getUuid() != null) {
             Glide.with(context)
-                    .load("https://crafatar.com/avatars/" + player.getUuid() + "?size=100")
+                    .load(UrlUtils.buildAvatarUrl(player.getUuid(), true))
                     .signature(new IntegerVersionSignature(GlideUtils.getSignatureVersionNumber(5)))
                     .into(holder.mPlayerAvatar);
         }
