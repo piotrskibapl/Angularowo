@@ -73,25 +73,25 @@ public class BanListAdapter extends RecyclerView.Adapter<BanListAdapter.BanViewH
             holder.mBanReason.setText(context.getString(R.string.warn_description_format, reason));
         }
 
+        holder.mPlayerAvatar.setImageDrawable(context.getResources().getDrawable(R.drawable.default_avatar));
+;
         MojangAPIInterface mojangAPIInterface = MojangAPIClient.getRetrofitInstance().create(MojangAPIInterface.class);
         mojangAPIInterface.getProfile(ban.getUsername()).enqueue(new Callback<MojangProfile>() {
             @Override
             public void onResponse(Call<MojangProfile> call, Response<MojangProfile> response) {
-                if(response.isSuccessful() && response.body() != null) {
-                    Glide.with(context)
-                            .load("https://crafatar.com/avatars/" + response.body().getId() + "?size=100")
-                            .signature(new IntegerVersionSignature(GlideUtils.getSignatureVersionNumber(5)))
-                            .into(holder.mPlayerAvatar);
-                }
-                else{
-                    holder.mPlayerAvatar.setImageDrawable(context.getResources().getDrawable(R.drawable.default_avatar));
+                if(holder.getAdapterPosition() == position) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        Glide.with(context)
+                                .load("https://crafatar.com/avatars/" + response.body().getId() + "?size=100")
+                                .signature(new IntegerVersionSignature(GlideUtils.getSignatureVersionNumber(5)))
+                                .into(holder.mPlayerAvatar);
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<MojangProfile> call, Throwable t) {
                 t.printStackTrace();
-                holder.mPlayerAvatar.setImageDrawable(context.getResources().getDrawable(R.drawable.default_avatar));
             }
         });
     }
