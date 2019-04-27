@@ -38,6 +38,7 @@ import pl.piotrskiba.angularowo.network.ServerAPIClient;
 import pl.piotrskiba.angularowo.network.ServerAPIInterface;
 import pl.piotrskiba.angularowo.utils.GlideUtils;
 import pl.piotrskiba.angularowo.utils.RankUtils;
+import pl.piotrskiba.angularowo.utils.TextUtils;
 import pl.piotrskiba.angularowo.utils.UrlUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -62,6 +63,9 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
 
     @BindView(R.id.tv_islandlevel)
     TextView mPlayerIslandLevelTextView;
+
+    @BindView(R.id.tv_playtime)
+    TextView mPlayerPlayTimeTextView;
 
     @BindView(R.id.tv_last_bans_title)
     TextView mLastBansTitleTextView;
@@ -202,6 +206,7 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
 
                         mPlayerBalanceTextView.setText(getString(R.string.balance_format, (int) player.getBalance()));
                         mPlayerIslandLevelTextView.setText(String.valueOf(player.getIslandLevel()));
+                        mPlayerPlayTimeTextView.setText(TextUtils.formatPlaytime(getContext(), player.getPlaytime()));
 
                         if (player.getRank() != null) {
                             // subscribe to player's rank Firebase topic

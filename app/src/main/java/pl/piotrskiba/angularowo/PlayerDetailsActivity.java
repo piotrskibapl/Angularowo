@@ -25,6 +25,7 @@ import pl.piotrskiba.angularowo.network.ServerAPIClient;
 import pl.piotrskiba.angularowo.network.ServerAPIInterface;
 import pl.piotrskiba.angularowo.utils.GlideUtils;
 import pl.piotrskiba.angularowo.utils.RankUtils;
+import pl.piotrskiba.angularowo.utils.TextUtils;
 import pl.piotrskiba.angularowo.utils.UrlUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,6 +44,9 @@ public class PlayerDetailsActivity extends AppCompatActivity implements SwipeRef
 
     @BindView(R.id.tv_islandlevel)
     TextView mPlayerIslandLevelTextView;
+
+    @BindView(R.id.tv_playtime)
+    TextView mPlayerPlayTimeTextView;
 
     // player_list_item
     @BindView(R.id.toolbar)
@@ -153,6 +157,7 @@ public class PlayerDetailsActivity extends AppCompatActivity implements SwipeRef
 
         mPlayerBalanceTextView.setText(getString(R.string.balance_format, (int)detailedPlayer.getBalance()));
         mPlayerIslandLevelTextView.setText(String.valueOf(detailedPlayer.getIslandLevel()));
+        mPlayerPlayTimeTextView.setText(TextUtils.formatPlaytime(this, detailedPlayer.getPlaytime()));
     }
 
     @Override
