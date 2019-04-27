@@ -258,14 +258,16 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
 
     @Override
     public void onRewardedVideoAdFailedToLoad(int i) {
-        freeRanksFragment.hideLoadingIndicator();
-        if(i == 3) {
-            new AlertDialog.Builder(this)
-                    .setTitle(R.string.no_ads)
-                    .setMessage(R.string.no_ads_description)
+        if(!isFinishing()) {
+            freeRanksFragment.hideLoadingIndicator();
+            if (i == 3) {
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.no_ads)
+                        .setMessage(R.string.no_ads_description)
 
-                    .setPositiveButton(R.string.button_dismiss, null)
-                    .show();
+                        .setPositiveButton(R.string.button_dismiss, null)
+                        .show();
+            }
         }
     }
 

@@ -100,42 +100,42 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
     }
 
     public void loadRewards(){
-        showLoadingIndicator();
+        if(isAdded()) {
+            showLoadingIndicator();
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        String access_token = sharedPreferences.getString(getString(R.string.pref_key_access_token), null);
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+            String access_token = sharedPreferences.getString(getString(R.string.pref_key_access_token), null);
 
-        ServerAPIInterface serverAPIInterface = ServerAPIClient.getRetrofitInstance().create(ServerAPIInterface.class);
-        serverAPIInterface.getAdCampaigns(ServerAPIClient.API_KEY, access_token).enqueue(new Callback<RewardList>() {
-            @Override
-            public void onResponse(Call<RewardList> call, Response<RewardList> response) {
-                if(isAdded()) {
-                    if (response.isSuccessful() && response.body() != null) {
-                        RewardList rewardList = response.body();
-                        if(rewardList.getRewards() != null && rewardList.getRewards().size() > 0) {
-                            showDefaultLayout();
-                            mRewards.clear();
-                            for (Reward reward : rewardList.getRewards()) {
-                                mRewards.add(reward);
+            ServerAPIInterface serverAPIInterface = ServerAPIClient.getRetrofitInstance().create(ServerAPIInterface.class);
+            serverAPIInterface.getAdCampaigns(ServerAPIClient.API_KEY, access_token).enqueue(new Callback<RewardList>() {
+                @Override
+                public void onResponse(Call<RewardList> call, Response<RewardList> response) {
+                    if (isAdded()) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            RewardList rewardList = response.body();
+                            if (rewardList.getRewards() != null && rewardList.getRewards().size() > 0) {
+                                showDefaultLayout();
+                                mRewards.clear();
+                                for (Reward reward : rewardList.getRewards()) {
+                                    mRewards.add(reward);
+                                }
+                                mFreeRankListAdapter.notifyDataSetChanged();
+                            } else {
+                                showNoRewardsLayout();
                             }
-                            mFreeRankListAdapter.notifyDataSetChanged();
+                        } else if (response.code() == 401) {
+                            listener.onInvalidAccessTokenResponseReceived();
                         }
-                        else{
-                            showNoRewardsLayout();
-                        }
+                        hideLoadingIndicator();
                     }
-                    else if (response.code() == 401) {
-                        listener.onInvalidAccessTokenResponseReceived();
-                    }
+                }
+
+                @Override
+                public void onFailure(Call<RewardList> call, Throwable t) {
                     hideLoadingIndicator();
                 }
-            }
-
-            @Override
-            public void onFailure(Call<RewardList> call, Throwable t) {
-                hideLoadingIndicator();
-            }
-        });
+            });
+        }
     }
 
     private void loadRewardedVideoAd(String adId) {
