@@ -15,4 +15,11 @@
             android:summary="@string/pref_summary_subscribed_to_events"
             android:defaultValue="true" />
     </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/pref_category_others"
+        android:icon="@drawable/ic_settings">
+        <Preference
+            android:key="@string/pref_key_logout"
+            android:title="@string/pref_title_logout" />
+    </PreferenceCategory>
 </PreferenceScreen>

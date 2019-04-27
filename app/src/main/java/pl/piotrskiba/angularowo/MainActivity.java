@@ -76,15 +76,25 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
         mRewardedVideoAd.setRewardedVideoAdListener(this);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if(!sharedPreferences.contains(getString(R.string.pref_key_access_token))){
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivityForResult(intent, Constants.REQUEST_CODE_REGISTER);
-        }
-        else {
+        if(sharedPreferences.contains(getString(R.string.pref_key_access_token))){
             if(savedInstanceState == null)
                 setupMainFragment();
 
             populateUi();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(!waitingForLogin) {
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+            if (!sharedPreferences.contains(getString(R.string.pref_key_access_token))) {
+                waitingForLogin = true;
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivityForResult(intent, Constants.REQUEST_CODE_REGISTER);
+            }
         }
     }
 

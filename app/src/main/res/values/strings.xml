@@ -8,12 +8,18 @@
     <string name="pref_key_subscribed_to_player_topic" translatable="false">player_topic_subscribed</string>
     <string name="pref_key_subscribed_to_new_reports" translatable="false">new_reports_subscribed</string>
     <string name="pref_key_subscribed_to_events" translatable="false">events_subscribed</string>
+    <string name="pref_key_logout" translatable="false">logout</string>
 
     <string name="pref_category_notifications">Powiadomienia</string>
+    <string name="pref_category_others">Inne</string>
     <string name="pref_title_subscribed_to_new_reports">Nowe zgłoszenia</string>
     <string name="pref_summary_subscribed_to_new_reports">Otrzymuj powiadomienia o nowych zgłoszeniach na serwerze</string>
     <string name="pref_title_subscribed_to_events">Eventy</string>
     <string name="pref_summary_subscribed_to_events">Otrzymuj powiadomienia o zbliżających się eventach</string>
+    <string name="pref_title_logout">Wyloguj</string>
+
+    <string name="logout_question">Wylogowywanie</string>
+    <string name="logout_question_description">Czy na pewno chcesz się wylogować?</string>
 
     <!-- activity_login.xml -->
     <string name="login_header">Witaj!</string>
