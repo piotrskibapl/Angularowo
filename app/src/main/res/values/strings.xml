@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Angularowo</string>
 
+    <string name="notification_channel_name" translatable="false">Wszystkie powiadomienia</string>
+    <string name="notification_channel_description" translatable="false">Wszystkie powiadomienia wyświetlane przez aplikację</string>
+
     <!-- preferences -->
     <string name="pref_key_nickname" translatable="false">nickname</string>
     <string name="pref_key_rank" translatable="false">rank</string>

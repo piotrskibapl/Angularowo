@@ -17,6 +17,14 @@ public class Constants {
     public final static String FIREBASE_NEW_REPORTS_TOPIC = "new_reports";
     public final static String FIREBASE_NEW_EVENT_TOPIC = "new_event";
 
+    public final static String FIREBASE_FCM_DATA_NOTIFICATION_TITLE = "notification_title";
+    public final static String FIREBASE_FCM_DATA_NOTIFICATION_BODY = "notification_body";
+    public final static String FIREBASE_FCM_DATA_NOTIFICATION_SOUND = "notification_sound";
+
     public final static String BAN_TYPES = "ban,warning,mute";
     public final static String ACTIVE_BAN_TYPES = "ban,warning";
+
+    public static final long[] DEFAULT_VIBRATE_PATTERN = {0, 250, 250, 250};
+
+    public final static String DEFAULT_CHANNEL_ID = "default_notification_channel";
 }
