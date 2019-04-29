@@ -75,12 +75,12 @@ public class BanListAdapter extends RecyclerView.Adapter<BanListAdapter.BanViewH
         }
 
         holder.mPlayerAvatar.setImageDrawable(context.getResources().getDrawable(R.drawable.default_avatar));
-;
+
         MojangAPIInterface mojangAPIInterface = MojangAPIClient.getRetrofitInstance().create(MojangAPIInterface.class);
         mojangAPIInterface.getProfile(ban.getUsername()).enqueue(new Callback<MojangProfile>() {
             @Override
             public void onResponse(Call<MojangProfile> call, Response<MojangProfile> response) {
-                if(holder.getAdapterPosition() == position) {
+                if(context != null && holder.getAdapterPosition() == position) {
                     if (response.isSuccessful() && response.body() != null) {
                         Glide.with(context)
                                 .load(UrlUtils.buildAvatarUrl(response.body().getId(), true))

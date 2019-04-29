@@ -115,39 +115,39 @@ public class PlayerDetailsActivity extends AppCompatActivity implements SwipeRef
     }
 
     private void populatePlayer(Player player){
-        if(!isFinishing() && player.getUuid() != null) {
-            Glide.with(this)
-                    .load(UrlUtils.buildAvatarUrl(player.getUuid(), true))
-                    .signature(new IntegerVersionSignature(GlideUtils.getSignatureVersionNumber(5)))
-                    .placeholder(R.drawable.default_body)
-                    .into(mPlayerAvatar);
+        if(!isFinishing()) {
+            if (player.getUuid() != null) {
+                Glide.with(this)
+                        .load(UrlUtils.buildAvatarUrl(player.getUuid(), true))
+                        .signature(new IntegerVersionSignature(GlideUtils.getSignatureVersionNumber(5)))
+                        .placeholder(R.drawable.default_body)
+                        .into(mPlayerAvatar);
 
-            Glide.with(this)
-                    .load(UrlUtils.buildBodyUrl(player.getUuid(), true))
-                    .signature(new IntegerVersionSignature(GlideUtils.getSignatureVersionNumber(5)))
-                    .placeholder(R.drawable.default_body)
-                    .into(mPlayerBodyImageView);
+                Glide.with(this)
+                        .load(UrlUtils.buildBodyUrl(player.getUuid(), true))
+                        .signature(new IntegerVersionSignature(GlideUtils.getSignatureVersionNumber(5)))
+                        .placeholder(R.drawable.default_body)
+                        .into(mPlayerBodyImageView);
+            } else {
+                mPlayerAvatar.setImageDrawable(getResources().getDrawable(R.drawable.default_avatar));
+            }
+
+            mPlayerName.setText(player.getUsername());
+            mPlayerRank.setText(player.getRank());
+
+            int color_id = RankUtils.getRankColorId(player.getRank());
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                ((ConstraintLayout) mPlayerAvatar.getParent()).setBackground(getResources().getDrawable(color_id));
+            } else {
+                ((ConstraintLayout) mPlayerAvatar.getParent()).setBackgroundDrawable(getResources().getDrawable(color_id));
+            }
+
+            if (player.isVanished())
+                mPlayerVanishIcon.setVisibility(View.VISIBLE);
+            else
+                mPlayerVanishIcon.setVisibility(View.INVISIBLE);
         }
-        else{
-            mPlayerAvatar.setImageDrawable(getResources().getDrawable(R.drawable.default_avatar));
-        }
-
-        mPlayerName.setText(player.getUsername());
-        mPlayerRank.setText(player.getRank());
-
-        int color_id = RankUtils.getRankColorId(player.getRank());
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            ((ConstraintLayout) mPlayerAvatar.getParent()).setBackground(getResources().getDrawable(color_id));
-        }
-        else{
-            ((ConstraintLayout) mPlayerAvatar.getParent()).setBackgroundDrawable(getResources().getDrawable(color_id));
-        }
-
-        if(player.isVanished())
-            mPlayerVanishIcon.setVisibility(View.VISIBLE);
-        else
-            mPlayerVanishIcon.setVisibility(View.INVISIBLE);
     }
 
     private void populatePlayer(DetailedPlayer detailedPlayer){
