@@ -21,9 +21,7 @@
                     android:layout_width="@dimen/body_width"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/section_margin"
-                    android:src="@drawable/default_body"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    android:src="@drawable/default_body" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
