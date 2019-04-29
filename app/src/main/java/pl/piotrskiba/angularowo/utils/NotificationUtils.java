@@ -44,9 +44,10 @@ public class NotificationUtils {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, Constants.DEFAULT_CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(title)
-                .setContentText(body)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(body))
                 .setAutoCancel(true);
         if(sound) {
             Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
