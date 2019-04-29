@@ -1,6 +1,7 @@
 package pl.piotrskiba.angularowo;
 
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -69,7 +70,14 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
         mFreeRankListAdapter = new FreeRankListAdapter(getContext(), this);
         mFreeRankListAdapter.setRewardList(mRewards);
 
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+        RecyclerView.LayoutManager layoutManager;
+        int display_mode = getResources().getConfiguration().orientation;
+        if (display_mode == Configuration.ORIENTATION_PORTRAIT) {
+            layoutManager = new GridLayoutManager(getContext(), 2);
+        }
+        else{
+            layoutManager = new GridLayoutManager(getContext(), 4);
+        }
         mFreeRankList.setAdapter(mFreeRankListAdapter);
         mFreeRankList.setLayoutManager(layoutManager);
         mFreeRankList.setHasFixedSize(true);

@@ -23,11 +23,7 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,7 +36,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements InvalidAccessTokenResponseListener, RewardedVideoAdListener {
-    private static final String TAG = MainActivity.class.getName();
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
