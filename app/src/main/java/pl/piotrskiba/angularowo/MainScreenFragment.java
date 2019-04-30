@@ -89,18 +89,11 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
 
         ButterKnife.bind(this, view);
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        username = sharedPreferences.getString(getString(R.string.pref_key_nickname), null);
-
         mBanListAdapter = new BanListAdapter(getContext(), this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         mBanList.setAdapter(mBanListAdapter);
         mBanList.setLayoutManager(layoutManager);
         mBanList.setHasFixedSize(true);
-
-        if(username != null){
-            populateUi();
-        }
 
         mSwipeRefreshLayout.setOnRefreshListener(() -> populateUi());
 
@@ -109,20 +102,18 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
 
     @Override
     public void onResume() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String username = sharedPreferences.getString(getString(R.string.pref_key_nickname), null);
 
-        if(this.username == null){
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-            String username = sharedPreferences.getString(getString(R.string.pref_key_nickname), null);
+        if(this.username == null || !this.username.equals(username)){
+            this.username = username;
 
-            if(username != null){
-                this.username = username;
+            if(username != null)
                 populateUi();
-            }
         }
 
         // subscribe to player's individual Firebase topic
         if(this.username != null){
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
             if(!sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_player_topic))) {
                 FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_PLAYER_TOPIC_PREFIX + this.username)
                         .addOnCompleteListener(task -> {
@@ -139,7 +130,6 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
 
         // subscribe to new events Firebase topic
         if(this.username != null){
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
             if(!sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_events))) {
                 FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_NEW_EVENT_TOPIC)
                         .addOnCompleteListener(task -> {

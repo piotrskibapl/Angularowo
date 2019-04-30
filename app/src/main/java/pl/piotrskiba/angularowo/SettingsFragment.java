@@ -8,6 +8,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import pl.piotrskiba.angularowo.utils.RankUtils;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
@@ -15,7 +17,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         String rank = sharedPreferences.getString(getString(R.string.pref_key_rank), null);
-        if(rank != null && RankUtils.isStaffRank(rank)){
+        if(RankUtils.isStaffRank(rank)){
             addPreferencesFromResource(R.xml.pref_settings_admin);
         }
         else {
@@ -33,6 +35,29 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                         .setPositiveButton(R.string.button_yes, (dialogInterface, i) -> {
                             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
                             SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                            if(sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_player_topic))) {
+                                String username = sharedPreferences.getString(getString(R.string.pref_key_nickname), null);
+                                FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_PLAYER_TOPIC_PREFIX + username);
+                                editor.remove(getString(R.string.pref_key_subscribed_to_player_topic));
+                            }
+
+                            String rank = sharedPreferences.getString(getString(R.string.pref_key_rank), null);
+                            if(rank != null) {
+                                FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_RANK_TOPIC_PREFIX + rank);
+                                editor.remove(getString(R.string.pref_key_rank));
+                            }
+
+                            if(sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_events))) {
+                                FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_NEW_EVENT_TOPIC);
+                                editor.remove(getString(R.string.pref_key_subscribed_to_events));
+                            }
+
+                            if(sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_new_reports))) {
+                                FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_NEW_REPORTS_TOPIC);
+                                editor.remove(getString(R.string.pref_key_subscribed_to_new_reports));
+                            }
+
 
                             editor.remove(getString(R.string.pref_key_nickname));
                             editor.remove(getString(R.string.pref_key_access_token));
