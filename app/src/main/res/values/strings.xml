@@ -39,6 +39,7 @@
     <!-- drawer_view.xml -->
     <string name="main_screen">Strona główna</string>
     <string name="player_list">Lista graczy online</string>
+    <string name="chat">Podgląd chatu</string>
     <string name="last_bans">Ostatnie bany</string>
     <string name="free_ranks">Odbierz darmowe nagrody</string>
     <string name="settings">Ustawienia</string>
@@ -89,4 +90,8 @@
     <string name="button_yes">Tak</string>
     <string name="button_no">Nie</string>
     <string name="button_dismiss">Zamknij</string>
+
+    <!-- fragment_chat.xml -->
+    <string name="actionbar_title_chat">Podgląd chatu</string>
+    <string name="chat_error">Nie można połączyć z czatem.</string>
 </resources>

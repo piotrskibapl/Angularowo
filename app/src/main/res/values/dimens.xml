@@ -34,4 +34,7 @@
     <dimen name="free_rank_image_height">120dp</dimen>
     <dimen name="reward_title_text_size">20sp</dimen>
     <dimen name="reward_description_text_size">12sp</dimen>
+
+    <!-- chat_message.xml -->
+    <dimen name="chat_message_text_size">16sp</dimen>
 </resources>

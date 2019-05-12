@@ -46,11 +46,13 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
 
     MainScreenFragment mainScreenFragment;
     PlayerListFragment playerListFragment;
+    ChatFragment chatFragment;
     BanListFragment banListFragment;
     FreeRanksFragment freeRanksFragment;
 
     private final static String TAG_MAIN_FRAGMENT = "fragment_main";
     private final static String TAG_PLAYER_LIST_FRAGMENT = "fragment_player_list";
+    private final static String TAG_CHAT_FRAGMENT = "fragment_chat";
     private final static String TAG_BAN_LIST_FRAGMENT = "fragment_ban_list";
     private final static String TAG_FREE_RANKS_FRAGMENT = "fragment_free_ranks";
 
@@ -115,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
 
         mainScreenFragment = (MainScreenFragment) fragmentManager.findFragmentByTag(TAG_MAIN_FRAGMENT);
         playerListFragment = (PlayerListFragment) fragmentManager.findFragmentByTag(TAG_PLAYER_LIST_FRAGMENT);
+        chatFragment = (ChatFragment) fragmentManager.findFragmentByTag(TAG_CHAT_FRAGMENT);
         banListFragment = (BanListFragment) fragmentManager.findFragmentByTag(TAG_BAN_LIST_FRAGMENT);
         freeRanksFragment = (FreeRanksFragment) fragmentManager.findFragmentByTag(TAG_FREE_RANKS_FRAGMENT);
 
@@ -127,6 +130,10 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
             playerListFragment = new PlayerListFragment();
         }
         playerListFragment.setInvalidAccessTokenResponseListener(this);
+
+        if(chatFragment == null) {
+            chatFragment = new ChatFragment();
+        }
 
         if(banListFragment == null) {
             banListFragment = new BanListFragment();
@@ -160,6 +167,10 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
                         else if(menuItem.getItemId() == R.id.nav_player_list){
                             fragmentManager.beginTransaction()
                                     .replace(R.id.fragment_container, playerListFragment, TAG_PLAYER_LIST_FRAGMENT)
+                                    .commit();
+                        } else if (menuItem.getItemId() == R.id.nav_chat) {
+                            fragmentManager.beginTransaction()
+                                    .replace(R.id.fragment_container, chatFragment, TAG_CHAT_FRAGMENT)
                                     .commit();
                         } else if (menuItem.getItemId() == R.id.nav_last_bans) {
                             fragmentManager.beginTransaction()

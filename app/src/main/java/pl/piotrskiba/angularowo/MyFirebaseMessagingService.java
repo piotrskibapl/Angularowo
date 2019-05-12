@@ -12,15 +12,17 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         super.onMessageReceived(remoteMessage);
 
         if(remoteMessage.getData() != null){
-            String notification_title = remoteMessage.getData().get(Constants.FIREBASE_FCM_DATA_NOTIFICATION_TITLE);
             String notification_body = remoteMessage.getData().get(Constants.FIREBASE_FCM_DATA_NOTIFICATION_BODY);
-            boolean notification_sound = Boolean.parseBoolean(
-                    remoteMessage.getData().get(Constants.FIREBASE_FCM_DATA_NOTIFICATION_SOUND)
-            );
+            if(notification_body != null) {
+                String notification_title = remoteMessage.getData().get(Constants.FIREBASE_FCM_DATA_NOTIFICATION_TITLE);
 
-            if(notification_body != null)
+                boolean notification_sound = Boolean.parseBoolean(
+                        remoteMessage.getData().get(Constants.FIREBASE_FCM_DATA_NOTIFICATION_SOUND)
+                );
+
                 new NotificationUtils(getApplicationContext())
                         .showNotification(notification_title, notification_body, notification_sound);
+            }
         }
     }
 }
