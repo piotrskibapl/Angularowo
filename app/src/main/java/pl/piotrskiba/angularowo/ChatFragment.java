@@ -1,13 +1,8 @@
 package pl.piotrskiba.angularowo;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +13,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -95,12 +89,10 @@ public class ChatFragment extends Fragment {
 
         @Override
         public void onOpen(WebSocket webSocket, Response response) {
-            Log.d("websocket", "onOpen");
         }
 
         @Override
         public void onMessage(WebSocket webSocket, String text) {
-            Log.d("websocket", "onMessage");
             String[] messageInfo = text.split(";");
             String username = messageInfo[0];
             String rank = messageInfo[1];
@@ -114,33 +106,24 @@ public class ChatFragment extends Fragment {
 
         @Override
         public void onMessage(WebSocket webSocket, ByteString bytes) {
-            Log.d("websocket", "onMessage2");
-            String[] messageInfo = bytes.hex().split(";");
-            String username = messageInfo[0];
-            String rank = messageInfo[1];
-            String body = messageInfo[2];
-
-            ChatMessage chatMessage = new ChatMessage(username, rank, body);
-            mChatAdapter.addMessage(chatMessage);
         }
 
         @Override
         public void onClosing(WebSocket webSocket, int code, String reason) {
-            Log.d("websocket", "onClosing");
             webSocket.close(NORMAL_CLOSURE_STATUS, null);
         }
 
         @Override
         public void onClosed(WebSocket webSocket, int code, String reason) {
-            Log.d("websocket", "onClosed");
         }
 
         @Override
         public void onFailure(WebSocket webSocket, Throwable t, @javax.annotation.Nullable Response response) {
-            Log.d("websocket", "onFailure");
             t.printStackTrace();
 
-            getActivity().runOnUiThread(() -> showErrorLayout());
+            if(isAdded()) {
+                getActivity().runOnUiThread(() -> showErrorLayout());
+            }
         }
     }
 }
