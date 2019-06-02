@@ -19,7 +19,12 @@ import pl.piotrskiba.angularowo.models.ChatMessage;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatMessageViewHolder> {
 
+    private Context context;
     private List<ChatMessage> mMessageList;
+
+    public ChatAdapter(Context context){
+        this.context = context;
+    }
 
     @NonNull
     @Override
@@ -35,8 +40,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatMessageVie
     @Override
     public void onBindViewHolder(@NonNull ChatMessageViewHolder holder, int position) {
         ChatMessage message = mMessageList.get(position);
-        holder.mMessageSender.setText(message.getUsername());
-        holder.mMessageBody.setText(message.getMessage());
+        holder.mMessage.setText(context.getString(
+                R.string.chat_user_message,
+                message.getRank(),
+                message.getUsername(),
+                message.getMessage()));
+
     }
 
     @Override
@@ -49,11 +58,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatMessageVie
 
     class ChatMessageViewHolder extends RecyclerView.ViewHolder{
 
-        @BindView(R.id.tv_player_name)
-        TextView mMessageSender;
-
         @BindView(R.id.tv_message)
-        TextView mMessageBody;
+        TextView mMessage;
 
         public ChatMessageViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -69,5 +75,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatMessageVie
         mMessageList.add(message);
 
         notifyDataSetChanged();
+
     }
 }

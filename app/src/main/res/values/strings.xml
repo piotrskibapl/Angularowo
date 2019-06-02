@@ -94,4 +94,5 @@
     <!-- fragment_chat.xml -->
     <string name="actionbar_title_chat">Podgląd chatu</string>
     <string name="chat_error">Nie można połączyć z czatem.</string>
+    <string name="chat_user_message">[%1$s] %2$s: %3$s</string>
 </resources>

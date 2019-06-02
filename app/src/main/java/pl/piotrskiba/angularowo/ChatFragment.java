@@ -50,7 +50,7 @@ public class ChatFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
-        mChatAdapter = new ChatAdapter();
+        mChatAdapter = new ChatAdapter(getContext());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         mChat.setAdapter(mChatAdapter);
         mChat.setLayoutManager(layoutManager);
@@ -101,6 +101,7 @@ public class ChatFragment extends Fragment {
             ChatMessage chatMessage = new ChatMessage(username, rank, body);
             getActivity().runOnUiThread(() -> {
                 mChatAdapter.addMessage(chatMessage);
+                mChat.scrollToPosition(mChatAdapter.getItemCount()-1);
             });
         }
 
