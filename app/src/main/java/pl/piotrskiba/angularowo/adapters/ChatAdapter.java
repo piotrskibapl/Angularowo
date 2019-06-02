@@ -18,6 +18,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.piotrskiba.angularowo.R;
+import pl.piotrskiba.angularowo.interfaces.ChatMessageClickListener;
 import pl.piotrskiba.angularowo.models.ChatMessage;
 import pl.piotrskiba.angularowo.utils.ColorUtils;
 import pl.piotrskiba.angularowo.utils.RankUtils;
@@ -27,8 +28,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatMessageVie
     private Context context;
     private List<ChatMessage> mMessageList;
 
-    public ChatAdapter(Context context){
+    private ChatMessageClickListener mClickListener;
+
+    public ChatAdapter(Context context, ChatMessageClickListener chatMessageClickListener){
         this.context = context;
+        this.mClickListener = chatMessageClickListener;
     }
 
     @NonNull
@@ -81,7 +85,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatMessageVie
             return mMessageList.size();
     }
 
-    class ChatMessageViewHolder extends RecyclerView.ViewHolder{
+    class ChatMessageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         @BindView(R.id.tv_message)
         TextView mMessage;
@@ -90,6 +94,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatMessageVie
             super(itemView);
 
             ButterKnife.bind(this, itemView);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int pos = getAdapterPosition();
+            mClickListener.onChatMessageClick(view, mMessageList.get(pos));
         }
     }
 

@@ -1,5 +1,6 @@
 package pl.piotrskiba.angularowo;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,9 +27,11 @@ import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
 import okio.ByteString;
 import pl.piotrskiba.angularowo.adapters.ChatAdapter;
+import pl.piotrskiba.angularowo.interfaces.ChatMessageClickListener;
 import pl.piotrskiba.angularowo.models.ChatMessage;
+import pl.piotrskiba.angularowo.models.Player;
 
-public class ChatFragment extends Fragment {
+public class ChatFragment extends Fragment implements ChatMessageClickListener {
 
     @BindView(R.id.rv_chat)
     RecyclerView mChat;
@@ -50,7 +54,7 @@ public class ChatFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
-        mChatAdapter = new ChatAdapter(getContext());
+        mChatAdapter = new ChatAdapter(getContext(), this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         mChat.setAdapter(mChatAdapter);
         mChat.setLayoutManager(layoutManager);
@@ -82,6 +86,21 @@ public class ChatFragment extends Fragment {
         ChatWebSocketListener listener = new ChatWebSocketListener();
         mOkHttpClient.newWebSocket(request, listener);
         mOkHttpClient.dispatcher().executorService().shutdown();
+    }
+
+    @Override
+    public void onChatMessageClick(View view, ChatMessage clickedChatMessage) {
+        Intent intent = new Intent(getContext(), PlayerDetailsActivity.class);
+        intent.putExtra(Constants.EXTRA_PLAYER,
+                new Player(
+                        clickedChatMessage.getUsername(),
+                        null,
+                        clickedChatMessage.getRank(),
+                        false
+                )
+        );
+
+        startActivity(intent);
     }
 
     private final class ChatWebSocketListener extends WebSocketListener{
