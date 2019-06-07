@@ -27,6 +27,7 @@ public class Constants {
     public static final long[] DEFAULT_VIBRATE_PATTERN = {0, 250, 250, 250};
 
     public final static String DEFAULT_CHANNEL_ID = "default_notification_channel";
+    public final static String SILENT_CHANNEL_ID = "silent_notification_channel";
 
     public final static String CHAT_WEBSOCKET_URL = "ws://164.132.159.123:25772";
     public final static String CHAT_WEBSOCKET_ACCESSTOKEN_HEADER = "access_token";

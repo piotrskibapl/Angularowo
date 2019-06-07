@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
 
         ButterKnife.bind(this);
 
-        new NotificationUtils(this).createNotificationChannel();
+        new NotificationUtils(this).createNotificationChannels();
 
         MobileAds.initialize(this, Constants.ADMOB_APP_ID);
 

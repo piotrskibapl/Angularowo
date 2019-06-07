@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name">Angularowo</string>
 
-    <string name="notification_channel_name" translatable="false">Wszystkie powiadomienia</string>
-    <string name="notification_channel_description" translatable="false">Wszystkie powiadomienia wyświetlane przez aplikację</string>
+    <string name="notification_channel_name" translatable="false">Domyślne powiadomienia</string>
+    <string name="notification_channel_description" translatable="false">Powiadomienia w aplikacji dla których włączony jest dźwięk oraz wibracje</string>
+
+    <string name="notification_channel_name_silent" translatable="false">Ciche powiadomienia</string>
+    <string name="notification_channel_description_silent" translatable="false">Powiadomienia w aplikacji dla których wyłączony jest dźwięk oraz wibracje</string>
 
     <!-- preferences -->
     <string name="pref_key_nickname" translatable="false">nickname</string>
