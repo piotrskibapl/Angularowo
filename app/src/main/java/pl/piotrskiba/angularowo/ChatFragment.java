@@ -7,13 +7,13 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,8 +28,14 @@ import okhttp3.WebSocketListener;
 import okio.ByteString;
 import pl.piotrskiba.angularowo.adapters.ChatAdapter;
 import pl.piotrskiba.angularowo.interfaces.ChatMessageClickListener;
+import pl.piotrskiba.angularowo.interfaces.InvalidAccessTokenResponseListener;
 import pl.piotrskiba.angularowo.models.ChatMessage;
+import pl.piotrskiba.angularowo.models.ChatMessageList;
 import pl.piotrskiba.angularowo.models.Player;
+import pl.piotrskiba.angularowo.network.ServerAPIClient;
+import pl.piotrskiba.angularowo.network.ServerAPIInterface;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class ChatFragment extends Fragment implements ChatMessageClickListener {
 
@@ -39,9 +45,14 @@ public class ChatFragment extends Fragment implements ChatMessageClickListener {
     @BindView(R.id.errorTextView)
     TextView mErrorTextView;
 
+    @BindView(R.id.pb_loading)
+    ProgressBar mLoadingIndicator;
+
     private ChatAdapter mChatAdapter;
 
     private OkHttpClient mOkHttpClient;
+
+    private InvalidAccessTokenResponseListener listener;
 
     public ChatFragment(){
 
@@ -60,6 +71,8 @@ public class ChatFragment extends Fragment implements ChatMessageClickListener {
         mChat.setLayoutManager(layoutManager);
         mChat.setHasFixedSize(true);
 
+        preloadChatMessages();
+
         mOkHttpClient = new OkHttpClient();
         startChatWebSocket();
 
@@ -69,10 +82,41 @@ public class ChatFragment extends Fragment implements ChatMessageClickListener {
         return view;
     }
 
+    private void preloadChatMessages(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String access_token = sharedPreferences.getString(getString(R.string.pref_key_access_token), null);
+
+        ServerAPIInterface serverAPIInterface = ServerAPIClient.getRetrofitInstance().create(ServerAPIInterface.class);
+        serverAPIInterface.getLastChatMessages(ServerAPIClient.API_KEY, access_token).enqueue(new Callback<ChatMessageList>() {
+            @Override
+            public void onResponse(Call<ChatMessageList> call, retrofit2.Response<ChatMessageList> response) {
+                if(isAdded()){
+                    if (response.isSuccessful() && response.body() != null) {
+                        mChatAdapter.setMessageList(response.body());
+                        showDefaultLayout();
+                    } else if (response.code() == 401) {
+                        listener.onInvalidAccessTokenResponseReceived();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ChatMessageList> call, Throwable t) {
+            }
+        });
+    }
+
+    private void showDefaultLayout(){
+        mChat.setVisibility(View.VISIBLE);
+        mErrorTextView.setVisibility(View.GONE);
+        mLoadingIndicator.setVisibility(View.GONE);
+    }
+
     private void showErrorLayout(){
         mChat.setVisibility(View.GONE);
         mErrorTextView.setVisibility(View.VISIBLE);
         mErrorTextView.setText(R.string.chat_error);
+        mLoadingIndicator.setVisibility(View.GONE);
     }
 
     private void startChatWebSocket() {
@@ -145,5 +189,9 @@ public class ChatFragment extends Fragment implements ChatMessageClickListener {
                 getActivity().runOnUiThread(() -> showErrorLayout());
             }
         }
+    }
+
+    public void setInvalidAccessTokenResponseListener(InvalidAccessTokenResponseListener listener){
+        this.listener = listener;
     }
 }

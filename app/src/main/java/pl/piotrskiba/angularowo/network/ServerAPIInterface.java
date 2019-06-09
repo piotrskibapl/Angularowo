@@ -2,6 +2,7 @@ package pl.piotrskiba.angularowo.network;
 
 import pl.piotrskiba.angularowo.models.AccessToken;
 import pl.piotrskiba.angularowo.models.BanList;
+import pl.piotrskiba.angularowo.models.ChatMessageList;
 import pl.piotrskiba.angularowo.models.DetailedPlayer;
 import pl.piotrskiba.angularowo.models.PlayerList;
 import pl.piotrskiba.angularowo.models.RewardList;
@@ -32,4 +33,7 @@ public interface ServerAPIInterface {
 
     @GET("redeem_ad_prize.php")
     Call<Void> redeemAdPrize(@Query("api_key") String api_key, @Query("prize") String prize, @Query("access_token") String access_token);
+
+    @GET("get_last_chat_messages.php")
+    Call<ChatMessageList> getLastChatMessages(@Query("api_key") String api_key, @Query("access_token") String access_token);
 }

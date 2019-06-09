@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 import pl.piotrskiba.angularowo.R;
 import pl.piotrskiba.angularowo.interfaces.ChatMessageClickListener;
 import pl.piotrskiba.angularowo.models.ChatMessage;
+import pl.piotrskiba.angularowo.models.ChatMessageList;
 import pl.piotrskiba.angularowo.utils.ColorUtils;
 import pl.piotrskiba.angularowo.utils.RankUtils;
 
@@ -105,6 +106,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatMessageVie
         }
     }
 
+    public void setMessageList(ChatMessageList messageList){
+        mMessageList = messageList.getChatMessageList();
+
+        notifyDataSetChanged();
+    }
+
     public void addMessage(ChatMessage message){
         if(mMessageList == null)
             mMessageList = new ArrayList<>();
@@ -112,6 +119,5 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatMessageVie
         mMessageList.add(message);
 
         notifyDataSetChanged();
-
     }
 }

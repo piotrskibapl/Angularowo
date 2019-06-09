@@ -134,6 +134,7 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
         if(chatFragment == null) {
             chatFragment = new ChatFragment();
         }
+        chatFragment.setInvalidAccessTokenResponseListener(this);
 
         if(banListFragment == null) {
             banListFragment = new BanListFragment();
