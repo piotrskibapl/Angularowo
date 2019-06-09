@@ -54,6 +54,8 @@ public class ChatFragment extends Fragment implements ChatMessageClickListener {
 
     private InvalidAccessTokenResponseListener listener;
 
+    private WebSocket mWebSocket;
+
     public ChatFragment(){
 
     }
@@ -80,6 +82,13 @@ public class ChatFragment extends Fragment implements ChatMessageClickListener {
         actionbar.setTitle(R.string.actionbar_title_chat);
 
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        mWebSocket.close(1000, null);
     }
 
     private void preloadChatMessages(){
@@ -128,7 +137,7 @@ public class ChatFragment extends Fragment implements ChatMessageClickListener {
                 .addHeader(Constants.CHAT_WEBSOCKET_ACCESSTOKEN_HEADER, access_token)
                 .build();
         ChatWebSocketListener listener = new ChatWebSocketListener();
-        mOkHttpClient.newWebSocket(request, listener);
+        mWebSocket = mOkHttpClient.newWebSocket(request, listener);
         mOkHttpClient.dispatcher().executorService().shutdown();
     }
 
