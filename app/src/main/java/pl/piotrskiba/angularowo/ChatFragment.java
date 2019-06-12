@@ -18,6 +18,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.common.collect.Lists;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import okhttp3.OkHttpClient;
@@ -101,7 +103,7 @@ public class ChatFragment extends Fragment implements ChatMessageClickListener {
             public void onResponse(Call<ChatMessageList> call, retrofit2.Response<ChatMessageList> response) {
                 if(isAdded()){
                     if (response.isSuccessful() && response.body() != null) {
-                        mChatAdapter.setMessageList(response.body());
+                        mChatAdapter.setMessageList(new ChatMessageList(Lists.reverse(response.body().getChatMessageList())));
                         showDefaultLayout();
                     } else if (response.code() == 401) {
                         listener.onInvalidAccessTokenResponseReceived();
