@@ -174,8 +174,13 @@ public class ChatFragment extends Fragment implements ChatMessageClickListener {
 
             ChatMessage chatMessage = new ChatMessage(username, rank, body);
             getActivity().runOnUiThread(() -> {
-                mChatAdapter.addMessage(chatMessage);
-                mChat.scrollToPosition(mChatAdapter.getItemCount()-1);
+                if(!mChat.canScrollVertically(1)) {
+                    mChatAdapter.addMessage(chatMessage);
+                    mChat.scrollToPosition(mChatAdapter.getItemCount() - 1);
+                }
+                else{
+                    mChatAdapter.addMessage(chatMessage);
+                }
             });
         }
 
