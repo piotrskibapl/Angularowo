@@ -104,6 +104,7 @@ public class ChatFragment extends Fragment implements ChatMessageClickListener {
                 if(isAdded()){
                     if (response.isSuccessful() && response.body() != null) {
                         mChatAdapter.setMessageList(new ChatMessageList(Lists.reverse(response.body().getChatMessageList())));
+                        mChat.scrollToPosition(mChatAdapter.getItemCount() - 1);
                         showDefaultLayout();
                     } else if (response.code() == 401) {
                         listener.onInvalidAccessTokenResponseReceived();
