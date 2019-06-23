@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:padding="@dimen/padding_default"
     android:layout_marginBottom="@dimen/margin_small"
-    android:background="@color/color_gracz">
+    android:background="@color/color_minecraft_7">
 
     <ImageView
         android:id="@+id/iv_player_avatar"
