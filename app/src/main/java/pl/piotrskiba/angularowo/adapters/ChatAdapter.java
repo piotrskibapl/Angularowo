@@ -23,6 +23,7 @@ import pl.piotrskiba.angularowo.models.ChatMessage;
 import pl.piotrskiba.angularowo.models.ChatMessageList;
 import pl.piotrskiba.angularowo.utils.ColorUtils;
 import pl.piotrskiba.angularowo.utils.RankUtils;
+import pl.piotrskiba.angularowo.utils.TextUtils;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatMessageViewHolder> {
 
@@ -58,9 +59,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatMessageVie
         ), 1.4f)));
         String message_color = String.format("#%06X", (0xFFFFFF & ColorUtils.changeBrightness(ResourcesCompat.getColor(
                 context.getResources(),
-                RankUtils.getRankColorId(message.getRank()),
+                RankUtils.getRankChatColorId(message.getRank()),
                 null
-        ), 1.8f)));
+        ), 1.4f)));
 
         String coloredmessage = context.getString(
                 R.string.chat_user_message,
@@ -70,6 +71,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatMessageVie
                 rank_color,
                 message_color
         );
+
+        coloredmessage = TextUtils.replaceColorCodes(context, coloredmessage);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             holder.mMessage.setText(Html.fromHtml(coloredmessage,  Html.FROM_HTML_MODE_LEGACY), TextView.BufferType.SPANNABLE);

@@ -16,11 +16,11 @@
     <color name="color_minecraft_7">#5E5E5E</color>
     <color name="color_minecraft_8">#090909</color>
     <color name="color_minecraft_9">#0909B3</color>
-    <color name="color_minecraft_f">#B3B3B3</color>
     <!-- 50% darker according to the official Minecraft colors -->
     <color name="color_minecraft_a">#008000</color>
     <color name="color_minecraft_b">#008080</color>
     <color name="color_minecraft_c">#800000</color>
     <color name="color_minecraft_d">#800080</color>
     <color name="color_minecraft_e">#808000</color>
+    <color name="color_minecraft_f">#808080</color>
 </resources>
