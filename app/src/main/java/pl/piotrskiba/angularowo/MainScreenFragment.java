@@ -162,7 +162,7 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
                 if(response.isSuccessful() && response.body() != null && getContext() != null){
                     ServerStatus server = response.body();
 
-                    mPlayerCountTextView.setText(getString(R.string.playercount, server.getPlayerCount()));
+                    mPlayerCountTextView.setText(getResources().getQuantityString(R.plurals.playercount, server.getPlayerCount(), server.getPlayerCount()));
                 }
                 else if(response.code() == 401){
                     listener.onInvalidAccessTokenResponseReceived();

@@ -51,63 +51,60 @@ public class LoginActivity extends AppCompatActivity {
 
         context = this;
 
-        accessTokenPeet.setOnPinEnteredListener(new PinEntryEditText.OnPinEnteredListener() {
-            @Override
-            public void onPinEntered(CharSequence str) {
-                String pin = str.toString();
+        accessTokenPeet.setOnPinEnteredListener(str -> {
+            String pin = str.toString();
 
-                accessTokenPeet.setText("");
-                closeKeyboard();
+            accessTokenPeet.setText("");
+            closeKeyboard();
 
-                // show loading snackbar
-                Snackbar snackbar = Snackbar.make(mCoordinatorLayout, getString(R.string.logging_in), Snackbar.LENGTH_INDEFINITE);
-                ViewGroup contentLay = (ViewGroup) snackbar.getView().findViewById(R.id.snackbar_text).getParent();
-                ProgressBar item = new ProgressBar(context);
-                contentLay.addView(item,0);
-                snackbar.show();
+            // show loading snackbar
+            Snackbar snackbar = Snackbar.make(mCoordinatorLayout, getString(R.string.logging_in), Snackbar.LENGTH_INDEFINITE);
+            ViewGroup contentLay = (ViewGroup) snackbar.getView().findViewById(R.id.snackbar_text).getParent();
+            ProgressBar item = new ProgressBar(context);
+            contentLay.addView(item,0);
+            snackbar.show();
 
-                ServerAPIInterface serverAPIInterface = ServerAPIClient.getRetrofitInstance().create(ServerAPIInterface.class);
-                serverAPIInterface.registerDevice(ServerAPIClient.API_KEY, pin).enqueue(new Callback<AccessToken>() {
-                    @Override
-                    public void onResponse(Call<AccessToken> call, Response<AccessToken> response) {
-                        if (response.body() != null) {
-                            AccessToken accessToken = response.body();
+            ServerAPIInterface serverAPIInterface = ServerAPIClient.getRetrofitInstance().create(ServerAPIInterface.class);
+            serverAPIInterface.registerDevice(ServerAPIClient.API_KEY, pin).enqueue(new Callback<AccessToken>() {
+                @Override
+                public void onResponse(Call<AccessToken> call, Response<AccessToken> response) {
+                    if (response.body() != null) {
+                        AccessToken accessToken = response.body();
 
-                            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                            editor.putString(getString(R.string.pref_key_nickname), accessToken.getUsername());
-                                editor.putString(getString(R.string.pref_key_access_token), accessToken.getAccessToken());
+                        editor.putString(getString(R.string.pref_key_nickname), accessToken.getUsername());
+                            editor.putString(getString(R.string.pref_key_access_token), accessToken.getAccessToken());
 
-                            editor.commit();
+                        editor.commit();
 
-                            setResult(Constants.RESULT_CODE_SUCCESS);
-                            finish();
-                        }
-                        else if(response.errorBody() != null) {
-                            Gson gson = new Gson();
-                            TypeAdapter<AccessToken> adapter = gson.getAdapter(AccessToken.class);
-                            try {
-                                AccessToken accessToken = adapter.fromJson(response.errorBody().string());
+                        setResult(Constants.RESULT_CODE_SUCCESS);
+                        finish();
+                    }
+                    else if(response.errorBody() != null) {
+                        Gson gson = new Gson();
+                        TypeAdapter<AccessToken> adapter = gson.getAdapter(AccessToken.class);
+                        try {
+                            AccessToken accessToken = adapter.fromJson(response.errorBody().string());
 
-                                if (accessToken.getMessage().equals(getString(R.string.login_api_response_code_not_found))) {
-                                    Snackbar.make(mCoordinatorLayout, getString(R.string.login_error_code_not_found), Snackbar.LENGTH_LONG).show();
-                                } else if (accessToken.getMessage().equals(getString(R.string.login_api_response_code_expired))) {
-                                    Snackbar.make(mCoordinatorLayout, getString(R.string.login_error_code_expired), Snackbar.LENGTH_LONG).show();
-                                }
-
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                            if (accessToken.getMessage().equals(getString(R.string.login_api_response_code_not_found))) {
+                                Snackbar.make(mCoordinatorLayout, getString(R.string.login_error_code_not_found), Snackbar.LENGTH_LONG).show();
+                            } else if (accessToken.getMessage().equals(getString(R.string.login_api_response_code_expired))) {
+                                Snackbar.make(mCoordinatorLayout, getString(R.string.login_error_code_expired), Snackbar.LENGTH_LONG).show();
                             }
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
+                }
 
-                    @Override
-                    public void onFailure(Call<AccessToken> call, Throwable t) {
-                        Snackbar.make(mCoordinatorLayout, getString(R.string.login_error_unknown), Snackbar.LENGTH_LONG).show();
-                    }
-                });
-            }
+                @Override
+                public void onFailure(Call<AccessToken> call, Throwable t) {
+                    Snackbar.make(mCoordinatorLayout, getString(R.string.login_error_unknown), Snackbar.LENGTH_LONG).show();
+                }
+            });
         });
     }
 

@@ -14,4 +14,10 @@
         <item quantity="few">%d minuty</item>
         <item quantity="other">%d minut</item>
     </plurals>
+
+    <!-- fragment_main_screen.xml -->
+    <plurals name="playercount">
+        <item quantity="one">%d gracz online</item>
+        <item quantity="other">%d graczy online</item>
+    </plurals>
 </resources>

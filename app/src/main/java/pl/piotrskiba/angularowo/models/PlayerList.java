@@ -3,7 +3,7 @@ package pl.piotrskiba.angularowo.models;
 import java.util.List;
 
 public class PlayerList {
-    private List<Player> players;
+    private final List<Player> players;
 
     public PlayerList(List<Player> players){
         this.players = players;

@@ -44,11 +44,11 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
     @BindView(R.id.nav_view)
     NavigationView mNavigationView;
 
-    MainScreenFragment mainScreenFragment;
-    PlayerListFragment playerListFragment;
-    ChatFragment chatFragment;
-    BanListFragment banListFragment;
-    FreeRanksFragment freeRanksFragment;
+    private MainScreenFragment mainScreenFragment;
+    private PlayerListFragment playerListFragment;
+    private ChatFragment chatFragment;
+    private BanListFragment banListFragment;
+    private FreeRanksFragment freeRanksFragment;
 
     private final static String TAG_MAIN_FRAGMENT = "fragment_main";
     private final static String TAG_PLAYER_LIST_FRAGMENT = "fragment_player_list";
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
 
     private RewardedVideoAd mRewardedVideoAd;
 
-    boolean waitingForLogin = false;
+    private boolean waitingForLogin = false;
 
     @Override
     protected void attachBaseContext(Context newBase) {

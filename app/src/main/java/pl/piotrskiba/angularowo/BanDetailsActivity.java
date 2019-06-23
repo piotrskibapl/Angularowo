@@ -1,11 +1,5 @@
 package pl.piotrskiba.angularowo;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import pl.piotrskiba.angularowo.models.Ban;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -13,9 +7,16 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import pl.piotrskiba.angularowo.models.Ban;
 
 public class BanDetailsActivity extends AppCompatActivity {
 
@@ -82,19 +83,18 @@ public class BanDetailsActivity extends AppCompatActivity {
         }
 
         String reason = ban.getReason().toLowerCase();
-        if(ban.getType().equals(Ban.TYPE_BAN)){
-            mBanTypeImageView.setImageResource(R.drawable.ic_ban);
-            if(reason.contains(":"))
-                reason = reason.split(":")[0];
-            mBanReason.setText(getString(R.string.ban_description_format, reason));
-        }
-        else if(ban.getType().equals(Ban.TYPE_MUTE)){
-            mBanTypeImageView.setImageResource(R.drawable.ic_mute);
-            mBanReason.setText(getString(R.string.mute_description_format, reason));
-        }
-        else if(ban.getType().equals(Ban.TYPE_WARNING)){
-            mBanTypeImageView.setImageResource(R.drawable.ic_warning);
-            mBanReason.setText(getString(R.string.warn_description_format, reason));
+        switch(ban.getType()){
+            case Ban.TYPE_BAN:
+                mBanTypeImageView.setImageResource(R.drawable.ic_ban);
+                if (reason.contains(":"))
+                    reason = reason.split(":")[0];
+                mBanReason.setText(getString(R.string.ban_description_format, reason));
+            case Ban.TYPE_MUTE:
+                mBanTypeImageView.setImageResource(R.drawable.ic_mute);
+                mBanReason.setText(getString(R.string.mute_description_format, reason));
+            case Ban.TYPE_WARNING:
+                mBanTypeImageView.setImageResource(R.drawable.ic_warning);
+                mBanReason.setText(getString(R.string.warn_description_format, reason));
         }
 
         mBanTypeTextView.setText(ban.getType());
@@ -118,10 +118,9 @@ public class BanDetailsActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                supportFinishAfterTransition();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            supportFinishAfterTransition();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

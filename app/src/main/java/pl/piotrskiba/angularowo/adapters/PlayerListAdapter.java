@@ -30,10 +30,10 @@ import pl.piotrskiba.angularowo.utils.UrlUtils;
 
 public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.PlayerViewHolder> {
 
-    private Context context;
-    private PlayerList playerList;
+    private final Context context;
+    private final PlayerClickListener mClickListener;
 
-    private PlayerClickListener mClickListener;
+    private PlayerList playerList;
 
     public PlayerListAdapter(Context context, PlayerClickListener clickListener){
         this.context = context;
@@ -106,7 +106,7 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
         @BindView(R.id.iv_vanish_status)
         ImageView mPlayerVanishIcon;
 
-        public PlayerViewHolder(View itemView) {
+        PlayerViewHolder(View itemView) {
             super(itemView);
 
             ButterKnife.bind(this, itemView);

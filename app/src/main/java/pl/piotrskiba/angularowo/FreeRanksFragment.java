@@ -124,9 +124,7 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
                             if (rewardList.getRewards() != null && rewardList.getRewards().size() > 0) {
                                 showDefaultLayout();
                                 mRewards.clear();
-                                for (Reward reward : rewardList.getRewards()) {
-                                    mRewards.add(reward);
-                                }
+                                mRewards.addAll(rewardList.getRewards());
                                 mFreeRankListAdapter.notifyDataSetChanged();
                             } else {
                                 showNoRewardsLayout();

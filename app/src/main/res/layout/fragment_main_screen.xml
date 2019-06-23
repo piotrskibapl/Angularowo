@@ -9,7 +9,7 @@
         android:layout_height="match_parent">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/tv_greeting"
@@ -35,6 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/section_margin"
                 android:src="@drawable/default_body"
+                android:contentDescription="@string/player_body_image_description"
                 app:layout_constraintTop_toBottomOf="@id/tv_playercount"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />

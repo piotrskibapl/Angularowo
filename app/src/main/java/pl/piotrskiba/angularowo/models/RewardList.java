@@ -6,7 +6,7 @@ import java.util.List;
 
 public class RewardList {
     @SerializedName("campaigns")
-    private List<Reward> rewards;
+    private final List<Reward> rewards;
 
     public RewardList(List<Reward> rewards){
         this.rewards = rewards;

@@ -24,8 +24,8 @@ import pl.piotrskiba.angularowo.utils.GlideUtils;
 
 public class FreeRankListAdapter extends RecyclerView.Adapter<FreeRankListAdapter.FreeRankViewHolder> {
 
-    private Context context;
-    private FreeRankClickListener mClickListener;
+    private final Context context;
+    private final FreeRankClickListener mClickListener;
 
     private List<Reward> mRewardList;
 
@@ -78,7 +78,7 @@ public class FreeRankListAdapter extends RecyclerView.Adapter<FreeRankListAdapte
         @BindView(R.id.reward_description)
         TextView mRewardDescription;
 
-        public FreeRankViewHolder(@NonNull View itemView) {
+        FreeRankViewHolder(@NonNull View itemView) {
             super(itemView);
 
             ButterKnife.bind(this, itemView);

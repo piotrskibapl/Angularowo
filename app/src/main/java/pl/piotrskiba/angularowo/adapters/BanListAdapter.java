@@ -31,10 +31,10 @@ import retrofit2.Response;
 
 public class BanListAdapter extends RecyclerView.Adapter<BanListAdapter.BanViewHolder> {
 
-    private Context context;
-    private BanList banList;
+    private final Context context;
+    private final BanClickListener mClickListener;
 
-    private BanClickListener mClickListener;
+    private BanList banList;
 
     public BanListAdapter(Context context, BanClickListener listener){
         this.context = context;
@@ -59,19 +59,18 @@ public class BanListAdapter extends RecyclerView.Adapter<BanListAdapter.BanViewH
         holder.mPlayerName.setText(ban.getUsername());
 
         String reason = ban.getReason().toLowerCase();
-        if(ban.getType().equals(Ban.TYPE_BAN)){
-            holder.mBanType.setImageResource(R.drawable.ic_ban);
-            if(reason.contains(":"))
-                reason = reason.split(":")[0];
-            holder.mBanReason.setText(context.getString(R.string.ban_description_format, reason));
-        }
-        else if(ban.getType().equals(Ban.TYPE_MUTE)){
-            holder.mBanType.setImageResource(R.drawable.ic_mute);
-            holder.mBanReason.setText(context.getString(R.string.mute_description_format, reason));
-        }
-        else if(ban.getType().equals(Ban.TYPE_WARNING)){
-            holder.mBanType.setImageResource(R.drawable.ic_warning);
-            holder.mBanReason.setText(context.getString(R.string.warn_description_format, reason));
+        switch(ban.getType()) {
+            case Ban.TYPE_BAN:
+                holder.mBanType.setImageResource(R.drawable.ic_ban);
+                if (reason.contains(":"))
+                    reason = reason.split(":")[0];
+                holder.mBanReason.setText(context.getString(R.string.ban_description_format, reason));
+            case Ban.TYPE_MUTE:
+                holder.mBanType.setImageResource(R.drawable.ic_mute);
+                holder.mBanReason.setText(context.getString(R.string.mute_description_format, reason));
+            case Ban.TYPE_WARNING:
+                holder.mBanType.setImageResource(R.drawable.ic_warning);
+                holder.mBanReason.setText(context.getString(R.string.warn_description_format, reason));
         }
 
         holder.mPlayerAvatar.setImageDrawable(context.getResources().getDrawable(R.drawable.default_avatar));
@@ -80,7 +79,7 @@ public class BanListAdapter extends RecyclerView.Adapter<BanListAdapter.BanViewH
         mojangAPIInterface.getProfile(ban.getUsername()).enqueue(new Callback<MojangProfile>() {
             @Override
             public void onResponse(Call<MojangProfile> call, Response<MojangProfile> response) {
-                if(context != null && holder.getAdapterPosition() == position) {
+                if(holder.getAdapterPosition() == position) {
                     if (response.isSuccessful() && response.body() != null) {
                         Glide.with(context)
                                 .load(UrlUtils.buildAvatarUrl(response.body().getId(), true))
@@ -123,7 +122,7 @@ public class BanListAdapter extends RecyclerView.Adapter<BanListAdapter.BanViewH
         @BindView(R.id.iv_ban_type)
         ImageView mBanType;
 
-        public BanViewHolder(@NonNull View itemView) {
+        BanViewHolder(@NonNull View itemView) {
             super(itemView);
 
             ButterKnife.bind(this, itemView);

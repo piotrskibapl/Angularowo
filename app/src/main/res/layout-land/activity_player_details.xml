@@ -32,7 +32,8 @@
                 android:layout_width="@dimen/body_width"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/section_margin"
-                android:src="@drawable/default_body" />
+                android:src="@drawable/default_body"
+                android:contentDescription="@string/player_body_image_description"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

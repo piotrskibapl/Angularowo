@@ -27,10 +27,10 @@ import pl.piotrskiba.angularowo.utils.TextUtils;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatMessageViewHolder> {
 
-    private Context context;
-    private List<ChatMessage> mMessageList;
+    private final Context context;
+    private final ChatMessageClickListener mClickListener;
 
-    private ChatMessageClickListener mClickListener;
+    private List<ChatMessage> mMessageList;
 
     public ChatAdapter(Context context, ChatMessageClickListener chatMessageClickListener){
         this.context = context;
@@ -94,7 +94,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatMessageVie
         @BindView(R.id.tv_message)
         TextView mMessage;
 
-        public ChatMessageViewHolder(@NonNull View itemView) {
+        ChatMessageViewHolder(@NonNull View itemView) {
             super(itemView);
 
             ButterKnife.bind(this, itemView);

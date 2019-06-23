@@ -19,7 +19,7 @@ import pl.piotrskiba.angularowo.R;
 
 public class NotificationUtils {
 
-    private Context context;
+    private final Context context;
 
     public NotificationUtils(Context context){
         this.context = context;
@@ -92,7 +92,7 @@ public class NotificationUtils {
                             .bigText(body))
                     .setAutoCancel(true)
                     .setSound(soundUri)
-                    .setVibrate(Constants.DEFAULT_VIBRATE_PATTERN);;
+                    .setVibrate(Constants.DEFAULT_VIBRATE_PATTERN);
 
             notificationManager.notify(getNotificationId(), builder.build());
         }
@@ -112,7 +112,7 @@ public class NotificationUtils {
         }
     }
 
-    public int getNotificationId(){
+    private int getNotificationId(){
         return (int)System.currentTimeMillis();
     }
 }

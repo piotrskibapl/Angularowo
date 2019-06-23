@@ -37,7 +37,7 @@
     <string name="login_error_code_not_found">Podany kod jest nieprawidłowy.</string>
     <string name="login_error_code_expired">Podany kod jest prawidłowy, jednak skończyła się jego ważność. Wpisz komendę /android ponownie.</string>
     <string name="login_error_unknown">Wystąpił nieznany błąd. Spróbuj ponownie później.</string>
-    <string name="logging_in">Logowanie...</string>
+    <string name="logging_in">Logowanie…</string>
 
     <!-- drawer_view.xml -->
     <string name="main_screen">Strona główna</string>
@@ -49,7 +49,6 @@
 
     <!-- fragment_main_screen.xml -->
     <string name="greeting">Witaj, %1$s!</string>
-    <string name="playercount">%1$d graczy online</string>
     <string name="balance_title">Stan konta:</string>
     <string name="balance_format">$%1$d</string>
     <string name="island_level_title">Poziom wyspy:</string>
@@ -98,4 +97,11 @@
     <string name="actionbar_title_chat">Podgląd chatu</string>
     <string name="chat_error">Nie można połączyć z czatem.</string>
     <string name="chat_user_message"><![CDATA[<font color=#555555>[</font><font color=%4$s>%1$s</font><font color=#555555>]</font> <font color=%4$s>%2$s</font><font color=#555555>:</font> <font color=%5$s>%3$s</font>]]></string>
+
+    <!-- content descriptions -->
+    <string name="player_body_image_description">Obrazek postaci</string>
+    <string name="player_avatar_image_description">Avatar gracza</string>
+    <string name="ban_type_image_description">Ikona typu kary</string>
+    <string name="reward_image_description">Ikona nagrody</string>
+    <string name="vanish_image_description">Ikona widoczności gracza</string>
 </resources>
