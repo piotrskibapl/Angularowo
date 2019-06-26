@@ -65,12 +65,15 @@ public class BanListAdapter extends RecyclerView.Adapter<BanListAdapter.BanViewH
                 if (reason.contains(":"))
                     reason = reason.split(":")[0];
                 holder.mBanReason.setText(context.getString(R.string.ban_description_format, reason));
+                break;
             case Ban.TYPE_MUTE:
                 holder.mBanType.setImageResource(R.drawable.ic_mute);
                 holder.mBanReason.setText(context.getString(R.string.mute_description_format, reason));
+                break;
             case Ban.TYPE_WARNING:
                 holder.mBanType.setImageResource(R.drawable.ic_warning);
                 holder.mBanReason.setText(context.getString(R.string.warn_description_format, reason));
+                break;
         }
 
         holder.mPlayerAvatar.setImageDrawable(context.getResources().getDrawable(R.drawable.default_avatar));
