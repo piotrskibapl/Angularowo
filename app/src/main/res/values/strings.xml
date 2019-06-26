@@ -11,6 +11,7 @@
     <string name="pref_key_nickname" translatable="false">nickname</string>
     <string name="pref_key_rank" translatable="false">rank</string>
     <string name="pref_key_access_token" translatable="false">access_token</string>
+    <string name="pref_key_subscribed_to_app_version_topic" translatable="false">app_version_%1$d_subscribed</string>
     <string name="pref_key_subscribed_to_player_topic" translatable="false">player_topic_subscribed</string>
     <string name="pref_key_subscribed_to_new_reports" translatable="false">new_reports_subscribed</string>
     <string name="pref_key_subscribed_to_events" translatable="false">events_subscribed</string>
