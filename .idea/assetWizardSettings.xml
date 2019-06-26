@@ -192,7 +192,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/D:/Programy/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_settings_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/D:/Programy/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/alert/ic_error_outline_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -203,8 +203,11 @@
                         <option name="values">
                           <map>
                             <entry key="color" value="e0e0e0" />
-                            <entry key="outputName" value="ic_settings" />
+                            <entry key="height" value="60" />
+                            <entry key="outputName" value="ic_error" />
+                            <entry key="overrideSize" value="true" />
                             <entry key="sourceFile" value="C:\Users\pskib\Documents\grafika\Projekty\Angularowo Android\mute.svg" />
+                            <entry key="width" value="60" />
                           </map>
                         </option>
                       </PersistentState>

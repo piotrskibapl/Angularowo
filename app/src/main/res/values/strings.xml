@@ -104,4 +104,8 @@
     <string name="ban_type_image_description">Ikona typu kary</string>
     <string name="reward_image_description">Ikona nagrody</string>
     <string name="vanish_image_description">Ikona widoczności gracza</string>
+    <string name="error_icon_content_description">Ikona błędu</string>
+
+    <!-- universal -->
+    <string name="no_internet">Wystąpił błąd przy pobieraniu danych.\nSprawdź czy masz połączenie z Internetem oraz spróbuj ponownie.</string>
 </resources>

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -73,11 +74,19 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
     @BindView(R.id.rv_bans)
     RecyclerView mBanList;
 
+    @BindView(R.id.default_layout)
+    View mDefaultLayout;
+
+    @BindView(R.id.no_internet_layout)
+    LinearLayout mNoInternetLayout;
+
     private String username;
 
     private InvalidAccessTokenResponseListener listener;
 
     private BanListAdapter mBanListAdapter;
+
+    private boolean error = false;
 
     public MainScreenFragment(){
     }
@@ -105,7 +114,7 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         String username = sharedPreferences.getString(getString(R.string.pref_key_nickname), null);
 
-        if(this.username == null || !this.username.equals(username)){
+        if(this.username == null || !this.username.equals(username) || error){
             this.username = username;
 
             if(username != null)
@@ -159,6 +168,8 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
         serverAPIInterface.getServerStatus(ServerAPIClient.API_KEY, access_token).enqueue(new Callback<ServerStatus>() {
             @Override
             public void onResponse(Call<ServerStatus> call, Response<ServerStatus> response) {
+                showDefaultLayout();
+
                 if(response.isSuccessful() && response.body() != null && getContext() != null){
                     ServerStatus server = response.body();
 
@@ -167,14 +178,11 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
                 else if(response.code() == 401){
                     listener.onInvalidAccessTokenResponseReceived();
                 }
-                mSwipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
             public void onFailure(Call<ServerStatus> call, Throwable t) {
-                mSwipeRefreshLayout.setRefreshing(false);
-
-
+                showNoInternetLayout();
             }
         });
 
@@ -183,6 +191,8 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
             @Override
             public void onResponse(Call<DetailedPlayer> call, Response<DetailedPlayer> response) {
                 if(isAdded()) {
+                    showDefaultLayout();
+
                     if (response.isSuccessful() && response.body() != null) {
                         DetailedPlayer player = response.body();
 
@@ -253,15 +263,13 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
                     } else if (response.code() == 401) {
                         listener.onInvalidAccessTokenResponseReceived();
                     }
-
-                    mSwipeRefreshLayout.setRefreshing(false);
                 }
             }
 
             @Override
             public void onFailure(Call<DetailedPlayer> call, Throwable t) {
                 if(isAdded()) {
-                    mSwipeRefreshLayout.setRefreshing(false);
+                    showNoInternetLayout();
                 }
             }
         });
@@ -283,28 +291,39 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
             @Override
             public void onResponse(Call<BanList> call, Response<BanList> response) {
                 if(isAdded()) {
+                    showDefaultLayout();
+
                     if (response.isSuccessful() && response.body() != null) {
                         adapter.setBanList(response.body());
                         if (!response.body().getBanList().isEmpty())
                             showLastBans();
                     } else if (response.code() == 401) {
                         listener.onInvalidAccessTokenResponseReceived();
-                        hideLastBans();
-                    } else {
-                        hideLastBans();
                     }
-                    mSwipeRefreshLayout.setRefreshing(false);
                 }
             }
 
             @Override
             public void onFailure(Call<BanList> call, Throwable t) {
                 if(isAdded()) {
-                    mSwipeRefreshLayout.setRefreshing(false);
-                    hideLastBans();
+                    showNoInternetLayout();
                 }
             }
         });
+    }
+
+    private void showDefaultLayout(){
+        mSwipeRefreshLayout.setRefreshing(false);
+        mDefaultLayout.setVisibility(View.VISIBLE);
+        mNoInternetLayout.setVisibility(View.GONE);
+        hideLastBans();
+        error = false;
+    }
+    private void showNoInternetLayout(){
+        mSwipeRefreshLayout.setRefreshing(false);
+        mDefaultLayout.setVisibility(View.GONE);
+        mNoInternetLayout.setVisibility(View.VISIBLE);
+        error = true;
     }
 
     private void showLastBans(){
@@ -312,8 +331,8 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
         mBanList.setVisibility(View.VISIBLE);
     }
     private void hideLastBans(){
-        mLastBansTitleTextView.setVisibility(View.VISIBLE);
-        mBanList.setVisibility(View.VISIBLE);
+        mLastBansTitleTextView.setVisibility(View.GONE);
+        mBanList.setVisibility(View.GONE);
     }
 
     public void setInvalidAccessTokenResponseListener(InvalidAccessTokenResponseListener listener){

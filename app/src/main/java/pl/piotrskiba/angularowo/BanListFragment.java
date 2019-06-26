@@ -10,6 +10,7 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -42,6 +43,9 @@ public class BanListFragment extends Fragment implements BanClickListener {
 
     @BindView(R.id.swiperefresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
+
+    @BindView(R.id.no_internet_layout)
+    LinearLayout mNoInternetLayout;
 
     private InvalidAccessTokenResponseListener listener;
 
@@ -95,19 +99,20 @@ public class BanListFragment extends Fragment implements BanClickListener {
             @Override
             public void onResponse(Call<BanList> call, Response<BanList> response) {
                 if(isAdded()) {
+                    showDefaultLayout();
+
                     if (response.isSuccessful() && response.body() != null) {
                         adapter.setBanList(response.body());
                     } else if (response.code() == 401) {
                         listener.onInvalidAccessTokenResponseReceived();
                     }
-                    mSwipeRefreshLayout.setRefreshing(false);
                 }
             }
 
             @Override
             public void onFailure(Call<BanList> call, Throwable t) {
                 if(isAdded()) {
-                    mSwipeRefreshLayout.setRefreshing(false);
+                    showNoInternetLayout();
                 }
             }
         });
@@ -135,5 +140,16 @@ public class BanListFragment extends Fragment implements BanClickListener {
         else {
             startActivity(intent);
         }
+    }
+
+    private void showDefaultLayout(){
+        mSwipeRefreshLayout.setRefreshing(false);
+        mBanList.setVisibility(View.VISIBLE);
+        mNoInternetLayout.setVisibility(View.GONE);
+    }
+    private void showNoInternetLayout(){
+        mSwipeRefreshLayout.setRefreshing(false);
+        mBanList.setVisibility(View.GONE);
+        mNoInternetLayout.setVisibility(View.VISIBLE);
     }
 }

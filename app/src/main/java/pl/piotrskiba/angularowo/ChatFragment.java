@@ -7,8 +7,8 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -44,11 +44,11 @@ public class ChatFragment extends Fragment implements ChatMessageClickListener {
     @BindView(R.id.rv_chat)
     RecyclerView mChat;
 
-    @BindView(R.id.errorTextView)
-    TextView mErrorTextView;
-
     @BindView(R.id.pb_loading)
     ProgressBar mLoadingIndicator;
+
+    @BindView(R.id.no_internet_layout)
+    LinearLayout mNoInternetLayout;
 
     private ChatAdapter mChatAdapter;
 
@@ -120,15 +120,14 @@ public class ChatFragment extends Fragment implements ChatMessageClickListener {
 
     private void showDefaultLayout(){
         mChat.setVisibility(View.VISIBLE);
-        mErrorTextView.setVisibility(View.GONE);
         mLoadingIndicator.setVisibility(View.GONE);
+        mNoInternetLayout.setVisibility(View.GONE);
     }
 
     private void showErrorLayout(){
         mChat.setVisibility(View.GONE);
-        mErrorTextView.setVisibility(View.VISIBLE);
-        mErrorTextView.setText(R.string.chat_error);
         mLoadingIndicator.setVisibility(View.GONE);
+        mNoInternetLayout.setVisibility(View.VISIBLE);
     }
 
     private void startChatWebSocket() {

@@ -12,14 +12,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
         <TextView
-            android:id="@+id/errorTextView"
+            android:id="@+id/noRanksAvailableTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/no_rewards_found"
             android:textSize="@dimen/error_text_size"
             android:textAlignment="center"
             android:visibility="gone"
             android:layout_marginTop="@dimen/error_margin"
             android:layout_marginStart="@dimen/margin_default"
             android:layout_marginEnd="@dimen/margin_default" />
+
+        <include layout="@layout/no_internet_layout" />
     </FrameLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -7,126 +7,133 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/tv_greeting"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/section_margin"
-                android:textSize="@dimen/title_text_size"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-
-            <TextView
-                android:id="@+id/tv_playercount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/tv_greeting"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-
-            <ImageView
-                android:id="@+id/iv_player_body"
-                android:layout_width="@dimen/body_width"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/section_margin"
-                android:src="@drawable/default_body"
-                android:contentDescription="@string/player_body_image_description"
-                app:layout_constraintTop_toBottomOf="@id/tv_playercount"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_balance_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/section_margin"
-                android:text="@string/balance_title"
-                android:textAlignment="center"
-                app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent="0.5"
-                app:layout_constraintTop_toBottomOf="@id/iv_player_body"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/tv_islandlevel_title"/>
-            <TextView
-                android:id="@+id/tv_balance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_small"
-                android:textSize="@dimen/playerinfo_values_text_sizes"
-                app:layout_constraintTop_toBottomOf="@id/tv_balance_title"
-                app:layout_constraintStart_toStartOf="@id/tv_balance_title"
-                app:layout_constraintEnd_toEndOf="@id/tv_balance_title"/>
-
-            <TextView
-                android:id="@+id/tv_islandlevel_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/section_margin"
-                android:text="@string/island_level_title"
-                android:textAlignment="center"
-                app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent="0.5"
-                app:layout_constraintTop_toBottomOf="@id/iv_player_body"
-                app:layout_constraintStart_toEndOf="@id/tv_balance_title"
-                app:layout_constraintEnd_toEndOf="parent"/>
-            <TextView
-                android:id="@+id/tv_islandlevel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_small"
-                android:textSize="@dimen/playerinfo_values_text_sizes"
-                app:layout_constraintTop_toBottomOf="@id/tv_islandlevel_title"
-                app:layout_constraintStart_toStartOf="@id/tv_islandlevel_title"
-                app:layout_constraintEnd_toEndOf="@id/tv_islandlevel_title"/>
-
-            <TextView
-                android:id="@+id/tv_playtime_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_default"
-                android:text="@string/playtime_title"
-                android:textAlignment="center"
-                app:layout_constraintTop_toBottomOf="@id/tv_islandlevel"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-            <TextView
-                android:id="@+id/tv_playtime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_small"
-                android:paddingStart="@dimen/padding_default"
-                android:paddingEnd="@dimen/padding_default"
-                android:textSize="@dimen/playerinfo_values_text_sizes"
-                android:textAlignment="center"
-                app:layout_constraintTop_toBottomOf="@id/tv_playtime_title"
-                app:layout_constraintStart_toStartOf="@id/tv_playtime_title"
-                app:layout_constraintEnd_toEndOf="@id/tv_playtime_title"/>
-
-            <TextView
-                android:id="@+id/tv_last_bans_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/section_margin"
-                android:text="@string/last_player_bans"
-                android:textSize="@dimen/title_text_size"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_playtime" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_bans"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/default_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/margin_default"
-                android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@+id/tv_last_bans_title" />
+                android:layout_height="wrap_content">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/tv_greeting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/section_margin"
+                    android:textSize="@dimen/title_text_size"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <TextView
+                    android:id="@+id/tv_playercount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tv_greeting"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <ImageView
+                    android:id="@+id/iv_player_body"
+                    android:layout_width="@dimen/body_width"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/section_margin"
+                    android:src="@drawable/default_body"
+                    android:contentDescription="@string/player_body_image_description"
+                    app:layout_constraintTop_toBottomOf="@id/tv_playercount"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_balance_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/section_margin"
+                    android:text="@string/balance_title"
+                    android:textAlignment="center"
+                    app:layout_constraintWidth_default="percent"
+                    app:layout_constraintWidth_percent="0.5"
+                    app:layout_constraintTop_toBottomOf="@id/iv_player_body"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/tv_islandlevel_title"/>
+                <TextView
+                    android:id="@+id/tv_balance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:textSize="@dimen/playerinfo_values_text_sizes"
+                    app:layout_constraintTop_toBottomOf="@id/tv_balance_title"
+                    app:layout_constraintStart_toStartOf="@id/tv_balance_title"
+                    app:layout_constraintEnd_toEndOf="@id/tv_balance_title"/>
+
+                <TextView
+                    android:id="@+id/tv_islandlevel_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/section_margin"
+                    android:text="@string/island_level_title"
+                    android:textAlignment="center"
+                    app:layout_constraintWidth_default="percent"
+                    app:layout_constraintWidth_percent="0.5"
+                    app:layout_constraintTop_toBottomOf="@id/iv_player_body"
+                    app:layout_constraintStart_toEndOf="@id/tv_balance_title"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+                <TextView
+                    android:id="@+id/tv_islandlevel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:textSize="@dimen/playerinfo_values_text_sizes"
+                    app:layout_constraintTop_toBottomOf="@id/tv_islandlevel_title"
+                    app:layout_constraintStart_toStartOf="@id/tv_islandlevel_title"
+                    app:layout_constraintEnd_toEndOf="@id/tv_islandlevel_title"/>
+
+                <TextView
+                    android:id="@+id/tv_playtime_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_default"
+                    android:text="@string/playtime_title"
+                    android:textAlignment="center"
+                    app:layout_constraintTop_toBottomOf="@id/tv_islandlevel"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+                <TextView
+                    android:id="@+id/tv_playtime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:paddingStart="@dimen/padding_default"
+                    android:paddingEnd="@dimen/padding_default"
+                    android:textSize="@dimen/playerinfo_values_text_sizes"
+                    android:textAlignment="center"
+                    app:layout_constraintTop_toBottomOf="@id/tv_playtime_title"
+                    app:layout_constraintStart_toStartOf="@id/tv_playtime_title"
+                    app:layout_constraintEnd_toEndOf="@id/tv_playtime_title"/>
+
+                <TextView
+                    android:id="@+id/tv_last_bans_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/section_margin"
+                    android:text="@string/last_player_bans"
+                    android:textSize="@dimen/title_text_size"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_playtime" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_bans"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/margin_default"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_last_bans_title" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <include layout="@layout/no_internet_layout" />
+        </FrameLayout>
     </ScrollView>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

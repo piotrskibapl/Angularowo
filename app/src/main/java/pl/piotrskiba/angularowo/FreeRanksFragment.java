@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -45,8 +46,11 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
     @BindView(R.id.rv_free_ranks)
     RecyclerView mFreeRankList;
 
-    @BindView(R.id.errorTextView)
-    TextView mErrorTextView;
+    @BindView(R.id.noRanksAvailableTextView)
+    TextView mNoRanksAvailableTextView;
+
+    @BindView(R.id.no_internet_layout)
+    LinearLayout mNoInternetLayout;
 
     private RewardedVideoAd mRewardedVideoAd;
 
@@ -132,13 +136,12 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
                         } else if (response.code() == 401) {
                             listener.onInvalidAccessTokenResponseReceived();
                         }
-                        hideLoadingIndicator();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<RewardList> call, Throwable t) {
-                    hideLoadingIndicator();
+                    showNoInternetLayout();
                 }
             });
         }
@@ -149,13 +152,22 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
     }
 
     private void showDefaultLayout(){
-        mErrorTextView.setVisibility(View.GONE);
+        hideLoadingIndicator();
+        mNoRanksAvailableTextView.setVisibility(View.GONE);
         mFreeRankList.setVisibility(View.VISIBLE);
+        mNoInternetLayout.setVisibility(View.GONE);
     }
     private void showNoRewardsLayout(){
-        mErrorTextView.setVisibility(View.VISIBLE);
+        hideLoadingIndicator();
+        mNoRanksAvailableTextView.setVisibility(View.VISIBLE);
         mFreeRankList.setVisibility(View.GONE);
-        mErrorTextView.setText(R.string.no_rewards_found);
+        mNoInternetLayout.setVisibility(View.GONE);
+    }
+    private void showNoInternetLayout(){
+        hideLoadingIndicator();
+        mNoRanksAvailableTextView.setVisibility(View.GONE);
+        mFreeRankList.setVisibility(View.GONE);
+        mNoInternetLayout.setVisibility(View.VISIBLE);
     }
 
     private void showLoadingIndicator(){

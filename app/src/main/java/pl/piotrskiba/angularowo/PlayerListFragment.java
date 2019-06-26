@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -42,8 +43,11 @@ public class PlayerListFragment extends Fragment implements PlayerClickListener 
     @BindView(R.id.swiperefresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
-    @BindView(R.id.errorTextView)
-    TextView mErrorTextView;
+    @BindView(R.id.tv_no_players)
+    TextView mNoPlayersTextView;
+
+    @BindView(R.id.no_internet_layout)
+    LinearLayout mNoInternetLayout;
 
     private InvalidAccessTokenResponseListener listener;
 
@@ -107,14 +111,13 @@ public class PlayerListFragment extends Fragment implements PlayerClickListener 
                     } else if (response.code() == 401) {
                         listener.onInvalidAccessTokenResponseReceived();
                     }
-                    mSwipeRefreshLayout.setRefreshing(false);
                 }
             }
 
             @Override
             public void onFailure(Call<PlayerList> call, Throwable t) {
                 if(isAdded()) {
-                    mSwipeRefreshLayout.setRefreshing(false);
+                    showNoInternetLayout();
                 }
             }
         });
@@ -139,12 +142,21 @@ public class PlayerListFragment extends Fragment implements PlayerClickListener 
     }
 
     private void showDefaultLayout(){
-        mErrorTextView.setVisibility(View.GONE);
+        mSwipeRefreshLayout.setRefreshing(false);
+        mNoPlayersTextView.setVisibility(View.GONE);
         mPlayerList.setVisibility(View.VISIBLE);
+        mNoInternetLayout.setVisibility(View.GONE);
     }
     private void showNoPlayersLayout(){
-        mErrorTextView.setVisibility(View.VISIBLE);
+        mSwipeRefreshLayout.setRefreshing(false);
+        mNoPlayersTextView.setVisibility(View.VISIBLE);
         mPlayerList.setVisibility(View.GONE);
-        mErrorTextView.setText(R.string.error_no_players);
+        mNoInternetLayout.setVisibility(View.GONE);
+    }
+    private void showNoInternetLayout(){
+        mSwipeRefreshLayout.setRefreshing(false);
+        mNoPlayersTextView.setVisibility(View.GONE);
+        mPlayerList.setVisibility(View.GONE);
+        mNoInternetLayout.setVisibility(View.VISIBLE);
     }
 }
