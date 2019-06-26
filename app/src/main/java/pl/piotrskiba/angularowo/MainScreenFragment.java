@@ -121,8 +121,22 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
                 populateUi();
         }
 
-        // subscribe to player's individual Firebase topic
         if(this.username != null){
+            // subscribe to current app version Firebase topic
+            if(!sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_app_version_topic, BuildConfig.VERSION_CODE))) {
+                FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_APP_VERSION_TOPIC_PREFIX + BuildConfig.VERSION_CODE)
+                        .addOnCompleteListener(task -> {
+                            if(isAdded()) {
+                                if (task.isSuccessful()) {
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putBoolean(getString(R.string.pref_key_subscribed_to_app_version_topic, BuildConfig.VERSION_CODE), true);
+                                    editor.apply();
+                                }
+                            }
+                        });
+            }
+
+            // subscribe to player's individual Firebase topic
             if(!sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_player_topic))) {
                 FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_PLAYER_TOPIC_PREFIX + this.username)
                         .addOnCompleteListener(task -> {
@@ -135,10 +149,8 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
                             }
                         });
             }
-        }
 
-        // subscribe to new events Firebase topic
-        if(this.username != null){
+            // subscribe to new events Firebase topic
             if(!sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_events))) {
                 FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_NEW_EVENT_TOPIC)
                         .addOnCompleteListener(task -> {
