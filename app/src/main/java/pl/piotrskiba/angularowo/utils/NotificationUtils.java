@@ -5,10 +5,12 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.AudioAttributes;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.preference.PreferenceManager;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -72,11 +74,24 @@ public class NotificationUtils {
         }
     }
 
-    public void showNotification(String title, String body, boolean sound){
+    public void showNotification(String raw_title, String raw_body, boolean sound){
         Intent intent = new Intent(context, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+
+        String title = raw_title;
+        String body = raw_body;
+        if(raw_title.contains(Constants.NOTIFICATION_USERNAME_QUALIFIER) || raw_body.contains(Constants.NOTIFICATION_USERNAME_QUALIFIER)){
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+            String username = sharedPreferences.getString(context.getString(R.string.pref_key_nickname), null);
+
+            if(username == null)
+                username = "";
+
+            title = title.replace(Constants.NOTIFICATION_USERNAME_QUALIFIER, username);
+            body = body.replace(Constants.NOTIFICATION_USERNAME_QUALIFIER, username);
+        }
 
         if(sound) {
             Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
