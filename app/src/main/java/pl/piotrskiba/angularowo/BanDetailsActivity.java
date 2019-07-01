@@ -89,12 +89,15 @@ public class BanDetailsActivity extends AppCompatActivity {
                 if (reason.contains(":"))
                     reason = reason.split(":")[0];
                 mBanReason.setText(getString(R.string.ban_description_format, reason));
+                break;
             case Ban.TYPE_MUTE:
                 mBanTypeImageView.setImageResource(R.drawable.ic_mute);
                 mBanReason.setText(getString(R.string.mute_description_format, reason));
+                break;
             case Ban.TYPE_WARNING:
                 mBanTypeImageView.setImageResource(R.drawable.ic_warning);
                 mBanReason.setText(getString(R.string.warn_description_format, reason));
+                break;
         }
 
         mBanTypeTextView.setText(ban.getType());
