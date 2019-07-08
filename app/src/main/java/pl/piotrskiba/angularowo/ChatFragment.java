@@ -30,7 +30,6 @@ import okhttp3.WebSocketListener;
 import okio.ByteString;
 import pl.piotrskiba.angularowo.adapters.ChatAdapter;
 import pl.piotrskiba.angularowo.interfaces.ChatMessageClickListener;
-import pl.piotrskiba.angularowo.interfaces.InvalidAccessTokenResponseListener;
 import pl.piotrskiba.angularowo.models.ChatMessage;
 import pl.piotrskiba.angularowo.models.ChatMessageList;
 import pl.piotrskiba.angularowo.models.Player;
@@ -53,8 +52,6 @@ public class ChatFragment extends Fragment implements ChatMessageClickListener {
     private ChatAdapter mChatAdapter;
 
     private OkHttpClient mOkHttpClient;
-
-    private InvalidAccessTokenResponseListener listener;
 
     private WebSocket mWebSocket;
 
@@ -106,8 +103,6 @@ public class ChatFragment extends Fragment implements ChatMessageClickListener {
                         mChatAdapter.setMessageList(new ChatMessageList(Lists.reverse(response.body().getChatMessageList())));
                         mChat.scrollToPosition(mChatAdapter.getItemCount() - 1);
                         showDefaultLayout();
-                    } else if (response.code() == 401) {
-                        listener.onInvalidAccessTokenResponseReceived();
                     }
                 }
             }
@@ -205,9 +200,5 @@ public class ChatFragment extends Fragment implements ChatMessageClickListener {
                 getActivity().runOnUiThread(() -> showErrorLayout());
             }
         }
-    }
-
-    public void setInvalidAccessTokenResponseListener(InvalidAccessTokenResponseListener listener){
-        this.listener = listener;
     }
 }

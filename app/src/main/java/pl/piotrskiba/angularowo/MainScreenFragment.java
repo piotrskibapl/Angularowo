@@ -30,7 +30,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.piotrskiba.angularowo.adapters.BanListAdapter;
 import pl.piotrskiba.angularowo.interfaces.BanClickListener;
-import pl.piotrskiba.angularowo.interfaces.InvalidAccessTokenResponseListener;
 import pl.piotrskiba.angularowo.models.Ban;
 import pl.piotrskiba.angularowo.models.BanList;
 import pl.piotrskiba.angularowo.models.DetailedPlayer;
@@ -81,8 +80,6 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
     LinearLayout mNoInternetLayout;
 
     private String username;
-
-    private InvalidAccessTokenResponseListener listener;
 
     private BanListAdapter mBanListAdapter;
 
@@ -186,9 +183,6 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
 
                     mPlayerCountTextView.setText(getResources().getQuantityString(R.plurals.playercount, server.getPlayerCount(), server.getPlayerCount()));
                 }
-                else if(response.code() == 401){
-                    listener.onInvalidAccessTokenResponseReceived();
-                }
             }
 
             @Override
@@ -269,8 +263,6 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
                                 }
                             }
                         }
-                    } else if (response.code() == 401) {
-                        listener.onInvalidAccessTokenResponseReceived();
                     }
                 }
             }
@@ -304,7 +296,6 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
                         if (!response.body().getBanList().isEmpty())
                             showLastBans();
                     } else if (response.code() == 401) {
-                        listener.onInvalidAccessTokenResponseReceived();
                         hideLastBans();
                     }
                     else{
@@ -341,10 +332,6 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
     private void hideLastBans(){
         mLastBansTitleTextView.setVisibility(View.GONE);
         mBanList.setVisibility(View.GONE);
-    }
-
-    public void setInvalidAccessTokenResponseListener(InvalidAccessTokenResponseListener listener){
-        this.listener = listener;
     }
 
     @Override

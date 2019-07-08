@@ -25,15 +25,16 @@ import com.google.android.material.navigation.NavigationView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import pl.piotrskiba.angularowo.interfaces.InvalidAccessTokenResponseListener;
+import pl.piotrskiba.angularowo.interfaces.UnauthorizedResponseListener;
 import pl.piotrskiba.angularowo.network.ServerAPIClient;
 import pl.piotrskiba.angularowo.network.ServerAPIInterface;
+import pl.piotrskiba.angularowo.network.UnauthorizedInterceptor;
 import pl.piotrskiba.angularowo.utils.NotificationUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements InvalidAccessTokenResponseListener, RewardedVideoAdListener {
+public class MainActivity extends AppCompatActivity implements UnauthorizedResponseListener, RewardedVideoAdListener {
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -80,6 +81,8 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
         mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
         mRewardedVideoAd.setRewardedVideoAdListener(this);
 
+        UnauthorizedInterceptor.setUnauthorizedListener(this);
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         if(sharedPreferences.contains(getString(R.string.pref_key_access_token))){
             if(savedInstanceState == null)
@@ -105,7 +108,6 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
 
     private void setupMainFragment(){
         MainScreenFragment mainScreenFragment = new MainScreenFragment();
-        mainScreenFragment.setInvalidAccessTokenResponseListener(this);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, mainScreenFragment, TAG_MAIN_FRAGMENT)
@@ -124,28 +126,23 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
         if(mainScreenFragment == null) {
             mainScreenFragment = new MainScreenFragment();
         }
-        mainScreenFragment.setInvalidAccessTokenResponseListener(this);
 
         if(playerListFragment == null) {
             playerListFragment = new PlayerListFragment();
         }
-        playerListFragment.setInvalidAccessTokenResponseListener(this);
 
         if(chatFragment == null) {
             chatFragment = new ChatFragment();
         }
-        chatFragment.setInvalidAccessTokenResponseListener(this);
 
         if(banListFragment == null) {
             banListFragment = new BanListFragment();
         }
-        banListFragment.setInvalidAccessTokenResponseListener(this);
 
         if(freeRanksFragment == null) {
             freeRanksFragment = new FreeRanksFragment();
         }
         freeRanksFragment.setRewardedVideoAd(mRewardedVideoAd);
-        freeRanksFragment.setInvalidAccessTokenResponseListener(this);
     }
 
     private void populateUi(){
@@ -204,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements InvalidAccessToke
     }
 
     @Override
-    public void onInvalidAccessTokenResponseReceived() {
+    public void onUnauthorizedResponse() {
         if(!waitingForLogin) {
             waitingForLogin = true;
             Intent intent = new Intent(this, LoginActivity.class);

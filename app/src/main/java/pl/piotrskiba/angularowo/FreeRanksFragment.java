@@ -29,7 +29,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.piotrskiba.angularowo.adapters.FreeRankListAdapter;
 import pl.piotrskiba.angularowo.interfaces.FreeRankClickListener;
-import pl.piotrskiba.angularowo.interfaces.InvalidAccessTokenResponseListener;
 import pl.piotrskiba.angularowo.models.Reward;
 import pl.piotrskiba.angularowo.models.RewardList;
 import pl.piotrskiba.angularowo.network.ServerAPIClient;
@@ -53,8 +52,6 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
     LinearLayout mNoInternetLayout;
 
     private RewardedVideoAd mRewardedVideoAd;
-
-    private InvalidAccessTokenResponseListener listener;
 
     private ArrayList<Reward> mRewards = new ArrayList<>();
 
@@ -133,8 +130,6 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
                             } else {
                                 showNoRewardsLayout();
                             }
-                        } else if (response.code() == 401) {
-                            listener.onInvalidAccessTokenResponseReceived();
                         }
                     }
                 }
@@ -179,9 +174,5 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
 
     public void setRewardedVideoAd(RewardedVideoAd ad){
         mRewardedVideoAd = ad;
-    }
-
-    public void setInvalidAccessTokenResponseListener(InvalidAccessTokenResponseListener listener){
-        this.listener = listener;
     }
 }

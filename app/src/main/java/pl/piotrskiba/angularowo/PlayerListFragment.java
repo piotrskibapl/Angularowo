@@ -25,7 +25,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.piotrskiba.angularowo.adapters.PlayerListAdapter;
-import pl.piotrskiba.angularowo.interfaces.InvalidAccessTokenResponseListener;
 import pl.piotrskiba.angularowo.interfaces.PlayerClickListener;
 import pl.piotrskiba.angularowo.models.Player;
 import pl.piotrskiba.angularowo.models.PlayerList;
@@ -48,8 +47,6 @@ public class PlayerListFragment extends Fragment implements PlayerClickListener 
 
     @BindView(R.id.no_internet_layout)
     LinearLayout mNoInternetLayout;
-
-    private InvalidAccessTokenResponseListener listener;
 
     public PlayerListFragment(){
 
@@ -108,8 +105,6 @@ public class PlayerListFragment extends Fragment implements PlayerClickListener 
                         } else {
                             showNoPlayersLayout();
                         }
-                    } else if (response.code() == 401) {
-                        listener.onInvalidAccessTokenResponseReceived();
                     }
                 }
             }
@@ -135,10 +130,6 @@ public class PlayerListFragment extends Fragment implements PlayerClickListener 
         else {
             startActivity(intent);
         }
-    }
-
-    public void setInvalidAccessTokenResponseListener(InvalidAccessTokenResponseListener listener){
-        this.listener = listener;
     }
 
     private void showDefaultLayout(){

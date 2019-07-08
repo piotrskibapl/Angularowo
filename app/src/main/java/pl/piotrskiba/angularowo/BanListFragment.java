@@ -27,7 +27,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.piotrskiba.angularowo.adapters.BanListAdapter;
 import pl.piotrskiba.angularowo.interfaces.BanClickListener;
-import pl.piotrskiba.angularowo.interfaces.InvalidAccessTokenResponseListener;
 import pl.piotrskiba.angularowo.models.Ban;
 import pl.piotrskiba.angularowo.models.BanList;
 import pl.piotrskiba.angularowo.network.ServerAPIClient;
@@ -46,8 +45,6 @@ public class BanListFragment extends Fragment implements BanClickListener {
 
     @BindView(R.id.no_internet_layout)
     LinearLayout mNoInternetLayout;
-
-    private InvalidAccessTokenResponseListener listener;
 
     public BanListFragment(){
 
@@ -103,8 +100,6 @@ public class BanListFragment extends Fragment implements BanClickListener {
 
                     if (response.isSuccessful() && response.body() != null) {
                         adapter.setBanList(response.body());
-                    } else if (response.code() == 401) {
-                        listener.onInvalidAccessTokenResponseReceived();
                     }
                 }
             }
@@ -118,9 +113,6 @@ public class BanListFragment extends Fragment implements BanClickListener {
         });
     }
 
-    public void setInvalidAccessTokenResponseListener(InvalidAccessTokenResponseListener listener){
-        this.listener = listener;
-    }
 
     @Override
     public void onBanClick(View view, Ban clickedBan) {
