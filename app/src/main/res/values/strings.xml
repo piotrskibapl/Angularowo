@@ -106,7 +106,10 @@
     <string name="reward_image_description">Ikona nagrody</string>
     <string name="vanish_image_description">Ikona widoczności gracza</string>
     <string name="error_icon_content_description">Ikona błędu</string>
+    <string name="access_restricted_icon_content_description">Ikona odmowy dostępu</string>
 
     <!-- universal -->
     <string name="no_internet">Wystąpił błąd przy pobieraniu danych.\nSprawdź czy masz połączenie z Internetem oraz spróbuj ponownie.</string>
+    <string name="account_banned">Twoje konto jest zbanowane.\nDostęp do tej funkcjonalności zostanie przywrócony po wygaśnięciu bana.</string>
+
 </resources>
