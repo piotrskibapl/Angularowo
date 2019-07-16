@@ -1,6 +1,8 @@
 package pl.piotrskiba.angularowo.models;
 
-public class Report {
+import java.io.Serializable;
+
+public class Report implements Serializable {
 
     private final int id;
     private final String status;
@@ -20,5 +22,37 @@ public class Report {
         this.reported = reported;
         this.reason = reason;
         this.archived = archived;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String getAppreciation() {
+        return appreciation;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getReporter() {
+        return reporter;
+    }
+
+    public String getReported() {
+        return reported;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public boolean isArchived() {
+        return archived;
     }
 }
