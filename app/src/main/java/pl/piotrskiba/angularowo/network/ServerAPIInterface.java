@@ -40,4 +40,7 @@ public interface ServerAPIInterface {
 
     @GET("get_reports.php?own")
     Call<ReportList> getUserReports(@Query("api_key") String api_key, @Query("access_token") String access_token);
+
+    @GET("get_reports.php")
+    Call<ReportList> getAllReports(@Query("api_key") String api_key, @Query("archived") boolean archived, @Query("access_token") String access_token);
 }

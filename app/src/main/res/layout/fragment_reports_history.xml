@@ -16,7 +16,6 @@
             android:id="@+id/tv_no_reports"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/error_no_reports"
             android:textSize="@dimen/error_text_size"
             android:textAlignment="center"
             android:visibility="gone"

@@ -103,11 +103,14 @@
     <!-- fragment_reports_history.xml -->
     <string name="actionbar_title_report_list">Historia zgłoszeń</string>
     <string name="error_no_reports">Nie zgłosiłeś jeszcze żadnego gracza.</string>
+    <string name="error_no_reports_admin">Aktualnie nie ma żadnych aktywnych zgłoszeń.</string>
     <string name="report_reason">Powód zgłoszenia: %1$s</string>
     <string name="report_status_true">Stan zgłoszenia: rozpatrzone jako prawidłowe</string>
     <string name="report_status_false">Stan zgłoszenia: rozpatrzone jako fałszywe</string>
     <string name="report_status_uncertain">Stan zgłoszenia: rozpatrzone jako niepewne</string>
     <string name="report_status_awaiting">Stan zgłoszenia: oczekuje na sprawdzenie</string>
+    <string name="reports_own">Twoje zgłoszenia</string>
+    <string name="reports_others">Zgłoszenia graczy</string>
 
     <!-- activity_report_details -->
     <string name="report_info">Szczegóły zgłoszenia</string>

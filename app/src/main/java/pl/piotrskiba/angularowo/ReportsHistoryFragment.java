@@ -48,8 +48,10 @@ public class ReportsHistoryFragment extends Fragment implements ReportClickListe
     @BindView(R.id.tv_no_reports)
     TextView mNoReportsTextView;
 
-    public ReportsHistoryFragment(){
+    private boolean admin;
 
+    public ReportsHistoryFragment(boolean admin){
+        this.admin = admin;
     }
 
     @Nullable
@@ -94,29 +96,54 @@ public class ReportsHistoryFragment extends Fragment implements ReportClickListe
         String access_token = sharedPreferences.getString(getString(R.string.pref_key_access_token), null);
 
         ServerAPIInterface serverAPIInterface = ServerAPIClient.getRetrofitInstance().create(ServerAPIInterface.class);
-        serverAPIInterface.getUserReports(ServerAPIClient.API_KEY, access_token).enqueue(new Callback<ReportList>() {
-            @Override
-            public void onResponse(Call<ReportList> call, Response<ReportList> response) {
-                if(isAdded()) {
-                    if (response.isSuccessful() && response.body() != null) {
-                        if (response.body().getReportList().size() > 0) {
-                            adapter.setReportList(response.body());
-                            showDefaultLayout();
-                        }
-                        else{
-                            showNoReportsLayout();
+        if(admin){
+            serverAPIInterface.getAllReports(ServerAPIClient.API_KEY, false, access_token).enqueue(new Callback<ReportList>() {
+                @Override
+                public void onResponse(Call<ReportList> call, Response<ReportList> response) {
+                    if (isAdded()) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            if (response.body().getReportList().size() > 0) {
+                                adapter.setReportList(response.body());
+                                showDefaultLayout();
+                            } else {
+                                showNoReportsLayout();
+                            }
                         }
                     }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<ReportList> call, Throwable t) {
-                if(isAdded()) {
-                    showNoInternetLayout();
+                @Override
+                public void onFailure(Call<ReportList> call, Throwable t) {
+                    if (isAdded()) {
+                        showNoInternetLayout();
+                    }
                 }
-            }
-        });
+            });
+        }
+        else {
+            serverAPIInterface.getUserReports(ServerAPIClient.API_KEY, access_token).enqueue(new Callback<ReportList>() {
+                @Override
+                public void onResponse(Call<ReportList> call, Response<ReportList> response) {
+                    if (isAdded()) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            if (response.body().getReportList().size() > 0) {
+                                adapter.setReportList(response.body());
+                                showDefaultLayout();
+                            } else {
+                                showNoReportsLayout();
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ReportList> call, Throwable t) {
+                    if (isAdded()) {
+                        showNoInternetLayout();
+                    }
+                }
+            });
+        }
     }
 
     private void showDefaultLayout(){
@@ -136,6 +163,13 @@ public class ReportsHistoryFragment extends Fragment implements ReportClickListe
         mReportList.setVisibility(View.GONE);
         mNoInternetLayout.setVisibility(View.GONE);
         mNoReportsTextView.setVisibility(View.VISIBLE);
+
+        if(admin){
+            mNoReportsTextView.setText(getString(R.string.error_no_reports_admin));
+        }
+        else{
+            mNoReportsTextView.setText(getString(R.string.error_no_reports));
+        }
     }
 
     @Override
