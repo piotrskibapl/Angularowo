@@ -37,6 +37,9 @@ public class ApplicationLockedActivity extends AppCompatActivity {
         String title = firebaseRemoteConfig.getString(Constants.REMOTE_CONFIG_APP_LOCK_TITLE_KEY);
         String body = firebaseRemoteConfig.getString(Constants.REMOTE_CONFIG_APP_LOCK_BODY_KEY);
 
+        title = title.replace("\\n", "\n");
+        body = body.replace("\\n", "\n");
+
         mTitleTextView.setText(title);
         mBodyTextView.setText(body);
     }
