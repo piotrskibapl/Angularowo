@@ -124,10 +124,7 @@ public class MainActivity extends AppCompatActivity implements UnauthorizedRespo
         mFirebaseRemoteConfig.setDefaults(R.xml.remote_config_default_values);
 
         mFirebaseRemoteConfig.fetch(60*30)
-                .addOnCompleteListener(this, task -> {
-                    mFirebaseRemoteConfig.activate();
-                    onRemoteConfigLoaded();
-                });
+                .addOnCompleteListener(this, task -> mFirebaseRemoteConfig.activate().addOnCompleteListener(task1 -> onRemoteConfigLoaded()));
     }
 
     private void onRemoteConfigLoaded(){
