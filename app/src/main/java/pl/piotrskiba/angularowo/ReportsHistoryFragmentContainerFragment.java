@@ -41,7 +41,7 @@ public class ReportsHistoryFragmentContainerFragment extends Fragment {
         ActionBar actionbar = ((AppCompatActivity)getActivity()).getSupportActionBar();
         actionbar.setTitle(R.string.actionbar_title_report_list);
 
-        ViewPagerFragmentAdapter adapter = new ViewPagerFragmentAdapter(getFragmentManager(), getLifecycle());
+        ViewPagerFragmentAdapter adapter = new ViewPagerFragmentAdapter(getChildFragmentManager(), getLifecycle());
         adapter.addFragment(new ReportsHistoryFragment(false));
         adapter.addFragment(new ReportsHistoryFragment(true));
 
