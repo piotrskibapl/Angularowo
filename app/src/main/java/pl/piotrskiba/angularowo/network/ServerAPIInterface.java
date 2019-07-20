@@ -5,6 +5,7 @@ import pl.piotrskiba.angularowo.models.BanList;
 import pl.piotrskiba.angularowo.models.ChatMessageList;
 import pl.piotrskiba.angularowo.models.DetailedPlayer;
 import pl.piotrskiba.angularowo.models.PlayerList;
+import pl.piotrskiba.angularowo.models.ReportList;
 import pl.piotrskiba.angularowo.models.RewardList;
 import pl.piotrskiba.angularowo.models.ServerStatus;
 import retrofit2.Call;
@@ -36,4 +37,10 @@ public interface ServerAPIInterface {
 
     @GET("get_last_chat_messages.php")
     Call<ChatMessageList> getLastChatMessages(@Query("api_key") String api_key, @Query("access_token") String access_token);
+
+    @GET("get_reports.php?own")
+    Call<ReportList> getUserReports(@Query("api_key") String api_key, @Query("access_token") String access_token);
+
+    @GET("get_reports.php")
+    Call<ReportList> getAllReports(@Query("api_key") String api_key, @Query("archived") boolean archived, @Query("access_token") String access_token);
 }

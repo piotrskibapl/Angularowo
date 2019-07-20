@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.multidex.MultiDex;
 
@@ -30,6 +31,7 @@ import pl.piotrskiba.angularowo.network.ServerAPIClient;
 import pl.piotrskiba.angularowo.network.ServerAPIInterface;
 import pl.piotrskiba.angularowo.network.UnauthorizedInterceptor;
 import pl.piotrskiba.angularowo.utils.NotificationUtils;
+import pl.piotrskiba.angularowo.utils.RankUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,12 +52,14 @@ public class MainActivity extends AppCompatActivity implements UnauthorizedRespo
     private ChatFragment chatFragment;
     private BanListFragment banListFragment;
     private FreeRanksFragment freeRanksFragment;
+    private Fragment reportsHistoryFragment;
 
     private final static String TAG_MAIN_FRAGMENT = "fragment_main";
     private final static String TAG_PLAYER_LIST_FRAGMENT = "fragment_player_list";
     private final static String TAG_CHAT_FRAGMENT = "fragment_chat";
     private final static String TAG_BAN_LIST_FRAGMENT = "fragment_ban_list";
     private final static String TAG_FREE_RANKS_FRAGMENT = "fragment_free_ranks";
+    private final static String TAG_REPORTS_HISTORY_FRAGMENT = "fragment_reports_history";
 
     private RewardedVideoAd mRewardedVideoAd;
 
@@ -122,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements UnauthorizedRespo
         chatFragment = (ChatFragment) fragmentManager.findFragmentByTag(TAG_CHAT_FRAGMENT);
         banListFragment = (BanListFragment) fragmentManager.findFragmentByTag(TAG_BAN_LIST_FRAGMENT);
         freeRanksFragment = (FreeRanksFragment) fragmentManager.findFragmentByTag(TAG_FREE_RANKS_FRAGMENT);
+        reportsHistoryFragment = fragmentManager.findFragmentByTag(TAG_REPORTS_HISTORY_FRAGMENT);
 
         if(mainScreenFragment == null) {
             mainScreenFragment = new MainScreenFragment();
@@ -143,6 +148,15 @@ public class MainActivity extends AppCompatActivity implements UnauthorizedRespo
             freeRanksFragment = new FreeRanksFragment();
         }
         freeRanksFragment.setRewardedVideoAd(mRewardedVideoAd);
+
+        if (reportsHistoryFragment == null) {
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+            if (RankUtils.isStaffRank(sharedPreferences.getString(getString(R.string.pref_key_rank), null))) {
+                reportsHistoryFragment = new ReportsHistoryFragmentContainerFragment();
+            } else {
+                reportsHistoryFragment = new ReportsHistoryFragment(false);
+            }
+        }
     }
 
     private void populateUi(){
@@ -177,6 +191,10 @@ public class MainActivity extends AppCompatActivity implements UnauthorizedRespo
                         } else if (menuItem.getItemId() == R.id.nav_free_ranks) {
                             fragmentManager.beginTransaction()
                                     .replace(R.id.fragment_container, freeRanksFragment, TAG_FREE_RANKS_FRAGMENT)
+                                    .commit();
+                        } else if (menuItem.getItemId() == R.id.nav_reports_history) {
+                            fragmentManager.beginTransaction()
+                                    .replace(R.id.fragment_container, reportsHistoryFragment, TAG_REPORTS_HISTORY_FRAGMENT)
                                     .commit();
                         } else if (menuItem.getItemId() == R.id.nav_settings) {
                             Intent intent = new Intent(this, SettingsActivity.class);

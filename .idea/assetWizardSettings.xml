@@ -192,7 +192,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/D:/Programy/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/alert/ic_warning_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/D:/Programy/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/navigation/ic_check_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -202,12 +202,12 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="e59b00" />
-                            <entry key="height" value="60" />
-                            <entry key="outputName" value="ic_access_restricted" />
+                            <entry key="color" value="008000" />
+                            <entry key="height" value="36" />
+                            <entry key="outputName" value="ic_report_accepted" />
                             <entry key="overrideSize" value="true" />
                             <entry key="sourceFile" value="C:\Users\pskib\Documents\grafika\Projekty\Angularowo Android\mute.svg" />
-                            <entry key="width" value="60" />
+                            <entry key="width" value="36" />
                           </map>
                         </option>
                       </PersistentState>
