@@ -1,15 +1,18 @@
 package pl.piotrskiba.angularowo;
 
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import android.os.Bundle;
-import android.widget.TextView;
 
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import pl.piotrskiba.angularowo.utils.RankUtils;
 
 public class ApplicationLockedActivity extends AppCompatActivity {
 
@@ -46,6 +49,10 @@ public class ApplicationLockedActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        // do nothing
+        // allow admins only to close this activity
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if(RankUtils.isStaffRank(sharedPreferences.getString(getString(R.string.pref_key_rank), null))){
+            super.onBackPressed();
+        }
     }
 }
