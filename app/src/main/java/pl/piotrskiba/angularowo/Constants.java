@@ -7,6 +7,7 @@ public class Constants {
     public final static String EXTRA_PLAYER = "extra_player";
     public final static String EXTRA_BAN = "extra_ban";
     public final static String EXTRA_BITMAP = "extra_bitmap";
+    public final static String EXTRA_REPORT = "extra_report";
 
     public final static int REQUEST_CODE_REGISTER = 1100;
 
@@ -34,4 +35,9 @@ public class Constants {
 
     public final static String CHAT_WEBSOCKET_URL = "ws://164.132.159.123:25772";
     public final static String CHAT_WEBSOCKET_ACCESSTOKEN_HEADER = "access_token";
+
+    public final static String API_RESPONSE_REPORT_ACCEPTED = "True";
+    public final static String API_RESPONSE_REPORT_REJECTED = "False";
+    public final static String API_RESPONSE_REPORT_PENDING = "None";
+    public final static String API_RESPONSE_REPORT_UNCERTAIN = "Uncertain";
 }
