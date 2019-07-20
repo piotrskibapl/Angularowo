@@ -44,8 +44,8 @@ public class ApplicationLockedActivity extends AppCompatActivity {
         mBodyTextView.setText(body);
     }
 
-    /*@Override
+    @Override
     public void onBackPressed() {
         // do nothing
-    }*/
+    }
 }
