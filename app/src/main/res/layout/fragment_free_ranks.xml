@@ -24,5 +24,6 @@
             android:layout_marginEnd="@dimen/margin_default" />
 
         <include layout="@layout/no_internet_layout" />
+        <include layout="@layout/account_banned_layout" />
     </FrameLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
