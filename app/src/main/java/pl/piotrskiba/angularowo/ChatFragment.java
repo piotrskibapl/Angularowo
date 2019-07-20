@@ -49,6 +49,9 @@ public class ChatFragment extends Fragment implements ChatMessageClickListener {
     @BindView(R.id.no_internet_layout)
     LinearLayout mNoInternetLayout;
 
+    @BindView(R.id.account_banned_layout)
+    LinearLayout mAccountBannedLayout;
+
     private ChatAdapter mChatAdapter;
 
     private OkHttpClient mOkHttpClient;
@@ -104,6 +107,9 @@ public class ChatFragment extends Fragment implements ChatMessageClickListener {
                         mChat.scrollToPosition(mChatAdapter.getItemCount() - 1);
                         showDefaultLayout();
                     }
+                    else if(response.code() == 403){
+                        showAccountBannedLayout();
+                    }
                 }
             }
 
@@ -117,12 +123,21 @@ public class ChatFragment extends Fragment implements ChatMessageClickListener {
         mChat.setVisibility(View.VISIBLE);
         mLoadingIndicator.setVisibility(View.GONE);
         mNoInternetLayout.setVisibility(View.GONE);
+        mAccountBannedLayout.setVisibility(View.GONE);
     }
 
-    private void showErrorLayout(){
+    private void showNoInternetLayout(){
         mChat.setVisibility(View.GONE);
         mLoadingIndicator.setVisibility(View.GONE);
         mNoInternetLayout.setVisibility(View.VISIBLE);
+        mAccountBannedLayout.setVisibility(View.GONE);
+    }
+
+    private void showAccountBannedLayout(){
+        mChat.setVisibility(View.GONE);
+        mLoadingIndicator.setVisibility(View.GONE);
+        mNoInternetLayout.setVisibility(View.GONE);
+        mAccountBannedLayout.setVisibility(View.VISIBLE);
     }
 
     private void startChatWebSocket() {
@@ -197,7 +212,7 @@ public class ChatFragment extends Fragment implements ChatMessageClickListener {
             t.printStackTrace();
 
             if(isAdded()) {
-                getActivity().runOnUiThread(() -> showErrorLayout());
+                getActivity().runOnUiThread(() -> showNoInternetLayout());
             }
         }
     }

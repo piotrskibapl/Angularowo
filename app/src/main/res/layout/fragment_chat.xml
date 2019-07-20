@@ -15,4 +15,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
     <include layout="@layout/no_internet_layout" />
+    <include layout="@layout/account_banned_layout" />
 </FrameLayout>

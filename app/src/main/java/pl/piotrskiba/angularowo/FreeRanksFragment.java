@@ -51,6 +51,9 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
     @BindView(R.id.no_internet_layout)
     LinearLayout mNoInternetLayout;
 
+    @BindView(R.id.account_banned_layout)
+    LinearLayout mAccountBannedLayout;
+
     private RewardedVideoAd mRewardedVideoAd;
 
     private ArrayList<Reward> mRewards = new ArrayList<>();
@@ -131,6 +134,9 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
                                 showNoRewardsLayout();
                             }
                         }
+                        else if(response.code() == 403){
+                            showAccoutBannedLayout();
+                        }
                     }
                 }
 
@@ -151,18 +157,28 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
         mNoRanksAvailableTextView.setVisibility(View.GONE);
         mFreeRankList.setVisibility(View.VISIBLE);
         mNoInternetLayout.setVisibility(View.GONE);
+        mAccountBannedLayout.setVisibility(View.GONE);
     }
     private void showNoRewardsLayout(){
         hideLoadingIndicator();
         mNoRanksAvailableTextView.setVisibility(View.VISIBLE);
         mFreeRankList.setVisibility(View.GONE);
         mNoInternetLayout.setVisibility(View.GONE);
+        mAccountBannedLayout.setVisibility(View.GONE);
     }
     private void showNoInternetLayout(){
         hideLoadingIndicator();
         mNoRanksAvailableTextView.setVisibility(View.GONE);
         mFreeRankList.setVisibility(View.GONE);
         mNoInternetLayout.setVisibility(View.VISIBLE);
+        mAccountBannedLayout.setVisibility(View.GONE);
+    }
+    private void showAccoutBannedLayout(){
+        hideLoadingIndicator();
+        mNoRanksAvailableTextView.setVisibility(View.GONE);
+        mFreeRankList.setVisibility(View.GONE);
+        mNoInternetLayout.setVisibility(View.GONE);
+        mAccountBannedLayout.setVisibility(View.VISIBLE);
     }
 
     private void showLoadingIndicator(){
