@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defaultsMap>
+    <entry>
+        <key>app_lock_title</key>
+        <value>Prace techniczne</value>
+    </entry>
+    <entry>
+        <key>app_lock_body</key>
+        <value>Dostęp do aplikacji jest tymczasowo wyłączony.\nSpróbuj ponownie później.</value>
+    </entry>
+    <entry>
+        <key>app_lock_end_timestamp</key>
+        <value>0</value>
+    </entry>
+    <entry>
+        <key>app_lock_start_timestamp</key>
+        <value>0</value>
+    </entry>
+</defaultsMap>

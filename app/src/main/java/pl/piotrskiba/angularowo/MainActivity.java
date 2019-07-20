@@ -23,6 +23,7 @@ import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements UnauthorizedRespo
 
     @BindView(R.id.nav_view)
     NavigationView mNavigationView;
+
+    private FirebaseRemoteConfig mFirebaseRemoteConfig;
 
     private MainScreenFragment mainScreenFragment;
     private PlayerListFragment playerListFragment;
@@ -80,6 +83,8 @@ public class MainActivity extends AppCompatActivity implements UnauthorizedRespo
 
         new NotificationUtils(this).createNotificationChannels();
 
+        setupRemoteConfig();
+
         MobileAds.initialize(this, Constants.ADMOB_APP_ID);
 
         mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
@@ -106,6 +111,25 @@ public class MainActivity extends AppCompatActivity implements UnauthorizedRespo
                 waitingForLogin = true;
                 Intent intent = new Intent(this, LoginActivity.class);
                 startActivityForResult(intent, Constants.REQUEST_CODE_REGISTER);
+            }
+        }
+    }
+
+    private void setupRemoteConfig(){
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+        mFirebaseRemoteConfig.setDefaults(R.xml.remote_config_default_values);
+
+        mFirebaseRemoteConfig.fetch(60*30)
+                .addOnCompleteListener(this, task -> mFirebaseRemoteConfig.activate().addOnCompleteListener(task1 -> onRemoteConfigLoaded()));
+    }
+
+    private void onRemoteConfigLoaded(){
+        long start = mFirebaseRemoteConfig.getLong(Constants.REMOTE_CONFIG_APP_LOCK_START_TIMESTAMP);
+        if(start*1000 <= System.currentTimeMillis()) {
+            long end = mFirebaseRemoteConfig.getLong(Constants.REMOTE_CONFIG_APP_LOCK_END_TIMESTAMP);
+            if(end*1000 > System.currentTimeMillis()) {
+                Intent intent = new Intent(this, ApplicationLockedActivity.class);
+                startActivity(intent);
             }
         }
     }
