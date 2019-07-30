@@ -26,6 +26,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.bumptech.glide.Glide;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.piotrskiba.angularowo.adapters.BanListAdapter;
@@ -292,8 +295,14 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
                 if(isAdded()) {
                     mSwipeRefreshLayout.setRefreshing(false);
                     if (response.isSuccessful() && response.body() != null) {
-                        adapter.setBanList(response.body());
-                        if (!response.body().getBanList().isEmpty())
+                        BanList activeBans = new BanList(new ArrayList<>());
+                        for(Ban ban : response.body().getBanList()){
+                            if(ban.getExpireDate() >= new Timestamp(System.currentTimeMillis()).getTime()){
+                                activeBans.getBanList().add(ban);
+                            }
+                        }
+                        adapter.setBanList(activeBans);
+                        if (!activeBans.getBanList().isEmpty())
                             showLastBans();
                     } else if (response.code() == 401) {
                         hideLastBans();
