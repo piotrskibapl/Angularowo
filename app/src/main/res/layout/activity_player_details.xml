@@ -49,7 +49,7 @@
                 app:layout_constraintWidth_percent="0.5"
                 app:layout_constraintTop_toBottomOf="@id/iv_player_body"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/tv_islandlevel_title"/>
+                app:layout_constraintEnd_toStartOf="@id/tv_tokens_title"/>
             <TextView
                 android:id="@+id/tv_balance"
                 android:layout_width="wrap_content"
@@ -61,11 +61,11 @@
                 app:layout_constraintEnd_toEndOf="@id/tv_balance_title"/>
 
             <TextView
-                android:id="@+id/tv_islandlevel_title"
+                android:id="@+id/tv_tokens_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/section_margin"
-                android:text="@string/island_level_title"
+                android:text="@string/tokens_title_others"
                 android:textAlignment="center"
                 app:layout_constraintWidth_default="percent"
                 app:layout_constraintWidth_percent="0.5"
@@ -73,14 +73,14 @@
                 app:layout_constraintStart_toEndOf="@id/tv_balance_title"
                 app:layout_constraintEnd_toEndOf="parent"/>
             <TextView
-                android:id="@+id/tv_islandlevel"
+                android:id="@+id/tv_tokens"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_small"
                 android:textSize="@dimen/playerinfo_values_text_sizes"
-                app:layout_constraintTop_toBottomOf="@id/tv_islandlevel_title"
-                app:layout_constraintStart_toStartOf="@id/tv_islandlevel_title"
-                app:layout_constraintEnd_toEndOf="@id/tv_islandlevel_title"/>
+                app:layout_constraintTop_toBottomOf="@id/tv_tokens_title"
+                app:layout_constraintStart_toStartOf="@id/tv_tokens_title"
+                app:layout_constraintEnd_toEndOf="@id/tv_tokens_title"/>
 
             <TextView
                 android:id="@+id/tv_playtime_title"
@@ -89,7 +89,7 @@
                 android:layout_marginTop="@dimen/margin_default"
                 android:text="@string/playtime_title"
                 android:textAlignment="center"
-                app:layout_constraintTop_toBottomOf="@id/tv_islandlevel"
+                app:layout_constraintTop_toBottomOf="@id/tv_tokens"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
             <TextView

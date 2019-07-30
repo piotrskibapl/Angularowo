@@ -42,8 +42,8 @@ public class PlayerDetailsActivity extends AppCompatActivity implements SwipeRef
     @BindView(R.id.tv_balance)
     TextView mPlayerBalanceTextView;
 
-    @BindView(R.id.tv_islandlevel)
-    TextView mPlayerIslandLevelTextView;
+    @BindView(R.id.tv_tokens)
+    TextView mPlayerTokensTextView;
 
     @BindView(R.id.tv_playtime)
     TextView mPlayerPlayTimeTextView;
@@ -156,7 +156,7 @@ public class PlayerDetailsActivity extends AppCompatActivity implements SwipeRef
         populatePlayer(player);
 
         mPlayerBalanceTextView.setText(getString(R.string.balance_format, (int)detailedPlayer.getBalance()));
-        mPlayerIslandLevelTextView.setText(String.valueOf(detailedPlayer.getIslandLevel()));
+        mPlayerTokensTextView.setText(String.valueOf(detailedPlayer.getTokens()));
         mPlayerPlayTimeTextView.setText(TextUtils.formatPlaytime(this, detailedPlayer.getPlaytime()));
     }
 

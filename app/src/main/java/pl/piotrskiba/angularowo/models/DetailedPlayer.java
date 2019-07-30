@@ -1,7 +1,5 @@
 package pl.piotrskiba.angularowo.models;
 
-import com.google.gson.annotations.SerializedName;
-
 public class DetailedPlayer {
     private final String username;
     private final String uuid;
@@ -10,10 +8,9 @@ public class DetailedPlayer {
     private final boolean vanished;
     private final float balance;
     private final int playtime;
-    @SerializedName("islandlevel")
-    private final int islandLevel;
+    private final int tokens;
 
-    public DetailedPlayer(String username, String uuid, String status, String rank, boolean vanished, float balance, int playtime, int islandLevel){
+    public DetailedPlayer(String username, String uuid, String status, String rank, boolean vanished, float balance, int playtime, int tokens){
         this.username = username;
         this.uuid = uuid;
         this.status = status;
@@ -21,7 +18,7 @@ public class DetailedPlayer {
         this.vanished = vanished;
         this.balance = balance;
         this.playtime = playtime;
-        this.islandLevel = islandLevel;
+        this.tokens = tokens;
     }
 
     public String getUsername(){
@@ -52,7 +49,7 @@ public class DetailedPlayer {
         return playtime;
     }
 
-    public int getIslandLevel() {
-        return islandLevel;
+    public int getTokens() {
+        return tokens;
     }
 }

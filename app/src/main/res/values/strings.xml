@@ -53,7 +53,7 @@
     <string name="greeting">Witaj, %1$s!</string>
     <string name="balance_title">Stan konta:</string>
     <string name="balance_format">$%1$d</string>
-    <string name="island_level_title">Twoje tokeny:</string>
+    <string name="tokens_title">Twoje tokeny:</string>
     <string name="playtime_title">Spędzony czas online:</string>
     <string name="last_player_bans">Twoje aktywne kary:</string>
 
@@ -63,6 +63,7 @@
 
     <!-- activity_player_details.xml -->
     <string name="player_info">Informacje o graczu</string>
+    <string name="tokens_title_others">Tokeny gracza:</string>
     <string name="player_banner_transition_name" translatable="false">player_banner</string>
 
     <!-- fragment_ban_list.xml -->

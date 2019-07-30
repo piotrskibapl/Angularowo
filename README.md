@@ -2,7 +2,7 @@
 Angularowo is an Android application created for Minecraft "Angularowo" server users.
 
 ## Features
-* Check basic server & user info, e.g. amount of players online, your island level etc.
+* Check basic server & user info, e.g. amount of players online, your account balance etc.
 * Access online players list and check basic info about them
 * View last bans and its details
 * Preview in-game chat in realtime
