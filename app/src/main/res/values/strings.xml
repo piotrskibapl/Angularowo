@@ -53,7 +53,7 @@
     <string name="greeting">Witaj, %1$s!</string>
     <string name="balance_title">Stan konta:</string>
     <string name="balance_format">$%1$d</string>
-    <string name="island_level_title">Poziom działki:</string>
+    <string name="island_level_title">Twoje tokeny:</string>
     <string name="playtime_title">Spędzony czas online:</string>
     <string name="last_player_bans">Twoje aktywne kary:</string>
 
