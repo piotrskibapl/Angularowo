@@ -23,8 +23,8 @@ public class Constants {
     public final static String FIREBASE_FCM_DATA_NOTIFICATION_BODY = "notification_body";
     public final static String FIREBASE_FCM_DATA_NOTIFICATION_SOUND = "notification_sound";
 
-    public final static String BAN_TYPES = "ban,warning,mute";
-    public final static String ACTIVE_BAN_TYPES = "ban,warning";
+    public final static String BAN_TYPES = "ban,warning,mute,kick";
+    public final static String ACTIVE_BAN_TYPES = "ban,warning,mute";
 
     public static final long[] DEFAULT_VIBRATE_PATTERN = {0, 250, 250, 250};
 
