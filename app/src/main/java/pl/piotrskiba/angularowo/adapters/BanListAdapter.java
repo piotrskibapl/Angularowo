@@ -78,26 +78,35 @@ public class BanListAdapter extends RecyclerView.Adapter<BanListAdapter.BanViewH
 
         holder.mPlayerAvatar.setImageDrawable(context.getResources().getDrawable(R.drawable.default_avatar));
 
-        MojangAPIInterface mojangAPIInterface = MojangAPIClient.getRetrofitInstance().create(MojangAPIInterface.class);
-        mojangAPIInterface.getProfile(ban.getUsername()).enqueue(new Callback<MojangProfile>() {
-            @Override
-            public void onResponse(Call<MojangProfile> call, Response<MojangProfile> response) {
-                if(holder.getAdapterPosition() == position) {
-                    if (response.isSuccessful() && response.body() != null) {
-                        Glide.with(context)
-                                .load(UrlUtils.buildAvatarUrl(response.body().getId(), true))
-                                .signature(new IntegerVersionSignature(GlideUtils.getSignatureVersionNumber(5)))
-                                .placeholder(R.drawable.default_avatar)
-                                .into(holder.mPlayerAvatar);
+        if(ban.getUuid() == null) {
+            MojangAPIInterface mojangAPIInterface = MojangAPIClient.getRetrofitInstance().create(MojangAPIInterface.class);
+            mojangAPIInterface.getProfile(ban.getUsername()).enqueue(new Callback<MojangProfile>() {
+                @Override
+                public void onResponse(Call<MojangProfile> call, Response<MojangProfile> response) {
+                    if (holder.getAdapterPosition() == position) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            Glide.with(context)
+                                    .load(UrlUtils.buildAvatarUrl(response.body().getId(), true))
+                                    .signature(new IntegerVersionSignature(GlideUtils.getSignatureVersionNumber(5)))
+                                    .placeholder(R.drawable.default_avatar)
+                                    .into(holder.mPlayerAvatar);
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<MojangProfile> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
+                @Override
+                public void onFailure(Call<MojangProfile> call, Throwable t) {
+                    t.printStackTrace();
+                }
+            });
+        }
+        else{
+            Glide.with(context)
+                    .load(UrlUtils.buildAvatarUrl(ban.getUuid(), true))
+                    .signature(new IntegerVersionSignature(GlideUtils.getSignatureVersionNumber(5)))
+                    .placeholder(R.drawable.default_avatar)
+                    .into(holder.mPlayerAvatar);
+        }
     }
 
     @Override

@@ -9,9 +9,11 @@ public class Ban implements Serializable {
     public final static String TYPE_BAN = "Ban";
     public final static String TYPE_MUTE = "Wyciszenie";
     public final static String TYPE_WARNING = "Ostrzeżenie";
+    public final static String TYPE_KICK = "Wyrzucenie z gry";
 
     @SerializedName("name")
     private final String username;
+    private final String uuid;
     private final String reason;
     private final String banner;
     @SerializedName("bantime")
@@ -20,8 +22,9 @@ public class Ban implements Serializable {
     private final float expireDate;
     private final String type;
 
-    public Ban(String username, String reason, String banner, float banTime, float expireDate, String type){
+    public Ban(String username, String uuid, String reason, String banner, float banTime, float expireDate, String type){
         this.username = username;
+        this.uuid = uuid;
         this.reason = reason;
         this.banner = banner;
         this.banTime = banTime;
@@ -31,6 +34,10 @@ public class Ban implements Serializable {
 
     public String getUsername() {
         return username;
+    }
+
+    public String getUuid() {
+        return uuid;
     }
 
     public String getReason() {
