@@ -191,6 +191,7 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
             @Override
             public void onFailure(Call<ServerStatus> call, Throwable t) {
                 showNoInternetLayout();
+                t.printStackTrace();
             }
         });
 
@@ -275,6 +276,7 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
                 if(isAdded()) {
                     showNoInternetLayout();
                 }
+                t.printStackTrace();
             }
         });
 
@@ -318,6 +320,7 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
                 if(isAdded()) {
                     showNoInternetLayout();
                 }
+                t.printStackTrace();
             }
         });
     }

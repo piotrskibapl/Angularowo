@@ -117,6 +117,7 @@ public class ReportsHistoryFragment extends Fragment implements ReportClickListe
                     if (isAdded()) {
                         showNoInternetLayout();
                     }
+                    t.printStackTrace();
                 }
             });
         }
@@ -141,6 +142,7 @@ public class ReportsHistoryFragment extends Fragment implements ReportClickListe
                     if (isAdded()) {
                         showNoInternetLayout();
                     }
+                    t.printStackTrace();
                 }
             });
         }

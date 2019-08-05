@@ -109,6 +109,7 @@ public class BanListFragment extends Fragment implements BanClickListener {
                 if(isAdded()) {
                     showNoInternetLayout();
                 }
+                t.printStackTrace();
             }
         });
     }

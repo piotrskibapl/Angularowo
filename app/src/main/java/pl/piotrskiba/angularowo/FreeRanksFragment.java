@@ -143,6 +143,7 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
                 @Override
                 public void onFailure(Call<RewardList> call, Throwable t) {
                     showNoInternetLayout();
+                    t.printStackTrace();
                 }
             });
         }

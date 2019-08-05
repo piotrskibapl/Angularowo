@@ -114,6 +114,7 @@ public class PlayerListFragment extends Fragment implements PlayerClickListener 
                 if(isAdded()) {
                     showNoInternetLayout();
                 }
+                t.printStackTrace();
             }
         });
     }

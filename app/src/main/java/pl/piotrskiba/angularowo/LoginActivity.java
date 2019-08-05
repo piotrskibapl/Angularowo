@@ -103,6 +103,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<AccessToken> call, Throwable t) {
                     Snackbar.make(mCoordinatorLayout, getString(R.string.login_error_unknown), Snackbar.LENGTH_LONG).show();
+                    t.printStackTrace();
                 }
             });
         });

@@ -110,6 +110,7 @@ public class PlayerDetailsActivity extends AppCompatActivity implements SwipeRef
             @Override
             public void onFailure(Call<DetailedPlayer> call, Throwable t) {
                 mSwipeRefreshLayout.setRefreshing(false);
+                t.printStackTrace();
             }
         });
     }

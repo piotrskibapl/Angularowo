@@ -115,6 +115,7 @@ public class ChatFragment extends Fragment implements ChatMessageClickListener {
 
             @Override
             public void onFailure(Call<ChatMessageList> call, Throwable t) {
+                t.printStackTrace();
             }
         });
     }
