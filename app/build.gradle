@@ -35,7 +35,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0-alpha02'
 
     // RecyclerView
-    implementation 'androidx.recyclerview:recyclerview:1.1.0-beta01'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-beta02'
 
     // Butter Knife
     implementation 'com.jakewharton:butterknife:10.0.0'
