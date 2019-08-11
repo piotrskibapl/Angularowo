@@ -33,6 +33,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.piotrskiba.angularowo.adapters.BanListAdapter;
 import pl.piotrskiba.angularowo.interfaces.BanClickListener;
+import pl.piotrskiba.angularowo.interfaces.DataLoadedListener;
 import pl.piotrskiba.angularowo.models.Ban;
 import pl.piotrskiba.angularowo.models.BanList;
 import pl.piotrskiba.angularowo.models.DetailedPlayer;
@@ -174,6 +175,17 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
 
         mGreetingTextView.setText(getString(R.string.greeting, username));
 
+        loadData();
+
+        ActionBar actionbar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        actionbar.setTitle(R.string.app_name);
+    }
+
+    private void loadData(){
+        loadServerStatus(() -> loadPlayerDetails(() -> loadBanList(mBanListAdapter, () -> mSwipeRefreshLayout.setRefreshing(false))));
+    }
+
+    private void loadServerStatus(DataLoadedListener listener){
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         String access_token = sharedPreferences.getString(getString(R.string.pref_key_access_token), null);
 
@@ -183,8 +195,9 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
             public void onResponse(Call<ServerStatus> call, Response<ServerStatus> response) {
                 if(response.isSuccessful() && response.body() != null && getContext() != null){
                     ServerStatus server = response.body();
-
                     mPlayerCountTextView.setText(getResources().getQuantityString(R.plurals.playercount, server.getPlayerCount(), server.getPlayerCount()));
+
+                    listener.onDataLoaded();
                 }
             }
 
@@ -194,7 +207,13 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
                 t.printStackTrace();
             }
         });
+    }
 
+    private void loadPlayerDetails(DataLoadedListener listener){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String access_token = sharedPreferences.getString(getString(R.string.pref_key_access_token), null);
+
+        ServerAPIInterface serverAPIInterface = ServerAPIClient.getRetrofitInstance().create(ServerAPIInterface.class);
         serverAPIInterface.getPlayerInfo(ServerAPIClient.API_KEY, username, access_token).enqueue(new Callback<DetailedPlayer>() {
 
             @Override
@@ -216,57 +235,11 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
                         mPlayerPlayTimeTextView.setText(TextUtils.formatPlaytime(getContext(), player.getPlaytime()));
 
                         if (player.getRank() != null) {
-                            // subscribe to player's rank Firebase topic
-                            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-                            String rank = sharedPreferences.getString(getString(R.string.pref_key_rank), null);
-                            if (!player.getRank().equals(rank)) {
-                                if (rank != null) {
-                                    FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_RANK_TOPIC_PREFIX + rank);
-                                }
-                                FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_RANK_TOPIC_PREFIX + player.getRank());
-
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putString(getString(R.string.pref_key_rank), player.getRank());
-                                editor.apply();
-                            }
-
-                            // check subscription for new reports
-                            if (RankUtils.isStaffRank(player.getRank())) {
-                                if (!sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_new_reports))) {
-                                    FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_NEW_REPORTS_TOPIC)
-                                            .addOnCompleteListener(task -> {
-                                                if(isAdded()) {
-                                                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                                                    editor.putBoolean(getString(R.string.pref_key_subscribed_to_new_reports), true);
-                                                    editor.apply();
-                                                }
-                                                else if(getActivity() != null){
-                                                    SharedPreferences sharedPreferences1 = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
-                                                    SharedPreferences.Editor editor = sharedPreferences1.edit();
-                                                    editor.putBoolean(getString(R.string.pref_key_subscribed_to_new_reports), true);
-                                                    editor.apply();
-                                                }
-                                            });
-                                }
-                            } else {
-                                if (sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_new_reports)) && sharedPreferences.getBoolean(getString(R.string.pref_key_subscribed_to_new_reports), false)) {
-                                    FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_NEW_REPORTS_TOPIC)
-                                            .addOnCompleteListener(task -> {
-                                                if(isAdded()) {
-                                                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                                                    editor.putBoolean(getString(R.string.pref_key_subscribed_to_new_reports), false);
-                                                    editor.apply();
-                                                }
-                                                else if(getActivity() != null){
-                                                    SharedPreferences sharedPreferences1 = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
-                                                    SharedPreferences.Editor editor = sharedPreferences1.edit();
-                                                    editor.putBoolean(getString(R.string.pref_key_subscribed_to_new_reports), false);
-                                                    editor.apply();
-                                                }
-                                            });
-                                }
-                            }
+                            subscribeToFirebaseRankTopic(player.getRank());
+                            checkFirebaseNewReportsTopicSubscription(player.getRank());
                         }
+
+                        listener.onDataLoaded();
                     }
                 }
             }
@@ -279,14 +252,65 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
                 t.printStackTrace();
             }
         });
-
-        loadBanList(mBanListAdapter);
-
-        ActionBar actionbar = ((AppCompatActivity)getActivity()).getSupportActionBar();
-        actionbar.setTitle(R.string.app_name);
     }
 
-    private void loadBanList(BanListAdapter adapter){
+    private void subscribeToFirebaseRankTopic(String rank){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String previous_rank = sharedPreferences.getString(getString(R.string.pref_key_rank), null);
+
+        if (!rank.equals(previous_rank)) {
+            if (previous_rank != null) {
+                FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_RANK_TOPIC_PREFIX + previous_rank);
+            }
+            FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_RANK_TOPIC_PREFIX + rank);
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(getString(R.string.pref_key_rank), rank);
+            editor.apply();
+        }
+    }
+
+    private void checkFirebaseNewReportsTopicSubscription(String rank){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+
+        if (RankUtils.isStaffRank(rank)) {
+            if (!sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_new_reports))) {
+                FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_NEW_REPORTS_TOPIC)
+                        .addOnCompleteListener(task -> {
+                            if(isAdded()) {
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putBoolean(getString(R.string.pref_key_subscribed_to_new_reports), true);
+                                editor.apply();
+                            }
+                            else if(getActivity() != null){
+                                SharedPreferences sharedPreferences1 = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+                                SharedPreferences.Editor editor = sharedPreferences1.edit();
+                                editor.putBoolean(getString(R.string.pref_key_subscribed_to_new_reports), true);
+                                editor.apply();
+                            }
+                        });
+            }
+        } else {
+            if (sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_new_reports)) && sharedPreferences.getBoolean(getString(R.string.pref_key_subscribed_to_new_reports), false)) {
+                FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_NEW_REPORTS_TOPIC)
+                        .addOnCompleteListener(task -> {
+                            if(isAdded()) {
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.remove(getString(R.string.pref_key_subscribed_to_new_reports));
+                                editor.apply();
+                            }
+                            else if(getActivity() != null){
+                                SharedPreferences sharedPreferences1 = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+                                SharedPreferences.Editor editor = sharedPreferences1.edit();
+                                editor.remove(getString(R.string.pref_key_subscribed_to_new_reports));
+                                editor.apply();
+                            }
+                        });
+            }
+        }
+    }
+
+    private void loadBanList(BanListAdapter adapter, DataLoadedListener listener){
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         String access_token = sharedPreferences.getString(getString(R.string.pref_key_access_token), null);
 
@@ -295,7 +319,6 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
             @Override
             public void onResponse(Call<BanList> call, Response<BanList> response) {
                 if(isAdded()) {
-                    mSwipeRefreshLayout.setRefreshing(false);
                     if (response.isSuccessful() && response.body() != null) {
                         BanList activeBans = new BanList(new ArrayList<>());
                         for(Ban ban : response.body().getBanList()){
@@ -312,6 +335,8 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
                     else{
                         hideLastBans();
                     }
+
+                    listener.onDataLoaded();
                 }
             }
 
