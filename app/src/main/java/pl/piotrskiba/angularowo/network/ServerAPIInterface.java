@@ -21,7 +21,10 @@ public interface ServerAPIInterface {
     Call<PlayerList> getPlayers(@Query("api_key") String api_key, @Query("access_token") String access_token);
 
     @GET("get_ban_list.php")
-    Call<BanList> getBanList(@Query("api_key") String api_key, @Query("type") String type, @Query("username") String username, @Query("access_token") String access_token);
+    Call<BanList> getAllBans(@Query("api_key") String api_key, @Query("type") String type, @Query("username") String username, @Query("access_token") String access_token);
+
+    @GET("get_ban_list.php?filter=active")
+    Call<BanList> getActiveBans(@Query("api_key") String api_key, @Query("type") String type, @Query("username") String username, @Query("access_token") String access_token);
 
     @GET("register_device.php")
     Call<AccessToken> registerDevice(@Query("api_key") String api_key, @Query("user_code") String user_code);

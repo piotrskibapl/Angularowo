@@ -315,19 +315,13 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
         String access_token = sharedPreferences.getString(getString(R.string.pref_key_access_token), null);
 
         ServerAPIInterface serverAPIInterface = ServerAPIClient.getRetrofitInstance().create(ServerAPIInterface.class);
-        serverAPIInterface.getBanList(ServerAPIClient.API_KEY, Constants.ACTIVE_BAN_TYPES, username, access_token).enqueue(new Callback<BanList>() {
+        serverAPIInterface.getActiveBans(ServerAPIClient.API_KEY, Constants.ACTIVE_BAN_TYPES, username, access_token).enqueue(new Callback<BanList>() {
             @Override
             public void onResponse(Call<BanList> call, Response<BanList> response) {
                 if(isAdded()) {
                     if (response.isSuccessful() && response.body() != null) {
-                        BanList activeBans = new BanList(new ArrayList<>());
-                        for(Ban ban : response.body().getBanList()){
-                            if(ban.getExpireDate() >= new Timestamp(System.currentTimeMillis()).getTime()){
-                                activeBans.getBanList().add(ban);
-                            }
-                        }
-                        adapter.setBanList(activeBans);
-                        if (!activeBans.getBanList().isEmpty())
+                        adapter.setBanList(response.body());
+                        if (!response.body().getBanList().isEmpty())
                             showLastBans();
                     } else if (response.code() == 401) {
                         hideLastBans();

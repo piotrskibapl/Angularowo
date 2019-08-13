@@ -92,7 +92,7 @@ public class BanListFragment extends Fragment implements BanClickListener {
         String access_token = sharedPreferences.getString(getString(R.string.pref_key_access_token), null);
 
         ServerAPIInterface serverAPIInterface = ServerAPIClient.getRetrofitInstance().create(ServerAPIInterface.class);
-        serverAPIInterface.getBanList(ServerAPIClient.API_KEY, Constants.BAN_TYPES, null, access_token).enqueue(new Callback<BanList>() {
+        serverAPIInterface.getActiveBans(ServerAPIClient.API_KEY, Constants.BAN_TYPES, null, access_token).enqueue(new Callback<BanList>() {
             @Override
             public void onResponse(Call<BanList> call, Response<BanList> response) {
                 if(isAdded()) {
