@@ -11,42 +11,34 @@ public class RankUtils {
                     return R.color.color_minecraft_4;
                 case "admin":
                     return R.color.color_minecraft_4;
-                case "viceadmin":
-                    return R.color.color_minecraft_c;
                 case "moderator":
                     return R.color.color_minecraft_2;
                 case "pomocnik":
                     return R.color.color_minecraft_9;
                 case "budowniczy":
                     return R.color.color_minecraft_b;
-                case "sponsor":
-                    return R.color.color_minecraft_e;
-                case "hrabia":
-                    return R.color.color_minecraft_b;
-                case "legenda":
-                    return R.color.color_minecraft_e;
-                case "duchowny":
-                    return R.color.color_minecraft_d;
-                case "pro":
-                    return R.color.color_minecraft_9;
-                case "noob":
-                    return R.color.color_minecraft_9;
-                case "kasyniarz":
-                    return R.color.color_minecraft_c;
                 case "eventowiec":
                     return R.color.color_minecraft_a;
+                case "duchowny":
+                    return R.color.color_minecraft_d;
+                case "ultravip":
+                    return R.color.color_minecraft_e;
                 case "supervip":
                     return R.color.color_minecraft_a;
                 case "kontovip":
                     return R.color.color_minecraft_6;
-                case "dziewczyna":
-                    return R.color.color_minecraft_d;
                 case "chlopak":
                     return R.color.color_minecraft_5;
+                case "dziewczyna":
+                    return R.color.color_minecraft_d;
                 case "nolife":
                     return R.color.color_minecraft_3;
                 case "stalygracz":
                     return R.color.color_minecraft_3;
+                case "gracz":
+                    return R.color.color_minecraft_7;
+                case "nowygracz":
+                    return R.color.color_minecraft_7;
                 default:
                     return R.color.color_minecraft_7;
             }
@@ -63,41 +55,33 @@ public class RankUtils {
                     return R.color.color_minecraft_b;
                 case "admin":
                     return R.color.color_minecraft_c;
-                case "viceadmin":
-                    return R.color.color_minecraft_a;
                 case "moderator":
                     return R.color.color_minecraft_a;
                 case "pomocnik":
                     return R.color.color_minecraft_b;
                 case "budowniczy":
                     return R.color.color_minecraft_f;
-                case "sponsor":
-                    return R.color.color_minecraft_6;
-                case "hrabia":
-                    return R.color.color_minecraft_6;
-                case "legenda":
-                    return R.color.color_minecraft_f;
-                case "duchowny":
-                    return R.color.color_minecraft_e;
-                case "pro":
-                    return R.color.color_minecraft_f;
-                case "noob":
-                    return R.color.color_minecraft_f;
-                case "kasyniarz":
-                    return R.color.color_minecraft_6;
                 case "eventowiec":
                     return R.color.color_minecraft_b;
-                case "supervip":
+                case "duchowny":
                     return R.color.color_minecraft_e;
+                case "ultravip":
+                    return R.color.color_minecraft_f;
+                case "supervip":
+                    return R.color.color_minecraft_f;
                 case "kontovip":
                     return R.color.color_minecraft_f;
-                case "dziewczyna":
-                    return R.color.color_minecraft_f;
                 case "chlopak":
+                    return R.color.color_minecraft_f;
+                case "dziewczyna":
                     return R.color.color_minecraft_f;
                 case "nolife":
                     return R.color.color_minecraft_f;
                 case "stalygracz":
+                    return R.color.color_minecraft_f;
+                case "gracz":
+                    return R.color.color_minecraft_f;
+                case "nowygracz":
                     return R.color.color_minecraft_f;
                 default:
                     return R.color.color_minecraft_f;
@@ -114,8 +98,6 @@ public class RankUtils {
                 case "wlasciciel":
                     return true;
                 case "admin":
-                    return true;
-                case "viceadmin":
                     return true;
                 case "moderator":
                     return true;

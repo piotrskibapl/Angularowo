@@ -3,20 +3,14 @@
     <string-array name="ranks_team">
         <item>wlasciciel</item>
         <item>admin</item>
-        <item>viceadmin</item>
         <item>moderator</item>
         <item>pomocnik</item>
         <item>budowniczy</item>
     </string-array>
     <string-array name="ranks_other">
         <item>eventowiec</item>
-        <item>hrabia</item>
-        <item>kasyniarz</item>
-        <item>sponsor</item>
-        <item>legenda</item>
         <item>duchowny</item>
-        <item>pro</item>
-        <item>noob</item>
+        <item>ultravip</item>
         <item>supervip</item>
         <item>kontovip</item>
         <item>chlopak</item>
@@ -24,6 +18,7 @@
         <item>nolife</item>
         <item>stalygracz</item>
         <item>gracz</item>
+        <item>nowygracz</item>
     </string-array>
 
 </resources>
