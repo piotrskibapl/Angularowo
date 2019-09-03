@@ -26,9 +26,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.bumptech.glide.Glide;
 import com.google.firebase.messaging.FirebaseMessaging;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.piotrskiba.angularowo.adapters.BanListAdapter;
@@ -82,6 +79,9 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
 
     @BindView(R.id.no_internet_layout)
     LinearLayout mNoInternetLayout;
+
+    @BindView(R.id.server_error_layout)
+    LinearLayout mServerErrorLayout;
 
     private String username;
 
@@ -199,6 +199,9 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
 
                     listener.onDataLoaded();
                 }
+                else if(!response.isSuccessful()){
+                    showServerErrorLayout();
+                }
             }
 
             @Override
@@ -240,6 +243,9 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
                         }
 
                         listener.onDataLoaded();
+                    }
+                    else if(!response.isSuccessful()){
+                        showServerErrorLayout();
                     }
                 }
             }
@@ -347,12 +353,21 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
     private void showDefaultLayout(){
         mDefaultLayout.setVisibility(View.VISIBLE);
         mNoInternetLayout.setVisibility(View.GONE);
+        mServerErrorLayout.setVisibility(View.GONE);
         error = false;
     }
     private void showNoInternetLayout(){
         mSwipeRefreshLayout.setRefreshing(false);
         mDefaultLayout.setVisibility(View.GONE);
         mNoInternetLayout.setVisibility(View.VISIBLE);
+        mServerErrorLayout.setVisibility(View.GONE);
+        error = true;
+    }
+    private void showServerErrorLayout(){
+        mSwipeRefreshLayout.setRefreshing(false);
+        mDefaultLayout.setVisibility(View.GONE);
+        mNoInternetLayout.setVisibility(View.GONE);
+        mServerErrorLayout.setVisibility(View.VISIBLE);
         error = true;
     }
 

@@ -45,6 +45,9 @@ public class ReportsHistoryFragment extends Fragment implements ReportClickListe
     @BindView(R.id.no_internet_layout)
     LinearLayout mNoInternetLayout;
 
+    @BindView(R.id.server_error_layout)
+    LinearLayout mServerErrorLayout;
+
     @BindView(R.id.tv_no_reports)
     TextView mNoReportsTextView;
 
@@ -109,6 +112,9 @@ public class ReportsHistoryFragment extends Fragment implements ReportClickListe
                                 showNoReportsLayout();
                             }
                         }
+                        else if(!response.isSuccessful()){
+                            showServerErrorLayout();
+                        }
                     }
                 }
 
@@ -134,6 +140,9 @@ public class ReportsHistoryFragment extends Fragment implements ReportClickListe
                                 showNoReportsLayout();
                             }
                         }
+                        else if(!response.isSuccessful()){
+                            showServerErrorLayout();
+                        }
                     }
                 }
 
@@ -152,18 +161,28 @@ public class ReportsHistoryFragment extends Fragment implements ReportClickListe
         mSwipeRefreshLayout.setRefreshing(false);
         mReportList.setVisibility(View.VISIBLE);
         mNoInternetLayout.setVisibility(View.GONE);
+        mServerErrorLayout.setVisibility(View.GONE);
         mNoReportsTextView.setVisibility(View.GONE);
     }
     private void showNoInternetLayout(){
         mSwipeRefreshLayout.setRefreshing(false);
         mReportList.setVisibility(View.GONE);
         mNoInternetLayout.setVisibility(View.VISIBLE);
+        mServerErrorLayout.setVisibility(View.GONE);
+        mNoReportsTextView.setVisibility(View.GONE);
+    }
+    private void showServerErrorLayout(){
+        mSwipeRefreshLayout.setRefreshing(false);
+        mReportList.setVisibility(View.GONE);
+        mNoInternetLayout.setVisibility(View.GONE);
+        mServerErrorLayout.setVisibility(View.VISIBLE);
         mNoReportsTextView.setVisibility(View.GONE);
     }
     private void showNoReportsLayout(){
         mSwipeRefreshLayout.setRefreshing(false);
         mReportList.setVisibility(View.GONE);
         mNoInternetLayout.setVisibility(View.GONE);
+        mServerErrorLayout.setVisibility(View.GONE);
         mNoReportsTextView.setVisibility(View.VISIBLE);
 
         if(admin){

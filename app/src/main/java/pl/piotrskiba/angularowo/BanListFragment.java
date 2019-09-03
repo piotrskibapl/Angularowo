@@ -46,6 +46,9 @@ public class BanListFragment extends Fragment implements BanClickListener {
     @BindView(R.id.no_internet_layout)
     LinearLayout mNoInternetLayout;
 
+    @BindView(R.id.server_error_layout)
+    LinearLayout mServerErrorLayout;
+
     public BanListFragment(){
 
     }
@@ -101,6 +104,9 @@ public class BanListFragment extends Fragment implements BanClickListener {
                     if (response.isSuccessful() && response.body() != null) {
                         adapter.setBanList(response.body());
                     }
+                    else if(!response.isSuccessful()){
+                        showServerErrorLayout();
+                    }
                 }
             }
 
@@ -139,10 +145,18 @@ public class BanListFragment extends Fragment implements BanClickListener {
         mSwipeRefreshLayout.setRefreshing(false);
         mBanList.setVisibility(View.VISIBLE);
         mNoInternetLayout.setVisibility(View.GONE);
+        mServerErrorLayout.setVisibility(View.GONE);
     }
     private void showNoInternetLayout(){
         mSwipeRefreshLayout.setRefreshing(false);
         mBanList.setVisibility(View.GONE);
         mNoInternetLayout.setVisibility(View.VISIBLE);
+        mServerErrorLayout.setVisibility(View.GONE);
+    }
+    private void showServerErrorLayout(){
+        mSwipeRefreshLayout.setRefreshing(false);
+        mBanList.setVisibility(View.GONE);
+        mNoInternetLayout.setVisibility(View.GONE);
+        mServerErrorLayout.setVisibility(View.VISIBLE);
     }
 }

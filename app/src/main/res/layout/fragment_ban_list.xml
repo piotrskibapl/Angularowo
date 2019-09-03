@@ -15,6 +15,7 @@
             android:layout_height="match_parent" />
 
         <include layout="@layout/no_internet_layout" />
+        <include layout="@layout/server_error_layout" />
     </FrameLayout>
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

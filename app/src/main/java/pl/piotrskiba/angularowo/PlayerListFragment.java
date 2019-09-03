@@ -48,6 +48,9 @@ public class PlayerListFragment extends Fragment implements PlayerClickListener 
     @BindView(R.id.no_internet_layout)
     LinearLayout mNoInternetLayout;
 
+    @BindView(R.id.server_error_layout)
+    LinearLayout mServerErrorLayout;
+
     public PlayerListFragment(){
 
     }
@@ -106,6 +109,9 @@ public class PlayerListFragment extends Fragment implements PlayerClickListener 
                             showNoPlayersLayout();
                         }
                     }
+                    else if(!response.isSuccessful()){
+                        showServerErrorLayout();
+                    }
                 }
             }
 
@@ -138,17 +144,27 @@ public class PlayerListFragment extends Fragment implements PlayerClickListener 
         mNoPlayersTextView.setVisibility(View.GONE);
         mPlayerList.setVisibility(View.VISIBLE);
         mNoInternetLayout.setVisibility(View.GONE);
+        mServerErrorLayout.setVisibility(View.GONE);
     }
     private void showNoPlayersLayout(){
         mSwipeRefreshLayout.setRefreshing(false);
         mNoPlayersTextView.setVisibility(View.VISIBLE);
         mPlayerList.setVisibility(View.GONE);
         mNoInternetLayout.setVisibility(View.GONE);
+        mServerErrorLayout.setVisibility(View.GONE);
     }
     private void showNoInternetLayout(){
         mSwipeRefreshLayout.setRefreshing(false);
         mNoPlayersTextView.setVisibility(View.GONE);
         mPlayerList.setVisibility(View.GONE);
         mNoInternetLayout.setVisibility(View.VISIBLE);
+        mServerErrorLayout.setVisibility(View.GONE);
+    }
+    private void showServerErrorLayout(){
+        mSwipeRefreshLayout.setRefreshing(false);
+        mNoPlayersTextView.setVisibility(View.GONE);
+        mPlayerList.setVisibility(View.GONE);
+        mNoInternetLayout.setVisibility(View.GONE);
+        mServerErrorLayout.setVisibility(View.VISIBLE);
     }
 }

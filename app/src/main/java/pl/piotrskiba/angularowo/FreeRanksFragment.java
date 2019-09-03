@@ -51,6 +51,9 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
     @BindView(R.id.no_internet_layout)
     LinearLayout mNoInternetLayout;
 
+    @BindView(R.id.server_error_layout)
+    LinearLayout mServerErrorLayout;
+
     @BindView(R.id.account_banned_layout)
     LinearLayout mAccountBannedLayout;
 
@@ -134,8 +137,13 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
                                 showNoRewardsLayout();
                             }
                         }
-                        else if(response.code() == 403){
-                            showAccoutBannedLayout();
+                        else if (!response.isSuccessful()){
+                            if(response.code() == 403){
+                                showAccountBannedLayout();
+                            }
+                            else{
+                                showServerErrorLayout();
+                            }
                         }
                     }
                 }
@@ -158,6 +166,7 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
         mNoRanksAvailableTextView.setVisibility(View.GONE);
         mFreeRankList.setVisibility(View.VISIBLE);
         mNoInternetLayout.setVisibility(View.GONE);
+        mServerErrorLayout.setVisibility(View.GONE);
         mAccountBannedLayout.setVisibility(View.GONE);
     }
     private void showNoRewardsLayout(){
@@ -165,6 +174,7 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
         mNoRanksAvailableTextView.setVisibility(View.VISIBLE);
         mFreeRankList.setVisibility(View.GONE);
         mNoInternetLayout.setVisibility(View.GONE);
+        mServerErrorLayout.setVisibility(View.GONE);
         mAccountBannedLayout.setVisibility(View.GONE);
     }
     private void showNoInternetLayout(){
@@ -172,13 +182,23 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
         mNoRanksAvailableTextView.setVisibility(View.GONE);
         mFreeRankList.setVisibility(View.GONE);
         mNoInternetLayout.setVisibility(View.VISIBLE);
+        mServerErrorLayout.setVisibility(View.GONE);
         mAccountBannedLayout.setVisibility(View.GONE);
     }
-    private void showAccoutBannedLayout(){
+    private void showServerErrorLayout(){
         hideLoadingIndicator();
         mNoRanksAvailableTextView.setVisibility(View.GONE);
         mFreeRankList.setVisibility(View.GONE);
         mNoInternetLayout.setVisibility(View.GONE);
+        mServerErrorLayout.setVisibility(View.VISIBLE);
+        mAccountBannedLayout.setVisibility(View.GONE);
+    }
+    private void showAccountBannedLayout(){
+        hideLoadingIndicator();
+        mNoRanksAvailableTextView.setVisibility(View.GONE);
+        mFreeRankList.setVisibility(View.GONE);
+        mNoInternetLayout.setVisibility(View.GONE);
+        mServerErrorLayout.setVisibility(View.GONE);
         mAccountBannedLayout.setVisibility(View.VISIBLE);
     }
 
