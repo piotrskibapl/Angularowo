@@ -33,7 +33,7 @@ public class Constants {
 
     public final static String NOTIFICATION_USERNAME_QUALIFIER = "%player%";
 
-    public final static String CHAT_WEBSOCKET_URL = "ws://164.132.159.123:25772";
+    public final static String CHAT_WEBSOCKET_URL = "ws://asmc-serwer.piotrskiba.pl:25772";
     public final static String CHAT_WEBSOCKET_ACCESSTOKEN_HEADER = "access_token";
 
     public final static String API_RESPONSE_REPORT_ACCEPTED = "True";

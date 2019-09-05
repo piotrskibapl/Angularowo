@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">164.132.159.123</domain>
+        <domain includeSubdomains="false">asmc-serwer.piotrskiba.pl</domain>
     </domain-config>
 </network-security-config>
