@@ -37,4 +37,8 @@
 
     <!-- chat_message.xml -->
     <dimen name="chat_message_text_size">16sp</dimen>
+
+    <!-- navigation_drawer_header.xml -->
+    <dimen name="navheader_title_text_size">18sp</dimen>
+    <dimen name="navheader_subtitle_text_size">14sp</dimen>
 </resources>

@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#512DA8</color>
     <color name="colorAccent">#FF5722</color>
     <color name="color_notification">#19A50C</color>
+    <color name="color_navheader">#fafafa</color>
 
     <!-- 30% darker according to the official Minecraft colors -->
     <color name="color_minecraft_0">#000000</color>

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -111,6 +112,16 @@ public class MainActivity extends AppCompatActivity implements UnauthorizedRespo
                 waitingForLogin = true;
                 Intent intent = new Intent(this, LoginActivity.class);
                 startActivityForResult(intent, Constants.REQUEST_CODE_REGISTER);
+            }
+            else{
+                String username = sharedPreferences.getString(getString(R.string.pref_key_nickname), null);
+                String rank = sharedPreferences.getString(getString(R.string.pref_key_rank), null);
+
+                TextView navHeaderUsernameTextView = mNavigationView.getHeaderView(0).findViewById(R.id.navheader_username);
+                TextView navHeaderRankTextView = mNavigationView.getHeaderView(0).findViewById(R.id.navheader_rank);
+
+                navHeaderUsernameTextView.setText(username);
+                navHeaderRankTextView.setText(rank);
             }
         }
     }
