@@ -107,6 +107,10 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
 
         mSwipeRefreshLayout.setOnRefreshListener(() -> populateUi());
 
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        username = sharedPreferences.getString(getString(R.string.pref_key_nickname), null);
+        populateUi();
+
         return view;
     }
 
