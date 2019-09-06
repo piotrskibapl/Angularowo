@@ -283,7 +283,7 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
     private void checkFirebaseNewReportsTopicSubscription(String rank){
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 
-        if (RankUtils.isStaffRank(rank)) {
+        if (RankUtils.isStaffRank(getContext(), rank)) {
             if (!sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_new_reports))) {
                 FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_NEW_REPORTS_TOPIC)
                         .addOnCompleteListener(task -> {

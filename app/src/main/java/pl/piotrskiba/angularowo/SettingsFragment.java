@@ -17,7 +17,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         String rank = sharedPreferences.getString(getString(R.string.pref_key_rank), null);
-        if(RankUtils.isStaffRank(rank)){
+        if(RankUtils.isStaffRank(getContext(), rank)){
             addPreferencesFromResource(R.xml.pref_settings_admin);
         }
         else {

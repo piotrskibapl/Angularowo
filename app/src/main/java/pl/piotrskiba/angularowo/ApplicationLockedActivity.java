@@ -51,7 +51,7 @@ public class ApplicationLockedActivity extends AppCompatActivity {
     public void onBackPressed() {
         // allow admins only to close this activity
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if(RankUtils.isStaffRank(sharedPreferences.getString(getString(R.string.pref_key_rank), null))){
+        if(RankUtils.isStaffRank(this, sharedPreferences.getString(getString(R.string.pref_key_rank), null))){
             super.onBackPressed();
         }
     }

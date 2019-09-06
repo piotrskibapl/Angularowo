@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="ranks_team">
+    <string-array name="ranks_team_ids">
         <item>wlasciciel</item>
         <item>admin</item>
         <item>moderator</item>
         <item>pomocnik</item>
         <item>budowniczy</item>
     </string-array>
-    <string-array name="ranks_other">
+    <string-array name="ranks_other_ids">
         <item>eventowiec</item>
         <item>duchowny</item>
         <item>ultravip</item>
@@ -20,5 +20,49 @@
         <item>gracz</item>
         <item>nowygracz</item>
     </string-array>
+
+    <array name="ranks_team_colors">
+        <item>@color/color_minecraft_4</item>
+        <item>@color/color_minecraft_4</item>
+        <item>@color/color_minecraft_2</item>
+        <item>@color/color_minecraft_9</item>
+        <item>@color/color_minecraft_b</item>
+    </array>
+    <array name="ranks_other_colors">
+        <item>@color/color_minecraft_a</item>
+        <item>@color/color_minecraft_d</item>
+        <item>@color/color_minecraft_e</item>
+        <item>@color/color_minecraft_a</item>
+        <item>@color/color_minecraft_6</item>
+        <item>@color/color_minecraft_5</item>
+        <item>@color/color_minecraft_d</item>
+        <item>@color/color_minecraft_3</item>
+        <item>@color/color_minecraft_3</item>
+        <item>@color/color_minecraft_7</item>
+        <item>@color/color_minecraft_7</item>
+        <item>@color/color_minecraft_7</item>
+    </array>
+
+    <array name="ranks_team_chat_colors">
+        <item>@color/color_minecraft_b</item>
+        <item>@color/color_minecraft_c</item>
+        <item>@color/color_minecraft_a</item>
+        <item>@color/color_minecraft_b</item>
+        <item>@color/color_minecraft_f</item>
+    </array>
+    <array name="ranks_other_chat_colors">
+        <item>@color/color_minecraft_b</item>
+        <item>@color/color_minecraft_e</item>
+        <item>@color/color_minecraft_f</item>
+        <item>@color/color_minecraft_f</item>
+        <item>@color/color_minecraft_f</item>
+        <item>@color/color_minecraft_f</item>
+        <item>@color/color_minecraft_f</item>
+        <item>@color/color_minecraft_f</item>
+        <item>@color/color_minecraft_f</item>
+        <item>@color/color_minecraft_f</item>
+        <item>@color/color_minecraft_f</item>
+        <item>@color/color_minecraft_f</item>
+    </array>
 
 </resources>

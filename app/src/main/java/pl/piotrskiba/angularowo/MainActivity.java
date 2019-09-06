@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements UnauthorizedRespo
 
         if (reportsHistoryFragment == null) {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-            if (RankUtils.isStaffRank(sharedPreferences.getString(getString(R.string.pref_key_rank), null))) {
+            if (RankUtils.isStaffRank(this, sharedPreferences.getString(getString(R.string.pref_key_rank), null))) {
                 reportsHistoryFragment = new ReportsHistoryFragmentContainerFragment();
             } else {
                 reportsHistoryFragment = new ReportsHistoryFragment(false);

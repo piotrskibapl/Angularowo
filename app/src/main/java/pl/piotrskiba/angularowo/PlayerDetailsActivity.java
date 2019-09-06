@@ -136,13 +136,8 @@ public class PlayerDetailsActivity extends AppCompatActivity implements SwipeRef
             mPlayerName.setText(player.getUsername());
             mPlayerRank.setText(player.getRank());
 
-            int color_id = RankUtils.getRankColorId(player.getRank());
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                ((ConstraintLayout) mPlayerAvatar.getParent()).setBackground(getResources().getDrawable(color_id));
-            } else {
-                ((ConstraintLayout) mPlayerAvatar.getParent()).setBackgroundDrawable(getResources().getDrawable(color_id));
-            }
+            int color = RankUtils.getRankColor(this, player.getRank());
+            ((ConstraintLayout) mPlayerAvatar.getParent()).setBackgroundColor(color);
 
             if (player.isVanished())
                 mPlayerVanishIcon.setVisibility(View.VISIBLE);

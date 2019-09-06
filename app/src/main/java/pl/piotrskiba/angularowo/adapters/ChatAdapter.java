@@ -52,16 +52,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatMessageVie
     public void onBindViewHolder(@NonNull ChatMessageViewHolder holder, int position) {
         ChatMessage message = mMessageList.get(position);
 
-        String rank_color = String.format("#%06X", (0xFFFFFF & ColorUtils.changeBrightness(ResourcesCompat.getColor(
-                context.getResources(),
-                RankUtils.getRankColorId(message.getRank()),
-                null
-        ), 1.4f)));
-        String message_color = String.format("#%06X", (0xFFFFFF & ColorUtils.changeBrightness(ResourcesCompat.getColor(
-                context.getResources(),
-                RankUtils.getRankChatColorId(message.getRank()),
-                null
-        ), 1.4f)));
+        String rank_color = String.format("#%06X", (0xFFFFFF & ColorUtils.changeBrightness(RankUtils.getRankColor(context, message.getRank()), 1.4f)));
+        String message_color = String.format("#%06X", (0xFFFFFF & ColorUtils.changeBrightness(RankUtils.getRankChatColor(context, message.getRank()), 1.4f)));
 
         String coloredmessage = context.getString(
                 R.string.chat_user_message,

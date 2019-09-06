@@ -69,14 +69,8 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
         holder.mPlayerName.setText(player.getUsername());
         holder.mPlayerRank.setText(player.getRank());
 
-        int color_id = RankUtils.getRankColorId(player.getRank());
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            ((ConstraintLayout) holder.mPlayerAvatar.getParent()).setBackground(context.getResources().getDrawable(color_id));
-        }
-        else{
-            ((ConstraintLayout) holder.mPlayerAvatar.getParent()).setBackgroundDrawable(context.getResources().getDrawable(color_id));
-        }
+        int color = RankUtils.getRankColor(context, player.getRank());
+        ((ConstraintLayout) holder.mPlayerAvatar.getParent()).setBackgroundColor(color);
 
         if(player.isVanished())
             holder.mPlayerVanishIcon.setVisibility(View.VISIBLE);
@@ -123,8 +117,8 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
 
     public void setPlayerList(PlayerList playerList){
         List<Player> sorted = new ArrayList<>();
-        String[] ranks_team = context.getResources().getStringArray(R.array.ranks_team);
-        String[] ranks_other = context.getResources().getStringArray(R.array.ranks_other);
+        String[] ranks_team = context.getResources().getStringArray(R.array.ranks_team_ids);
+        String[] ranks_other = context.getResources().getStringArray(R.array.ranks_other_ids);
 
         if(playerList.getPlayers() != null && !playerList.getPlayers().isEmpty()) {
             for (String rank : ranks_team) {
