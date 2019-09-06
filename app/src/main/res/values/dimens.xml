@@ -8,6 +8,8 @@
     <dimen name="section_margin">24dp</dimen>
     <dimen name="error_margin">60dp</dimen>
     <dimen name="error_text_size">20sp</dimen>
+    <dimen name="label_text_size">14sp</dimen>
+    <dimen name="content_text_size">22sp</dimen>
 
     <!-- navigation_drawer_header.xml -->
     <dimen name="navigation_drawer_header_height">170dp</dimen>
@@ -27,11 +29,6 @@
 
     <!-- fragment_main_screen.xml -->
     <dimen name="body_width">120dp</dimen>
-    <dimen name="playerinfo_values_text_sizes">24sp</dimen>
-    
-    <!-- activity_ban_details.xml -->
-    <dimen name="label_text_size">12sp</dimen>
-    <dimen name="content_text_size">20sp</dimen>
 
     <!-- free_rank_list_item.xml -->
     <dimen name="free_rank_image_height">120dp</dimen>

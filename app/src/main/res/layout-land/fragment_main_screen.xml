@@ -45,6 +45,7 @@
                             android:id="@+id/tv_playercount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textSize="@dimen/label_text_size"
                             app:layout_constraintTop_toBottomOf="@id/tv_greeting"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"/>
@@ -56,6 +57,7 @@
                             android:layout_marginTop="@dimen/section_margin"
                             android:text="@string/balance_title"
                             android:textAlignment="center"
+                            android:textSize="@dimen/label_text_size"
                             app:layout_constraintWidth_default="percent"
                             app:layout_constraintWidth_percent="0.5"
                             app:layout_constraintTop_toBottomOf="@+id/tv_playercount"
@@ -66,7 +68,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/margin_small"
-                            android:textSize="@dimen/playerinfo_values_text_sizes"
+                            android:textSize="@dimen/content_text_size"
                             app:layout_constraintTop_toBottomOf="@id/tv_balance_title"
                             app:layout_constraintStart_toStartOf="@id/tv_balance_title"
                             app:layout_constraintEnd_toEndOf="@id/tv_balance_title"/>
@@ -78,6 +80,7 @@
                             android:layout_marginTop="@dimen/section_margin"
                             android:text="@string/tokens_title"
                             android:textAlignment="center"
+                            android:textSize="@dimen/label_text_size"
                             app:layout_constraintWidth_default="percent"
                             app:layout_constraintWidth_percent="0.5"
                             app:layout_constraintTop_toBottomOf="@+id/tv_playercount"
@@ -88,7 +91,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/margin_small"
-                            android:textSize="@dimen/playerinfo_values_text_sizes"
+                            android:textSize="@dimen/content_text_size"
                             app:layout_constraintTop_toBottomOf="@id/tv_tokens_title"
                             app:layout_constraintStart_toStartOf="@id/tv_tokens_title"
                             app:layout_constraintEnd_toEndOf="@id/tv_tokens_title"/>
@@ -100,6 +103,7 @@
                             android:layout_marginTop="@dimen/margin_default"
                             android:text="@string/playtime_title"
                             android:textAlignment="center"
+                            android:textSize="@dimen/label_text_size"
                             app:layout_constraintTop_toBottomOf="@id/tv_tokens"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"/>
@@ -110,7 +114,7 @@
                             android:layout_marginTop="@dimen/margin_small"
                             android:paddingStart="@dimen/padding_default"
                             android:paddingEnd="@dimen/padding_default"
-                            android:textSize="@dimen/playerinfo_values_text_sizes"
+                            android:textSize="@dimen/content_text_size"
                             android:textAlignment="center"
                             app:layout_constraintTop_toBottomOf="@id/tv_playtime_title"
                             app:layout_constraintStart_toStartOf="@id/tv_playtime_title"
