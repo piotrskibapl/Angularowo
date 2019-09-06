@@ -2,7 +2,6 @@ package pl.piotrskiba.angularowo;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
@@ -134,7 +133,7 @@ public class PlayerDetailsActivity extends AppCompatActivity implements SwipeRef
             }
 
             mPlayerName.setText(player.getUsername());
-            mPlayerRank.setText(player.getRank());
+            mPlayerRank.setText(RankUtils.getRankName(this, player.getRank()));
 
             int color = RankUtils.getRankColor(this, player.getRank());
             ((ConstraintLayout) mPlayerAvatar.getParent()).setBackgroundColor(color);

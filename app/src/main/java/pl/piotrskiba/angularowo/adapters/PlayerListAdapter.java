@@ -1,7 +1,6 @@
 package pl.piotrskiba.angularowo.adapters;
 
 import android.content.Context;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,7 +66,7 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
         }
 
         holder.mPlayerName.setText(player.getUsername());
-        holder.mPlayerRank.setText(player.getRank());
+        holder.mPlayerRank.setText(RankUtils.getRankName(context, player.getRank()));
 
         int color = RankUtils.getRankColor(context, player.getRank());
         ((ConstraintLayout) holder.mPlayerAvatar.getParent()).setBackgroundColor(color);

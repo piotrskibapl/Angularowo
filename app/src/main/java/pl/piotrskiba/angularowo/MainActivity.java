@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements UnauthorizedRespo
                 TextView navHeaderRankTextView = mNavigationView.getHeaderView(0).findViewById(R.id.navheader_rank);
 
                 navHeaderUsernameTextView.setText(username);
-                navHeaderRankTextView.setText(rank);
+                navHeaderRankTextView.setText(RankUtils.getRankName(this, rank));
             }
         }
     }

@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -57,7 +56,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatMessageVie
 
         String coloredmessage = context.getString(
                 R.string.chat_user_message,
-                message.getRank(),
+                RankUtils.getRankName(context, message.getRank()),
                 message.getUsername(),
                 message.getMessage(),
                 rank_color,

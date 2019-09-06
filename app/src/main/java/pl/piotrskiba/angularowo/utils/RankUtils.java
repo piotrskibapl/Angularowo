@@ -52,6 +52,28 @@ public class RankUtils {
         }
     }
 
+    public static String getRankName(Context context, String rank){
+        if(rank != null) {
+            String[] ranks_team = context.getResources().getStringArray(R.array.ranks_team_ids);
+            String[] ranks_other = context.getResources().getStringArray(R.array.ranks_other_ids);
+
+            if(Arrays.asList(ranks_team).contains(rank)){
+                String[] names = context.getResources().getStringArray(R.array.ranks_team_names);
+                return names[Arrays.asList(ranks_team).indexOf(rank)];
+            }
+            else if(Arrays.asList(ranks_other).contains(rank)){
+                String[] names = context.getResources().getStringArray(R.array.ranks_other_names);
+                return names[Arrays.asList(ranks_other).indexOf(rank)];
+            }
+            else{
+                return null;
+            }
+        }
+        else{
+            return null;
+        }
+    }
+
     public static boolean isStaffRank(Context context, String rank){
         if(rank != null) {
             String[] ranks_team = context.getResources().getStringArray(R.array.ranks_team_ids);

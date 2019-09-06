@@ -21,6 +21,27 @@
         <item>nowygracz</item>
     </string-array>
 
+    <string-array name="ranks_team_names">
+        <item>Właściciel</item>
+        <item>Administrator</item>
+        <item>Moderator</item>
+        <item>Pomocnik</item>
+        <item>Budowniczy</item>
+    </string-array>
+    <string-array name="ranks_other_names">
+        <item>Eventowiec</item>
+        <item>Duchowny</item>
+        <item>UltraVIP</item>
+        <item>SuperVIP</item>
+        <item>VIP</item>
+        <item>Chłopak</item>
+        <item>Dziewczyna</item>
+        <item>Nolife</item>
+        <item>Stały Gracz</item>
+        <item>Gracz</item>
+        <item>Nowy Gracz</item>
+    </string-array>
+
     <array name="ranks_team_colors">
         <item>@color/color_minecraft_4</item>
         <item>@color/color_minecraft_4</item>
