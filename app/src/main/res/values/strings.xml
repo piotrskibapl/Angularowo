@@ -1,11 +1,12 @@
 <resources>
     <string name="app_name">Angularowo</string>
 
-    <string name="notification_channel_name" translatable="false">Domyślne powiadomienia</string>
-    <string name="notification_channel_description" translatable="false">Powiadomienia w aplikacji dla których włączony jest dźwięk oraz wibracje</string>
+    <!-- notifications -->
+    <string name="notification_channel_name">Domyślne powiadomienia</string>
+    <string name="notification_channel_description">Powiadomienia w aplikacji dla których włączony jest dźwięk oraz wibracje</string>
 
-    <string name="notification_channel_name_silent" translatable="false">Ciche powiadomienia</string>
-    <string name="notification_channel_description_silent" translatable="false">Powiadomienia w aplikacji dla których wyłączony jest dźwięk oraz wibracje</string>
+    <string name="notification_channel_name_silent">Ciche powiadomienia</string>
+    <string name="notification_channel_description_silent">Powiadomienia w aplikacji dla których wyłączony jest dźwięk oraz wibracje</string>
 
     <!-- preferences -->
     <string name="pref_key_nickname" translatable="false">nickname</string>
@@ -126,7 +127,6 @@
     <string name="ban_type_image_description">Ikona typu kary</string>
     <string name="reward_image_description">Ikona nagrody</string>
     <string name="vanish_image_description">Ikona widoczności gracza</string>
-    <string name="error_icon_content_description">Ikona błędu</string>
     <string name="report_status_image_description">Ikona statusu zgłoszenia</string>
     <string name="access_restricted_icon_content_description">Ikona odmowy dostępu</string>
 
