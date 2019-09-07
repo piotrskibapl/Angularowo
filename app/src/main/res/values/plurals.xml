@@ -20,4 +20,8 @@
         <item quantity="one">%d gracz online</item>
         <item quantity="other">%d graczy online</item>
     </plurals>
+    <plurals name="playercount_tps">
+        <item quantity="one">%d gracz online\n%s TPS</item>
+        <item quantity="other">%d graczy online\n%s TPS</item>
+    </plurals>
 </resources>

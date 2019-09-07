@@ -26,6 +26,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.bumptech.glide.Glide;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.util.Arrays;
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.piotrskiba.angularowo.adapters.BanListAdapter;
@@ -199,7 +202,22 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
             public void onResponse(Call<ServerStatus> call, Response<ServerStatus> response) {
                 if(response.isSuccessful() && response.body() != null && getContext() != null){
                     ServerStatus server = response.body();
-                    mPlayerCountTextView.setText(getResources().getQuantityString(R.plurals.playercount, server.getPlayerCount(), server.getPlayerCount()));
+
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                    String rank = sharedPreferences.getString(getString(R.string.pref_key_rank), null);
+
+                    if(Arrays.asList(getContext().getResources().getStringArray(R.array.ranks_team_ids)).contains(rank) &&
+                            Arrays.asList(getContext().getResources().getStringArray(R.array.ranks_team_ids)).indexOf(rank) < 2){
+                        String tps;
+                        if(server.getTps() == (int) server.getTps())
+                            tps = String.format(Locale.getDefault(), "%d", (int) server.getTps());
+                        else
+                            tps = String.format(Locale.getDefault(), "%s", server.getTps());
+                        mPlayerCountTextView.setText(getResources().getQuantityString(R.plurals.playercount_tps, server.getPlayerCount(), server.getPlayerCount(), tps));
+                    }
+                    else {
+                        mPlayerCountTextView.setText(getResources().getQuantityString(R.plurals.playercount, server.getPlayerCount(), server.getPlayerCount()));
+                    }
 
                     listener.onDataLoaded();
                 }
