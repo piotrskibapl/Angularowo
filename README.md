@@ -5,6 +5,7 @@ The app is still available in the Play Store to allow anyone to preview it.
 
 ## Download
 This application can be downloaded from the Play Store: https://play.google.com/store/apps/details?id=pl.piotrskiba.angularowo
+To test the app, use "757575" login code.
 
 ## Features
 * Check basic server & user info, e.g. amount of players online, your account balance etc.
@@ -15,9 +16,6 @@ This application can be downloaded from the Play Store: https://play.google.com/
 
 ## API
 The server has been closed in late 2019. API interface has been programmed to return always the same data to allow anyone to preview the app. Due to project abandonment, the API documentation is not available.
-
-## Testing account
-If you want to test the app, use "757575" login code.
 
 ## Contact
 In any app-related issues, I'll be happy to answer at angularowo@piotrskiba.pl.
