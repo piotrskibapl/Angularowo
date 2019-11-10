@@ -1,5 +1,7 @@
 # Angularowo
 Angularowo is an Android application created for Minecraft "Angularowo" server players.
+NOTE: As the server has been closed, this project is currently abandoned.
+The app is still available in the Play Store to allow anyone to preview it.
 
 ## Features
 * Check basic server & user info, e.g. amount of players online, your account balance etc.
@@ -9,7 +11,7 @@ Angularowo is an Android application created for Minecraft "Angularowo" server p
 * Receive free bonuses for watching ads
 
 ## API
-The server has been closed in late 2019. API interface has been programmed to return always the same data to allow anyone to preview the app.
+The server has been closed in late 2019. API interface has been programmed to return always the same data to allow anyone to preview the app. Due to project abandonment, the API documentation is not available.
 
 ## Testing account
 If you want to test the app, use "757575" login code.
