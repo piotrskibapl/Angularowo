@@ -5,7 +5,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServerAPIClient {
-
+    // I know that the API key should not be present here, but as the game server has been closed,
+    // the API is not usable anymore, and it's set up to return the same data every query
     public static final String API_KEY = "ySrfs3nAqaw28D8W1KJPz3HT8IAydXnY";
 
     private static Retrofit retrofit;
