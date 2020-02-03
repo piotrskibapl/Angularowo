@@ -20,6 +20,8 @@ public class ServerAPIClient {
                     .addInterceptor(unauthorizedInterceptor)
                     .build();
 
+            client.dispatcher().setMaxRequests(1);
+
             retrofit = new retrofit2.Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())

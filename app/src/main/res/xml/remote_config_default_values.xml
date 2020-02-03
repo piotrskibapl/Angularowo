@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <defaultsMap>
     <entry>
+        <key>ranks</key>
+        <value>[{"name":"właściciel","staff":true,"color_code":"4","chat_color_code":"b"},{"name":"Admin","staff":true,"color_code":"4","chat_color_code":"c"},{"name":"Moderator","staff":true,"color_code":"2","chat_color_code":"a"},{"name":"Pomocnik","staff":true,"color_code":"9","chat_color_code":"b"},{"name":"Budowniczy","staff":true,"color_code":"b","chat_color_code":"f"},{"name":"Eventowiec","staff":false,"color_code":"a","chat_color_code":"b"},{"name":"Duchowny","staff":false,"color_code":"d","chat_color_code":"e"},{"name":"UltraVIP","staff":false,"color_code":"e","chat_color_code":"f"},{"name":"SuperVIP","staff":false,"color_code":"a","chat_color_code":"f"},{"name":"VIP","staff":false,"color_code":"6","chat_color_code":"f"},{"name":"Chłopak","staff":false,"color_code":"5","chat_color_code":"f"},{"name":"Dziewczyna","staff":false,"color_code":"d","chat_color_code":"f"},{"name":"NoLife","staff":false,"color_code":"3","chat_color_code":"f"},{"name":"StałyGracz","staff":false,"color_code":"3","chat_color_code":"f"},{"name":"Gracz","staff":false,"color_code":"7","chat_color_code":"f"},{"name":"NowyGracz","staff":false,"color_code":"7","chat_color_code":"f"}]</value>
+    </entry>
+    <entry>
         <key>app_lock_title</key>
         <value>Prace techniczne</value>
     </entry>

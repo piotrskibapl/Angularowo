@@ -20,6 +20,7 @@ import pl.piotrskiba.angularowo.R;
 import pl.piotrskiba.angularowo.interfaces.ChatMessageClickListener;
 import pl.piotrskiba.angularowo.models.ChatMessage;
 import pl.piotrskiba.angularowo.models.ChatMessageList;
+import pl.piotrskiba.angularowo.models.Rank;
 import pl.piotrskiba.angularowo.utils.ColorUtils;
 import pl.piotrskiba.angularowo.utils.RankUtils;
 import pl.piotrskiba.angularowo.utils.TextUtils;
@@ -50,13 +51,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatMessageVie
     @Override
     public void onBindViewHolder(@NonNull ChatMessageViewHolder holder, int position) {
         ChatMessage message = mMessageList.get(position);
+        Rank rank = RankUtils.getRankFromName(message.getRank());
 
-        String rank_color = String.format("#%06X", (0xFFFFFF & ColorUtils.changeBrightness(RankUtils.getRankColor(context, message.getRank()), 1.4f)));
-        String message_color = String.format("#%06X", (0xFFFFFF & ColorUtils.changeBrightness(RankUtils.getRankChatColor(context, message.getRank()), 1.4f)));
+        String rank_color = String.format("#%06X", (0xFFFFFF & ColorUtils.changeBrightness(ColorUtils.getColorFromCode(rank.getColorCode()), 1.4f)));
+        String message_color = String.format("#%06X", (0xFFFFFF & ColorUtils.changeBrightness(ColorUtils.getColorFromCode(rank.getChatColorCode()), 1.4f)));
 
         String coloredmessage = context.getString(
                 R.string.chat_user_message,
-                RankUtils.getRankName(context, message.getRank()),
+                message.getRank(),
                 message.getUsername(),
                 message.getMessage(),
                 rank_color,

@@ -29,6 +29,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.piotrskiba.angularowo.interfaces.UnauthorizedResponseListener;
+import pl.piotrskiba.angularowo.models.Rank;
 import pl.piotrskiba.angularowo.network.ServerAPIClient;
 import pl.piotrskiba.angularowo.network.ServerAPIInterface;
 import pl.piotrskiba.angularowo.network.UnauthorizedInterceptor;
@@ -121,17 +122,17 @@ public class MainActivity extends AppCompatActivity implements UnauthorizedRespo
                 TextView navHeaderRankTextView = mNavigationView.getHeaderView(0).findViewById(R.id.navheader_rank);
 
                 navHeaderUsernameTextView.setText(username);
-                navHeaderRankTextView.setText(RankUtils.getRankName(this, rank));
+                navHeaderRankTextView.setText(rank);
             }
         }
     }
 
     private void setupRemoteConfig(){
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
-        mFirebaseRemoteConfig.setDefaults(R.xml.remote_config_default_values);
+        mFirebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_default_values);
 
-        mFirebaseRemoteConfig.fetch(60*30)
-                .addOnCompleteListener(this, task -> mFirebaseRemoteConfig.activate().addOnCompleteListener(task1 -> onRemoteConfigLoaded()));
+        mFirebaseRemoteConfig.fetchAndActivate()
+                .addOnCompleteListener(this, task -> onRemoteConfigLoaded());
     }
 
     private void onRemoteConfigLoaded(){
@@ -185,8 +186,8 @@ public class MainActivity extends AppCompatActivity implements UnauthorizedRespo
         freeRanksFragment.setRewardedVideoAd(mRewardedVideoAd);
 
         if (reportsHistoryFragment == null) {
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-            if (RankUtils.isStaffRank(this, sharedPreferences.getString(getString(R.string.pref_key_rank), null))) {
+            Rank rank = RankUtils.getRankFromPreferences(this);
+            if (rank != null && rank.isStaff()) {
                 reportsHistoryFragment = new ReportsHistoryFragmentContainerFragment();
             } else {
                 reportsHistoryFragment = new ReportsHistoryFragment(false);

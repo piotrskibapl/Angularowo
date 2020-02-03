@@ -23,6 +23,8 @@ import pl.piotrskiba.angularowo.R;
 import pl.piotrskiba.angularowo.interfaces.PlayerClickListener;
 import pl.piotrskiba.angularowo.models.Player;
 import pl.piotrskiba.angularowo.models.PlayerList;
+import pl.piotrskiba.angularowo.models.Rank;
+import pl.piotrskiba.angularowo.utils.ColorUtils;
 import pl.piotrskiba.angularowo.utils.GlideUtils;
 import pl.piotrskiba.angularowo.utils.RankUtils;
 import pl.piotrskiba.angularowo.utils.UrlUtils;
@@ -66,9 +68,9 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
         }
 
         holder.mPlayerName.setText(player.getUsername());
-        holder.mPlayerRank.setText(RankUtils.getRankName(context, player.getRank()));
+        holder.mPlayerRank.setText(player.getRank().getName());
 
-        int color = RankUtils.getRankColor(context, player.getRank());
+        int color = ColorUtils.getColorFromCode(player.getRank().getColorCode());
         ((ConstraintLayout) holder.mPlayerAvatar.getParent()).setBackgroundColor(color);
 
         if(player.isVanished())
@@ -116,19 +118,13 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
 
     public void setPlayerList(PlayerList playerList){
         List<Player> sorted = new ArrayList<>();
-        String[] ranks_team = context.getResources().getStringArray(R.array.ranks_team_ids);
-        String[] ranks_other = context.getResources().getStringArray(R.array.ranks_other_ids);
 
         if(playerList.getPlayers() != null && !playerList.getPlayers().isEmpty()) {
-            for (String rank : ranks_team) {
+            List<Rank> ranks = RankUtils.getAllRanks();
+
+            for (Rank rank : ranks) {
                 for (Player player : playerList.getPlayers()) {
-                    if (player.getRank()!= null && player.getRank().equals(rank))
-                        sorted.add(player);
-                }
-            }
-            for (String rank : ranks_other) {
-                for (Player player : playerList.getPlayers()) {
-                    if (player.getRank()!= null && player.getRank().equals(rank))
+                    if (player.getRank() != null && player.getRank().getName().equals(rank.getName()))
                         sorted.add(player);
                 }
             }

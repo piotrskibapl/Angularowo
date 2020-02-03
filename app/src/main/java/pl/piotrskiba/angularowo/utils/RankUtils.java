@@ -2,88 +2,42 @@ package pl.piotrskiba.angularowo.utils;
 
 import android.content.Context;
 
-import java.util.Arrays;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
-import pl.piotrskiba.angularowo.R;
+import java.util.List;
+
+import pl.piotrskiba.angularowo.Constants;
+import pl.piotrskiba.angularowo.models.Rank;
 
 public class RankUtils {
 
-    public static int getRankColor(Context context, String rank){
-        if(rank != null) {
-            String[] ranks_team = context.getResources().getStringArray(R.array.ranks_team_ids);
-            String[] ranks_other = context.getResources().getStringArray(R.array.ranks_other_ids);
+    public static List<Rank> getAllRanks(){
+        FirebaseRemoteConfig firebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
 
-            if(Arrays.asList(ranks_team).contains(rank)){
-                int[] colors = context.getResources().getIntArray(R.array.ranks_team_colors);
-                return colors[Arrays.asList(ranks_team).indexOf(rank)];
-            }
-            else if(Arrays.asList(ranks_other).contains(rank)){
-                int[] colors = context.getResources().getIntArray(R.array.ranks_other_colors);
-                return colors[Arrays.asList(ranks_other).indexOf(rank)];
-            }
-            else{
-                return R.color.color_minecraft_7;
-            }
-        }
-        else{
-            return R.color.color_minecraft_7;
-        }
+        String json = firebaseRemoteConfig.getString(Constants.REMOTE_CONFIG_RANKS_KEY);
+        Gson gson = new GsonBuilder().create();
+        return gson.fromJson(json, new TypeToken<List<Rank>>(){}.getType());
     }
 
-    public static int getRankChatColor(Context context, String rank){
-        if(rank != null) {
-            String[] ranks_team = context.getResources().getStringArray(R.array.ranks_team_ids);
-            String[] ranks_other = context.getResources().getStringArray(R.array.ranks_other_ids);
-
-            if(Arrays.asList(ranks_team).contains(rank)){
-                int[] colors = context.getResources().getIntArray(R.array.ranks_team_chat_colors);
-                return colors[Arrays.asList(ranks_team).indexOf(rank)];
-            }
-            else if(Arrays.asList(ranks_other).contains(rank)){
-                int[] colors = context.getResources().getIntArray(R.array.ranks_other_chat_colors);
-                return colors[Arrays.asList(ranks_other).indexOf(rank)];
-            }
-            else{
-                return R.color.color_minecraft_f;
-            }
-        }
-        else{
-            return R.color.color_minecraft_f;
-        }
+    public static Rank getRankFromPreferences(Context context){
+        String rankname = PreferenceUtils.getRankName(context);
+        return getRankFromName(rankname);
     }
 
-    public static String getRankName(Context context, String rank){
-        if(rank != null) {
-            String[] ranks_team = context.getResources().getStringArray(R.array.ranks_team_ids);
-            String[] ranks_other = context.getResources().getStringArray(R.array.ranks_other_ids);
-
-            if(Arrays.asList(ranks_team).contains(rank)){
-                String[] names = context.getResources().getStringArray(R.array.ranks_team_names);
-                return names[Arrays.asList(ranks_team).indexOf(rank)];
-            }
-            else if(Arrays.asList(ranks_other).contains(rank)){
-                String[] names = context.getResources().getStringArray(R.array.ranks_other_names);
-                return names[Arrays.asList(ranks_other).indexOf(rank)];
-            }
-            else{
-                return null;
-            }
-        }
-        else{
+    public static Rank getRankFromName(String name){
+        if(name == null || name.isEmpty())
             return null;
-        }
-    }
 
-    public static boolean isStaffRank(Context context, String rank){
-        if(rank != null) {
-            String[] ranks_team = context.getResources().getStringArray(R.array.ranks_team_ids);
-            if(Arrays.asList(ranks_team).contains(rank))
-                return true;
-            else
-                return false;
+        List<Rank> ranks = getAllRanks();
+
+        for(Rank rank : ranks){
+            if(rank.getName().equals(name))
+                return rank;
         }
-        else{
-            return false;
-        }
+
+        return new Rank(name, false, "7", "7");
     }
 }

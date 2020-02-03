@@ -41,6 +41,7 @@ public class Constants {
     public final static String API_RESPONSE_REPORT_PENDING = "None";
     public final static String API_RESPONSE_REPORT_UNCERTAIN = "Uncertain";
 
+    public final static String REMOTE_CONFIG_RANKS_KEY = "ranks";
     public final static String REMOTE_CONFIG_APP_LOCK_TITLE_KEY = "app_lock_title";
     public final static String REMOTE_CONFIG_APP_LOCK_BODY_KEY = "app_lock_body";
     public final static String REMOTE_CONFIG_APP_LOCK_START_TIMESTAMP = "app_lock_start_timestamp";

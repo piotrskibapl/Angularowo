@@ -2,6 +2,8 @@ package pl.piotrskiba.angularowo.models;
 
 import java.io.Serializable;
 
+import pl.piotrskiba.angularowo.utils.RankUtils;
+
 public class Player implements Serializable {
 
     private final String username;
@@ -24,8 +26,8 @@ public class Player implements Serializable {
         return uuid;
     }
 
-    public String getRank(){
-        return rank;
+    public Rank getRank(){
+        return RankUtils.getRankFromName(rank);
     }
 
     public boolean isVanished(){

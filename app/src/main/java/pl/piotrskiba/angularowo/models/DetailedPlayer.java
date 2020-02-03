@@ -1,5 +1,7 @@
 package pl.piotrskiba.angularowo.models;
 
+import pl.piotrskiba.angularowo.utils.RankUtils;
+
 public class DetailedPlayer {
     private final String username;
     private final String uuid;
@@ -33,8 +35,8 @@ public class DetailedPlayer {
         return status;
     }
 
-    public String getRank(){
-        return rank;
+    public Rank getRank(){
+        return RankUtils.getRankFromName(rank);
     }
 
     public boolean isVanished(){

@@ -1,8 +1,6 @@
 package pl.piotrskiba.angularowo;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +10,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import pl.piotrskiba.angularowo.models.Rank;
 import pl.piotrskiba.angularowo.utils.RankUtils;
 
 public class ApplicationLockedActivity extends AppCompatActivity {
@@ -25,6 +24,8 @@ public class ApplicationLockedActivity extends AppCompatActivity {
     @BindView(R.id.tv_body)
     TextView mBodyTextView;
 
+    FirebaseRemoteConfig mFirebaseRemoteConfig;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,11 +35,11 @@ public class ApplicationLockedActivity extends AppCompatActivity {
 
         setSupportActionBar(mToolbar);
 
-        FirebaseRemoteConfig firebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
-        firebaseRemoteConfig.setDefaults(R.xml.remote_config_default_values);
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+        mFirebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_default_values);
 
-        String title = firebaseRemoteConfig.getString(Constants.REMOTE_CONFIG_APP_LOCK_TITLE_KEY);
-        String body = firebaseRemoteConfig.getString(Constants.REMOTE_CONFIG_APP_LOCK_BODY_KEY);
+        String title = mFirebaseRemoteConfig.getString(Constants.REMOTE_CONFIG_APP_LOCK_TITLE_KEY);
+        String body = mFirebaseRemoteConfig.getString(Constants.REMOTE_CONFIG_APP_LOCK_BODY_KEY);
 
         title = title.replace("\\n", "\n");
         body = body.replace("\\n", "\n");
@@ -50,8 +51,8 @@ public class ApplicationLockedActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         // allow admins only to close this activity
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if(RankUtils.isStaffRank(this, sharedPreferences.getString(getString(R.string.pref_key_rank), null))){
+        Rank rank = RankUtils.getRankFromPreferences(this);
+        if (rank != null && rank.isStaff()) {
             super.onBackPressed();
         }
     }

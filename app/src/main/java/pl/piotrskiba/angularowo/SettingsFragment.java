@@ -10,14 +10,17 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import pl.piotrskiba.angularowo.models.Rank;
 import pl.piotrskiba.angularowo.utils.RankUtils;
+import pl.piotrskiba.angularowo.utils.TextUtils;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        String rank = sharedPreferences.getString(getString(R.string.pref_key_rank), null);
-        if(RankUtils.isStaffRank(getContext(), rank)){
+        String rankname = sharedPreferences.getString(getString(R.string.pref_key_rank), null);
+        Rank rank = RankUtils.getRankFromName(rankname);
+        if(rank != null && rank.isStaff()){
             addPreferencesFromResource(R.xml.pref_settings_admin);
         }
         else {
@@ -44,7 +47,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
                             String rank = sharedPreferences.getString(getString(R.string.pref_key_rank), null);
                             if(rank != null) {
-                                FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_RANK_TOPIC_PREFIX + rank);
+                                FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_RANK_TOPIC_PREFIX + TextUtils.normalize(rank));
                                 editor.remove(getString(R.string.pref_key_rank));
                             }
 

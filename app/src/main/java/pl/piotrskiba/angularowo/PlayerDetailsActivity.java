@@ -22,8 +22,8 @@ import pl.piotrskiba.angularowo.models.DetailedPlayer;
 import pl.piotrskiba.angularowo.models.Player;
 import pl.piotrskiba.angularowo.network.ServerAPIClient;
 import pl.piotrskiba.angularowo.network.ServerAPIInterface;
+import pl.piotrskiba.angularowo.utils.ColorUtils;
 import pl.piotrskiba.angularowo.utils.GlideUtils;
-import pl.piotrskiba.angularowo.utils.RankUtils;
 import pl.piotrskiba.angularowo.utils.TextUtils;
 import pl.piotrskiba.angularowo.utils.UrlUtils;
 import retrofit2.Call;
@@ -133,9 +133,9 @@ public class PlayerDetailsActivity extends AppCompatActivity implements SwipeRef
             }
 
             mPlayerName.setText(player.getUsername());
-            mPlayerRank.setText(RankUtils.getRankName(this, player.getRank()));
+            mPlayerRank.setText(player.getRank().getName());
 
-            int color = RankUtils.getRankColor(this, player.getRank());
+            int color = ColorUtils.getColorFromCode(player.getRank().getColorCode());
             ((ConstraintLayout) mPlayerAvatar.getParent()).setBackgroundColor(color);
 
             if (player.isVanished())
@@ -147,7 +147,7 @@ public class PlayerDetailsActivity extends AppCompatActivity implements SwipeRef
 
     private void populatePlayer(DetailedPlayer detailedPlayer){
         Player player = new Player(detailedPlayer.getUsername(), detailedPlayer.getUuid(),
-                detailedPlayer.getRank(), detailedPlayer.isVanished());
+                detailedPlayer.getRank().getName(), detailedPlayer.isVanished());
         populatePlayer(player);
 
         mPlayerBalanceTextView.setText(getString(R.string.balance_format, (int)detailedPlayer.getBalance()));

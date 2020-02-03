@@ -4,6 +4,9 @@ import android.content.Context;
 
 import androidx.core.content.ContextCompat;
 
+import java.text.Normalizer;
+import java.util.Locale;
+
 import pl.piotrskiba.angularowo.R;
 
 public class TextUtils {
@@ -49,6 +52,15 @@ public class TextUtils {
         return result;
     }
 
+    public static String formatTps(double tps){
+        String result;
+        if(tps == (int) tps)
+            result = String.format(Locale.getDefault(), "%d", (int) tps);
+        else
+            result = String.format(Locale.getDefault(), "%s", tps);
+        return result;
+    }
+
     public static String replaceColorCodes(Context context, String s){
         s = s.replace("§0", "</font><font color=#" + Integer.toHexString(ContextCompat.getColor(context, R.color.color_minecraft_0)).substring(2, 8) + ">");
         s = s.replace("§1", "</font><font color=#" + Integer.toHexString(ContextCompat.getColor(context, R.color.color_minecraft_1)).substring(2, 8) + ">");
@@ -68,5 +80,9 @@ public class TextUtils {
         s = s.replace("§f", "</font><font color=#" + Integer.toHexString(ContextCompat.getColor(context, R.color.color_minecraft_f)).substring(2, 8) + ">");
 
         return s;
+    }
+
+    public static String normalize(String s){
+        return Normalizer.normalize(s, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
     }
 }
