@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import pl.piotrskiba.angularowo.models.BanList;
 import pl.piotrskiba.angularowo.models.DetailedPlayer;
+import pl.piotrskiba.angularowo.models.PlayerList;
 import pl.piotrskiba.angularowo.models.ServerStatus;
 import pl.piotrskiba.angularowo.network.ServerAPIClient;
 import pl.piotrskiba.angularowo.network.ServerAPIInterface;
@@ -24,6 +25,7 @@ public class AppViewModel extends AndroidViewModel {
     private MutableLiveData<DetailedPlayer> player;
     private MutableLiveData<BanList> activePlayerBans;
     private MutableLiveData<BanList> banList;
+    private MutableLiveData<PlayerList> playerList;
 
     public AppViewModel(@NonNull Application application) {
         super(application);
@@ -152,7 +154,7 @@ public class AppViewModel extends AndroidViewModel {
                 if (response.isSuccessful() && response.body() != null) {
                     banList.setValue(response.body());
                 }
-                else if(!response.isSuccessful()){
+                else {
                     banList.setValue(null);
                 }
             }
@@ -160,6 +162,39 @@ public class AppViewModel extends AndroidViewModel {
             @Override
             public void onFailure(Call<BanList> call, Throwable t) {
                 banList.setValue(null);
+                t.printStackTrace();
+            }
+        });
+    }
+
+    public LiveData<PlayerList> getPlayerList(){
+        if(playerList == null){
+            playerList = new MutableLiveData<>();
+            loadPlayerList();
+        }
+        return playerList;
+    }
+    public void refreshPlayerList(){
+        loadPlayerList();
+    }
+    private void loadPlayerList(){
+        String access_token = PreferenceUtils.getAccessToken(getApplication());
+
+        ServerAPIInterface serverAPIInterface = ServerAPIClient.getRetrofitInstance().create(ServerAPIInterface.class);
+        serverAPIInterface.getPlayers(ServerAPIClient.API_KEY, access_token).enqueue(new Callback<PlayerList>() {
+            @Override
+            public void onResponse(Call<PlayerList> call, Response<PlayerList> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    playerList.setValue(response.body());
+                }
+                else {
+                    playerList.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PlayerList> call, Throwable t) {
+                playerList.setValue(null);
                 t.printStackTrace();
             }
         });

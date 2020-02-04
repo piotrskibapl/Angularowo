@@ -1,10 +1,8 @@
 package pl.piotrskiba.angularowo;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +15,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,12 +26,6 @@ import butterknife.ButterKnife;
 import pl.piotrskiba.angularowo.adapters.PlayerListAdapter;
 import pl.piotrskiba.angularowo.interfaces.PlayerClickListener;
 import pl.piotrskiba.angularowo.models.Player;
-import pl.piotrskiba.angularowo.models.PlayerList;
-import pl.piotrskiba.angularowo.network.ServerAPIClient;
-import pl.piotrskiba.angularowo.network.ServerAPIInterface;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class PlayerListFragment extends Fragment implements PlayerClickListener {
 
@@ -51,6 +44,8 @@ public class PlayerListFragment extends Fragment implements PlayerClickListener 
     @BindView(R.id.server_error_layout)
     LinearLayout mServerErrorLayout;
 
+    private PlayerListAdapter mPlayerListAdapter;
+
     public PlayerListFragment(){
 
     }
@@ -62,7 +57,7 @@ public class PlayerListFragment extends Fragment implements PlayerClickListener 
 
         ButterKnife.bind(this, view);
 
-        final PlayerListAdapter adapter = new PlayerListAdapter(getContext(), this);
+        mPlayerListAdapter = new PlayerListAdapter(getContext(), this);
 
         RecyclerView.LayoutManager layoutManager;
         int display_mode = getResources().getConfiguration().orientation;
@@ -76,13 +71,13 @@ public class PlayerListFragment extends Fragment implements PlayerClickListener 
             mPlayerList.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
         }
 
-        mPlayerList.setAdapter(adapter);
+        mPlayerList.setAdapter(mPlayerListAdapter);
         mPlayerList.setLayoutManager(layoutManager);
         mPlayerList.setHasFixedSize(true);
 
-        loadPlayerList(adapter);
+        seekForPlayerList();
 
-        mSwipeRefreshLayout.setOnRefreshListener(() -> loadPlayerList(adapter));
+        mSwipeRefreshLayout.setOnRefreshListener(() -> refreshData());
 
         ActionBar actionbar = ((AppCompatActivity)getActivity()).getSupportActionBar();
         actionbar.setTitle(R.string.actionbar_title_player_list);
@@ -90,39 +85,25 @@ public class PlayerListFragment extends Fragment implements PlayerClickListener 
         return view;
     }
 
-    private void loadPlayerList(PlayerListAdapter adapter){
-        mSwipeRefreshLayout.setRefreshing(true);
+    private void seekForPlayerList(){
+        AppViewModel viewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
+        viewModel.getPlayerList().observe(this, playerList -> {
+            if(playerList != null){
+                mSwipeRefreshLayout.setRefreshing(false);
+                mPlayerListAdapter.setPlayerList(playerList);
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        String access_token = sharedPreferences.getString(getString(R.string.pref_key_access_token), null);
-
-        ServerAPIInterface serverAPIInterface = ServerAPIClient.getRetrofitInstance().create(ServerAPIInterface.class);
-        serverAPIInterface.getPlayers(ServerAPIClient.API_KEY, access_token).enqueue(new Callback<PlayerList>() {
-            @Override
-            public void onResponse(Call<PlayerList> call, Response<PlayerList> response) {
-                if(isAdded()) {
-                    if (response.isSuccessful() && response.body() != null) {
-                        if (response.body().getPlayers().size() > 0) {
-                            adapter.setPlayerList(response.body());
-                            showDefaultLayout();
-                        } else {
-                            showNoPlayersLayout();
-                        }
-                    }
-                    else if(!response.isSuccessful()){
-                        showServerErrorLayout();
-                    }
-                }
             }
-
-            @Override
-            public void onFailure(Call<PlayerList> call, Throwable t) {
-                if(isAdded()) {
-                    showNoInternetLayout();
-                }
-                t.printStackTrace();
+            else{
+                // TODO: show err
             }
         });
+    }
+
+    private void refreshData(){
+        mSwipeRefreshLayout.setRefreshing(true);
+
+        AppViewModel viewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
+        viewModel.refreshPlayerList();
     }
 
     @Override
