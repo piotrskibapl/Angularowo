@@ -1,4 +1,4 @@
-package pl.piotrskiba.angularowo;
+package pl.piotrskiba.angularowo.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,6 +17,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import pl.piotrskiba.angularowo.R;
 import pl.piotrskiba.angularowo.adapters.ViewPagerFragmentAdapter;
 
 public class ReportsHistoryFragmentContainerFragment extends Fragment {

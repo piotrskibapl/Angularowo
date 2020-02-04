@@ -1,4 +1,4 @@
-package pl.piotrskiba.angularowo;
+package pl.piotrskiba.angularowo.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,6 +18,9 @@ import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import pl.piotrskiba.angularowo.Constants;
+import pl.piotrskiba.angularowo.IntegerVersionSignature;
+import pl.piotrskiba.angularowo.R;
 import pl.piotrskiba.angularowo.models.DetailedPlayer;
 import pl.piotrskiba.angularowo.models.Player;
 import pl.piotrskiba.angularowo.network.ServerAPIClient;

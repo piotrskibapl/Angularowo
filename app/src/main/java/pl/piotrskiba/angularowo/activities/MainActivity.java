@@ -1,4 +1,4 @@
-package pl.piotrskiba.angularowo;
+package pl.piotrskiba.angularowo.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -28,6 +28,15 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import pl.piotrskiba.angularowo.fragments.BanListFragment;
+import pl.piotrskiba.angularowo.fragments.ChatFragment;
+import pl.piotrskiba.angularowo.Constants;
+import pl.piotrskiba.angularowo.fragments.FreeRanksFragment;
+import pl.piotrskiba.angularowo.fragments.MainScreenFragment;
+import pl.piotrskiba.angularowo.fragments.PlayerListFragment;
+import pl.piotrskiba.angularowo.R;
+import pl.piotrskiba.angularowo.fragments.ReportsHistoryFragment;
+import pl.piotrskiba.angularowo.fragments.ReportsHistoryFragmentContainerFragment;
 import pl.piotrskiba.angularowo.interfaces.UnauthorizedResponseListener;
 import pl.piotrskiba.angularowo.models.Rank;
 import pl.piotrskiba.angularowo.network.ServerAPIClient;

@@ -1,4 +1,4 @@
-package pl.piotrskiba.angularowo;
+package pl.piotrskiba.angularowo.fragments;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,6 +24,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import pl.piotrskiba.angularowo.Constants;
+import pl.piotrskiba.angularowo.R;
+import pl.piotrskiba.angularowo.SpacesItemDecoration;
+import pl.piotrskiba.angularowo.activities.ReportDetailsActivity;
 import pl.piotrskiba.angularowo.adapters.ReportListAdapter;
 import pl.piotrskiba.angularowo.interfaces.ReportClickListener;
 import pl.piotrskiba.angularowo.models.Report;

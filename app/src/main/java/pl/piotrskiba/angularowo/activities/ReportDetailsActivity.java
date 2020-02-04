@@ -1,4 +1,4 @@
-package pl.piotrskiba.angularowo;
+package pl.piotrskiba.angularowo.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import pl.piotrskiba.angularowo.Constants;
+import pl.piotrskiba.angularowo.R;
 import pl.piotrskiba.angularowo.models.Report;
 
 public class ReportDetailsActivity extends AppCompatActivity {

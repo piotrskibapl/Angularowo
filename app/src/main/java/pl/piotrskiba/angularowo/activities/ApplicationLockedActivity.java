@@ -1,4 +1,4 @@
-package pl.piotrskiba.angularowo;
+package pl.piotrskiba.angularowo.activities;
 
 import android.os.Bundle;
 import android.widget.TextView;
@@ -10,6 +10,8 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import pl.piotrskiba.angularowo.Constants;
+import pl.piotrskiba.angularowo.R;
 import pl.piotrskiba.angularowo.models.Rank;
 import pl.piotrskiba.angularowo.utils.RankUtils;
 

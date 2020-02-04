@@ -1,4 +1,4 @@
-package pl.piotrskiba.angularowo;
+package pl.piotrskiba.angularowo.fragments;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,6 +29,12 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import pl.piotrskiba.angularowo.AppViewModel;
+import pl.piotrskiba.angularowo.BuildConfig;
+import pl.piotrskiba.angularowo.Constants;
+import pl.piotrskiba.angularowo.IntegerVersionSignature;
+import pl.piotrskiba.angularowo.R;
+import pl.piotrskiba.angularowo.activities.BanDetailsActivity;
 import pl.piotrskiba.angularowo.adapters.BanListAdapter;
 import pl.piotrskiba.angularowo.interfaces.BanClickListener;
 import pl.piotrskiba.angularowo.models.Ban;

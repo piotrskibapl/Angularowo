@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SettingsActivity"
+    tools:context=".activities.SettingsActivity"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/fragment_settings"
-        android:name="pl.piotrskiba.angularowo.SettingsFragment"
+        android:name="pl.piotrskiba.angularowo.fragments.SettingsFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:iconSpaceReserved="false" />

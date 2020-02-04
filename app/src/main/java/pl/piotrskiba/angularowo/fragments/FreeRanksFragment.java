@@ -1,4 +1,4 @@
-package pl.piotrskiba.angularowo;
+package pl.piotrskiba.angularowo.fragments;
 
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -27,6 +27,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import pl.piotrskiba.angularowo.R;
 import pl.piotrskiba.angularowo.adapters.FreeRankListAdapter;
 import pl.piotrskiba.angularowo.interfaces.FreeRankClickListener;
 import pl.piotrskiba.angularowo.models.Reward;

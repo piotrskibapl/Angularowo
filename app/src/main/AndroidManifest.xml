@@ -16,23 +16,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".ApplicationLockedActivity"></activity>
-        <activity android:name=".ReportDetailsActivity" />
+        <activity android:name=".activities.ApplicationLockedActivity"></activity>
+        <activity android:name=".activities.ReportDetailsActivity" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-7790074991647252~4144564614" />
 
         <activity
-            android:name=".BanDetailsActivity"
-            android:parentActivityName=".MainActivity" />
-        <activity android:name=".SettingsActivity" />
+            android:name=".activities.BanDetailsActivity"
+            android:parentActivityName=".activities.MainActivity" />
+        <activity android:name=".activities.SettingsActivity" />
         <activity
-            android:name=".PlayerDetailsActivity"
-            android:parentActivityName=".MainActivity" />
-        <activity android:name=".LoginActivity" />
+            android:name=".activities.PlayerDetailsActivity"
+            android:parentActivityName=".activities.MainActivity" />
+        <activity android:name=".activities.LoginActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

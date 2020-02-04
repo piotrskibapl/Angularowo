@@ -16,7 +16,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import pl.piotrskiba.angularowo.Constants;
-import pl.piotrskiba.angularowo.MainActivity;
+import pl.piotrskiba.angularowo.activities.MainActivity;
 import pl.piotrskiba.angularowo.R;
 
 public class NotificationUtils {

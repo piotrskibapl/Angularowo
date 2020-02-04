@@ -1,4 +1,4 @@
-package pl.piotrskiba.angularowo;
+package pl.piotrskiba.angularowo.fragments;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,6 +28,9 @@ import okhttp3.Response;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
 import okio.ByteString;
+import pl.piotrskiba.angularowo.Constants;
+import pl.piotrskiba.angularowo.R;
+import pl.piotrskiba.angularowo.activities.PlayerDetailsActivity;
 import pl.piotrskiba.angularowo.adapters.ChatAdapter;
 import pl.piotrskiba.angularowo.interfaces.ChatMessageClickListener;
 import pl.piotrskiba.angularowo.models.ChatMessage;

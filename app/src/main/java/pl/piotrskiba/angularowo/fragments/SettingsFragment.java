@@ -1,4 +1,4 @@
-package pl.piotrskiba.angularowo;
+package pl.piotrskiba.angularowo.fragments;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import pl.piotrskiba.angularowo.Constants;
+import pl.piotrskiba.angularowo.R;
 import pl.piotrskiba.angularowo.models.Rank;
 import pl.piotrskiba.angularowo.utils.RankUtils;
 import pl.piotrskiba.angularowo.utils.TextUtils;
