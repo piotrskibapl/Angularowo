@@ -1,12 +1,10 @@
 package pl.piotrskiba.angularowo;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +16,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,12 +27,6 @@ import butterknife.ButterKnife;
 import pl.piotrskiba.angularowo.adapters.BanListAdapter;
 import pl.piotrskiba.angularowo.interfaces.BanClickListener;
 import pl.piotrskiba.angularowo.models.Ban;
-import pl.piotrskiba.angularowo.models.BanList;
-import pl.piotrskiba.angularowo.network.ServerAPIClient;
-import pl.piotrskiba.angularowo.network.ServerAPIInterface;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class BanListFragment extends Fragment implements BanClickListener {
 
@@ -49,6 +42,8 @@ public class BanListFragment extends Fragment implements BanClickListener {
     @BindView(R.id.server_error_layout)
     LinearLayout mServerErrorLayout;
 
+    private BanListAdapter mBanListAdapter;
+
     public BanListFragment(){
 
     }
@@ -60,7 +55,7 @@ public class BanListFragment extends Fragment implements BanClickListener {
 
         ButterKnife.bind(this, view);
 
-        final BanListAdapter adapter = new BanListAdapter(getContext(), this);
+        mBanListAdapter = new BanListAdapter(getContext(), this);
 
         RecyclerView.LayoutManager layoutManager;
         int display_mode = getResources().getConfiguration().orientation;
@@ -74,13 +69,13 @@ public class BanListFragment extends Fragment implements BanClickListener {
             mBanList.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
         }
 
-        mBanList.setAdapter(adapter);
+        mBanList.setAdapter(mBanListAdapter);
         mBanList.setLayoutManager(layoutManager);
         mBanList.setHasFixedSize(true);
 
-        loadBanList(adapter);
+        seekForBanList();
 
-        mSwipeRefreshLayout.setOnRefreshListener(() -> loadBanList(adapter));
+        mSwipeRefreshLayout.setOnRefreshListener(() -> refreshData());
 
         ActionBar actionbar = ((AppCompatActivity)getActivity()).getSupportActionBar();
         actionbar.setTitle(R.string.actionbar_title_ban_list);
@@ -88,38 +83,25 @@ public class BanListFragment extends Fragment implements BanClickListener {
         return view;
     }
 
-    private void loadBanList(BanListAdapter adapter){
-        mSwipeRefreshLayout.setRefreshing(true);
-
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        String access_token = sharedPreferences.getString(getString(R.string.pref_key_access_token), null);
-
-        ServerAPIInterface serverAPIInterface = ServerAPIClient.getRetrofitInstance().create(ServerAPIInterface.class);
-        serverAPIInterface.getActiveBans(ServerAPIClient.API_KEY, Constants.BAN_TYPES, null, access_token).enqueue(new Callback<BanList>() {
-            @Override
-            public void onResponse(Call<BanList> call, Response<BanList> response) {
-                if(isAdded()) {
-                    showDefaultLayout();
-
-                    if (response.isSuccessful() && response.body() != null) {
-                        adapter.setBanList(response.body());
-                    }
-                    else if(!response.isSuccessful()){
-                        showServerErrorLayout();
-                    }
-                }
+    private void seekForBanList(){
+        AppViewModel viewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
+        viewModel.getBanList().observe(this, banList -> {
+            if(banList != null){
+                mSwipeRefreshLayout.setRefreshing(false);
+                mBanListAdapter.setBanList(banList);
             }
-
-            @Override
-            public void onFailure(Call<BanList> call, Throwable t) {
-                if(isAdded()) {
-                    showNoInternetLayout();
-                }
-                t.printStackTrace();
+            else{
+                // TODO: show err
             }
         });
     }
 
+    private void refreshData(){
+        AppViewModel viewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
+
+        mSwipeRefreshLayout.setRefreshing(true);
+        viewModel.refreshBanList();
+    }
 
     @Override
     public void onBanClick(View view, Ban clickedBan) {

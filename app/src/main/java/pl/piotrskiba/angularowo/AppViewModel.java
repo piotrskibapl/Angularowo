@@ -23,6 +23,7 @@ public class AppViewModel extends AndroidViewModel {
     private MutableLiveData<ServerStatus> serverStatus;
     private MutableLiveData<DetailedPlayer> player;
     private MutableLiveData<BanList> activePlayerBans;
+    private MutableLiveData<BanList> banList;
 
     public AppViewModel(@NonNull Application application) {
         super(application);
@@ -126,6 +127,39 @@ public class AppViewModel extends AndroidViewModel {
             @Override
             public void onFailure(Call<BanList> call, Throwable t) {
                 activePlayerBans.setValue(null);
+                t.printStackTrace();
+            }
+        });
+    }
+
+    public LiveData<BanList> getBanList(){
+        if(banList == null){
+            banList = new MutableLiveData<>();
+            loadBanList();
+        }
+        return banList;
+    }
+    public void refreshBanList(){
+        loadBanList();
+    }
+    private void loadBanList(){
+        String access_token = PreferenceUtils.getAccessToken(getApplication());
+
+        ServerAPIInterface serverAPIInterface = ServerAPIClient.getRetrofitInstance().create(ServerAPIInterface.class);
+        serverAPIInterface.getActiveBans(ServerAPIClient.API_KEY, Constants.BAN_TYPES, null, access_token).enqueue(new Callback<BanList>() {
+            @Override
+            public void onResponse(Call<BanList> call, Response<BanList> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    banList.setValue(response.body());
+                }
+                else if(!response.isSuccessful()){
+                    banList.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BanList> call, Throwable t) {
+                banList.setValue(null);
                 t.printStackTrace();
             }
         });
