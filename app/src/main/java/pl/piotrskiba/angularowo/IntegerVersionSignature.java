@@ -6,7 +6,7 @@ import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 
 public class IntegerVersionSignature implements Key {
-    private int currentVersion;
+    private final int currentVersion;
 
     public IntegerVersionSignature(int currentVersion) {
         this.currentVersion = currentVersion;

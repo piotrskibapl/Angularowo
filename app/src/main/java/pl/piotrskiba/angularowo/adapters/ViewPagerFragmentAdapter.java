@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class ViewPagerFragmentAdapter extends FragmentStateAdapter {
 
-    private ArrayList<Fragment> fragmentList = new ArrayList<>();
+    private final ArrayList<Fragment> fragmentList = new ArrayList<>();
 
     public ViewPagerFragmentAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
         super(fragmentManager, lifecycle);

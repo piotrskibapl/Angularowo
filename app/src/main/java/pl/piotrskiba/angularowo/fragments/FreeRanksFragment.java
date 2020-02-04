@@ -60,7 +60,7 @@ public class FreeRanksFragment extends Fragment implements FreeRankClickListener
 
     private RewardedVideoAd mRewardedVideoAd;
 
-    private ArrayList<Reward> mRewards = new ArrayList<>();
+    private final ArrayList<Reward> mRewards = new ArrayList<>();
 
     private FreeRankListAdapter mFreeRankListAdapter;
 
