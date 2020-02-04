@@ -135,7 +135,7 @@ public class PlayerDetailsActivity extends AppCompatActivity implements SwipeRef
             mPlayerName.setText(player.getUsername());
             mPlayerRank.setText(player.getRank().getName());
 
-            int color = ColorUtils.getColorFromCode(player.getRank().getColorCode());
+            int color = ColorUtils.getColorFromCode(this, player.getRank().getColorCode());
             ((ConstraintLayout) mPlayerAvatar.getParent()).setBackgroundColor(color);
 
             if (player.isVanished())

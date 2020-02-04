@@ -70,7 +70,7 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Pl
         holder.mPlayerName.setText(player.getUsername());
         holder.mPlayerRank.setText(player.getRank().getName());
 
-        int color = ColorUtils.getColorFromCode(player.getRank().getColorCode());
+        int color = ColorUtils.getColorFromCode(context, player.getRank().getColorCode());
         ((ConstraintLayout) holder.mPlayerAvatar.getParent()).setBackgroundColor(color);
 
         if(player.isVanished())

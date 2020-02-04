@@ -3,6 +3,7 @@ package pl.piotrskiba.angularowo.adapters;
 import android.content.Context;
 import android.os.Build;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,8 +54,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatMessageVie
         ChatMessage message = mMessageList.get(position);
         Rank rank = RankUtils.getRankFromName(message.getRank());
 
-        String rank_color = String.format("#%06X", (0xFFFFFF & ColorUtils.changeBrightness(ColorUtils.getColorFromCode(rank.getColorCode()), 1.4f)));
-        String message_color = String.format("#%06X", (0xFFFFFF & ColorUtils.changeBrightness(ColorUtils.getColorFromCode(rank.getChatColorCode()), 1.4f)));
+        Log.d("asdasd", rank.getColorCode() + " -> " + ColorUtils.getColorFromCode(context, rank.getColorCode()));
+        String rank_color = String.format("#%06X", (0xFFFFFF & ColorUtils.changeBrightness(ColorUtils.getColorFromCode(context, rank.getColorCode()), 1.4f)));
+        String message_color = String.format("#%06X", (0xFFFFFF & ColorUtils.changeBrightness(ColorUtils.getColorFromCode(context, rank.getChatColorCode()), 1.4f)));
 
         String coloredmessage = context.getString(
                 R.string.chat_user_message,
