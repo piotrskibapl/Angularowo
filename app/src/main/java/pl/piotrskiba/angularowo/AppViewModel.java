@@ -1,7 +1,6 @@
 package pl.piotrskiba.angularowo;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -94,7 +93,6 @@ public class AppViewModel extends AndroidViewModel {
             @Override
             public void onFailure(Call<DetailedPlayer> call, Throwable t) {
                 player.setValue(null);
-                Log.d("asdasd", call.request().url().toString());
                 t.printStackTrace();
             }
         });
