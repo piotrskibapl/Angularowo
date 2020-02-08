@@ -37,6 +37,7 @@ import pl.piotrskiba.angularowo.R;
 import pl.piotrskiba.angularowo.activities.BanDetailsActivity;
 import pl.piotrskiba.angularowo.adapters.BanListAdapter;
 import pl.piotrskiba.angularowo.interfaces.BanClickListener;
+import pl.piotrskiba.angularowo.interfaces.NetworkErrorListener;
 import pl.piotrskiba.angularowo.models.Ban;
 import pl.piotrskiba.angularowo.models.Rank;
 import pl.piotrskiba.angularowo.utils.GlideUtils;
@@ -45,7 +46,7 @@ import pl.piotrskiba.angularowo.utils.RankUtils;
 import pl.piotrskiba.angularowo.utils.TextUtils;
 import pl.piotrskiba.angularowo.utils.UrlUtils;
 
-public class MainScreenFragment extends Fragment implements BanClickListener {
+public class MainScreenFragment extends Fragment implements BanClickListener, NetworkErrorListener {
 
     @BindView(R.id.swiperefresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
@@ -109,9 +110,13 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
 
         populateUi();
 
+        AppViewModel viewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
+        viewModel.setNetworkErrorListener(this);
+        mSwipeRefreshLayout.setRefreshing(true);
         seekForServerStatusUpdates();
         seekForPlayerUpdates();
         seekForLastPlayerBans();
+
 
         return view;
     }
@@ -121,7 +126,7 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
         viewModel.getServerStatus().observe(this, serverStatus -> {
             if(serverStatus != null) {
                 loadedServerStatus = true;
-                hideLoadingIndicatorIfLoadedAllData();
+                showDefaultLayoutIfLoadedAllData();
 
                 Rank rank = RankUtils.getRankFromPreferences(getContext());
 
@@ -132,9 +137,6 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
                     mPlayerCountTextView.setText(getResources().getQuantityString(R.plurals.playercount, serverStatus.getPlayerCount(), serverStatus.getPlayerCount()));
                 }
             }
-            else{
-                // TODO: show err
-            }
         });
     }
 
@@ -143,7 +145,7 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
         viewModel.getPlayer().observe(this, player -> {
             if (player != null) {
                 loadedPlayer = true;
-                hideLoadingIndicatorIfLoadedAllData();
+                showDefaultLayoutIfLoadedAllData();
 
                 if (player.getUuid() != null && getContext() != null) {
                     Glide.with(getContext())
@@ -161,8 +163,6 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
                     subscribeToFirebaseRankTopic(player.getRank());
                     checkFirebaseNewReportsTopicSubscription(player.getRank());
                 }
-            } else {
-                // TODO: show err
             }
         });
     }
@@ -172,21 +172,20 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
         viewModel.getActivePlayerBans().observe(this, banList -> {
             if(banList != null) {
                 loadedActivePlayerBans = true;
-                hideLoadingIndicatorIfLoadedAllData();
+                showDefaultLayoutIfLoadedAllData();
 
                 mBanListAdapter.setBanList(banList);
                 if (!banList.getBanList().isEmpty())
                     showLastBans();
             }
-            else{
-                // TODO: show err
-            }
         });
     }
 
-    private void hideLoadingIndicatorIfLoadedAllData(){
-        if(loadedServerStatus && loadedPlayer && loadedActivePlayerBans)
+    private void showDefaultLayoutIfLoadedAllData(){
+        if(loadedServerStatus && loadedPlayer && loadedActivePlayerBans) {
+            showDefaultLayout();
             mSwipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     private void refreshData(){
@@ -365,5 +364,15 @@ public class MainScreenFragment extends Fragment implements BanClickListener {
         else {
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void onNoInternet() {
+        showNoInternetLayout();
+    }
+
+    @Override
+    public void onServerError() {
+        showServerErrorLayout();
     }
 }

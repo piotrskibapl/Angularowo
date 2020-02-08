@@ -31,9 +31,10 @@ import pl.piotrskiba.angularowo.SpacesItemDecoration;
 import pl.piotrskiba.angularowo.activities.BanDetailsActivity;
 import pl.piotrskiba.angularowo.adapters.BanListAdapter;
 import pl.piotrskiba.angularowo.interfaces.BanClickListener;
+import pl.piotrskiba.angularowo.interfaces.NetworkErrorListener;
 import pl.piotrskiba.angularowo.models.Ban;
 
-public class BanListFragment extends Fragment implements BanClickListener {
+public class BanListFragment extends Fragment implements BanClickListener, NetworkErrorListener {
 
     @BindView(R.id.rv_bans)
     RecyclerView mBanList;
@@ -78,6 +79,7 @@ public class BanListFragment extends Fragment implements BanClickListener {
         mBanList.setLayoutManager(layoutManager);
         mBanList.setHasFixedSize(true);
 
+        mSwipeRefreshLayout.setRefreshing(true);
         seekForBanList();
 
         mSwipeRefreshLayout.setOnRefreshListener(() -> refreshData());
@@ -90,13 +92,12 @@ public class BanListFragment extends Fragment implements BanClickListener {
 
     private void seekForBanList(){
         AppViewModel viewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
+        viewModel.setNetworkErrorListener(this);
         viewModel.getBanList().observe(this, banList -> {
             if(banList != null){
                 mSwipeRefreshLayout.setRefreshing(false);
                 mBanListAdapter.setBanList(banList);
-            }
-            else{
-                // TODO: show err
+                showDefaultLayout();
             }
         });
     }
@@ -145,5 +146,15 @@ public class BanListFragment extends Fragment implements BanClickListener {
         mBanList.setVisibility(View.GONE);
         mNoInternetLayout.setVisibility(View.GONE);
         mServerErrorLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onNoInternet() {
+        showNoInternetLayout();
+    }
+
+    @Override
+    public void onServerError() {
+        showServerErrorLayout();
     }
 }

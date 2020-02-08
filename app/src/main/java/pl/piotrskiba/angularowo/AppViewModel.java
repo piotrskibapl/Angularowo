@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import pl.piotrskiba.angularowo.interfaces.NetworkErrorListener;
 import pl.piotrskiba.angularowo.models.BanList;
 import pl.piotrskiba.angularowo.models.DetailedPlayer;
 import pl.piotrskiba.angularowo.models.PlayerList;
@@ -26,6 +27,8 @@ public class AppViewModel extends AndroidViewModel {
     private MutableLiveData<BanList> banList;
     private MutableLiveData<PlayerList> playerList;
 
+    private NetworkErrorListener mNetworkErrorListener;
+
     public AppViewModel(@NonNull Application application) {
         super(application);
     }
@@ -34,6 +37,9 @@ public class AppViewModel extends AndroidViewModel {
         if (serverStatus == null) {
             serverStatus = new MutableLiveData<>();
             loadServerStatus();
+        }
+        else if (serverStatus.getValue() == null){
+            refreshServerStatus();
         }
         return serverStatus;
     }
@@ -52,12 +58,14 @@ public class AppViewModel extends AndroidViewModel {
                 }
                 else{
                     serverStatus.setValue(null);
+                    mNetworkErrorListener.onServerError();
                 }
             }
 
             @Override
             public void onFailure(Call<ServerStatus> call, Throwable t) {
                 serverStatus.setValue(null);
+                mNetworkErrorListener.onNoInternet();
                 t.printStackTrace();
             }
         });
@@ -67,6 +75,9 @@ public class AppViewModel extends AndroidViewModel {
         if (player == null) {
             player = new MutableLiveData<>();
             loadPlayer();
+        }
+        else if (player.getValue() == null){
+            refreshPlayer();
         }
         return player;
     }
@@ -87,12 +98,14 @@ public class AppViewModel extends AndroidViewModel {
                 }
                 else {
                     player.setValue(null);
+                    mNetworkErrorListener.onServerError();
                 }
             }
 
             @Override
             public void onFailure(Call<DetailedPlayer> call, Throwable t) {
                 player.setValue(null);
+                mNetworkErrorListener.onNoInternet();
                 t.printStackTrace();
             }
         });
@@ -102,6 +115,9 @@ public class AppViewModel extends AndroidViewModel {
         if (activePlayerBans == null) {
             activePlayerBans = new MutableLiveData<>();
             loadActivePlayerBans();
+        }
+        else if (activePlayerBans.getValue() == null){
+            refreshActivePlayerBans();
         }
         return activePlayerBans;
     }
@@ -121,12 +137,14 @@ public class AppViewModel extends AndroidViewModel {
                 }
                 else{
                     activePlayerBans.setValue(null);
+                    mNetworkErrorListener.onServerError();
                 }
             }
 
             @Override
             public void onFailure(Call<BanList> call, Throwable t) {
                 activePlayerBans.setValue(null);
+                mNetworkErrorListener.onNoInternet();
                 t.printStackTrace();
             }
         });
@@ -136,6 +154,9 @@ public class AppViewModel extends AndroidViewModel {
         if(banList == null){
             banList = new MutableLiveData<>();
             loadBanList();
+        }
+        else if (banList.getValue() == null){
+            refreshBanList();
         }
         return banList;
     }
@@ -154,12 +175,14 @@ public class AppViewModel extends AndroidViewModel {
                 }
                 else {
                     banList.setValue(null);
+                    mNetworkErrorListener.onServerError();
                 }
             }
 
             @Override
             public void onFailure(Call<BanList> call, Throwable t) {
                 banList.setValue(null);
+                mNetworkErrorListener.onNoInternet();
                 t.printStackTrace();
             }
         });
@@ -169,6 +192,9 @@ public class AppViewModel extends AndroidViewModel {
         if(playerList == null){
             playerList = new MutableLiveData<>();
             loadPlayerList();
+        }
+        else if (playerList.getValue() == null){
+            refreshPlayerList();
         }
         return playerList;
     }
@@ -187,14 +213,20 @@ public class AppViewModel extends AndroidViewModel {
                 }
                 else {
                     playerList.setValue(null);
+                    mNetworkErrorListener.onServerError();
                 }
             }
 
             @Override
             public void onFailure(Call<PlayerList> call, Throwable t) {
                 playerList.setValue(null);
+                mNetworkErrorListener.onNoInternet();
                 t.printStackTrace();
             }
         });
+    }
+
+    public void setNetworkErrorListener(NetworkErrorListener listener){
+        mNetworkErrorListener = listener;
     }
 }

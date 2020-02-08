@@ -29,10 +29,11 @@ import pl.piotrskiba.angularowo.R;
 import pl.piotrskiba.angularowo.SpacesItemDecoration;
 import pl.piotrskiba.angularowo.activities.PlayerDetailsActivity;
 import pl.piotrskiba.angularowo.adapters.PlayerListAdapter;
+import pl.piotrskiba.angularowo.interfaces.NetworkErrorListener;
 import pl.piotrskiba.angularowo.interfaces.PlayerClickListener;
 import pl.piotrskiba.angularowo.models.Player;
 
-public class PlayerListFragment extends Fragment implements PlayerClickListener {
+public class PlayerListFragment extends Fragment implements PlayerClickListener, NetworkErrorListener {
 
     @BindView(R.id.rv_players)
     RecyclerView mPlayerList;
@@ -80,6 +81,7 @@ public class PlayerListFragment extends Fragment implements PlayerClickListener 
         mPlayerList.setLayoutManager(layoutManager);
         mPlayerList.setHasFixedSize(true);
 
+        mSwipeRefreshLayout.setRefreshing(true);
         seekForPlayerList();
 
         mSwipeRefreshLayout.setOnRefreshListener(() -> refreshData());
@@ -92,14 +94,16 @@ public class PlayerListFragment extends Fragment implements PlayerClickListener 
 
     private void seekForPlayerList(){
         AppViewModel viewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
+        viewModel.setNetworkErrorListener(this);
         viewModel.getPlayerList().observe(this, playerList -> {
             if(playerList != null){
                 mSwipeRefreshLayout.setRefreshing(false);
                 mPlayerListAdapter.setPlayerList(playerList);
 
-            }
-            else{
-                // TODO: show err
+                if(playerList.getPlayers().isEmpty())
+                    showNoPlayersLayout();
+                else
+                    showDefaultLayout();
             }
         });
     }
@@ -152,5 +156,15 @@ public class PlayerListFragment extends Fragment implements PlayerClickListener 
         mPlayerList.setVisibility(View.GONE);
         mNoInternetLayout.setVisibility(View.GONE);
         mServerErrorLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onNoInternet() {
+        showNoInternetLayout();
+    }
+
+    @Override
+    public void onServerError() {
+        showServerErrorLayout();
     }
 }
