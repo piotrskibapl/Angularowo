@@ -173,7 +173,7 @@ public class OffersFragment extends Fragment implements AdOfferClickListener, Of
     }
 
     private void populateUi(){
-        mSwipeRefreshLayout.setRefreshing(false);
+        showDefaultLayout();
 
         mCoinsTextView.setText(String.valueOf(mOffersInfo.getPoints()));
 
@@ -271,11 +271,11 @@ public class OffersFragment extends Fragment implements AdOfferClickListener, Of
 
     @Override
     public void onNoInternet() {
-
+        showNoInternetLayout();
     }
 
     @Override
     public void onServerError() {
-
+        showServerErrorLayout();
     }
 }
