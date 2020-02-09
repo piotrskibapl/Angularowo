@@ -28,13 +28,13 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import pl.piotrskiba.angularowo.Constants;
+import pl.piotrskiba.angularowo.R;
 import pl.piotrskiba.angularowo.fragments.BanListFragment;
 import pl.piotrskiba.angularowo.fragments.ChatFragment;
-import pl.piotrskiba.angularowo.Constants;
-import pl.piotrskiba.angularowo.fragments.FreeRanksFragment;
 import pl.piotrskiba.angularowo.fragments.MainScreenFragment;
+import pl.piotrskiba.angularowo.fragments.OffersFragment;
 import pl.piotrskiba.angularowo.fragments.PlayerListFragment;
-import pl.piotrskiba.angularowo.R;
 import pl.piotrskiba.angularowo.fragments.ReportsHistoryFragment;
 import pl.piotrskiba.angularowo.fragments.ReportsHistoryFragmentContainerFragment;
 import pl.piotrskiba.angularowo.interfaces.UnauthorizedResponseListener;
@@ -65,14 +65,14 @@ public class MainActivity extends AppCompatActivity implements UnauthorizedRespo
     private PlayerListFragment playerListFragment;
     private ChatFragment chatFragment;
     private BanListFragment banListFragment;
-    private FreeRanksFragment freeRanksFragment;
+    private OffersFragment offersFragment;
     private Fragment reportsHistoryFragment;
 
     private final static String TAG_MAIN_FRAGMENT = "fragment_main";
     private final static String TAG_PLAYER_LIST_FRAGMENT = "fragment_player_list";
     private final static String TAG_CHAT_FRAGMENT = "fragment_chat";
     private final static String TAG_BAN_LIST_FRAGMENT = "fragment_ban_list";
-    private final static String TAG_FREE_RANKS_FRAGMENT = "fragment_free_ranks";
+    private final static String TAG_FREE_RANKS_FRAGMENT = "fragment_offers";
     private final static String TAG_REPORTS_HISTORY_FRAGMENT = "fragment_reports_history";
 
     private RewardedVideoAd mRewardedVideoAd;
@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements UnauthorizedRespo
         playerListFragment = (PlayerListFragment) fragmentManager.findFragmentByTag(TAG_PLAYER_LIST_FRAGMENT);
         chatFragment = (ChatFragment) fragmentManager.findFragmentByTag(TAG_CHAT_FRAGMENT);
         banListFragment = (BanListFragment) fragmentManager.findFragmentByTag(TAG_BAN_LIST_FRAGMENT);
-        freeRanksFragment = (FreeRanksFragment) fragmentManager.findFragmentByTag(TAG_FREE_RANKS_FRAGMENT);
+        offersFragment = (OffersFragment) fragmentManager.findFragmentByTag(TAG_FREE_RANKS_FRAGMENT);
         reportsHistoryFragment = fragmentManager.findFragmentByTag(TAG_REPORTS_HISTORY_FRAGMENT);
 
         if(mainScreenFragment == null) {
@@ -189,10 +189,10 @@ public class MainActivity extends AppCompatActivity implements UnauthorizedRespo
             banListFragment = new BanListFragment();
         }
 
-        if(freeRanksFragment == null) {
-            freeRanksFragment = new FreeRanksFragment();
+        if(offersFragment == null) {
+            offersFragment = new OffersFragment();
         }
-        freeRanksFragment.setRewardedVideoAd(mRewardedVideoAd);
+        offersFragment.setRewardedVideoAd(mRewardedVideoAd);
 
         if (reportsHistoryFragment == null) {
             Rank rank = RankUtils.getRankFromPreferences(this);
@@ -235,7 +235,7 @@ public class MainActivity extends AppCompatActivity implements UnauthorizedRespo
                                     .commit();
                         } else if (menuItem.getItemId() == R.id.nav_free_ranks) {
                             fragmentManager.beginTransaction()
-                                    .replace(R.id.fragment_container, freeRanksFragment, TAG_FREE_RANKS_FRAGMENT)
+                                    .replace(R.id.fragment_container, offersFragment, TAG_FREE_RANKS_FRAGMENT)
                                     .commit();
                         } else if (menuItem.getItemId() == R.id.nav_reports_history) {
                             fragmentManager.beginTransaction()
@@ -287,7 +287,7 @@ public class MainActivity extends AppCompatActivity implements UnauthorizedRespo
 
     @Override
     public void onRewardedVideoAdLoaded() {
-        freeRanksFragment.hideLoadingIndicator();
+        offersFragment.hideLoadingIndicator();
         mRewardedVideoAd.show();
     }
 
@@ -314,18 +314,18 @@ public class MainActivity extends AppCompatActivity implements UnauthorizedRespo
         Context context = this;
 
         ServerAPIInterface serverAPIInterface = ServerAPIClient.getRetrofitInstance().create(ServerAPIInterface.class);
-        serverAPIInterface.redeemAdPrize(ServerAPIClient.API_KEY, rewardItem.getType(), access_token).enqueue(new Callback<Void>() {
+        serverAPIInterface.redeemAdOffer(ServerAPIClient.API_KEY, rewardItem.getType(), access_token).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if(!isFinishing()) {
                     new AlertDialog.Builder(context)
-                            .setTitle(R.string.prize_redeemed)
-                            .setMessage(R.string.prize_redeemed_description)
+                            .setTitle(R.string.ad_offer_redeemed)
+                            .setMessage(R.string.ad_offer_redeemed_description)
 
                             .setPositiveButton(R.string.button_dismiss, null)
                             .show();
 
-                    freeRanksFragment.loadRewards();
+                    offersFragment.refreshData();
                 }
             }
 
@@ -344,7 +344,7 @@ public class MainActivity extends AppCompatActivity implements UnauthorizedRespo
     @Override
     public void onRewardedVideoAdFailedToLoad(int i) {
         if(!isFinishing()) {
-            freeRanksFragment.hideLoadingIndicator();
+            offersFragment.hideLoadingIndicator();
             if (i == 3) {
                 new AlertDialog.Builder(this)
                         .setTitle(R.string.no_ads)

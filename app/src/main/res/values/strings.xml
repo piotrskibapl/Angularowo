@@ -84,18 +84,23 @@
     <string name="warn_description_format">Ostrzeżony za %1$s</string>
     <string name="mute_description_format">Wyciszony za %1$s</string>
 
-    <!-- fragment_free_rank.xml -->
+    <!-- fragment_offers.xml -->
     <string name="actionbar_title_free_ranks">Darmowe nagrody</string>
     <string name="no_rewards_found">Aktualnie nie masz żadnych nagród do odebrania.</string>
     <string name="no_ads">Brak reklam</string>
     <string name="no_ads_description">Nie znaleziono żadnych reklam. Spróbuj ponownie za kilka godzin.</string>
-    <string name="prize_redeemed">Nagroda przyznana!</string>
-    <string name="prize_redeemed_description">Twoja nagroda została przyznana - aby ją odebrać, wpisz komendę /aktywuj w grze.</string>
-    <string name="ad_question">Odbiór nagrody</string>
-    <string name="ad_question_description">Czy chcesz obejrzeć reklamę w zamian za wybraną nagrodę?</string>
+    <string name="ad_offer_redeemed">Punkty przyznane!</string>
+    <string name="ad_offer_redeemed_description">Punkty za obejrzenie reklamy zostały dodane do Twojego konta.</string>
+    <string name="offer_redeemed">Nagroda przyznana!</string>
+    <string name="offer_redeemed_description">Gratulacje, odebrałeś swoją ofertę - zostanie ona aktywowana automatycznie.\nMiłej gry!</string>
+    <string name="ad_question">Odbiór monet</string>
+    <string name="ad_question_description">Czy chcesz obejrzeć reklamę w zamian za wybraną ilość monet?</string>
+    <string name="offer_question">Aktywacja oferty</string>
     <string name="button_yes">Tak</string>
     <string name="button_no">Nie</string>
     <string name="button_dismiss">Zamknij</string>
+    <string name="earn_more_coins">Zdobądź więcej monet</string>
+    <string name="exchange_coins_to_prizes">Wymień monety na nagrody</string>
 
     <!-- fragment_chat.xml -->
     <string name="actionbar_title_chat">Podgląd chatu</string>

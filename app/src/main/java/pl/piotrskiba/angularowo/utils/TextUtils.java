@@ -52,6 +52,34 @@ public class TextUtils {
         return result;
     }
 
+    public static String formatApproximateTimeleft(int seconds){
+        int minutes = seconds / 60;
+        int hours = minutes / 60;
+        int days = hours / 24;
+
+        StringBuilder builder = new StringBuilder();
+
+        if(days > 0)
+            builder.append(days).append(" d");
+        if(hours % 24 > 0) {
+            if(builder.length() > 0)
+                builder.append(" ");
+            builder.append(hours % 24).append(" h");
+        }
+        if(minutes % 60 > 0 && days == 0) {
+            if (builder.length() > 0)
+                builder.append(" ");
+            builder.append(minutes % 60).append(" m");
+        }
+        if(seconds % 60 > 0 && days == 0 && hours == 0){
+            if (builder.length() > 0)
+                builder.append(" ");
+            builder.append(seconds % 60).append(" s");
+        }
+
+        return builder.toString();
+    }
+
     public static String formatTps(double tps){
         String result;
         if(tps == (int) tps)

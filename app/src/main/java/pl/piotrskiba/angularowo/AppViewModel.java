@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import pl.piotrskiba.angularowo.interfaces.NetworkErrorListener;
 import pl.piotrskiba.angularowo.models.BanList;
 import pl.piotrskiba.angularowo.models.DetailedPlayer;
+import pl.piotrskiba.angularowo.models.OffersInfo;
 import pl.piotrskiba.angularowo.models.PlayerList;
 import pl.piotrskiba.angularowo.models.ServerStatus;
 import pl.piotrskiba.angularowo.network.ServerAPIClient;
@@ -26,6 +27,7 @@ public class AppViewModel extends AndroidViewModel {
     private MutableLiveData<BanList> activePlayerBans;
     private MutableLiveData<BanList> banList;
     private MutableLiveData<PlayerList> playerList;
+    private MutableLiveData<OffersInfo> offersInfo;
 
     private NetworkErrorListener mNetworkErrorListener;
 
@@ -220,6 +222,44 @@ public class AppViewModel extends AndroidViewModel {
             @Override
             public void onFailure(Call<PlayerList> call, Throwable t) {
                 playerList.setValue(null);
+                mNetworkErrorListener.onNoInternet();
+                t.printStackTrace();
+            }
+        });
+    }
+
+    public LiveData<OffersInfo> getOffersInfo(){
+        if(offersInfo == null){
+            offersInfo = new MutableLiveData<>();
+            loadOffersInfo();
+        }
+        else if (offersInfo.getValue() == null){
+            refreshOffersInfo();
+        }
+        return offersInfo;
+    }
+    public void refreshOffersInfo(){
+        loadOffersInfo();
+    }
+    private void loadOffersInfo(){
+        String access_token = PreferenceUtils.getAccessToken(getApplication());
+
+        ServerAPIInterface serverAPIInterface = ServerAPIClient.getRetrofitInstance().create(ServerAPIInterface.class);
+        serverAPIInterface.getOffersInfo(ServerAPIClient.API_KEY, access_token).enqueue(new Callback<OffersInfo>() {
+            @Override
+            public void onResponse(Call<OffersInfo> call, Response<OffersInfo> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    offersInfo.setValue(response.body());
+                }
+                else {
+                    offersInfo.setValue(null);
+                    mNetworkErrorListener.onServerError();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<OffersInfo> call, Throwable t) {
+                offersInfo.setValue(null);
                 mNetworkErrorListener.onNoInternet();
                 t.printStackTrace();
             }
