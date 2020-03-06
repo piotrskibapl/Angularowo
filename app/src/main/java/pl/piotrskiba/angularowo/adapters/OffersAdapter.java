@@ -73,7 +73,7 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.OfferViewH
             holder.mOfferDescription.setTextColor(ContextCompat.getColor(context, R.color.offer_text_color_disabled));
 
             if(offer.getTimeleft() > 0) {
-                holder.mOfferTime.setText(TextUtils.formatApproximateTimeleft(offer.getTimeleft()));
+                holder.mOfferTime.setText(TextUtils.formatApproximateTimeLeft(offer.getTimeleft()));
                 holder.mOfferTime.setVisibility(View.VISIBLE);
             }
             else

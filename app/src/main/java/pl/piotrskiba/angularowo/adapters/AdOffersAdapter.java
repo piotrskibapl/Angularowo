@@ -52,7 +52,7 @@ public class AdOffersAdapter extends RecyclerView.Adapter<AdOffersAdapter.AdOffe
             holder.mCoins.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_coin_disabled, 0, 0, 0);
             holder.mCoins.setTextColor(ContextCompat.getColor(context, R.color.color_coin_disabled));
 
-            holder.mTime.setText(TextUtils.formatApproximateTimeleft(adOffer.getTimeleft()));
+            holder.mTime.setText(TextUtils.formatApproximateTimeLeft(adOffer.getTimeleft()));
             holder.mTime.setVisibility(View.VISIBLE);
         }
         else {
