@@ -74,7 +74,7 @@ class BanDetailsActivity : AppCompatActivity() {
             mPlayerAvatar.setImageBitmap(avatarBitmap)
         }
 
-        var reason = ban.reason.toLowerCase()
+        var reason = ban.reason.toLowerCase(Locale.getDefault())
         when (ban.type) {
             Ban.TYPE_BAN -> {
                 mBanTypeImageView.setImageResource(R.drawable.ic_ban)
@@ -100,7 +100,7 @@ class BanDetailsActivity : AppCompatActivity() {
         val end = Date(ban.expireDate.toLong() * 1000)
 
         val pattern = "dd.MM.yyyy HH:mm"
-        val df: DateFormat = SimpleDateFormat(pattern)
+        val df: DateFormat = SimpleDateFormat(pattern, Locale.getDefault())
 
         mBanStartDate.text = df.format(start)
 

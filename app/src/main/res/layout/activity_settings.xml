@@ -15,7 +15,7 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_settings"
         android:name="pl.piotrskiba.angularowo.fragments.SettingsFragment"
         android:layout_width="match_parent"

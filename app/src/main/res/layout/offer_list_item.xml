@@ -27,7 +27,8 @@
         android:shadowRadius="3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/offer_image"/>
+        app:layout_constraintTop_toTopOf="@+id/offer_image"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/offer_description"
@@ -39,7 +40,8 @@
         android:shadowRadius="3"
         app:layout_constraintTop_toBottomOf="@+id/offer_title"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/offer_time"

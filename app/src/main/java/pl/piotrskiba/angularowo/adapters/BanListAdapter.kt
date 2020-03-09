@@ -25,6 +25,8 @@ import pl.piotrskiba.angularowo.utils.UrlUtils.buildAvatarUrl
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
+import kotlin.collections.ArrayList
 
 class BanListAdapter(private val context: Context, private val mClickListener: BanClickListener) : RecyclerView.Adapter<BanViewHolder>() {
     private var banList: BanList = BanList(ArrayList())
@@ -43,7 +45,7 @@ class BanListAdapter(private val context: Context, private val mClickListener: B
 
         holder.mPlayerName.text = ban.username
 
-        var reason = ban.reason.toLowerCase()
+        var reason = ban.reason.toLowerCase(Locale.getDefault())
 
         when (ban.type) {
             Ban.TYPE_BAN -> {

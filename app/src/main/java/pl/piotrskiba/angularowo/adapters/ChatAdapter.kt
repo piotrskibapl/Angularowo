@@ -39,7 +39,7 @@ class ChatAdapter(private val context: Context, private val mClickListener: Chat
         val rankColor = String.format("#%06X", 0xFFFFFF and changeBrightness(getColorFromCode(context, rank.colorCode), 1.4f))
         val messageColor = String.format("#%06X", 0xFFFFFF and changeBrightness(getColorFromCode(context, rank.chatColorCode), 1.4f))
 
-        var coloredmessage = context.getString(
+        var coloredMessage = context.getString(
                 R.string.chat_user_message,
                 message.rank,
                 message.username,
@@ -47,12 +47,12 @@ class ChatAdapter(private val context: Context, private val mClickListener: Chat
                 rankColor,
                 messageColor
         )
-        coloredmessage = replaceColorCodes(context, coloredmessage)
+        coloredMessage = replaceColorCodes(context, coloredMessage)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            holder.mMessage.setText(Html.fromHtml(coloredmessage, Html.FROM_HTML_MODE_LEGACY), TextView.BufferType.SPANNABLE)
+            holder.mMessage.setText(Html.fromHtml(coloredMessage, Html.FROM_HTML_MODE_LEGACY), TextView.BufferType.SPANNABLE)
         } else {
-            holder.mMessage.setText(Html.fromHtml(coloredmessage), TextView.BufferType.SPANNABLE)
+            holder.mMessage.setText(Html.fromHtml(coloredMessage), TextView.BufferType.SPANNABLE)
         }
     }
 
