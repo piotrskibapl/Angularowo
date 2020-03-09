@@ -44,7 +44,7 @@ class OffersAdapter(private val context: Context, private val mClickListener: Of
 
         holder.mOfferTitle.text = offer.title
         holder.mOfferDescription.text = offer.description
-        holder.mOfferPrice!!.text = offer.price.toString()
+        holder.mOfferPrice.text = offer.price.toString()
 
         if (offer.timeleft > 0 || offer.price > mCoins) {
             holder.mOfferImage.setColorFilter(Color.argb(224, 0, 0, 0))

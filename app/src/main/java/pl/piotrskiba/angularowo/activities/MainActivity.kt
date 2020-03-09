@@ -259,7 +259,7 @@ class MainActivity : AppCompatActivity(), UnauthorizedResponseListener, Rewarded
     }
 
     override fun onRewardedVideoAdLoaded() {
-        offersFragment!!.hideLoadingIndicator()
+        offersFragment.hideLoadingIndicator()
         mRewardedVideoAd.show()
     }
 
@@ -283,7 +283,7 @@ class MainActivity : AppCompatActivity(), UnauthorizedResponseListener, Rewarded
                             .setPositiveButton(R.string.button_dismiss, null)
                             .show()
 
-                    offersFragment!!.refreshData()
+                    offersFragment.refreshData()
                 }
             }
 
@@ -296,7 +296,7 @@ class MainActivity : AppCompatActivity(), UnauthorizedResponseListener, Rewarded
     override fun onRewardedVideoAdLeftApplication() {}
     override fun onRewardedVideoAdFailedToLoad(i: Int) {
         if (!isFinishing) {
-            offersFragment!!.hideLoadingIndicator()
+            offersFragment.hideLoadingIndicator()
             if (i == 3) {
                 AlertDialog.Builder(this)
                         .setTitle(R.string.no_ads)

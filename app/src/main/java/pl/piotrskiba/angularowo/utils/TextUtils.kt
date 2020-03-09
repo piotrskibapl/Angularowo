@@ -31,12 +31,16 @@ object TextUtils {
         if (days > 0)
             result = context.resources.getQuantityString(R.plurals.days, days, days)
         if (hours > 0) {
-            if (result.isEmpty()) {
-                result = context.resources.getQuantityString(R.plurals.hours, hours, hours)
-            } else if (minutes > 0) {
-                result += ", " + context.resources.getQuantityString(R.plurals.hours, hours, hours)
-            } else {
-                result += " i " + context.resources.getQuantityString(R.plurals.hours, hours, hours)
+            when {
+                result.isEmpty() -> {
+                    result = context.resources.getQuantityString(R.plurals.hours, hours, hours)
+                }
+                minutes > 0 -> {
+                    result += ", " + context.resources.getQuantityString(R.plurals.hours, hours, hours)
+                }
+                else -> {
+                    result += " i " + context.resources.getQuantityString(R.plurals.hours, hours, hours)
+                }
             }
         }
         if (minutes > 0) {
