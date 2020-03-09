@@ -156,15 +156,15 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         serverAPIInterface.getActiveBans(ServerAPIClient.API_KEY, Constants.BAN_TYPES, null, accessToken!!).enqueue(object : Callback<BanList?> {
             override fun onResponse(call: Call<BanList?>, response: Response<BanList?>) {
                 if (response.isSuccessful && response.body() != null) {
-                    banList?.setValue(response.body())
+                    banList?.value = response.body()
                 } else {
-                    banList?.setValue(null)
+                    banList?.value = null
                     mNetworkErrorListener?.onServerError()
                 }
             }
 
             override fun onFailure(call: Call<BanList?>, t: Throwable) {
-                banList?.setValue(null)
+                banList?.value = null
                 mNetworkErrorListener?.onNoInternet()
                 t.printStackTrace()
             }

@@ -72,7 +72,7 @@ class BanListAdapter(private val context: Context, private val mClickListener: B
                 override fun onResponse(call: Call<MojangProfile?>, response: Response<MojangProfile?>) {
                     if (holder.adapterPosition == position) {
                         if (response.isSuccessful) {
-                            val mojangProfile = response.body();
+                            val mojangProfile = response.body()
 
                             mojangProfile?.run {
                                 Glide.with(context)
