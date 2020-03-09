@@ -6,7 +6,7 @@ import java.io.Serializable
 class Ban(
         @field:SerializedName("name")
         val username: String,
-        val uuid: String,
+        val uuid: String?,
         val reason: String,
         val banner: String,
         @field:SerializedName("bantime")

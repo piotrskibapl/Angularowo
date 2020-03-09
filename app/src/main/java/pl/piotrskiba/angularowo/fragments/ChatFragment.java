@@ -18,7 +18,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.common.collect.Lists;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -109,7 +110,9 @@ public class ChatFragment extends Fragment implements ChatMessageClickListener {
             public void onResponse(Call<ChatMessageList> call, retrofit2.Response<ChatMessageList> response) {
                 if(isAdded()){
                     if (response.isSuccessful() && response.body() != null) {
-                        mChatAdapter.setMessageList(new ChatMessageList(Lists.reverse(response.body().getChatMessageList())));
+                        ArrayList<ChatMessage> messages = response.body().getChatMessageList();
+                        Collections.reverse(messages);
+                        mChatAdapter.setMessageList(new ChatMessageList(messages));
                         mChat.scrollToPosition(mChatAdapter.getItemCount() - 1);
                         showDefaultLayout();
                     }
