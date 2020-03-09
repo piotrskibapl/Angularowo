@@ -110,7 +110,7 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
 
     private fun seekForServerStatusUpdates() {
         val viewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
-        viewModel.serverStatus.observe(viewLifecycleOwner, Observer { serverStatus: ServerStatus? ->
+        viewModel.getServerStatus().observe(viewLifecycleOwner, Observer { serverStatus: ServerStatus? ->
             if (serverStatus != null) {
                 loadedServerStatus = true
                 showDefaultLayoutIfLoadedAllData()
@@ -128,7 +128,7 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
 
     private fun seekForPlayerUpdates() {
         val viewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
-        viewModel.player.observe(viewLifecycleOwner, Observer { player: DetailedPlayer? ->
+        viewModel.getPlayer().observe(viewLifecycleOwner, Observer { player: DetailedPlayer? ->
             if (player != null) {
                 loadedPlayer = true
                 showDefaultLayoutIfLoadedAllData()
@@ -153,7 +153,7 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
 
     private fun seekForLastPlayerBans() {
         val viewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
-        viewModel.activePlayerBans.observe(viewLifecycleOwner, Observer { banList: BanList? ->
+        viewModel.getActivePlayerBans().observe(viewLifecycleOwner, Observer { banList: BanList? ->
             if (banList != null) {
                 loadedActivePlayerBans = true
                 showDefaultLayoutIfLoadedAllData()

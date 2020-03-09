@@ -81,7 +81,7 @@ class PlayerListFragment : Fragment(), PlayerClickListener, NetworkErrorListener
     private fun seekForPlayerList() {
         val viewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
         viewModel.setNetworkErrorListener(this)
-        viewModel.playerList.observe(viewLifecycleOwner, Observer { playerList: PlayerList? ->
+        viewModel.getPlayerList().observe(viewLifecycleOwner, Observer { playerList: PlayerList? ->
             if (playerList != null) {
                 mSwipeRefreshLayout.isRefreshing = false
                 mPlayerListAdapter.setPlayerList(playerList)

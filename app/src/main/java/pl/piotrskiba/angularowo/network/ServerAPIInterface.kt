@@ -13,10 +13,10 @@ interface ServerAPIInterface {
     fun getPlayers(@Query("api_key") apiKey: String, @Query("access_token") access_token: String): Call<PlayerList>
 
     @GET("get_ban_list.php")
-    fun getAllBans(@Query("api_key") apiKey: String, @Query("type") type: String, @Query("username") username: String, @Query("access_token") access_token: String): Call<BanList>
+    fun getAllBans(@Query("api_key") apiKey: String, @Query("type") type: String, @Query("username") username: String?, @Query("access_token") access_token: String): Call<BanList>
 
     @GET("get_ban_list.php?filter=active")
-    fun getActiveBans(@Query("api_key") apiKey: String, @Query("type") type: String, @Query("username") username: String, @Query("access_token") access_token: String): Call<BanList>
+    fun getActiveBans(@Query("api_key") apiKey: String, @Query("type") type: String, @Query("username") username: String?, @Query("access_token") access_token: String): Call<BanList>
 
     @GET("register_device.php")
     fun registerDevice(@Query("api_key") apiKey: String, @Query("user_code") user_code: String): Call<AccessToken>

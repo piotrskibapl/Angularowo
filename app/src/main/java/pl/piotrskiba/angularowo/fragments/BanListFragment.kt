@@ -84,7 +84,7 @@ class BanListFragment : Fragment(), BanClickListener, NetworkErrorListener {
         val viewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
 
         viewModel.setNetworkErrorListener(this)
-        viewModel.banList.observe(viewLifecycleOwner, Observer { banList: BanList? ->
+        viewModel.getBanList().observe(viewLifecycleOwner, Observer { banList: BanList? ->
             if (banList != null) {
                 mSwipeRefreshLayout.isRefreshing = false
                 mBanListAdapter?.setBanList(banList)

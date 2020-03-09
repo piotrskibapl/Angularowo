@@ -135,7 +135,7 @@ class OffersFragment : Fragment(), AdOfferClickListener, OfferClickListener, Net
     private fun seekForOffersInfo() {
         val viewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
         viewModel.setNetworkErrorListener(this)
-        viewModel.offersInfo.observe(viewLifecycleOwner, Observer { offersInfo: OffersInfo? ->
+        viewModel.getOffersInfo().observe(viewLifecycleOwner, Observer { offersInfo: OffersInfo? ->
             if (offersInfo != null) {
                 mOffersInfo = offersInfo
                 populateUi()
