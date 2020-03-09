@@ -71,12 +71,16 @@ class BanListAdapter(private val context: Context, private val mClickListener: B
             mojangAPIInterface.getProfile(ban.username).enqueue(object : Callback<MojangProfile?> {
                 override fun onResponse(call: Call<MojangProfile?>, response: Response<MojangProfile?>) {
                     if (holder.adapterPosition == position) {
-                        if (response.isSuccessful && response.body() != null) {
-                            Glide.with(context)
-                                    .load(buildAvatarUrl(response.body()!!.id, true))
-                                    .signature(IntegerVersionSignature(getSignatureVersionNumber(5)))
-                                    .placeholder(R.drawable.default_avatar)
-                                    .into(holder.mPlayerAvatar)
+                        if (response.isSuccessful) {
+                            val mojangProfile = response.body();
+
+                            mojangProfile?.run {
+                                Glide.with(context)
+                                        .load(buildAvatarUrl(mojangProfile.id, true))
+                                        .signature(IntegerVersionSignature(getSignatureVersionNumber(5)))
+                                        .placeholder(R.drawable.default_avatar)
+                                        .into(holder.mPlayerAvatar)
+                            }
                         }
                     }
                 }

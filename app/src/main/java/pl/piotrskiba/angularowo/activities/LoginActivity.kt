@@ -66,12 +66,12 @@ class LoginActivity : AppCompatActivity() {
             val serverAPIInterface = retrofitInstance.create(ServerAPIInterface::class.java)
             serverAPIInterface.registerDevice(ServerAPIClient.API_KEY, pin).enqueue(object : Callback<AccessToken?> {
                 override fun onResponse(call: Call<AccessToken?>, response: Response<AccessToken?>) {
-                    if (response.body() != null) {
-                        val accessToken = response.body()
+                    var accessToken = response.body()
 
+                    if (accessToken != null) {
                         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
                         val editor = sharedPreferences.edit()
-                        editor.putString(getString(R.string.pref_key_nickname), accessToken!!.username)
+                        editor.putString(getString(R.string.pref_key_nickname), accessToken.username)
                         editor.putString(getString(R.string.pref_key_access_token), accessToken.accessToken)
                         editor.commit()
 
@@ -83,7 +83,7 @@ class LoginActivity : AppCompatActivity() {
                         val adapter = gson.getAdapter(AccessToken::class.java)
 
                         try {
-                            val accessToken = adapter.fromJson(response.errorBody()!!.string())
+                            accessToken = adapter.fromJson(response.errorBody()?.string())
 
                             if (accessToken.message == getString(R.string.login_api_response_code_not_found))
                                 Snackbar.make(mCoordinatorLayout, getString(R.string.login_error_code_not_found), Snackbar.LENGTH_LONG).show()
@@ -107,7 +107,7 @@ class LoginActivity : AppCompatActivity() {
         val inputManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
         if (currentFocus != null) {
-            inputManager.hideSoftInputFromWindow(currentFocus!!.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+            inputManager.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
         }
     }
 

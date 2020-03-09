@@ -92,21 +92,23 @@ class PlayerDetailsActivity : AppCompatActivity(), OnRefreshListener {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         val accessToken = sharedPreferences.getString(getString(R.string.pref_key_access_token), null)
 
-        val serverAPIInterface = retrofitInstance.create(ServerAPIInterface::class.java)
-        serverAPIInterface.getPlayerInfo(ServerAPIClient.API_KEY, player.username, accessToken!!).enqueue(object : Callback<DetailedPlayer?> {
-            override fun onResponse(call: Call<DetailedPlayer?>, response: Response<DetailedPlayer?>) {
-                if (response.isSuccessful && response.body() != null) {
-                    val player = response.body() as DetailedPlayer
-                    populatePlayer(player)
+        accessToken?.run {
+            val serverAPIInterface = retrofitInstance.create(ServerAPIInterface::class.java)
+            serverAPIInterface.getPlayerInfo(ServerAPIClient.API_KEY, player.username, accessToken).enqueue(object : Callback<DetailedPlayer?> {
+                override fun onResponse(call: Call<DetailedPlayer?>, response: Response<DetailedPlayer?>) {
+                    if (response.isSuccessful && response.body() != null) {
+                        val detailedPlayer = response.body() as DetailedPlayer
+                        populatePlayer(detailedPlayer)
+                    }
+                    mSwipeRefreshLayout.isRefreshing = false
                 }
-                mSwipeRefreshLayout.isRefreshing = false
-            }
 
-            override fun onFailure(call: Call<DetailedPlayer?>, t: Throwable) {
-                mSwipeRefreshLayout.isRefreshing = false
-                t.printStackTrace()
-            }
-        })
+                override fun onFailure(call: Call<DetailedPlayer?>, t: Throwable) {
+                    mSwipeRefreshLayout.isRefreshing = false
+                    t.printStackTrace()
+                }
+            })
+        }
     }
 
     private fun populatePlayer(player: Player) {

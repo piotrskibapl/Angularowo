@@ -87,7 +87,7 @@ class BanListFragment : Fragment(), BanClickListener, NetworkErrorListener {
         viewModel.banList.observe(viewLifecycleOwner, Observer { banList: BanList? ->
             if (banList != null) {
                 mSwipeRefreshLayout.isRefreshing = false
-                mBanListAdapter!!.setBanList(banList)
+                mBanListAdapter?.setBanList(banList)
                 showDefaultLayout()
             }
         })

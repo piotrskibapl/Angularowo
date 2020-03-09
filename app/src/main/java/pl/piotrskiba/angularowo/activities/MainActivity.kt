@@ -271,26 +271,28 @@ class MainActivity : AppCompatActivity(), UnauthorizedResponseListener, Rewarded
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
         val accessToken = sharedPreferences.getString(getString(R.string.pref_key_access_token), null)
-
         val context: Context = this
-        val serverAPIInterface = retrofitInstance.create(ServerAPIInterface::class.java)
-        serverAPIInterface.redeemAdOffer(ServerAPIClient.API_KEY, rewardItem.type, accessToken!!).enqueue(object : Callback<Void?> {
-            override fun onResponse(call: Call<Void?>, response: Response<Void?>) {
-                if (!isFinishing) {
-                    AlertDialog.Builder(context)
-                            .setTitle(R.string.ad_offer_redeemed)
-                            .setMessage(R.string.ad_offer_redeemed_description)
-                            .setPositiveButton(R.string.button_dismiss, null)
-                            .show()
 
-                    offersFragment.refreshData()
+        accessToken?.run {
+            val serverAPIInterface = retrofitInstance.create(ServerAPIInterface::class.java)
+            serverAPIInterface.redeemAdOffer(ServerAPIClient.API_KEY, rewardItem.type, accessToken).enqueue(object : Callback<Void?> {
+                override fun onResponse(call: Call<Void?>, response: Response<Void?>) {
+                    if (!isFinishing) {
+                        AlertDialog.Builder(context)
+                                .setTitle(R.string.ad_offer_redeemed)
+                                .setMessage(R.string.ad_offer_redeemed_description)
+                                .setPositiveButton(R.string.button_dismiss, null)
+                                .show()
+
+                        offersFragment.refreshData()
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<Void?>, t: Throwable) {
-                t.printStackTrace()
-            }
-        })
+                override fun onFailure(call: Call<Void?>, t: Throwable) {
+                    t.printStackTrace()
+                }
+            })
+        }
     }
 
     override fun onRewardedVideoAdLeftApplication() {}
