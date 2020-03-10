@@ -17,6 +17,9 @@ import pl.piotrskiba.angularowo.activities.MainActivity
 
 class NotificationUtils(private val context: Context) {
 
+    /**
+     * creates all the notification channels for the app
+     */
     fun createNotificationChannels() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createNotificationChannel()
@@ -24,6 +27,9 @@ class NotificationUtils(private val context: Context) {
         }
     }
 
+    /**
+     * creates the default (not silent) notification channel
+     */
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name: CharSequence = context.getString(R.string.notification_channel_name)
@@ -47,6 +53,9 @@ class NotificationUtils(private val context: Context) {
         }
     }
 
+    /**
+     * creates the silent notification channel
+     */
     private fun createSilentNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name: CharSequence = context.getString(R.string.notification_channel_name_silent)
@@ -64,15 +73,26 @@ class NotificationUtils(private val context: Context) {
         }
     }
 
-    fun showNotification(raw_title: String, raw_body: String, sound: Boolean) {
+    /**
+     * A function used to display the notification to the user
+     *
+     * The function replaces all username qualifiers in the raw message and body with the
+     * actual user nickname. It also creates an PendingIntent to open the app when clicked and
+     * displays the notification.
+     *
+     * @param rawTitle notification title
+     * @param rawBody notification body
+     * @param sound a boolean whether the notification should be sent with a notification sound or not
+     */
+    fun showNotification(rawTitle: String, rawBody: String, sound: Boolean) {
         val intent = Intent(context, MainActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
 
         val notificationManager = NotificationManagerCompat.from(context)
 
-        var title = raw_title
-        var body = raw_body
-        if (raw_title.contains(Constants.NOTIFICATION_USERNAME_QUALIFIER) || raw_body.contains(Constants.NOTIFICATION_USERNAME_QUALIFIER)) {
+        var title = rawTitle
+        var body = rawBody
+        if (rawTitle.contains(Constants.NOTIFICATION_USERNAME_QUALIFIER) || rawBody.contains(Constants.NOTIFICATION_USERNAME_QUALIFIER)) {
             val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
             val username = sharedPreferences.getString(context.getString(R.string.pref_key_nickname), null)

@@ -8,6 +8,9 @@ import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.models.Rank
 
 object RankUtils {
+    /**
+     * a list of all ranks available in the app
+     */
     @JvmStatic
     val allRanks: List<Rank>
         get() {
@@ -17,6 +20,12 @@ object RankUtils {
             return gson.fromJson(json, object : TypeToken<List<Rank?>?>() {}.type)
         }
 
+    /**
+     * A function for getting the rank of user from the preferences
+     *
+     * @param context
+     * @return the rank of user or null if not found
+     */
     @JvmStatic
     fun getRankFromPreferences(context: Context): Rank? {
         val rankName = PreferenceUtils.getRankName(context)
@@ -28,6 +37,12 @@ object RankUtils {
         }
     }
 
+    /**
+     * Function for getting the rank corresponding to the specified rank name
+     *
+     * @param name the name of the rank to obtain
+     * @return the corresponding rank
+     */
     @JvmStatic
     fun getRankFromName(name: String): Rank {
         val ranks = allRanks
