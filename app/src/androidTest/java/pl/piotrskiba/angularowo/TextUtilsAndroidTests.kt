@@ -8,7 +8,7 @@ import org.junit.Test
 import pl.piotrskiba.angularowo.utils.TextUtils
 
 class TextUtilsAndroidTests {
-    lateinit var instrumentationContext: Context
+    private lateinit var instrumentationContext: Context
 
     @Before
     fun setup() {

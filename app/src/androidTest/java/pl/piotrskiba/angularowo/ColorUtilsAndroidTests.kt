@@ -9,7 +9,7 @@ import org.junit.Test
 import pl.piotrskiba.angularowo.utils.ColorUtils
 
 class ColorUtilsAndroidTests {
-    lateinit var instrumentationContext: Context
+    private lateinit var instrumentationContext: Context
 
     @Before
     fun setup() {
