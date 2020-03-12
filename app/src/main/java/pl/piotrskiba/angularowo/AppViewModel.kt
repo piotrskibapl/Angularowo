@@ -22,6 +22,8 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     private var banList: MutableLiveData<BanList?>? = null
     private var playerList: MutableLiveData<PlayerList?>? = null
     private var offersInfo: MutableLiveData<OffersInfo?>? = null
+    private var userReports: MutableLiveData<ReportList?>? = null
+    private var allReports: MutableLiveData<ReportList?>? = null
 
     private var mNetworkErrorListener: NetworkErrorListener? = null
 
@@ -237,6 +239,78 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
 
             override fun onFailure(call: Call<OffersInfo?>, t: Throwable) {
                 offersInfo?.value = null
+                mNetworkErrorListener?.onNoInternet()
+                t.printStackTrace()
+            }
+        })
+    }
+
+    fun getUserReports(): LiveData<ReportList?> {
+        if (userReports == null) {
+            userReports = MutableLiveData()
+            loadUserReports()
+        } else if (userReports!!.value == null) {
+            refreshUserReports()
+        }
+        return userReports!!
+    }
+
+    fun refreshUserReports() {
+        loadUserReports()
+    }
+
+    private fun loadUserReports() {
+        val accessToken = getAccessToken(getApplication())
+
+        val serverAPIInterface = retrofitInstance.create(ServerAPIInterface::class.java)
+        serverAPIInterface.getUserReports(ServerAPIClient.API_KEY, accessToken!!).enqueue(object : Callback<ReportList?> {
+            override fun onResponse(call: Call<ReportList?>, response: Response<ReportList?>) {
+                if (response.isSuccessful && response.body() != null) {
+                    userReports?.value = response.body()
+                } else {
+                    userReports?.value = null
+                    mNetworkErrorListener?.onServerError()
+                }
+            }
+
+            override fun onFailure(call: Call<ReportList?>, t: Throwable) {
+                userReports?.value = null
+                mNetworkErrorListener?.onNoInternet()
+                t.printStackTrace()
+            }
+        })
+    }
+
+    fun getAllReports(): LiveData<ReportList?> {
+        if (allReports == null) {
+            allReports = MutableLiveData()
+            loadAllReports()
+        } else if (allReports!!.value == null) {
+            refreshAllReports()
+        }
+        return allReports!!
+    }
+
+    fun refreshAllReports() {
+        loadAllReports()
+    }
+
+    private fun loadAllReports() {
+        val accessToken = getAccessToken(getApplication())
+
+        val serverAPIInterface = retrofitInstance.create(ServerAPIInterface::class.java)
+        serverAPIInterface.getAllReports(ServerAPIClient.API_KEY, false, accessToken!!).enqueue(object : Callback<ReportList?> {
+            override fun onResponse(call: Call<ReportList?>, response: Response<ReportList?>) {
+                if (response.isSuccessful && response.body() != null) {
+                    allReports?.value = response.body()
+                } else {
+                    allReports?.value = null
+                    mNetworkErrorListener?.onServerError()
+                }
+            }
+
+            override fun onFailure(call: Call<ReportList?>, t: Throwable) {
+                allReports?.value = null
                 mNetworkErrorListener?.onNoInternet()
                 t.printStackTrace()
             }

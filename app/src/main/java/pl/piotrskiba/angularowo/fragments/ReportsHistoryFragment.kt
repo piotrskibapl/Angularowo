@@ -11,29 +11,26 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
-import androidx.preference.PreferenceManager
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import butterknife.BindView
 import butterknife.ButterKnife
+import pl.piotrskiba.angularowo.AppViewModel
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.SpacesItemDecoration
 import pl.piotrskiba.angularowo.activities.ReportDetailsActivity
 import pl.piotrskiba.angularowo.adapters.ReportListAdapter
+import pl.piotrskiba.angularowo.interfaces.NetworkErrorListener
 import pl.piotrskiba.angularowo.interfaces.ReportClickListener
 import pl.piotrskiba.angularowo.models.Report
 import pl.piotrskiba.angularowo.models.ReportList
-import pl.piotrskiba.angularowo.network.ServerAPIClient
-import pl.piotrskiba.angularowo.network.ServerAPIClient.retrofitInstance
-import pl.piotrskiba.angularowo.network.ServerAPIInterface
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
-class ReportsHistoryFragment(private val admin: Boolean) : Fragment(), ReportClickListener {
+class ReportsHistoryFragment(private val admin: Boolean) : Fragment(), ReportClickListener, NetworkErrorListener {
 
     @BindView(R.id.rv_reports)
     lateinit var mReportList: RecyclerView
@@ -50,13 +47,15 @@ class ReportsHistoryFragment(private val admin: Boolean) : Fragment(), ReportCli
     @BindView(R.id.tv_no_reports)
     lateinit var mNoReportsTextView: TextView
 
+    private lateinit var mReportListAdapter: ReportListAdapter
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_reports_history, container, false)
 
         ButterKnife.bind(this, view)
 
-        val adapter = ReportListAdapter(context!!, this)
-        mReportList.adapter = adapter
+        mReportListAdapter = ReportListAdapter(context!!, this)
+        mReportList.adapter = mReportListAdapter
 
         val layoutManager: RecyclerView.LayoutManager
         val displayMode = resources.configuration.orientation
@@ -71,9 +70,10 @@ class ReportsHistoryFragment(private val admin: Boolean) : Fragment(), ReportCli
 
         mReportList.setHasFixedSize(true)
 
-        loadReportList(adapter)
+        mSwipeRefreshLayout.isRefreshing = true
+        seekForReportList()
 
-        mSwipeRefreshLayout.setOnRefreshListener { loadReportList(adapter) }
+        mSwipeRefreshLayout.setOnRefreshListener { refreshReportList() }
 
         val actionbar = (activity as AppCompatActivity?)?.supportActionBar
         actionbar?.setTitle(R.string.actionbar_title_report_list)
@@ -81,62 +81,47 @@ class ReportsHistoryFragment(private val admin: Boolean) : Fragment(), ReportCli
         return view
     }
 
-    private fun loadReportList(adapter: ReportListAdapter) {
-        mSwipeRefreshLayout.isRefreshing = true
+    private fun seekForReportList() {
+        val viewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
+        viewModel.setNetworkErrorListener(this)
 
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val accessToken = sharedPreferences.getString(getString(R.string.pref_key_access_token), null)
+        if(admin) {
+            viewModel.getAllReports().observe(viewLifecycleOwner, Observer { reportList: ReportList? ->
+                if (reportList != null) {
+                    mSwipeRefreshLayout.isRefreshing = false
+                    mReportListAdapter.setReportList(reportList)
 
-        val serverAPIInterface = retrofitInstance.create(ServerAPIInterface::class.java)
-        if (admin) {
-            serverAPIInterface.getAllReports(ServerAPIClient.API_KEY, false, accessToken!!).enqueue(object : Callback<ReportList?> {
-                override fun onResponse(call: Call<ReportList?>, response: Response<ReportList?>) {
-                    if (isAdded) {
-                        if (response.isSuccessful && response.body() != null) {
-                            if (response.body()!!.reportList.isNotEmpty()) {
-                                adapter.setReportList(response.body()!!)
-                                showDefaultLayout()
-                            } else {
-                                showNoReportsLayout()
-                            }
-                        } else if (!response.isSuccessful) {
-                            showServerErrorLayout()
-                        }
-                    }
-                }
-
-                override fun onFailure(call: Call<ReportList?>, t: Throwable) {
-                    if (isAdded)
-                        showNoInternetLayout()
-
-                    t.printStackTrace()
-                }
-            })
-        } else {
-            serverAPIInterface.getUserReports(ServerAPIClient.API_KEY, accessToken!!).enqueue(object : Callback<ReportList?> {
-                override fun onResponse(call: Call<ReportList?>, response: Response<ReportList?>) {
-                    if (isAdded) {
-                        if (response.isSuccessful && response.body() != null) {
-                            if (response.body()!!.reportList.isNotEmpty()) {
-                                adapter.setReportList(response.body()!!)
-                                showDefaultLayout()
-                            } else {
-                                showNoReportsLayout()
-                            }
-                        } else if (!response.isSuccessful) {
-                            showServerErrorLayout()
-                        }
-                    }
-                }
-
-                override fun onFailure(call: Call<ReportList?>, t: Throwable) {
-                    if (isAdded)
-                        showNoInternetLayout()
-
-                    t.printStackTrace()
+                    if (reportList.reportList.isEmpty())
+                        showNoReportsLayout()
+                    else
+                        showDefaultLayout()
                 }
             })
         }
+        else {
+            viewModel.getUserReports().observe(viewLifecycleOwner, Observer { reportList: ReportList? ->
+                if (reportList != null) {
+                    mSwipeRefreshLayout.isRefreshing = false
+                    mReportListAdapter.setReportList(reportList)
+
+                    if (reportList.reportList.isEmpty())
+                        showNoReportsLayout()
+                    else
+                        showDefaultLayout()
+                }
+            })
+        }
+    }
+
+    private fun refreshReportList() {
+        mSwipeRefreshLayout.isRefreshing = true
+
+        val viewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
+
+        if(admin)
+            viewModel.refreshAllReports()
+        else
+            viewModel.refreshUserReports()
     }
 
     private fun showDefaultLayout() {
@@ -188,4 +173,11 @@ class ReportsHistoryFragment(private val admin: Boolean) : Fragment(), ReportCli
         }
     }
 
+    override fun onNoInternet() {
+        showNoInternetLayout()
+    }
+
+    override fun onServerError() {
+        showServerErrorLayout()
+    }
 }
