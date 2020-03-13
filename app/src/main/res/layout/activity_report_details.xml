@@ -22,7 +22,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/section_margin"
         android:textSize="@dimen/title_text_size"
-        android:textAlignment="center"/>
+        android:textAlignment="center"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:layout_width="match_parent"
@@ -30,13 +31,15 @@
         android:layout_marginTop="@dimen/section_margin"
         android:text="@string/report_details_reason"
         android:textSize="@dimen/label_text_size"
-        android:textAlignment="center"/>
+        android:textAlignment="center"
+        android:gravity="center_horizontal" />
     <TextView
         android:id="@+id/tv_reason"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/content_text_size"
-        android:textAlignment="center"/>
+        android:textAlignment="center"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:layout_width="match_parent"
@@ -44,7 +47,8 @@
         android:layout_marginTop="@dimen/section_margin"
         android:text="@string/report_details_reporter"
         android:textSize="@dimen/label_text_size"
-        android:textAlignment="center"/>
+        android:textAlignment="center"
+        android:gravity="center_horizontal" />
     <TextView
         android:id="@+id/tv_reporter"
         android:layout_width="match_parent"
@@ -52,7 +56,8 @@
         android:paddingStart="@dimen/padding_default"
         android:paddingEnd="@dimen/padding_default"
         android:textSize="@dimen/content_text_size"
-        android:textAlignment="center"/>
+        android:textAlignment="center"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:layout_width="match_parent"
@@ -60,7 +65,8 @@
         android:layout_marginTop="@dimen/section_margin"
         android:text="@string/report_details_date"
         android:textSize="@dimen/label_text_size"
-        android:textAlignment="center"/>
+        android:textAlignment="center"
+        android:gravity="center_horizontal" />
     <TextView
         android:id="@+id/tv_date"
         android:layout_width="match_parent"
@@ -68,5 +74,6 @@
         android:paddingStart="@dimen/padding_default"
         android:paddingEnd="@dimen/padding_default"
         android:textSize="@dimen/content_text_size"
-        android:textAlignment="center"/>
+        android:textAlignment="center"
+        android:gravity="center_horizontal" />
 </LinearLayout>

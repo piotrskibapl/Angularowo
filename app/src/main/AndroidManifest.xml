@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".activities.ApplicationLockedActivity"></activity>
+        <activity android:name=".activities.ApplicationLockedActivity" />
         <activity android:name=".activities.ReportDetailsActivity" />
 
         <meta-data

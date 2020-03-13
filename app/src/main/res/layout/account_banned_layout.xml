@@ -19,5 +19,6 @@
         android:paddingStart="@dimen/padding_default"
         android:paddingEnd="@dimen/padding_default"
         android:text="@string/account_banned"
-        android:textAlignment="center"/>
+        android:textAlignment="center"
+        android:gravity="center_horizontal" />
 </LinearLayout>
