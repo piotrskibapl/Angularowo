@@ -62,7 +62,8 @@
                             app:layout_constraintWidth_percent="0.5"
                             app:layout_constraintTop_toBottomOf="@+id/tv_playercount"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toStartOf="@id/tv_tokens_title"/>
+                            app:layout_constraintEnd_toStartOf="@id/tv_tokens_title"
+                            android:gravity="center_horizontal" />
                         <TextView
                             android:id="@+id/tv_balance"
                             android:layout_width="wrap_content"
@@ -85,7 +86,8 @@
                             app:layout_constraintWidth_percent="0.5"
                             app:layout_constraintTop_toBottomOf="@+id/tv_playercount"
                             app:layout_constraintStart_toEndOf="@id/tv_balance_title"
-                            app:layout_constraintEnd_toEndOf="parent"/>
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:gravity="center_horizontal" />
                         <TextView
                             android:id="@+id/tv_tokens"
                             android:layout_width="wrap_content"
@@ -106,7 +108,8 @@
                             android:textSize="@dimen/label_text_size"
                             app:layout_constraintTop_toBottomOf="@id/tv_tokens"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"/>
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:gravity="center_horizontal" />
                         <TextView
                             android:id="@+id/tv_playtime"
                             android:layout_width="wrap_content"
@@ -118,7 +121,8 @@
                             android:textAlignment="center"
                             app:layout_constraintTop_toBottomOf="@id/tv_playtime_title"
                             app:layout_constraintStart_toStartOf="@id/tv_playtime_title"
-                            app:layout_constraintEnd_toEndOf="@id/tv_playtime_title"/>
+                            app:layout_constraintEnd_toEndOf="@id/tv_playtime_title"
+                            android:gravity="center_horizontal" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
 

@@ -35,14 +35,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:textSize="@dimen/username_text_size" />
+            android:textSize="@dimen/username_text_size"
+            android:gravity="center_horizontal" />
 
         <TextView
             android:id="@+id/tv_ban_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:textSize="@dimen/rank_text_size" />
+            android:textSize="@dimen/rank_text_size"
+            android:gravity="center_horizontal" />
     </LinearLayout>
 
     <ImageView
