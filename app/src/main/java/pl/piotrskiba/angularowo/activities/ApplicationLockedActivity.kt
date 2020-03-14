@@ -48,7 +48,7 @@ class ApplicationLockedActivity : AppCompatActivity() {
     override fun onBackPressed() {
         // allow admins only to close this activity
         val rank = getRankFromPreferences(this)
-        if (rank != null && rank.isStaff) {
+        if (rank != null && rank.staff) {
             super.onBackPressed()
         }
     }

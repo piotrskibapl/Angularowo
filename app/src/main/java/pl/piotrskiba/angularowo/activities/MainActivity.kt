@@ -168,7 +168,7 @@ class MainActivity : AppCompatActivity(), UnauthorizedResponseListener, Rewarded
 
         if (reportsHistoryFragment == null) {
             val rank = getRankFromPreferences(this)
-            reportsHistoryFragment = if (rank != null && rank.isStaff) {
+            reportsHistoryFragment = if (rank != null && rank.staff) {
                 ReportsHistoryFragmentContainerFragment()
             } else {
                 ReportsHistoryFragment(false)

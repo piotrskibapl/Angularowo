@@ -116,7 +116,7 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
                 showDefaultLayoutIfLoadedAllData()
 
                 val rank = getRankFromPreferences(context!!)
-                if (rank != null && rank.isStaff) {
+                if (rank != null && rank.staff) {
                     val tps = formatTps(serverStatus.tps)
                     mPlayerCountTextView.text = resources.getQuantityString(R.plurals.playercount_tps, serverStatus.playerCount, serverStatus.playerCount, tps)
                 } else {
@@ -264,7 +264,7 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
 
     private fun checkFirebaseNewReportsTopicSubscription(rank: Rank?) {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        if (rank != null && rank.isStaff) {
+        if (rank != null && rank.staff) {
             if (!sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_new_reports))) {
                 FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_NEW_REPORTS_TOPIC)
                         .addOnCompleteListener {

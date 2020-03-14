@@ -20,7 +20,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val rankName = sharedPreferences.getString(getString(R.string.pref_key_rank), null)
         val rank = getRankFromName(rankName!!)
 
-        if (rank.isStaff) {
+        if (rank.staff) {
             addPreferencesFromResource(R.xml.pref_settings_admin)
         } else {
             addPreferencesFromResource(R.xml.pref_settings)
