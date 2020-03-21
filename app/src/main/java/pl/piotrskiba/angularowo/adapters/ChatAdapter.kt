@@ -81,7 +81,6 @@ class ChatAdapter(private val context: Context, private val mClickListener: Chat
     }
 
     fun addMessage(message: ChatMessage) {
-        mMessageList.clear()
         mMessageList.add(message)
         notifyDataSetChanged()
     }
