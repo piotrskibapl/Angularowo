@@ -38,9 +38,15 @@ class AdOffersAdapter(private val context: Context, private val mClickListener: 
 
             holder.mTime.text = formatApproximateTimeLeft(adOffer.timeleft)
             holder.mTime.visibility = View.VISIBLE
-        } else {
+        } else if (adOffer.timeleft == 0){
             holder.mCoins.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_coin, 0, 0, 0)
             holder.mCoins.setTextColor(ContextCompat.getColor(context, R.color.color_coin))
+
+            holder.mTime.visibility = View.GONE
+        }
+        else {
+            holder.mCoins.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_coin_disabled, 0, 0, 0)
+            holder.mCoins.setTextColor(ContextCompat.getColor(context, R.color.color_coin_disabled))
 
             holder.mTime.visibility = View.GONE
         }

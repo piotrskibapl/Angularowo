@@ -42,6 +42,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"/>
+                <TextView
+                    android:id="@+id/tv_limit_reached"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/coin_limit_reached"
+                    android:textColor="@color/color_minecraft_c"
+                    android:textSize="@dimen/label_text_size" />
 
                 <TextView
                     android:layout_width="wrap_content"

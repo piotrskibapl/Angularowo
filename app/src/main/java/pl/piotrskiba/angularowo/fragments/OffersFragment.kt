@@ -53,6 +53,9 @@ class OffersFragment : Fragment(), AdOfferClickListener, OfferClickListener, Net
     @BindView(R.id.rv_ad_offers)
     lateinit var mAdOffersRecyclerView: RecyclerView
 
+    @BindView(R.id.tv_limit_reached)
+    lateinit var mOfferLimitReachedTextView: TextView
+
     @BindView(R.id.rv_offers)
     lateinit var mOffersRecyclerView: RecyclerView
 
@@ -154,6 +157,20 @@ class OffersFragment : Fragment(), AdOfferClickListener, OfferClickListener, Net
         mCoinsTextView.text = mOffersInfo.points.toString()
         mAdOffersAdapter.setAdOfferList(mOffersInfo.adOffers)
         mOffersAdapter.setOfferList(mOffersInfo.offers, mOffersInfo.points)
+
+        var limitReached = true
+        for (adOffer in mOffersInfo.adOffers) {
+            if (adOffer.timeleft != -1) {
+                limitReached = false
+                break
+            }
+        }
+        if (limitReached) {
+            mOfferLimitReachedTextView.visibility = View.VISIBLE
+        }
+        else {
+            mOfferLimitReachedTextView.visibility = View.GONE
+        }
     }
 
     private fun loadRewardedVideoAd(adId: String) {

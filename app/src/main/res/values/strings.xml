@@ -101,6 +101,7 @@
     <string name="button_dismiss">Zamknij</string>
     <string name="earn_more_coins">Zdobądź więcej monet</string>
     <string name="exchange_coins_to_prizes">Wymień monety na nagrody</string>
+    <string name="coin_limit_reached">Nie możesz zdobyć więcej monet!</string>
 
     <!-- fragment_chat.xml -->
     <string name="actionbar_title_chat">Podgląd chatu</string>
