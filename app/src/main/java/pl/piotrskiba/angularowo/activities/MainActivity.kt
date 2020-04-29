@@ -171,7 +171,7 @@ class MainActivity : AppCompatActivity(), UnauthorizedResponseListener, Rewarded
             reportsHistoryFragment = if (rank != null && rank.staff) {
                 ReportsHistoryFragmentContainerFragment()
             } else {
-                ReportsHistoryFragment(false)
+                ReportsHistoryFragment.newInstance(false)
             }
         }
     }

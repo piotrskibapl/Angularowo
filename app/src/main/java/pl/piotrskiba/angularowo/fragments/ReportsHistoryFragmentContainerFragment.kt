@@ -32,8 +32,8 @@ class ReportsHistoryFragmentContainerFragment : Fragment() {
         actionbar?.setTitle(R.string.actionbar_title_report_list)
 
         val adapter = ViewPagerFragmentAdapter(childFragmentManager, lifecycle)
-        adapter.addFragment(ReportsHistoryFragment(false))
-        adapter.addFragment(ReportsHistoryFragment(true))
+        adapter.addFragment(ReportsHistoryFragment.newInstance(false))
+        adapter.addFragment(ReportsHistoryFragment.newInstance(true))
         mViewPager.adapter = adapter
 
         mViewPager.isUserInputEnabled = false

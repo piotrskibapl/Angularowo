@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -30,7 +31,7 @@ import pl.piotrskiba.angularowo.interfaces.ReportClickListener
 import pl.piotrskiba.angularowo.models.Report
 import pl.piotrskiba.angularowo.models.ReportList
 
-class ReportsHistoryFragment(private val admin: Boolean) : Fragment(), ReportClickListener, NetworkErrorListener {
+class ReportsHistoryFragment() : Fragment(), ReportClickListener, NetworkErrorListener {
 
     @BindView(R.id.rv_reports)
     lateinit var mReportList: RecyclerView
@@ -48,6 +49,21 @@ class ReportsHistoryFragment(private val admin: Boolean) : Fragment(), ReportCli
     lateinit var mNoReportsTextView: TextView
 
     private lateinit var mReportListAdapter: ReportListAdapter
+    private var admin: Boolean = false
+
+    companion object {
+        private const val ARGUMENT_ADMIN = "admin"
+
+        fun newInstance(admin: Boolean): ReportsHistoryFragment = ReportsHistoryFragment().apply {
+            arguments = bundleOf(ARGUMENT_ADMIN to admin)
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        admin = requireArguments().getBoolean(ARGUMENT_ADMIN)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_reports_history, container, false)
