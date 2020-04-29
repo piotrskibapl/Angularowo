@@ -70,7 +70,7 @@ class ReportsHistoryFragment() : Fragment(), ReportClickListener, NetworkErrorLi
 
         ButterKnife.bind(this, view)
 
-        mReportListAdapter = ReportListAdapter(context!!, this)
+        mReportListAdapter = ReportListAdapter(requireContext(), this)
         mReportList.adapter = mReportListAdapter
 
         val layoutManager: RecyclerView.LayoutManager
@@ -182,7 +182,7 @@ class ReportsHistoryFragment() : Fragment(), ReportClickListener, NetworkErrorLi
         intent.putExtra(Constants.EXTRA_REPORT, clickedReport)
 
         if (activity != null) {
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!, view, getString(R.string.report_banner_transition_name))
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), view, getString(R.string.report_banner_transition_name))
             startActivity(intent, options.toBundle())
         } else {
             startActivity(intent)

@@ -61,7 +61,7 @@ class ChatFragment : Fragment(), ChatMessageClickListener {
 
         ButterKnife.bind(this, view)
 
-        mChatAdapter = ChatAdapter(context!!, this)
+        mChatAdapter = ChatAdapter(requireContext(), this)
         mChat.adapter = mChatAdapter
 
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(context)

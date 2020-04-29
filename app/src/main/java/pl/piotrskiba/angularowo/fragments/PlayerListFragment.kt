@@ -53,7 +53,7 @@ class PlayerListFragment : Fragment(), PlayerClickListener, NetworkErrorListener
 
         ButterKnife.bind(this, view)
 
-        mPlayerListAdapter = PlayerListAdapter(context!!, this)
+        mPlayerListAdapter = PlayerListAdapter(requireContext(), this)
         mPlayerList.adapter = mPlayerListAdapter
 
         val layoutManager: RecyclerView.LayoutManager
@@ -105,7 +105,7 @@ class PlayerListFragment : Fragment(), PlayerClickListener, NetworkErrorListener
         val intent = Intent(context, PlayerDetailsActivity::class.java)
         intent.putExtra(Constants.EXTRA_PLAYER, clickedPlayer)
         if (activity != null) {
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!, view, getString(R.string.player_banner_transition_name))
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), view, getString(R.string.player_banner_transition_name))
             startActivity(intent, options.toBundle())
         } else {
             startActivity(intent)

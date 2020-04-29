@@ -92,7 +92,7 @@ class OffersFragment : Fragment(), AdOfferClickListener, OfferClickListener, Net
     }
 
     private fun setupAdOffersRecyclerView() {
-        mAdOffersAdapter = AdOffersAdapter(context!!, this)
+        mAdOffersAdapter = AdOffersAdapter(requireContext(), this)
         mAdOffersRecyclerView.adapter = mAdOffersAdapter
 
         val adOffersLayoutManager = GridLayoutManager(context, 4)
@@ -103,7 +103,7 @@ class OffersFragment : Fragment(), AdOfferClickListener, OfferClickListener, Net
     }
 
     private fun setupOffersRecyclerView() {
-        mOffersAdapter = OffersAdapter(context!!, this)
+        mOffersAdapter = OffersAdapter(requireContext(), this)
         mOffersRecyclerView.adapter = mOffersAdapter
 
         val offersLayoutManager = GridLayoutManager(context, 3)
@@ -115,7 +115,7 @@ class OffersFragment : Fragment(), AdOfferClickListener, OfferClickListener, Net
 
     override fun onAdOfferClick(view: View, clickedAdOffer: AdOffer) {
         if (context != null && !mSwipeRefreshLayout.isRefreshing && clickedAdOffer.timeleft == 0) {
-            AlertDialog.Builder(context!!)
+            AlertDialog.Builder(requireContext())
                     .setTitle(R.string.ad_question)
                     .setMessage(R.string.ad_question_description)
                     .setPositiveButton(R.string.button_yes) { _: DialogInterface?, _: Int -> loadRewardedVideoAd(clickedAdOffer.adId) }
@@ -126,7 +126,7 @@ class OffersFragment : Fragment(), AdOfferClickListener, OfferClickListener, Net
 
     override fun onOfferClick(view: View, clickedOffer: Offer) {
         if (context != null && !mSwipeRefreshLayout.isRefreshing && clickedOffer.timeleft == 0 && clickedOffer.price <= mOffersInfo.points) {
-            AlertDialog.Builder(context!!)
+            AlertDialog.Builder(requireContext())
                     .setTitle(R.string.offer_question)
                     .setMessage(resources.getQuantityString(R.plurals.offer_question_description, clickedOffer.price, clickedOffer.title, clickedOffer.price))
                     .setPositiveButton(R.string.button_yes) { _: DialogInterface?, _: Int -> redeemOffer(clickedOffer) }

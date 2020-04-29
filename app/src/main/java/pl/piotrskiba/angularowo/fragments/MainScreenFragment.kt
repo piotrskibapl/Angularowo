@@ -86,7 +86,7 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
 
         ButterKnife.bind(this, view)
 
-        mBanListAdapter = BanListAdapter(context!!, this)
+        mBanListAdapter = BanListAdapter(requireContext(), this)
         mBanList.adapter = mBanListAdapter
 
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(context)
@@ -115,7 +115,7 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
                 loadedServerStatus = true
                 showDefaultLayoutIfLoadedAllData()
 
-                val rank = getRankFromPreferences(context!!)
+                val rank = getRankFromPreferences(requireContext())
                 if (rank != null && rank.staff) {
                     val tps = formatTps(serverStatus.tps)
                     mPlayerCountTextView.text = resources.getQuantityString(R.plurals.playercount_tps, serverStatus.playerCount, serverStatus.playerCount, tps)
@@ -134,7 +134,7 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
                 showDefaultLayoutIfLoadedAllData()
 
                 if (player.uuid != null && context != null) {
-                    Glide.with(context!!)
+                    Glide.with(requireContext())
                             .load(buildBodyUrl(player.uuid, true))
                             .signature(IntegerVersionSignature(getSignatureVersionNumber(1)))
                             .placeholder(R.drawable.default_body)
@@ -143,7 +143,7 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
 
                 mPlayerBalanceTextView.text = getString(R.string.balance_format, player.balance.toInt())
                 mPlayerTokensTextView.text = player.tokens.toString()
-                mPlayerPlayTimeTextView.text = formatPlaytime(context!!, player.playtime)
+                mPlayerPlayTimeTextView.text = formatPlaytime(requireContext(), player.playtime)
 
                 subscribeToFirebaseRankTopic(player.getRank())
                 checkFirebaseNewReportsTopicSubscription(player.getRank())
@@ -188,7 +188,7 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
 
     override fun onResume() {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val username = getUsername(context!!)
+        val username = getUsername(requireContext())
         if (username != null) {
             // subscribe to current app version Firebase topic
             if (!sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_app_version_topic, BuildConfig.VERSION_CODE))) {
@@ -238,7 +238,7 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
     private fun populateUi() {
         showDefaultLayout()
 
-        val username = getUsername(context!!)
+        val username = getUsername(requireContext())
         mGreetingTextView.text = getString(R.string.greeting, username)
 
         val actionbar = (activity as AppCompatActivity?)?.supportActionBar
@@ -273,7 +273,7 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
                                 editor.putBoolean(getString(R.string.pref_key_subscribed_to_new_reports), true)
                                 editor.apply()
                             } else if (activity != null) {
-                                val sharedPreferences1 = PreferenceManager.getDefaultSharedPreferences(activity!!.applicationContext)
+                                val sharedPreferences1 = PreferenceManager.getDefaultSharedPreferences(requireActivity().applicationContext)
                                 val editor = sharedPreferences1.edit()
                                 editor.putBoolean(getString(R.string.pref_key_subscribed_to_new_reports), true)
                                 editor.apply()
@@ -289,7 +289,7 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
                                 editor.remove(getString(R.string.pref_key_subscribed_to_new_reports))
                                 editor.apply()
                             } else if (activity != null) {
-                                val sharedPreferences1 = PreferenceManager.getDefaultSharedPreferences(activity!!.applicationContext)
+                                val sharedPreferences1 = PreferenceManager.getDefaultSharedPreferences(requireActivity().applicationContext)
                                 val editor = sharedPreferences1.edit()
                                 editor.remove(getString(R.string.pref_key_subscribed_to_new_reports))
                                 editor.apply()
@@ -341,7 +341,7 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
         }
 
         if (activity != null) {
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!, view, getString(R.string.ban_banner_transition_name))
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), view, getString(R.string.ban_banner_transition_name))
             startActivity(intent, options.toBundle())
         } else {
             startActivity(intent)

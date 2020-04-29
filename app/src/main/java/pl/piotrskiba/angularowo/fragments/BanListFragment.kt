@@ -52,7 +52,7 @@ class BanListFragment : Fragment(), BanClickListener, NetworkErrorListener {
 
         ButterKnife.bind(this, view)
 
-        mBanListAdapter = BanListAdapter(context!!, this)
+        mBanListAdapter = BanListAdapter(requireContext(), this)
 
         val layoutManager: RecyclerView.LayoutManager
 
@@ -112,7 +112,7 @@ class BanListFragment : Fragment(), BanClickListener, NetworkErrorListener {
         }
 
         if (activity != null) {
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!, view, getString(R.string.ban_banner_transition_name))
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), view, getString(R.string.ban_banner_transition_name))
             startActivity(intent, options.toBundle())
         } else {
             startActivity(intent)

@@ -30,7 +30,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
         if (preference.key == getString(R.string.pref_key_logout)) {
             if (context != null) {
-                AlertDialog.Builder(context!!)
+                AlertDialog.Builder(requireContext())
                         .setTitle(R.string.logout_question)
                         .setMessage(R.string.logout_question_description)
                         .setPositiveButton(R.string.button_yes) { _: DialogInterface?, _: Int ->
