@@ -87,6 +87,12 @@ class MainActivity : AppCompatActivity(), UnauthorizedResponseListener, Rewarded
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+
+        mNavigationView.setNavigationItemSelectedListener(null)
+    }
+
     override fun onResume() {
         super.onResume()
         if (!waitingForLogin) {
@@ -107,6 +113,7 @@ class MainActivity : AppCompatActivity(), UnauthorizedResponseListener, Rewarded
                 navHeaderRankTextView.text = rank
             }
         }
+        setNavigationItemSelectedListener()
     }
 
     private fun setupRemoteConfig() {
@@ -184,6 +191,10 @@ class MainActivity : AppCompatActivity(), UnauthorizedResponseListener, Rewarded
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
 
+        mNavigationView.setCheckedItem(R.id.nav_main_screen)
+    }
+
+    private fun setNavigationItemSelectedListener() {
         mNavigationView.setNavigationItemSelectedListener { menuItem: MenuItem ->
             if (!menuItem.isChecked) {
                 when (menuItem.itemId) {
@@ -226,7 +237,6 @@ class MainActivity : AppCompatActivity(), UnauthorizedResponseListener, Rewarded
             mDrawerLayout.closeDrawers()
             true
         }
-        mNavigationView.setCheckedItem(R.id.nav_main_screen)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
