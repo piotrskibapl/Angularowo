@@ -31,7 +31,7 @@ import pl.piotrskiba.angularowo.interfaces.ReportClickListener
 import pl.piotrskiba.angularowo.models.Report
 import pl.piotrskiba.angularowo.models.ReportList
 
-class ReportsHistoryFragment() : Fragment(), ReportClickListener, NetworkErrorListener {
+class ReportsHistoryFragment : Fragment(), ReportClickListener, NetworkErrorListener {
 
     @BindView(R.id.rv_reports)
     lateinit var mReportList: RecyclerView
