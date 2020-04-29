@@ -147,9 +147,11 @@ class OffersFragment : Fragment(), AdOfferClickListener, OfferClickListener, Net
     }
 
     fun refreshData() {
-        mSwipeRefreshLayout.isRefreshing = true
-        val viewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
-        viewModel.refreshOffersInfo()
+        if (isAdded) {
+            mSwipeRefreshLayout.isRefreshing = true
+            val viewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
+            viewModel.refreshOffersInfo()
+        }
     }
 
     private fun populateUi() {
