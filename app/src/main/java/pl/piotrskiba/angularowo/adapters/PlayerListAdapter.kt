@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -44,7 +45,8 @@ class PlayerListAdapter(private val context: Context, private val mClickListener
                     .placeholder(R.drawable.default_avatar)
                     .into(holder.mPlayerAvatar)
         } else {
-            holder.mPlayerAvatar.setImageDrawable(context.resources.getDrawable(R.drawable.default_avatar))
+            val avatar = ContextCompat.getDrawable(context, R.drawable.default_avatar)
+            holder.mPlayerAvatar.setImageDrawable(avatar)
         }
 
         holder.mPlayerName.text = player.username
@@ -78,8 +80,7 @@ class PlayerListAdapter(private val context: Context, private val mClickListener
         lateinit var mPlayerVanishIcon: ImageView
 
         override fun onClick(view: View) {
-            val pos = adapterPosition
-            mClickListener.onPlayerClick(view, playerList.players[pos])
+            mClickListener.onPlayerClick(view, playerList.players[bindingAdapterPosition])
         }
 
         init {

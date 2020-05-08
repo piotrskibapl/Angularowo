@@ -66,7 +66,7 @@ class ChatAdapter(private val context: Context, private val mClickListener: Chat
         lateinit var mMessage: TextView
 
         override fun onClick(view: View) {
-            mClickListener.onChatMessageClick(view, mMessageList[adapterPosition])
+            mClickListener.onChatMessageClick(view, mMessageList[bindingAdapterPosition])
         }
 
         init {

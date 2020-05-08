@@ -72,7 +72,7 @@ class ReportListAdapter(private val context: Context, private val mClickListener
         lateinit var mReportStatusImage: ImageView
 
         override fun onClick(view: View) {
-            mClickListener.onReportClick(view, reportList.reportList[adapterPosition])
+            mClickListener.onReportClick(view, reportList.reportList[bindingAdapterPosition])
         }
 
         init {
