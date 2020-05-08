@@ -2,6 +2,8 @@ package pl.piotrskiba.angularowo.utils
 
 import android.content.Context
 import androidx.core.content.ContextCompat
+import androidx.preference.PreferenceManager
+import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import java.text.Normalizer
 
@@ -120,5 +122,23 @@ object TextUtils {
     @JvmStatic
     fun normalize(s: String?): String {
         return Normalizer.normalize(s, Normalizer.Form.NFD).replace("[^\\p{ASCII}]".toRegex(), "")
+    }
+
+    fun replaceQualifiers(context: Context, s: String): String {
+        return if (s.contains(Constants.USERNAME_QUALIFIER)) {
+            val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+
+            val username = sharedPreferences.getString(context.getString(R.string.pref_key_nickname), null)
+
+            if (username != null) {
+                s.replace(Constants.USERNAME_QUALIFIER, username)
+            }
+            else {
+                s
+            }
+        }
+        else {
+            s
+        }
     }
 }

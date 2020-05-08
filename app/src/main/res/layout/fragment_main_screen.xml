@@ -16,12 +16,23 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/tv_motd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/motd_text_size"
+                    android:textAlignment="center"
+                    android:gravity="center_horizontal"
+                    android:padding="@dimen/padding_small"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
                     android:id="@+id/tv_greeting"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/section_margin"
                     android:textSize="@dimen/title_text_size"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_motd"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
 

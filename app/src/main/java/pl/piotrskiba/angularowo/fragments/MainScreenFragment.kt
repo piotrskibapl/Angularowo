@@ -1,7 +1,11 @@
 package pl.piotrskiba.angularowo.fragments
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -33,6 +37,7 @@ import pl.piotrskiba.angularowo.models.*
 import pl.piotrskiba.angularowo.utils.GlideUtils.getSignatureVersionNumber
 import pl.piotrskiba.angularowo.utils.PreferenceUtils.getUsername
 import pl.piotrskiba.angularowo.utils.RankUtils.getRankFromPreferences
+import pl.piotrskiba.angularowo.utils.TextUtils
 import pl.piotrskiba.angularowo.utils.TextUtils.formatPlaytime
 import pl.piotrskiba.angularowo.utils.TextUtils.formatTps
 import pl.piotrskiba.angularowo.utils.TextUtils.normalize
@@ -45,8 +50,13 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
     private var loadedPlayer = false
     private var loadedActivePlayerBans = false
 
+    private var motd: Motd? = null
+
     @BindView(R.id.swiperefresh)
     lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
+
+    @BindView(R.id.tv_motd)
+    lateinit var mMotdTextView: TextView
 
     @BindView(R.id.tv_greeting)
     lateinit var mGreetingTextView: TextView
@@ -95,6 +105,8 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
         mBanList.setHasFixedSize(true)
         mSwipeRefreshLayout.setOnRefreshListener { refreshData() }
 
+        mMotdTextView.setOnClickListener { onMotdClick() }
+
         populateUi()
 
         val viewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
@@ -121,6 +133,28 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
                     mPlayerCountTextView.text = resources.getQuantityString(R.plurals.playercount_tps, serverStatus.playerCount, serverStatus.playerCount, tps)
                 } else {
                     mPlayerCountTextView.text = resources.getQuantityString(R.plurals.playercount, serverStatus.playerCount, serverStatus.playerCount)
+                }
+
+                motd = serverStatus.motd
+                if (motd != null && context != null) {
+                    mMotdTextView.visibility = View.VISIBLE
+                    mMotdTextView.text = TextUtils.replaceQualifiers(requireContext(), motd!!.text)
+                    mMotdTextView.setTextColor(Color.parseColor(motd!!.textColor))
+                    mMotdTextView.setBackgroundColor(Color.parseColor(motd!!.backgroundColor))
+
+                    if (motd?.url != null) {
+                        mMotdTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_chevron_right, 0)
+
+                        for (drawable in mMotdTextView.compoundDrawables) {
+                            drawable?.colorFilter = PorterDuffColorFilter(Color.parseColor(motd!!.textColor), PorterDuff.Mode.SRC_IN)
+                        }
+                    }
+                    else {
+                        mMotdTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
+                    }
+                }
+                else {
+                    mMotdTextView.visibility = View.GONE
                 }
             }
         })
@@ -162,6 +196,8 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
 
                 if (banList.banList.isNotEmpty())
                     showLastBans()
+                else
+                    hideLastBans()
             }
         })
     }
@@ -344,6 +380,13 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), view, getString(R.string.ban_banner_transition_name))
             startActivity(intent, options.toBundle())
         } else {
+            startActivity(intent)
+        }
+    }
+
+    private fun onMotdClick() {
+        if (motd?.url != null) {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(motd!!.url))
             startActivity(intent)
         }
     }
