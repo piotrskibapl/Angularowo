@@ -17,7 +17,7 @@ object ServerAPIClient {
                 val client = OkHttpClient.Builder()
                         .addInterceptor(unauthorizedInterceptor)
                         .build()
-                client.dispatcher().maxRequests = 1
+                client.dispatcher.maxRequests = 1
                 retrofit = Retrofit.Builder()
                         .baseUrl(BASE_URL)
                         .addConverterFactory(GsonConverterFactory.create())

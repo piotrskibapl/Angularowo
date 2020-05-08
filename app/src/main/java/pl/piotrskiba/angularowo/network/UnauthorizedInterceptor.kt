@@ -12,7 +12,7 @@ class UnauthorizedInterceptor : Interceptor {
         val request = chain.request()
         val response = chain.proceed(request)
 
-        if (response.code() == 401) {
+        if (response.code == 401) {
             unauthorizedListener.onUnauthorizedResponse()
         }
         return response
