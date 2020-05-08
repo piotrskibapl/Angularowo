@@ -33,6 +33,7 @@
 
     <!-- fragment_main_screen.xml -->
     <dimen name="body_width">120dp</dimen>
+    <dimen name="motd_text_size">16sp</dimen>
 
     <!-- fragment_offers.xml -->
     <dimen name="coins_text_size">48sp</dimen>

@@ -27,7 +27,7 @@ object Constants {
     const val DEFAULT_CHANNEL_ID = "default_notification_channel"
     const val SILENT_CHANNEL_ID = "silent_notification_channel"
 
-    const val NOTIFICATION_USERNAME_QUALIFIER = "%player%"
+    const val USERNAME_QUALIFIER = "%player%"
 
     const val CHAT_WEBSOCKET_URL = "ws://asmc-serwer.piotrskiba.pl:25772"
     const val CHAT_WEBSOCKET_ACCESSTOKEN_HEADER = "access_token"

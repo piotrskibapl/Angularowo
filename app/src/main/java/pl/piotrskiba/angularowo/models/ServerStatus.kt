@@ -6,4 +6,5 @@ class ServerStatus(
         @field:SerializedName("player_count")
         val playerCount: Int,
         @field:SerializedName("tps_5")
-        val tps: Double)
+        val tps: Double,
+        val motd: Motd?)

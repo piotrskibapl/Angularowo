@@ -91,17 +91,8 @@ class NotificationUtils(private val context: Context) {
 
         val notificationManager = NotificationManagerCompat.from(context)
 
-        var title = rawTitle
-        var body = rawBody
-        if (rawTitle.contains(Constants.NOTIFICATION_USERNAME_QUALIFIER) || rawBody.contains(Constants.NOTIFICATION_USERNAME_QUALIFIER)) {
-            val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-
-            val username = sharedPreferences.getString(context.getString(R.string.pref_key_nickname), null)
-            username?.run {
-                title = title.replace(Constants.NOTIFICATION_USERNAME_QUALIFIER, username)
-                body = body.replace(Constants.NOTIFICATION_USERNAME_QUALIFIER, username)
-            }
-        }
+        var title = TextUtils.replaceQualifiers(context, rawTitle)
+        var body = TextUtils.replaceQualifiers(context, rawBody)
 
         if (sound) {
             val soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
