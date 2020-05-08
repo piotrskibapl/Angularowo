@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -66,13 +67,14 @@ class BanListAdapter(private val context: Context, private val mClickListener: B
             }
         }
 
-        holder.mPlayerAvatar.setImageDrawable(context.resources.getDrawable(R.drawable.default_avatar))
+        val avatar = ContextCompat.getDrawable(context, R.drawable.default_avatar)
+        holder.mPlayerAvatar.setImageDrawable(avatar)
         if (ban.uuid == null) {
             val mojangAPIInterface = retrofitInstance.create(MojangAPIInterface::class.java)
 
             mojangAPIInterface.getProfile(ban.username).enqueue(object : Callback<MojangProfile?> {
                 override fun onResponse(call: Call<MojangProfile?>, response: Response<MojangProfile?>) {
-                    if (holder.adapterPosition == position) {
+                    if (holder.bindingAdapterPosition == position) {
                         if (response.isSuccessful) {
                             val mojangProfile = response.body()
 
@@ -122,8 +124,7 @@ class BanListAdapter(private val context: Context, private val mClickListener: B
         lateinit var mBanType: ImageView
 
         override fun onClick(view: View) {
-            val pos = adapterPosition
-            mClickListener.onBanClick(view, banList.banList[pos])
+            mClickListener.onBanClick(view, banList.banList[bindingAdapterPosition])
         }
 
         init {

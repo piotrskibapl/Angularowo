@@ -10,6 +10,7 @@ import android.media.RingtoneManager
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
@@ -107,7 +108,7 @@ class NotificationUtils(private val context: Context) {
 
             val builder = NotificationCompat.Builder(context, Constants.DEFAULT_CHANNEL_ID)
                     .setSmallIcon(R.drawable.ic_notification)
-                    .setColor(context.resources.getColor(R.color.color_notification))
+                    .setColor(ContextCompat.getColor(context, R.color.color_notification))
                     .setContentTitle(title)
                     .setContentText(body)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -122,7 +123,7 @@ class NotificationUtils(private val context: Context) {
         } else {
             val builder = NotificationCompat.Builder(context, Constants.SILENT_CHANNEL_ID)
                     .setSmallIcon(R.drawable.ic_notification)
-                    .setColor(context.resources.getColor(R.color.color_notification))
+                    .setColor(ContextCompat.getColor(context, R.color.color_notification))
                     .setContentTitle(title)
                     .setContentText(body)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)

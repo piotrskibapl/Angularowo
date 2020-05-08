@@ -1,8 +1,6 @@
 package pl.piotrskiba.angularowo
 
 object Constants {
-    const val ADMOB_APP_ID = "ca-app-pub-7790074991647252~4144564614"
-
     const val EXTRA_PLAYER = "extra_player"
     const val EXTRA_BAN = "extra_ban"
     const val EXTRA_BITMAP = "extra_bitmap"

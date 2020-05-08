@@ -94,7 +94,7 @@ class OffersAdapter(private val context: Context, private val mClickListener: Of
         lateinit var mOfferPrice: TextView
 
         override fun onClick(view: View) {
-            mClickListener.onOfferClick(view, mOfferList[adapterPosition])
+            mClickListener.onOfferClick(view, mOfferList[bindingAdapterPosition])
         }
 
         init {

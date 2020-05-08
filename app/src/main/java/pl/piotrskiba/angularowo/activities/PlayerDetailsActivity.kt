@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import butterknife.BindView
@@ -126,7 +127,8 @@ class PlayerDetailsActivity : AppCompatActivity(), OnRefreshListener {
                         .placeholder(R.drawable.default_body)
                         .into(mPlayerBodyImageView)
             } else {
-                mPlayerAvatar.setImageDrawable(resources.getDrawable(R.drawable.default_avatar))
+                val avatar = ContextCompat.getDrawable(this, R.drawable.default_avatar)
+                mPlayerAvatar.setImageDrawable(avatar)
             }
 
             mPlayerName.text = player.username

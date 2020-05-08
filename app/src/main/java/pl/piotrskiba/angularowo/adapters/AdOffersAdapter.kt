@@ -68,7 +68,7 @@ class AdOffersAdapter(private val context: Context, private val mClickListener: 
         lateinit var mTime: TextView
 
         override fun onClick(view: View) {
-            mClickListener.onAdOfferClick(view, mAdOfferList[adapterPosition])
+            mClickListener.onAdOfferClick(view, mAdOfferList[bindingAdapterPosition])
         }
 
         init {

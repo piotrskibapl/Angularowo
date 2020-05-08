@@ -154,13 +154,13 @@ class ChatFragment : Fragment(), ChatMessageClickListener {
 
         val request = Request.Builder()
                 .url(Constants.CHAT_WEBSOCKET_URL)
-                .addHeader(Constants.CHAT_WEBSOCKET_ACCESSTOKEN_HEADER, accessToken)
+                .addHeader(Constants.CHAT_WEBSOCKET_ACCESSTOKEN_HEADER, accessToken!!)
                 .build()
 
         val listener = ChatWebSocketListener()
         mWebSocket = mOkHttpClient.newWebSocket(request, listener)
 
-        mOkHttpClient.dispatcher().executorService().shutdown()
+        mOkHttpClient.dispatcher.executorService.shutdown()
     }
 
     override fun onChatMessageClick(view: View, clickedChatMessage: ChatMessage) {

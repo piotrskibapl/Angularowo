@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity(), UnauthorizedResponseListener, Rewarded
 
         NotificationUtils(this).createNotificationChannels()
         setupRemoteConfig()
-        MobileAds.initialize(this, Constants.ADMOB_APP_ID)
+        MobileAds.initialize(this)
 
         mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this)
         mRewardedVideoAd.rewardedVideoAdListener = this
