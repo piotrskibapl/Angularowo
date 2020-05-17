@@ -17,7 +17,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
-        val rankName = sharedPreferences.getString(getString(R.string.pref_key_rank), null)
+        val rankName = sharedPreferences.getString(getString(R.string.pref_key_rank), "")
         val rank = getRankFromName(rankName!!)
 
         if (rank.staff) {

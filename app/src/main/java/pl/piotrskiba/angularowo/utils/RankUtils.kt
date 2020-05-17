@@ -41,7 +41,7 @@ object RankUtils {
      * Function for getting the rank corresponding to the specified rank name
      *
      * @param name the name of the rank to obtain
-     * @return the corresponding rank
+     * @return the corresponding rank from rank list or new rank if not found
      */
     @JvmStatic
     fun getRankFromName(name: String): Rank {
