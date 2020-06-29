@@ -1,7 +1,7 @@
 package pl.piotrskiba.angularowo.activities
 
+import android.os.Build
 import android.os.Bundle
-import androidx.preference.PreferenceManager
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.preference.PreferenceManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import butterknife.BindView
@@ -113,7 +114,12 @@ class PlayerDetailsActivity : AppCompatActivity(), OnRefreshListener {
     }
 
     private fun populatePlayer(player: Player) {
-        if (!isFinishing) {
+        var canPopulate = !isFinishing
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            canPopulate = !isFinishing && !isDestroyed
+        }
+
+        if (canPopulate) {
             if (player.uuid != null) {
                 Glide.with(this)
                         .load(buildAvatarUrl(player.uuid, true))
