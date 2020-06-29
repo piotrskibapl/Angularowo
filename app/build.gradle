@@ -11,8 +11,8 @@ android {
         applicationId "pl.piotrskiba.angularowo"
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode 52
-        versionName "3.2.1"
+        versionCode 53
+        versionName "3.2.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -45,7 +45,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0-rc01'
 
     // RecyclerView
-    implementation 'androidx.recyclerview:recyclerview:1.2.0-alpha03'
+    implementation 'androidx.recyclerview:recyclerview:1.2.0-alpha04'
 
     // ButterKnife
     implementation 'com.jakewharton:butterknife:10.2.1'
