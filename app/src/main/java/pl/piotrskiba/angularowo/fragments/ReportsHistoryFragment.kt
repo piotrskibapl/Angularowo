@@ -33,6 +33,10 @@ import pl.piotrskiba.angularowo.models.ReportList
 
 class ReportsHistoryFragment : Fragment(), ReportClickListener, NetworkErrorListener {
 
+    private lateinit var mViewModel: AppViewModel
+    private lateinit var mReportListAdapter: ReportListAdapter
+    private var admin: Boolean = false
+
     @BindView(R.id.rv_reports)
     lateinit var mReportList: RecyclerView
 
@@ -48,9 +52,6 @@ class ReportsHistoryFragment : Fragment(), ReportClickListener, NetworkErrorList
     @BindView(R.id.tv_no_reports)
     lateinit var mNoReportsTextView: TextView
 
-    private lateinit var mReportListAdapter: ReportListAdapter
-    private var admin: Boolean = false
-
     companion object {
         private const val ARGUMENT_ADMIN = "admin"
 
@@ -62,6 +63,7 @@ class ReportsHistoryFragment : Fragment(), ReportClickListener, NetworkErrorList
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        mViewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
         admin = requireArguments().getBoolean(ARGUMENT_ADMIN)
     }
 
@@ -98,11 +100,10 @@ class ReportsHistoryFragment : Fragment(), ReportClickListener, NetworkErrorList
     }
 
     private fun seekForReportList() {
-        val viewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
-        viewModel.setNetworkErrorListener(this)
+        mViewModel.setNetworkErrorListener(this)
 
         if(admin) {
-            viewModel.getAllReports().observe(viewLifecycleOwner, Observer { reportList: ReportList? ->
+            mViewModel.getAllReports().observe(viewLifecycleOwner, Observer { reportList: ReportList? ->
                 if (reportList != null) {
                     mSwipeRefreshLayout.isRefreshing = false
                     mReportListAdapter.setReportList(reportList)
@@ -115,7 +116,7 @@ class ReportsHistoryFragment : Fragment(), ReportClickListener, NetworkErrorList
             })
         }
         else {
-            viewModel.getUserReports().observe(viewLifecycleOwner, Observer { reportList: ReportList? ->
+            mViewModel.getUserReports().observe(viewLifecycleOwner, Observer { reportList: ReportList? ->
                 if (reportList != null) {
                     mSwipeRefreshLayout.isRefreshing = false
                     mReportListAdapter.setReportList(reportList)
@@ -132,12 +133,10 @@ class ReportsHistoryFragment : Fragment(), ReportClickListener, NetworkErrorList
     private fun refreshReportList() {
         mSwipeRefreshLayout.isRefreshing = true
 
-        val viewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
-
         if(admin)
-            viewModel.refreshAllReports()
+            mViewModel.refreshAllReports()
         else
-            viewModel.refreshUserReports()
+            mViewModel.refreshUserReports()
     }
 
     private fun showDefaultLayout() {

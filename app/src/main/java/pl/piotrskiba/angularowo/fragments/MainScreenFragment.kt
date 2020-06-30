@@ -45,6 +45,7 @@ import pl.piotrskiba.angularowo.utils.UrlUtils.buildBodyUrl
 
 class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
 
+    private lateinit var mViewModel: AppViewModel
     private lateinit var mBanListAdapter: BanListAdapter
     private var loadedServerStatus = false
     private var loadedPlayer = false
@@ -91,6 +92,12 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
     @BindView(R.id.server_error_layout)
     lateinit var mServerErrorLayout: LinearLayout
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        mViewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_main_screen, container, false)
 
@@ -109,8 +116,7 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
 
         populateUi()
 
-        val viewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
-        viewModel.setNetworkErrorListener(this)
+        mViewModel.setNetworkErrorListener(this)
 
         mSwipeRefreshLayout.isRefreshing = true
         seekForServerStatusUpdates()
@@ -121,8 +127,7 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
     }
 
     private fun seekForServerStatusUpdates() {
-        val viewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
-        viewModel.getServerStatus().observe(viewLifecycleOwner, Observer { serverStatus: ServerStatus? ->
+        mViewModel.getServerStatus().observe(viewLifecycleOwner, Observer { serverStatus: ServerStatus? ->
             if (serverStatus != null) {
                 loadedServerStatus = true
                 showDefaultLayoutIfLoadedAllData()
@@ -161,8 +166,7 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
     }
 
     private fun seekForPlayerUpdates() {
-        val viewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
-        viewModel.getPlayer().observe(viewLifecycleOwner, Observer { player: DetailedPlayer? ->
+        mViewModel.getPlayer().observe(viewLifecycleOwner, Observer { player: DetailedPlayer? ->
             if (player != null) {
                 loadedPlayer = true
                 showDefaultLayoutIfLoadedAllData()
@@ -186,8 +190,7 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
     }
 
     private fun seekForLastPlayerBans() {
-        val viewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
-        viewModel.getActivePlayerBans().observe(viewLifecycleOwner, Observer { banList: BanList? ->
+        mViewModel.getActivePlayerBans().observe(viewLifecycleOwner, Observer { banList: BanList? ->
             if (banList != null) {
                 loadedActivePlayerBans = true
                 showDefaultLayoutIfLoadedAllData()
@@ -211,15 +214,13 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
     }
 
     private fun refreshData() {
-        val viewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
-
         loadedServerStatus = false
         loadedPlayer = false
         loadedActivePlayerBans = false
 
-        viewModel.refreshServerStatus()
-        viewModel.refreshPlayer()
-        viewModel.refreshActivePlayerBans()
+        mViewModel.refreshServerStatus()
+        mViewModel.refreshPlayer()
+        mViewModel.refreshActivePlayerBans()
     }
 
     override fun onResume() {

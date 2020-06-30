@@ -33,6 +33,7 @@ import pl.piotrskiba.angularowo.models.BanList
 
 class BanListFragment : Fragment(), BanClickListener, NetworkErrorListener {
 
+    private lateinit var mViewModel: AppViewModel
     private var mBanListAdapter: BanListAdapter? = null
 
     @BindView(R.id.rv_bans)
@@ -46,6 +47,12 @@ class BanListFragment : Fragment(), BanClickListener, NetworkErrorListener {
 
     @BindView(R.id.server_error_layout)
     lateinit var mServerErrorLayout: LinearLayout
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        mViewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_ban_list, container, false)
@@ -81,10 +88,8 @@ class BanListFragment : Fragment(), BanClickListener, NetworkErrorListener {
     }
 
     private fun seekForBanList() {
-        val viewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
-
-        viewModel.setNetworkErrorListener(this)
-        viewModel.getBanList().observe(viewLifecycleOwner, Observer { banList: BanList? ->
+        mViewModel.setNetworkErrorListener(this)
+        mViewModel.getBanList().observe(viewLifecycleOwner, Observer { banList: BanList? ->
             if (banList != null) {
                 mSwipeRefreshLayout.isRefreshing = false
                 mBanListAdapter?.setBanList(banList)
@@ -94,10 +99,8 @@ class BanListFragment : Fragment(), BanClickListener, NetworkErrorListener {
     }
 
     private fun refreshData() {
-        val viewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
-
         mSwipeRefreshLayout.isRefreshing = true
-        viewModel.refreshBanList()
+        mViewModel.refreshBanList()
     }
 
     override fun onBanClick(view: View, clickedBan: Ban) {
