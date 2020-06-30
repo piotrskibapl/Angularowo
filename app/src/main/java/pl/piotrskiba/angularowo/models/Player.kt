@@ -14,6 +14,4 @@ data class Player(
     val rank: Rank
         get() = RankUtils.getRankFromName(rankKey)
 
-    fun asFriend() = Friend(uuid, username, rankKey, vanished)
-
 }
