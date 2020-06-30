@@ -75,12 +75,9 @@ class ReportsHistoryFragment : Fragment(), ReportClickListener, NetworkErrorList
         mReportListAdapter = ReportListAdapter(requireContext(), this)
         mReportList.adapter = mReportListAdapter
 
-        val layoutManager: RecyclerView.LayoutManager
-        val displayMode = resources.configuration.orientation
-        if (displayMode == Configuration.ORIENTATION_PORTRAIT) {
-            layoutManager = LinearLayoutManager(context)
-        } else {
-            layoutManager = GridLayoutManager(context, 2)
+        val spanCount = resources.getInteger(R.integer.report_list_span_count)
+        val layoutManager = GridLayoutManager(context, spanCount)
+        if (spanCount > 1) {
             val spacingInPixels = resources.getDimensionPixelSize(R.dimen.margin_small)
             mReportList.addItemDecoration(SpacesItemDecoration(spacingInPixels))
         }

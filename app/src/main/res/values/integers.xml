@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Player List -->
+    <integer name="player_list_span_count">1</integer>
+
+    <!-- Ban List -->
+    <integer name="ban_list_span_count">1</integer>
+
+    <!-- Reports -->
+    <integer name="report_list_span_count">1</integer>
+
+    <!-- Offers -->
+    <integer name="ad_offer_list_span_count">4</integer>
+    <integer name="offer_list_span_count">3</integer>
+</resources>
