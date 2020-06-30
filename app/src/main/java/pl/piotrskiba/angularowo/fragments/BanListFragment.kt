@@ -34,7 +34,7 @@ import pl.piotrskiba.angularowo.models.BanList
 class BanListFragment : Fragment(), BanClickListener, NetworkErrorListener {
 
     private lateinit var mViewModel: AppViewModel
-    private var mBanListAdapter: BanListAdapter? = null
+    private lateinit var mBanListAdapter: BanListAdapter
 
     @BindView(R.id.rv_bans)
     lateinit var mBanList: RecyclerView
@@ -92,7 +92,7 @@ class BanListFragment : Fragment(), BanClickListener, NetworkErrorListener {
         mViewModel.getBanList().observe(viewLifecycleOwner, Observer { banList: BanList? ->
             if (banList != null) {
                 mSwipeRefreshLayout.isRefreshing = false
-                mBanListAdapter?.setBanList(banList)
+                mBanListAdapter.setBanList(banList)
                 showDefaultLayout()
             }
         })
