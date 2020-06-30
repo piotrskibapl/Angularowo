@@ -138,9 +138,9 @@ class PlayerDetailsActivity : AppCompatActivity(), OnRefreshListener {
             }
 
             mPlayerName.text = player.username
-            mPlayerRank.text = player.getRank().name
+            mPlayerRank.text = player.rank.name
 
-            val color = getColorFromCode(this, player.getRank().colorCode)
+            val color = getColorFromCode(this, player.rank.colorCode)
             (mPlayerAvatar.parent as ConstraintLayout).setBackgroundColor(color)
 
             if (player.vanished)
@@ -152,7 +152,7 @@ class PlayerDetailsActivity : AppCompatActivity(), OnRefreshListener {
 
     private fun populatePlayer(detailedPlayer: DetailedPlayer) {
         val player = Player(detailedPlayer.uuid, detailedPlayer.username,
-                detailedPlayer.getRank().name, detailedPlayer.isVanished)
+                detailedPlayer.rank.name, detailedPlayer.isVanished)
         populatePlayer(player)
 
         mPlayerBalanceTextView.text = getString(R.string.balance_format, detailedPlayer.balance.toInt())

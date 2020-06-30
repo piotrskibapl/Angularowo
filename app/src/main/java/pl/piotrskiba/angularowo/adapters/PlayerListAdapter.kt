@@ -50,9 +50,9 @@ class PlayerListAdapter(private val context: Context, private val mClickListener
         }
 
         holder.mPlayerName.text = player.username
-        holder.mPlayerRank.text = player.getRank().name
+        holder.mPlayerRank.text = player.rank.name
 
-        val color = getColorFromCode(context, player.getRank().colorCode)
+        val color = getColorFromCode(context, player.rank.colorCode)
         (holder.mPlayerAvatar.parent as ConstraintLayout).setBackgroundColor(color)
 
         if (player.vanished)
@@ -95,7 +95,7 @@ class PlayerListAdapter(private val context: Context, private val mClickListener
             val ranks = allRanks
             for (rank in ranks) {
                 for (player in playerList.players) {
-                    if (player.getRank().name == rank.name) sorted.add(player)
+                    if (player.rank.name == rank.name) sorted.add(player)
                 }
             }
         }

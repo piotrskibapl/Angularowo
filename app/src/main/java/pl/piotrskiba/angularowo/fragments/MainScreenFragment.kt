@@ -183,8 +183,8 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
                 mPlayerTokensTextView.text = player.tokens.toString()
                 mPlayerPlayTimeTextView.text = formatPlaytime(requireContext(), player.playtime)
 
-                subscribeToFirebaseRankTopic(player.getRank())
-                checkFirebaseNewReportsTopicSubscription(player.getRank())
+                subscribeToFirebaseRankTopic(player.rank)
+                checkFirebaseNewReportsTopicSubscription(player.rank)
             }
         })
     }
