@@ -39,6 +39,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class OffersFragment : Fragment(), AdOfferClickListener, OfferClickListener, NetworkErrorListener {
+
+    private lateinit var mViewModel: AppViewModel
     private lateinit var mRewardedVideoAd: RewardedVideoAd
     private lateinit var mOffersInfo: OffersInfo
     private lateinit var mAdOffersAdapter: AdOffersAdapter
@@ -73,6 +75,12 @@ class OffersFragment : Fragment(), AdOfferClickListener, OfferClickListener, Net
 
     @BindView(R.id.default_layout)
     lateinit var mDefaultLayout: NestedScrollView
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        mViewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_offers, container, false)
@@ -136,9 +144,8 @@ class OffersFragment : Fragment(), AdOfferClickListener, OfferClickListener, Net
     }
 
     private fun seekForOffersInfo() {
-        val viewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
-        viewModel.setNetworkErrorListener(this)
-        viewModel.getOffersInfo().observe(viewLifecycleOwner, Observer { offersInfo: OffersInfo? ->
+        mViewModel.setNetworkErrorListener(this)
+        mViewModel.getOffersInfo().observe(viewLifecycleOwner, Observer { offersInfo: OffersInfo? ->
             if (offersInfo != null) {
                 mOffersInfo = offersInfo
                 populateUi()
@@ -149,8 +156,7 @@ class OffersFragment : Fragment(), AdOfferClickListener, OfferClickListener, Net
     fun refreshData() {
         if (isAdded) {
             mSwipeRefreshLayout.isRefreshing = true
-            val viewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
-            viewModel.refreshOffersInfo()
+            mViewModel.refreshOffersInfo()
         }
     }
 

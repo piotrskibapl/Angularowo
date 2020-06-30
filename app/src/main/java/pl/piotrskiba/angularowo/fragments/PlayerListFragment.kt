@@ -31,6 +31,8 @@ import pl.piotrskiba.angularowo.models.Player
 import pl.piotrskiba.angularowo.models.PlayerList
 
 class PlayerListFragment : Fragment(), PlayerClickListener, NetworkErrorListener {
+
+    private lateinit var mViewModel: AppViewModel
     private lateinit var mPlayerListAdapter: PlayerListAdapter
 
     @BindView(R.id.rv_players)
@@ -47,6 +49,11 @@ class PlayerListFragment : Fragment(), PlayerClickListener, NetworkErrorListener
 
     @BindView(R.id.server_error_layout)
     lateinit var mServerErrorLayout: LinearLayout
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mViewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_player_list, container, false)
@@ -79,9 +86,8 @@ class PlayerListFragment : Fragment(), PlayerClickListener, NetworkErrorListener
     }
 
     private fun seekForPlayerList() {
-        val viewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
-        viewModel.setNetworkErrorListener(this)
-        viewModel.getPlayerList().observe(viewLifecycleOwner, Observer { playerList: PlayerList? ->
+        mViewModel.setNetworkErrorListener(this)
+        mViewModel.getPlayerList().observe(viewLifecycleOwner, Observer { playerList: PlayerList? ->
             if (playerList != null) {
                 mSwipeRefreshLayout.isRefreshing = false
                 mPlayerListAdapter.setPlayerList(playerList)
@@ -96,9 +102,7 @@ class PlayerListFragment : Fragment(), PlayerClickListener, NetworkErrorListener
 
     private fun refreshData() {
         mSwipeRefreshLayout.isRefreshing = true
-
-        val viewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
-        viewModel.refreshPlayerList()
+        mViewModel.refreshPlayerList()
     }
 
     override fun onPlayerClick(view: View, clickedPlayer: Player) {

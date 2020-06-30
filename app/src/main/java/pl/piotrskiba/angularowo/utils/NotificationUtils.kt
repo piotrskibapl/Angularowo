@@ -90,8 +90,8 @@ class NotificationUtils(private val context: Context) {
 
         val notificationManager = NotificationManagerCompat.from(context)
 
-        var title = TextUtils.replaceQualifiers(context, rawTitle)
-        var body = TextUtils.replaceQualifiers(context, rawBody)
+        val title = TextUtils.replaceQualifiers(context, rawTitle)
+        val body = TextUtils.replaceQualifiers(context, rawBody)
 
         if (sound) {
             val soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
