@@ -103,7 +103,7 @@ class OffersFragment : Fragment(), AdOfferClickListener, OfferClickListener, Net
         mAdOffersAdapter = AdOffersAdapter(requireContext(), this)
         mAdOffersRecyclerView.adapter = mAdOffersAdapter
 
-        val adOffersLayoutManager = GridLayoutManager(context, 4)
+        val adOffersLayoutManager = GridLayoutManager(context, resources.getInteger(R.integer.ad_offer_list_span_count))
         mAdOffersRecyclerView.layoutManager = adOffersLayoutManager
 
         mAdOffersRecyclerView.setHasFixedSize(true)
@@ -114,7 +114,7 @@ class OffersFragment : Fragment(), AdOfferClickListener, OfferClickListener, Net
         mOffersAdapter = OffersAdapter(requireContext(), this)
         mOffersRecyclerView.adapter = mOffersAdapter
 
-        val offersLayoutManager = GridLayoutManager(context, 3)
+        val offersLayoutManager = GridLayoutManager(context, resources.getInteger(R.integer.offer_list_span_count))
         mOffersRecyclerView.layoutManager = offersLayoutManager
 
         mOffersRecyclerView.setHasFixedSize(true)

@@ -1,7 +1,6 @@
 package pl.piotrskiba.angularowo.fragments
 
 import android.content.Intent
-import android.content.res.Configuration
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,7 +13,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import butterknife.BindView
@@ -60,20 +58,16 @@ class BanListFragment : Fragment(), BanClickListener, NetworkErrorListener {
         ButterKnife.bind(this, view)
 
         mBanListAdapter = BanListAdapter(requireContext(), this)
+        mBanList.adapter = mBanListAdapter
 
-        val layoutManager: RecyclerView.LayoutManager
-
-        val displayMode = resources.configuration.orientation
-        if (displayMode == Configuration.ORIENTATION_PORTRAIT) {
-            layoutManager = LinearLayoutManager(context)
-        } else {
-            layoutManager = GridLayoutManager(context, 2)
+        val spanCount = resources.getInteger(R.integer.ban_list_span_count)
+        val layoutManager = GridLayoutManager(context, spanCount)
+        if (spanCount > 1) {
             val spacingInPixels = resources.getDimensionPixelSize(R.dimen.margin_small)
             mBanList.addItemDecoration(SpacesItemDecoration(spacingInPixels))
         }
-
-        mBanList.adapter = mBanListAdapter
         mBanList.layoutManager = layoutManager
+
         mBanList.setHasFixedSize(true)
 
         mSwipeRefreshLayout.isRefreshing = true
