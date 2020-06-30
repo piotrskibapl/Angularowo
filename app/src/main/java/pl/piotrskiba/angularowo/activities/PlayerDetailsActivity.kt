@@ -151,7 +151,7 @@ class PlayerDetailsActivity : AppCompatActivity(), OnRefreshListener {
     }
 
     private fun populatePlayer(detailedPlayer: DetailedPlayer) {
-        val player = Player(detailedPlayer.username, detailedPlayer.uuid,
+        val player = Player(detailedPlayer.uuid, detailedPlayer.username,
                 detailedPlayer.getRank().name, detailedPlayer.isVanished)
         populatePlayer(player)
 
