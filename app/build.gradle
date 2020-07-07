@@ -98,6 +98,9 @@ dependencies {
     // Room
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
+
+    // TutoShowcase
+    implementation 'com.github.florent37:tutoshowcase:1.0.1'
 }
 
 configurations.all {

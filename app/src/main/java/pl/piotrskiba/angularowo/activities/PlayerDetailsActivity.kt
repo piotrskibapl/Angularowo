@@ -20,6 +20,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.bumptech.glide.Glide
+import com.github.florent37.tutoshowcase.TutoShowcase
 import com.google.android.material.snackbar.Snackbar
 import pl.piotrskiba.angularowo.AppViewModel
 import pl.piotrskiba.angularowo.Constants
@@ -191,6 +192,21 @@ class PlayerDetailsActivity : AppCompatActivity(), OnRefreshListener {
         mPlayerBalanceTextView.text = getString(R.string.balance_format, detailedPlayer.balance.toInt())
         mPlayerTokensTextView.text = detailedPlayer.tokens.toString()
         mPlayerPlayTimeTextView.text = formatPlaytime(this, detailedPlayer.playtime)
+
+        showFavoriteShowcase()
+    }
+
+    private fun showFavoriteShowcase() {
+        if (!PreferenceUtils.hasSeenFavoriteShowcase(this) && findViewById<View>(R.id.nav_favorite) != null) {
+            TutoShowcase.from(this)
+                    .setContentView(R.layout.showcase_favorite)
+                    .on(R.id.nav_favorite)
+                    .addCircle()
+                    .withBorder()
+                    .show()
+
+            PreferenceUtils.setHasSeenFavoriteShowcase(this, true)
+        }
     }
 
     override fun onRefresh() {
