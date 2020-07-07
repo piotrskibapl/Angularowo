@@ -2,7 +2,6 @@ package pl.piotrskiba.angularowo.activities
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -32,6 +31,7 @@ import pl.piotrskiba.angularowo.network.ServerAPIClient.retrofitInstance
 import pl.piotrskiba.angularowo.network.ServerAPIInterface
 import pl.piotrskiba.angularowo.utils.ColorUtils.getColorFromCode
 import pl.piotrskiba.angularowo.utils.GlideUtils.getSignatureVersionNumber
+import pl.piotrskiba.angularowo.utils.PreferenceUtils
 import pl.piotrskiba.angularowo.utils.TextUtils.formatPlaytime
 import pl.piotrskiba.angularowo.utils.UrlUtils.buildAvatarUrl
 import pl.piotrskiba.angularowo.utils.UrlUtils.buildBodyUrl
@@ -184,7 +184,7 @@ class PlayerDetailsActivity : AppCompatActivity(), OnRefreshListener {
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
         val friends = mViewModel.allFriends.value
-        if (mPlayer.uuid != null) {
+        if (mPlayer.uuid != null && mPlayer.username != PreferenceUtils.getUsername(this)) {
             if (friends != null && friends.contains(Friend(mPlayer.uuid!!))) {
                 menu?.findItem(R.id.nav_favorite)?.isVisible = false
                 menu?.findItem(R.id.nav_unfavorite)?.isVisible = true
