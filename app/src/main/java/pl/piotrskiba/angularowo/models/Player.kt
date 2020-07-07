@@ -1,12 +1,18 @@
 package pl.piotrskiba.angularowo.models
 
+import com.google.gson.annotations.SerializedName
+import pl.piotrskiba.angularowo.database.entity.Friend
 import pl.piotrskiba.angularowo.utils.RankUtils
 import java.io.Serializable
 
-class Player(val username: String, val uuid: String?, private val rank: String, val vanished: Boolean) : Serializable {
+data class Player(
+        val uuid: String?,
+        val username: String,
+        @SerializedName("rank") val rankKey: String,
+        @SerializedName(value = "vanished") val isVanished: Boolean
+) : Serializable {
 
-    fun getRank(): Rank {
-        return RankUtils.getRankFromName(rank)
-    }
+    val rank: Rank
+        get() = RankUtils.getRankFromName(rankKey)
 
 }

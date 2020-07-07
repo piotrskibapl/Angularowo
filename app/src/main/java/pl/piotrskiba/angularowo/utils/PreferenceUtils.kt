@@ -41,4 +41,23 @@ object PreferenceUtils {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         return sharedPreferences.getString(context.getString(R.string.pref_key_rank), null)
     }
+
+    /**
+     * Function for checking if user has been shown a "Favorite players" showcase
+     *
+     * @param context
+     * @return true if the showcase was shown, false otherwise
+     */
+    @JvmStatic
+    fun hasSeenFavoriteShowcase(context: Context): Boolean {
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        return sharedPreferences.getBoolean(context.getString(R.string.pref_key_showcase_favorite), false)
+    }
+
+    fun setHasSeenFavoriteShowcase(context: Context, seen: Boolean) {
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val editor = sharedPreferences.edit()
+        editor.putBoolean(context.getString(R.string.pref_key_showcase_favorite), seen)
+        editor.apply()
+    }
 }

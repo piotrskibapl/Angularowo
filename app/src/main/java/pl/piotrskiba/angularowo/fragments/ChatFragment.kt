@@ -167,8 +167,8 @@ class ChatFragment : Fragment(), ChatMessageClickListener {
         val intent = Intent(context, PlayerDetailsActivity::class.java)
         intent.putExtra(Constants.EXTRA_PLAYER,
                 Player(
-                        clickedChatMessage.username,
                         null,
+                        clickedChatMessage.username,
                         clickedChatMessage.rank,
                         false
                 )

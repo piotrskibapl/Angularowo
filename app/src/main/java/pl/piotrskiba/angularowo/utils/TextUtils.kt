@@ -126,9 +126,7 @@ object TextUtils {
 
     fun replaceQualifiers(context: Context, s: String): String {
         return if (s.contains(Constants.USERNAME_QUALIFIER)) {
-            val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-
-            val username = sharedPreferences.getString(context.getString(R.string.pref_key_nickname), null)
+            val username = PreferenceUtils.getUsername(context)
 
             if (username != null) {
                 s.replace(Constants.USERNAME_QUALIFIER, username)

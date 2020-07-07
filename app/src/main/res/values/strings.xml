@@ -17,6 +17,7 @@
     <string name="pref_key_subscribed_to_new_reports" translatable="false">new_reports_subscribed</string>
     <string name="pref_key_subscribed_to_events" translatable="false">events_subscribed</string>
     <string name="pref_key_logout" translatable="false">logout</string>
+    <string name="pref_key_showcase_favorite" translatable="false">showcase_favorite_shown</string>
 
     <string name="pref_category_notifications">Powiadomienia</string>
     <string name="pref_category_others">Inne</string>
@@ -63,9 +64,15 @@
     <string name="error_no_players">Aktualnie nie ma nikogo na serwerze.</string>
 
     <!-- activity_player_details.xml -->
+    <string name="mark_as_favorite">Dodaj do ulubionych</string>
+    <string name="unmark_as_favorite">Usuń z ulubionych</string>
     <string name="player_info">Informacje o graczu</string>
     <string name="tokens_title_others">Tokeny gracza:</string>
     <string name="player_banner_transition_name" translatable="false">player_banner</string>
+    <string name="marked_as_favorite">Gracz został dodany do ulubionych.</string>
+    <string name="unmarked_as_favorite">Gracz został usunięty z ulubionych.</string>
+    <string name="showcase_favorite_title">Dodaj do ulubionych</string>
+    <string name="showcase_favorite_description">Jeśli chcesz dodać gracza do ulubionych, kliknij ikonę serca.\nUlubieni gracze będą zawsze wyświetlani na początku listy!</string>
 
     <!-- fragment_ban_list.xml -->
     <string name="actionbar_title_ban_list">Ostatnie bany</string>
@@ -133,6 +140,7 @@
     <string name="ban_type_image_description">Ikona typu kary</string>
     <string name="reward_image_description">Ikona nagrody</string>
     <string name="vanish_image_description">Ikona widoczności gracza</string>
+    <string name="heart_image_description">Ikona oznaczenia jako ulubiony</string>
     <string name="report_status_image_description">Ikona statusu zgłoszenia</string>
     <string name="access_restricted_icon_content_description">Ikona odmowy dostępu</string>
     <string name="navigation_drawer_header_content_description">Obrazek tła</string>
@@ -141,5 +149,4 @@
     <string name="no_internet">Wystąpił błąd przy pobieraniu danych.\nSprawdź czy masz połączenie z Internetem oraz spróbuj ponownie.</string>
     <string name="server_error">Wygląda na to, że nasze serwery chwilowo nie działają.\nSpróbuj ponownie później.</string>
     <string name="account_banned">Twoje konto jest zbanowane.\nDostęp do tej funkcjonalności zostanie przywrócony po wygaśnięciu bana.</string>
-
 </resources>

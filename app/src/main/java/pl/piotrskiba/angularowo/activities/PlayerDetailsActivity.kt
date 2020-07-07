@@ -2,6 +2,7 @@ package pl.piotrskiba.angularowo.activities
 
 import android.os.Build
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
@@ -9,16 +10,23 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.bumptech.glide.Glide
+import com.github.florent37.tutoshowcase.TutoShowcase
+import com.google.android.material.snackbar.Snackbar
+import pl.piotrskiba.angularowo.AppViewModel
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.IntegerVersionSignature
 import pl.piotrskiba.angularowo.R
+import pl.piotrskiba.angularowo.database.entity.Friend
 import pl.piotrskiba.angularowo.models.DetailedPlayer
 import pl.piotrskiba.angularowo.models.Player
 import pl.piotrskiba.angularowo.network.ServerAPIClient
@@ -26,6 +34,7 @@ import pl.piotrskiba.angularowo.network.ServerAPIClient.retrofitInstance
 import pl.piotrskiba.angularowo.network.ServerAPIInterface
 import pl.piotrskiba.angularowo.utils.ColorUtils.getColorFromCode
 import pl.piotrskiba.angularowo.utils.GlideUtils.getSignatureVersionNumber
+import pl.piotrskiba.angularowo.utils.PreferenceUtils
 import pl.piotrskiba.angularowo.utils.TextUtils.formatPlaytime
 import pl.piotrskiba.angularowo.utils.UrlUtils.buildAvatarUrl
 import pl.piotrskiba.angularowo.utils.UrlUtils.buildBodyUrl
@@ -37,6 +46,9 @@ class PlayerDetailsActivity : AppCompatActivity(), OnRefreshListener {
 
     @BindView(R.id.swiperefresh)
     lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
+
+    @BindView(R.id.coordinatorLayout)
+    lateinit var mCoordinatorLayout: CoordinatorLayout
 
     @BindView(R.id.iv_player_body)
     lateinit var mPlayerBodyImageView: ImageView
@@ -65,12 +77,22 @@ class PlayerDetailsActivity : AppCompatActivity(), OnRefreshListener {
     @BindView(R.id.iv_vanish_status)
     lateinit var mPlayerVanishIcon: ImageView
 
+    @BindView(R.id.iv_heart)
+    lateinit var mPlayerHeartIcon: ImageView
+
+    private lateinit var mViewModel: AppViewModel
+    private lateinit var mPlayer: Player
+
+    private var snackbar: Snackbar? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_player_details)
 
         ButterKnife.bind(this)
+
+        mViewModel = ViewModelProvider(this).get(AppViewModel::class.java)
 
         setSupportActionBar(mToolbar)
 
@@ -79,13 +101,25 @@ class PlayerDetailsActivity : AppCompatActivity(), OnRefreshListener {
         supportActionBar?.setTitle(R.string.player_info)
 
         if (intent.hasExtra(Constants.EXTRA_PLAYER)) {
-            val player = intent.getSerializableExtra(Constants.EXTRA_PLAYER) as Player
+            mPlayer = intent.getSerializableExtra(Constants.EXTRA_PLAYER) as Player
 
-            populatePlayer(player)
-            loadDetailedPlayerData(player)
+            populatePlayer(mPlayer)
+            loadDetailedPlayerData(mPlayer)
         }
 
         mSwipeRefreshLayout.setOnRefreshListener(this)
+
+        mViewModel.allFriends.observe(this, Observer<List<Friend>> {
+            invalidateOptionsMenu()
+
+            val friends = mViewModel.allFriends.value
+            if (mPlayer.uuid != null && friends != null && friends.contains(Friend(mPlayer.uuid!!))) {
+                mPlayerHeartIcon.visibility = View.VISIBLE
+            }
+            else {
+                mPlayerHeartIcon.visibility = View.GONE
+            }
+        })
     }
 
     private fun loadDetailedPlayerData(player: Player) {
@@ -138,12 +172,12 @@ class PlayerDetailsActivity : AppCompatActivity(), OnRefreshListener {
             }
 
             mPlayerName.text = player.username
-            mPlayerRank.text = player.getRank().name
+            mPlayerRank.text = player.rank.name
 
-            val color = getColorFromCode(this, player.getRank().colorCode)
+            val color = getColorFromCode(this, player.rank.colorCode)
             (mPlayerAvatar.parent as ConstraintLayout).setBackgroundColor(color)
 
-            if (player.vanished)
+            if (player.isVanished)
                 mPlayerVanishIcon.visibility = View.VISIBLE
             else
                 mPlayerVanishIcon.visibility = View.INVISIBLE
@@ -151,13 +185,28 @@ class PlayerDetailsActivity : AppCompatActivity(), OnRefreshListener {
     }
 
     private fun populatePlayer(detailedPlayer: DetailedPlayer) {
-        val player = Player(detailedPlayer.username, detailedPlayer.uuid,
-                detailedPlayer.getRank().name, detailedPlayer.isVanished)
+        val player = Player(detailedPlayer.uuid, detailedPlayer.username,
+                detailedPlayer.rank.name, detailedPlayer.isVanished)
         populatePlayer(player)
 
         mPlayerBalanceTextView.text = getString(R.string.balance_format, detailedPlayer.balance.toInt())
         mPlayerTokensTextView.text = detailedPlayer.tokens.toString()
         mPlayerPlayTimeTextView.text = formatPlaytime(this, detailedPlayer.playtime)
+
+        showFavoriteShowcase()
+    }
+
+    private fun showFavoriteShowcase() {
+        if (!PreferenceUtils.hasSeenFavoriteShowcase(this) && findViewById<View>(R.id.nav_favorite) != null) {
+            TutoShowcase.from(this)
+                    .setContentView(R.layout.showcase_favorite)
+                    .on(R.id.nav_favorite)
+                    .addCircle()
+                    .withBorder()
+                    .show()
+
+            PreferenceUtils.setHasSeenFavoriteShowcase(this, true)
+        }
     }
 
     override fun onRefresh() {
@@ -167,11 +216,63 @@ class PlayerDetailsActivity : AppCompatActivity(), OnRefreshListener {
         }
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        val friends = mViewModel.allFriends.value
+        if (mPlayer.uuid != null && mPlayer.username != PreferenceUtils.getUsername(this)) {
+            if (friends != null && friends.contains(Friend(mPlayer.uuid!!))) {
+                menu?.findItem(R.id.nav_favorite)?.isVisible = false
+                menu?.findItem(R.id.nav_unfavorite)?.isVisible = true
+            }
+            else {
+                menu?.findItem(R.id.nav_favorite)?.isVisible = true
+                menu?.findItem(R.id.nav_unfavorite)?.isVisible = false
+            }
+        }
+        else {
+            menu?.findItem(R.id.nav_favorite)?.isVisible = false
+            menu?.findItem(R.id.nav_unfavorite)?.isVisible = false
+        }
+        return super.onPrepareOptionsMenu(menu)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.player_details, menu)
+        return true
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            supportFinishAfterTransition()
-            return true
+        when (item.itemId) {
+            android.R.id.home -> {
+                supportFinishAfterTransition()
+                return true
+            }
+            R.id.nav_favorite -> {
+                onFavorite()
+            }
+            R.id.nav_unfavorite -> {
+                onUnfavorite()
+            }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun onFavorite() {
+        if (mPlayer.uuid != null) {
+            mViewModel.insertFriend(Friend(mPlayer.uuid!!))
+
+            snackbar?.dismiss()
+            snackbar = Snackbar.make(mCoordinatorLayout, getString(R.string.marked_as_favorite), Snackbar.LENGTH_SHORT)
+            snackbar?.show()
+        }
+    }
+
+    private fun onUnfavorite() {
+        if (mPlayer.uuid != null) {
+            mViewModel.deleteFriend(Friend(mPlayer.uuid!!))
+
+            snackbar?.dismiss()
+            snackbar = Snackbar.make(mCoordinatorLayout, getString(R.string.unmarked_as_favorite), Snackbar.LENGTH_SHORT)
+            snackbar?.show()
+        }
     }
 }

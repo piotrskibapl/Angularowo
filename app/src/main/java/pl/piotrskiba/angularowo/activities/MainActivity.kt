@@ -30,6 +30,7 @@ import pl.piotrskiba.angularowo.network.ServerAPIClient.retrofitInstance
 import pl.piotrskiba.angularowo.network.ServerAPIInterface
 import pl.piotrskiba.angularowo.network.UnauthorizedInterceptor.Companion.setUnauthorizedListener
 import pl.piotrskiba.angularowo.utils.NotificationUtils
+import pl.piotrskiba.angularowo.utils.PreferenceUtils
 import pl.piotrskiba.angularowo.utils.RankUtils.getRankFromPreferences
 import retrofit2.Call
 import retrofit2.Callback
@@ -104,13 +105,10 @@ class MainActivity : AppCompatActivity(), UnauthorizedResponseListener, Rewarded
                 waitingForLogin = true
             }
             else {
-                val username = sharedPreferences.getString(getString(R.string.pref_key_nickname), null)
-                val rank = sharedPreferences.getString(getString(R.string.pref_key_rank), null)
-
                 val navHeaderUsernameTextView = mNavigationView.getHeaderView(0).findViewById<TextView>(R.id.navheader_username)
                 val navHeaderRankTextView = mNavigationView.getHeaderView(0).findViewById<TextView>(R.id.navheader_rank)
-                navHeaderUsernameTextView.text = username
-                navHeaderRankTextView.text = rank
+                navHeaderUsernameTextView.text = PreferenceUtils.getUsername(this)
+                navHeaderRankTextView.text = PreferenceUtils.getRankName(this)
             }
         }
         setNavigationItemSelectedListener()

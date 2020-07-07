@@ -1,6 +1,7 @@
 package pl.piotrskiba.angularowo.fragments
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import butterknife.BindView
@@ -23,6 +25,7 @@ import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.SpacesItemDecoration
 import pl.piotrskiba.angularowo.activities.PlayerDetailsActivity
 import pl.piotrskiba.angularowo.adapters.PlayerListAdapter
+import pl.piotrskiba.angularowo.database.entity.Friend
 import pl.piotrskiba.angularowo.interfaces.NetworkErrorListener
 import pl.piotrskiba.angularowo.interfaces.PlayerClickListener
 import pl.piotrskiba.angularowo.models.Player
@@ -32,9 +35,14 @@ class PlayerListFragment : Fragment(), PlayerClickListener, NetworkErrorListener
 
     private lateinit var mViewModel: AppViewModel
     private lateinit var mPlayerListAdapter: PlayerListAdapter
+    private lateinit var mFavoritePlayerListAdapter: PlayerListAdapter
+    private lateinit var mFriendsObserver: Observer<List<Friend>>
 
     @BindView(R.id.rv_players)
     lateinit var mPlayerList: RecyclerView
+
+    @BindView(R.id.rv_players_favorite)
+    lateinit var mFavoritePlayerList: RecyclerView
 
     @BindView(R.id.swiperefresh)
     lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
@@ -58,18 +66,9 @@ class PlayerListFragment : Fragment(), PlayerClickListener, NetworkErrorListener
 
         ButterKnife.bind(this, view)
 
-        mPlayerListAdapter = PlayerListAdapter(requireContext(), this)
-        mPlayerList.adapter = mPlayerListAdapter
+        setupPlayerListRecyclerView()
+        setupFavoritePlayerListRecyclerView()
 
-        val spanCount = resources.getInteger(R.integer.player_list_span_count)
-        val layoutManager = GridLayoutManager(context, spanCount)
-        if (spanCount > 1) {
-            val spacingInPixels = resources.getDimensionPixelSize(R.dimen.margin_small)
-            mPlayerList.addItemDecoration(SpacesItemDecoration(spacingInPixels))
-        }
-        mPlayerList.layoutManager = layoutManager
-
-        mPlayerList.setHasFixedSize(true)
         mSwipeRefreshLayout.isRefreshing = true
         seekForPlayerList()
 
@@ -80,17 +79,76 @@ class PlayerListFragment : Fragment(), PlayerClickListener, NetworkErrorListener
         return view
     }
 
+    private fun setupPlayerListRecyclerView() {
+        val layoutManager: RecyclerView.LayoutManager
+        val displayMode = resources.configuration.orientation
+        if (displayMode == Configuration.ORIENTATION_PORTRAIT) {
+            layoutManager = LinearLayoutManager(context)
+        } else {
+            layoutManager = GridLayoutManager(context, 2)
+            val spacingInPixels = resources.getDimensionPixelSize(R.dimen.margin_small)
+            mPlayerList.addItemDecoration(SpacesItemDecoration(spacingInPixels))
+            mFavoritePlayerList.addItemDecoration(SpacesItemDecoration(spacingInPixels))
+        }
+
+        mPlayerListAdapter = PlayerListAdapter(requireContext(), this, mViewModel)
+        mPlayerList.adapter = mPlayerListAdapter
+        mPlayerList.layoutManager = layoutManager
+    }
+
+    private fun setupFavoritePlayerListRecyclerView() {
+        val layoutManager: RecyclerView.LayoutManager
+        val displayMode = resources.configuration.orientation
+        if (displayMode == Configuration.ORIENTATION_PORTRAIT) {
+            layoutManager = LinearLayoutManager(context)
+        } else {
+            layoutManager = GridLayoutManager(context, 2)
+            val spacingInPixels = resources.getDimensionPixelSize(R.dimen.margin_small)
+            mPlayerList.addItemDecoration(SpacesItemDecoration(spacingInPixels))
+            mFavoritePlayerList.addItemDecoration(SpacesItemDecoration(spacingInPixels))
+        }
+
+        mFavoritePlayerListAdapter = PlayerListAdapter(requireContext(), this, mViewModel)
+        mFavoritePlayerList.adapter = mFavoritePlayerListAdapter
+        mFavoritePlayerList.layoutManager = layoutManager
+    }
+
     private fun seekForPlayerList() {
         mViewModel.setNetworkErrorListener(this)
         mViewModel.getPlayerList().observe(viewLifecycleOwner, Observer { playerList: PlayerList? ->
             if (playerList != null) {
                 mSwipeRefreshLayout.isRefreshing = false
-                mPlayerListAdapter.setPlayerList(playerList)
 
-                if (playerList.players.isEmpty())
+                if (this::mFriendsObserver.isInitialized && mViewModel.allFriends.hasObservers()) {
+                    mViewModel.allFriends.removeObserver(mFriendsObserver)
+                }
+
+                if (playerList.players.isEmpty()) {
                     showNoPlayersLayout()
-                else
-                    showDefaultLayout()
+                }
+                else {
+                    mFriendsObserver = Observer {friends ->
+                        val newPlayerList = ArrayList<Player>()
+                        newPlayerList.addAll(playerList.players)
+                        val newFavoritePlayerList = ArrayList<Player>()
+
+                        if (friends != null) {
+                            playerList.players.forEach { player ->
+                                if (player.uuid != null && friends.contains(Friend(player.uuid))) {
+                                    newPlayerList.remove(player)
+                                    newFavoritePlayerList.add(player)
+                                }
+                            }
+                        }
+
+                        mPlayerListAdapter.setPlayerList(PlayerList(newPlayerList))
+                        mFavoritePlayerListAdapter.setPlayerList(PlayerList(newFavoritePlayerList))
+
+                        showDefaultLayout(newPlayerList.isNotEmpty(), newFavoritePlayerList.isNotEmpty())
+                    }
+
+                    mViewModel.allFriends.observe(viewLifecycleOwner, mFriendsObserver)
+                }
             }
         })
     }
@@ -111,12 +169,25 @@ class PlayerListFragment : Fragment(), PlayerClickListener, NetworkErrorListener
         }
     }
 
-    private fun showDefaultLayout() {
+    private fun showDefaultLayout(hasPlayers: Boolean, hasFavoritePlayers: Boolean) {
         mSwipeRefreshLayout.isRefreshing = false
         mNoPlayersTextView.visibility = View.GONE
-        mPlayerList.visibility = View.VISIBLE
         mNoInternetLayout.visibility = View.GONE
         mServerErrorLayout.visibility = View.GONE
+
+        if (hasPlayers) {
+            mPlayerList.visibility = View.VISIBLE
+        }
+        else {
+            mPlayerList.visibility = View.GONE
+        }
+
+        if (hasFavoritePlayers) {
+            mFavoritePlayerList.visibility = View.VISIBLE
+        }
+        else {
+            mFavoritePlayerList.visibility = View.GONE
+        }
     }
 
     private fun showNoPlayersLayout() {
