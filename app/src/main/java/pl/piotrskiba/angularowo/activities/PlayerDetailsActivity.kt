@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -19,6 +20,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import pl.piotrskiba.angularowo.AppViewModel
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.IntegerVersionSignature
@@ -43,6 +45,9 @@ class PlayerDetailsActivity : AppCompatActivity(), OnRefreshListener {
 
     @BindView(R.id.swiperefresh)
     lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
+
+    @BindView(R.id.coordinatorLayout)
+    lateinit var mCoordinatorLayout: CoordinatorLayout
 
     @BindView(R.id.iv_player_body)
     lateinit var mPlayerBodyImageView: ImageView
@@ -76,6 +81,8 @@ class PlayerDetailsActivity : AppCompatActivity(), OnRefreshListener {
 
     private lateinit var mViewModel: AppViewModel
     private lateinit var mPlayer: Player
+
+    private var snackbar: Snackbar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -236,12 +243,20 @@ class PlayerDetailsActivity : AppCompatActivity(), OnRefreshListener {
     private fun onFavorite() {
         if (mPlayer.uuid != null) {
             mViewModel.insertFriend(Friend(mPlayer.uuid!!))
+
+            snackbar?.dismiss()
+            snackbar = Snackbar.make(mCoordinatorLayout, getString(R.string.marked_as_favorite), Snackbar.LENGTH_SHORT)
+            snackbar?.show()
         }
     }
 
     private fun onUnfavorite() {
         if (mPlayer.uuid != null) {
             mViewModel.deleteFriend(Friend(mPlayer.uuid!!))
+
+            snackbar?.dismiss()
+            snackbar = Snackbar.make(mCoordinatorLayout, getString(R.string.unmarked_as_favorite), Snackbar.LENGTH_SHORT)
+            snackbar?.show()
         }
     }
 }
