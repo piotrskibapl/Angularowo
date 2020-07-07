@@ -158,7 +158,7 @@ class PlayerDetailsActivity : AppCompatActivity(), OnRefreshListener {
             val color = getColorFromCode(this, player.rank.colorCode)
             (mPlayerAvatar.parent as ConstraintLayout).setBackgroundColor(color)
 
-            if (player.vanished)
+            if (player.isVanished)
                 mPlayerVanishIcon.visibility = View.VISIBLE
             else
                 mPlayerVanishIcon.visibility = View.INVISIBLE

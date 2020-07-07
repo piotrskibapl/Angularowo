@@ -55,7 +55,7 @@ class PlayerListAdapter(private val context: Context, private val mClickListener
         val color = getColorFromCode(context, player.rank.colorCode)
         (holder.mPlayerAvatar.parent as ConstraintLayout).setBackgroundColor(color)
 
-        if (player.vanished)
+        if (player.isVanished)
             holder.mPlayerVanishIcon.visibility = View.VISIBLE
         else
             holder.mPlayerVanishIcon.visibility = View.INVISIBLE

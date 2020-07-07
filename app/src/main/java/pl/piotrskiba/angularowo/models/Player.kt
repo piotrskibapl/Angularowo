@@ -9,7 +9,7 @@ data class Player(
         val uuid: String?,
         val username: String,
         @SerializedName("rank") val rankKey: String,
-        val vanished: Boolean
+        @SerializedName(value = "vanished") val isVanished: Boolean
 ) : Serializable {
 
     val rank: Rank
