@@ -91,7 +91,7 @@ class PlayerListFragment : Fragment(), PlayerClickListener, NetworkErrorListener
             mFavoritePlayerList.addItemDecoration(SpacesItemDecoration(spacingInPixels))
         }
 
-        mPlayerListAdapter = PlayerListAdapter(requireContext(), this)
+        mPlayerListAdapter = PlayerListAdapter(requireContext(), this, mViewModel)
         mPlayerList.adapter = mPlayerListAdapter
         mPlayerList.layoutManager = layoutManager
     }
@@ -108,7 +108,7 @@ class PlayerListFragment : Fragment(), PlayerClickListener, NetworkErrorListener
             mFavoritePlayerList.addItemDecoration(SpacesItemDecoration(spacingInPixels))
         }
 
-        mFavoritePlayerListAdapter = PlayerListAdapter(requireContext(), this)
+        mFavoritePlayerListAdapter = PlayerListAdapter(requireContext(), this, mViewModel)
         mFavoritePlayerList.adapter = mFavoritePlayerListAdapter
         mFavoritePlayerList.layoutManager = layoutManager
     }

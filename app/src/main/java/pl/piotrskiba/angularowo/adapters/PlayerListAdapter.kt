@@ -12,9 +12,11 @@ import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.bumptech.glide.Glide
+import pl.piotrskiba.angularowo.AppViewModel
 import pl.piotrskiba.angularowo.IntegerVersionSignature
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.adapters.PlayerListAdapter.PlayerViewHolder
+import pl.piotrskiba.angularowo.database.entity.Friend
 import pl.piotrskiba.angularowo.interfaces.PlayerClickListener
 import pl.piotrskiba.angularowo.models.Player
 import pl.piotrskiba.angularowo.models.PlayerList
@@ -23,7 +25,12 @@ import pl.piotrskiba.angularowo.utils.GlideUtils.getSignatureVersionNumber
 import pl.piotrskiba.angularowo.utils.RankUtils.allRanks
 import pl.piotrskiba.angularowo.utils.UrlUtils.buildAvatarUrl
 
-class PlayerListAdapter(private val context: Context, private val mClickListener: PlayerClickListener) : RecyclerView.Adapter<PlayerViewHolder>() {
+class PlayerListAdapter(
+        private val context: Context,
+        private val mClickListener: PlayerClickListener,
+        private val mViewModel: AppViewModel
+) : RecyclerView.Adapter<PlayerViewHolder>() {
+
     private var playerList: PlayerList = PlayerList(ArrayList())
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlayerViewHolder {
@@ -59,6 +66,14 @@ class PlayerListAdapter(private val context: Context, private val mClickListener
             holder.mPlayerVanishIcon.visibility = View.VISIBLE
         else
             holder.mPlayerVanishIcon.visibility = View.INVISIBLE
+
+        val friends = mViewModel.allFriends.value
+        if (player.uuid != null && friends != null && friends.contains(Friend(player.uuid))) {
+            holder.mPlayerHeartIcon.visibility = View.VISIBLE
+        }
+        else {
+            holder.mPlayerHeartIcon.visibility = View.GONE
+        }
     }
 
     override fun getItemCount(): Int {
@@ -78,6 +93,9 @@ class PlayerListAdapter(private val context: Context, private val mClickListener
 
         @BindView(R.id.iv_vanish_status)
         lateinit var mPlayerVanishIcon: ImageView
+
+        @BindView(R.id.iv_heart)
+        lateinit var mPlayerHeartIcon: ImageView
 
         override fun onClick(view: View) {
             mClickListener.onPlayerClick(view, playerList.players[bindingAdapterPosition])

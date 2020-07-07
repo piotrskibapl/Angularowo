@@ -71,6 +71,9 @@ class PlayerDetailsActivity : AppCompatActivity(), OnRefreshListener {
     @BindView(R.id.iv_vanish_status)
     lateinit var mPlayerVanishIcon: ImageView
 
+    @BindView(R.id.iv_heart)
+    lateinit var mPlayerHeartIcon: ImageView
+
     private lateinit var mViewModel: AppViewModel
     private lateinit var mPlayer: Player
 
@@ -100,6 +103,14 @@ class PlayerDetailsActivity : AppCompatActivity(), OnRefreshListener {
 
         mViewModel.allFriends.observe(this, Observer<List<Friend>> {
             invalidateOptionsMenu()
+
+            val friends = mViewModel.allFriends.value
+            if (mPlayer.uuid != null && friends != null && friends.contains(Friend(mPlayer.uuid!!))) {
+                mPlayerHeartIcon.visibility = View.VISIBLE
+            }
+            else {
+                mPlayerHeartIcon.visibility = View.GONE
+            }
         })
     }
 

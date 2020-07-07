@@ -135,6 +135,7 @@
     <string name="ban_type_image_description">Ikona typu kary</string>
     <string name="reward_image_description">Ikona nagrody</string>
     <string name="vanish_image_description">Ikona widoczności gracza</string>
+    <string name="heart_image_description">Ikona oznaczenia jako ulubiony</string>
     <string name="report_status_image_description">Ikona statusu zgłoszenia</string>
     <string name="access_restricted_icon_content_description">Ikona odmowy dostępu</string>
     <string name="navigation_drawer_header_content_description">Obrazek tła</string>
