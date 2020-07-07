@@ -1,5 +1,6 @@
 package pl.piotrskiba.angularowo.database.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -9,8 +10,8 @@ import pl.piotrskiba.angularowo.database.entity.Friend
 @Dao
 interface FriendDao {
 
-    @Query("SELECT * FROM friend")
-    fun getAll(): List<Friend>
+    @Query("SELECT * FROM friends")
+    fun getAll(): LiveData<List<Friend>>
 
     @Insert
     fun insert(friend: Friend)

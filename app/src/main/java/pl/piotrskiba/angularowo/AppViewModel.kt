@@ -4,6 +4,12 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import pl.piotrskiba.angularowo.database.AppDatabase
+import pl.piotrskiba.angularowo.database.FriendRepository
+import pl.piotrskiba.angularowo.database.entity.Friend
 import pl.piotrskiba.angularowo.interfaces.NetworkErrorListener
 import pl.piotrskiba.angularowo.models.*
 import pl.piotrskiba.angularowo.network.ServerAPIClient
@@ -16,6 +22,11 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class AppViewModel(application: Application) : AndroidViewModel(application) {
+
+    private val friendRepository: FriendRepository
+
+    val allFriends: LiveData<List<Friend>>
+
     private var serverStatus: MutableLiveData<ServerStatus?>? = null
     private var player: MutableLiveData<DetailedPlayer?>? = null
     private var activePlayerBans: MutableLiveData<BanList?>? = null
@@ -26,6 +37,12 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     private var allReports: MutableLiveData<ReportList?>? = null
 
     private var mNetworkErrorListener: NetworkErrorListener? = null
+
+    init {
+        val friendDao = AppDatabase.getInstance(application).friendDao()
+        friendRepository = FriendRepository(friendDao)
+        allFriends = friendRepository.all
+    }
 
     fun getServerStatus(): LiveData<ServerStatus?> {
         if (serverStatus == null) {
@@ -335,5 +352,13 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
 
     fun setNetworkErrorListener(listener: NetworkErrorListener) {
         mNetworkErrorListener = listener
+    }
+
+    fun insertFriend(friend: Friend) = viewModelScope.launch(Dispatchers.IO) {
+        friendRepository.insert(friend)
+    }
+
+    fun deleteFriend(friend: Friend) = viewModelScope.launch(Dispatchers.IO) {
+        friendRepository.delete(friend)
     }
 }

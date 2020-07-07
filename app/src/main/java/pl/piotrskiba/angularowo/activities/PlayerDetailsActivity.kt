@@ -2,6 +2,8 @@ package pl.piotrskiba.angularowo.activities
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
@@ -10,15 +12,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.bumptech.glide.Glide
+import pl.piotrskiba.angularowo.AppViewModel
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.IntegerVersionSignature
 import pl.piotrskiba.angularowo.R
+import pl.piotrskiba.angularowo.database.entity.Friend
 import pl.piotrskiba.angularowo.models.DetailedPlayer
 import pl.piotrskiba.angularowo.models.Player
 import pl.piotrskiba.angularowo.network.ServerAPIClient
@@ -65,12 +71,17 @@ class PlayerDetailsActivity : AppCompatActivity(), OnRefreshListener {
     @BindView(R.id.iv_vanish_status)
     lateinit var mPlayerVanishIcon: ImageView
 
+    private lateinit var mViewModel: AppViewModel
+    private lateinit var mPlayer: Player
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_player_details)
 
         ButterKnife.bind(this)
+
+        mViewModel = ViewModelProvider(this).get(AppViewModel::class.java)
 
         setSupportActionBar(mToolbar)
 
@@ -79,13 +90,17 @@ class PlayerDetailsActivity : AppCompatActivity(), OnRefreshListener {
         supportActionBar?.setTitle(R.string.player_info)
 
         if (intent.hasExtra(Constants.EXTRA_PLAYER)) {
-            val player = intent.getSerializableExtra(Constants.EXTRA_PLAYER) as Player
+            mPlayer = intent.getSerializableExtra(Constants.EXTRA_PLAYER) as Player
 
-            populatePlayer(player)
-            loadDetailedPlayerData(player)
+            populatePlayer(mPlayer)
+            loadDetailedPlayerData(mPlayer)
         }
 
         mSwipeRefreshLayout.setOnRefreshListener(this)
+
+        mViewModel.allFriends.observe(this, Observer<List<Friend>> {
+            invalidateOptionsMenu()
+        })
     }
 
     private fun loadDetailedPlayerData(player: Player) {
@@ -167,11 +182,55 @@ class PlayerDetailsActivity : AppCompatActivity(), OnRefreshListener {
         }
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        val friends = mViewModel.allFriends.value
+        if (mPlayer.uuid != null) {
+            if (friends != null && friends.contains(Friend(mPlayer.uuid!!))) {
+                menu?.findItem(R.id.nav_favorite)?.isVisible = false
+                menu?.findItem(R.id.nav_unfavorite)?.isVisible = true
+            }
+            else {
+                menu?.findItem(R.id.nav_favorite)?.isVisible = true
+                menu?.findItem(R.id.nav_unfavorite)?.isVisible = false
+            }
+        }
+        else {
+            menu?.findItem(R.id.nav_favorite)?.isVisible = false
+            menu?.findItem(R.id.nav_unfavorite)?.isVisible = false
+        }
+        return super.onPrepareOptionsMenu(menu)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.player_details, menu)
+        return true
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            supportFinishAfterTransition()
-            return true
+        when (item.itemId) {
+            android.R.id.home -> {
+                supportFinishAfterTransition()
+                return true
+            }
+            R.id.nav_favorite -> {
+                onFavorite()
+            }
+            R.id.nav_unfavorite -> {
+                onUnfavorite()
+            }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun onFavorite() {
+        if (mPlayer.uuid != null) {
+            mViewModel.insertFriend(Friend(mPlayer.uuid!!))
+        }
+    }
+
+    private fun onUnfavorite() {
+        if (mPlayer.uuid != null) {
+            mViewModel.deleteFriend(Friend(mPlayer.uuid!!))
+        }
     }
 }

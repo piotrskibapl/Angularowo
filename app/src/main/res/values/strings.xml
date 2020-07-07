@@ -63,6 +63,8 @@
     <string name="error_no_players">Aktualnie nie ma nikogo na serwerze.</string>
 
     <!-- activity_player_details.xml -->
+    <string name="mark_as_favorite">Dodaj do ulubionych</string>
+    <string name="unmark_as_favorite">Usuń z ulubionych</string>
     <string name="player_info">Informacje o graczu</string>
     <string name="tokens_title_others">Tokeny gracza:</string>
     <string name="player_banner_transition_name" translatable="false">player_banner</string>
