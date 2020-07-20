@@ -134,7 +134,7 @@ class PlayerListFragment : Fragment(), PlayerClickListener, NetworkErrorListener
 
                         if (friends != null) {
                             playerList.players.forEach { player ->
-                                if (player.uuid != null && friends.contains(Friend(player.uuid))) {
+                                if (friends.contains(Friend(player.uuid))) {
                                     newPlayerList.remove(player)
                                     newFavoritePlayerList.add(player)
                                 }

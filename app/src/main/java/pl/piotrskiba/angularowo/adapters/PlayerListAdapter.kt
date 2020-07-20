@@ -45,16 +45,11 @@ class PlayerListAdapter(
     override fun onBindViewHolder(holder: PlayerViewHolder, position: Int) {
         val player = playerList.players[position]
 
-        if (player.uuid != null) {
-            Glide.with(context)
-                    .load(buildAvatarUrl(player.uuid, true))
-                    .signature(IntegerVersionSignature(getSignatureVersionNumber(5)))
-                    .placeholder(R.drawable.default_avatar)
-                    .into(holder.mPlayerAvatar)
-        } else {
-            val avatar = ContextCompat.getDrawable(context, R.drawable.default_avatar)
-            holder.mPlayerAvatar.setImageDrawable(avatar)
-        }
+        Glide.with(context)
+                .load(buildAvatarUrl(player.uuid, true))
+                .signature(IntegerVersionSignature(getSignatureVersionNumber(5)))
+                .placeholder(R.drawable.default_avatar)
+                .into(holder.mPlayerAvatar)
 
         holder.mPlayerName.text = player.username
         holder.mPlayerRank.text = player.rank.name
@@ -68,7 +63,7 @@ class PlayerListAdapter(
             holder.mPlayerVanishIcon.visibility = View.INVISIBLE
 
         val friends = mViewModel.allFriends.value
-        if (player.uuid != null && friends != null && friends.contains(Friend(player.uuid))) {
+        if (friends != null && friends.contains(Friend(player.uuid))) {
             holder.mPlayerHeartIcon.visibility = View.VISIBLE
         }
         else {

@@ -171,7 +171,7 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
                 loadedPlayer = true
                 showDefaultLayoutIfLoadedAllData()
 
-                if (player.uuid != null && context != null) {
+                if (context != null) {
                     Glide.with(requireContext())
                             .load(buildBodyUrl(player.uuid, true))
                             .signature(IntegerVersionSignature(getSignatureVersionNumber(1)))
