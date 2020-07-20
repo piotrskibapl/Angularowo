@@ -232,8 +232,8 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
 
     override fun onResume() {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val username = PreferenceUtils.getUsername(requireContext())
-        if (username != null) {
+        val uuid = PreferenceUtils.getUuid(requireContext())
+        if (uuid != null) {
             // subscribe to current app version Firebase topic
             if (!sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_app_version_topic, BuildConfig.VERSION_CODE))) {
                 FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_APP_VERSION_TOPIC_PREFIX + BuildConfig.VERSION_CODE)
@@ -249,13 +249,13 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
             }
 
             // subscribe to player's individual Firebase topic
-            if (!sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_player_topic))) {
-                FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_PLAYER_TOPIC_PREFIX + username)
+            if (!sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_uuid_topic))) {
+                FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_PLAYER_TOPIC_PREFIX + uuid)
                         .addOnCompleteListener { task: Task<Void?> ->
                             if (isAdded) {
                                 if (task.isSuccessful) {
                                     val editor = sharedPreferences.edit()
-                                    editor.putBoolean(getString(R.string.pref_key_subscribed_to_player_topic), true)
+                                    editor.putBoolean(getString(R.string.pref_key_subscribed_to_uuid_topic), true)
                                     editor.apply()
                                 }
                             }

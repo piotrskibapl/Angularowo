@@ -37,10 +37,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
                             val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
                             val editor = sharedPreferences.edit()
 
-                            if (sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_player_topic))) {
-                                val username = sharedPreferences.getString(getString(R.string.pref_key_nickname), null)
-                                FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_PLAYER_TOPIC_PREFIX + username)
-                                editor.remove(getString(R.string.pref_key_subscribed_to_player_topic))
+                            if (sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_uuid_topic))) {
+                                val uuid = sharedPreferences.getString(getString(R.string.pref_key_nickname), null)
+                                FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_PLAYER_TOPIC_PREFIX + uuid)
+                                editor.remove(getString(R.string.pref_key_subscribed_to_uuid_topic))
                             }
 
                             val rank = sharedPreferences.getString(getString(R.string.pref_key_rank), null)
