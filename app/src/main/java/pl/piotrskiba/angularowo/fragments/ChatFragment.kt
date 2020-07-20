@@ -167,7 +167,7 @@ class ChatFragment : Fragment(), ChatMessageClickListener {
         val intent = Intent(context, PlayerDetailsActivity::class.java)
         intent.putExtra(Constants.EXTRA_PLAYER,
                 Player(
-                        null,
+                        clickedChatMessage.uuid,
                         clickedChatMessage.username,
                         clickedChatMessage.rank,
                         false
@@ -182,11 +182,12 @@ class ChatFragment : Fragment(), ChatMessageClickListener {
 
         override fun onMessage(webSocket: WebSocket, text: String) {
             val messageInfo = text.split(";").toTypedArray()
-            val username = messageInfo[0]
-            val rank = messageInfo[1]
-            val body = messageInfo[2]
+            val uuid = messageInfo[0]
+            val username = messageInfo[1]
+            val rank = messageInfo[2]
+            val body = messageInfo[3]
 
-            val chatMessage = ChatMessage(username, rank, body)
+            val chatMessage = ChatMessage(uuid, username, rank, body)
             activity!!.runOnUiThread {
                 if (!mChat.canScrollVertically(1)) {
                     mChatAdapter.addMessage(chatMessage)

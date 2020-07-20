@@ -3,6 +3,7 @@ package pl.piotrskiba.angularowo.models
 import com.google.gson.annotations.SerializedName
 
 class AccessToken(
+        val uuid: String,
         val username: String,
         @field:SerializedName("access_token")
         val accessToken: String,

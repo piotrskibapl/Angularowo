@@ -113,7 +113,7 @@ class PlayerDetailsActivity : AppCompatActivity(), OnRefreshListener {
             invalidateOptionsMenu()
 
             val friends = mViewModel.allFriends.value
-            if (mPlayer.uuid != null && friends != null && friends.contains(Friend(mPlayer.uuid!!))) {
+            if (friends != null && friends.contains(Friend(mPlayer.uuid))) {
                 mPlayerHeartIcon.visibility = View.VISIBLE
             }
             else {
@@ -154,22 +154,17 @@ class PlayerDetailsActivity : AppCompatActivity(), OnRefreshListener {
         }
 
         if (canPopulate) {
-            if (player.uuid != null) {
-                Glide.with(this)
-                        .load(buildAvatarUrl(player.uuid, true))
-                        .signature(IntegerVersionSignature(getSignatureVersionNumber(5)))
-                        .placeholder(R.drawable.default_body)
-                        .into(mPlayerAvatar)
+            Glide.with(this)
+                    .load(buildAvatarUrl(player.uuid, true))
+                    .signature(IntegerVersionSignature(getSignatureVersionNumber(5)))
+                    .placeholder(R.drawable.default_body)
+                    .into(mPlayerAvatar)
 
-                Glide.with(this)
-                        .load(buildBodyUrl(player.uuid, true))
-                        .signature(IntegerVersionSignature(getSignatureVersionNumber(5)))
-                        .placeholder(R.drawable.default_body)
-                        .into(mPlayerBodyImageView)
-            } else {
-                val avatar = ContextCompat.getDrawable(this, R.drawable.default_avatar)
-                mPlayerAvatar.setImageDrawable(avatar)
-            }
+            Glide.with(this)
+                    .load(buildBodyUrl(player.uuid, true))
+                    .signature(IntegerVersionSignature(getSignatureVersionNumber(5)))
+                    .placeholder(R.drawable.default_body)
+                    .into(mPlayerBodyImageView)
 
             mPlayerName.text = player.username
             mPlayerRank.text = player.rank.name
@@ -218,8 +213,8 @@ class PlayerDetailsActivity : AppCompatActivity(), OnRefreshListener {
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
         val friends = mViewModel.allFriends.value
-        if (mPlayer.uuid != null && mPlayer.username != PreferenceUtils.getUsername(this)) {
-            if (friends != null && friends.contains(Friend(mPlayer.uuid!!))) {
+        if (mPlayer.username != PreferenceUtils.getUsername(this)) {
+            if (friends != null && friends.contains(Friend(mPlayer.uuid))) {
                 menu?.findItem(R.id.nav_favorite)?.isVisible = false
                 menu?.findItem(R.id.nav_unfavorite)?.isVisible = true
             }
@@ -257,22 +252,18 @@ class PlayerDetailsActivity : AppCompatActivity(), OnRefreshListener {
     }
 
     private fun onFavorite() {
-        if (mPlayer.uuid != null) {
-            mViewModel.insertFriend(Friend(mPlayer.uuid!!))
+        mViewModel.insertFriend(Friend(mPlayer.uuid))
 
-            snackbar?.dismiss()
-            snackbar = Snackbar.make(mCoordinatorLayout, getString(R.string.marked_as_favorite), Snackbar.LENGTH_SHORT)
-            snackbar?.show()
-        }
+        snackbar?.dismiss()
+        snackbar = Snackbar.make(mCoordinatorLayout, getString(R.string.marked_as_favorite), Snackbar.LENGTH_SHORT)
+        snackbar?.show()
     }
 
     private fun onUnfavorite() {
-        if (mPlayer.uuid != null) {
-            mViewModel.deleteFriend(Friend(mPlayer.uuid!!))
+        mViewModel.deleteFriend(Friend(mPlayer.uuid))
 
-            snackbar?.dismiss()
-            snackbar = Snackbar.make(mCoordinatorLayout, getString(R.string.unmarked_as_favorite), Snackbar.LENGTH_SHORT)
-            snackbar?.show()
-        }
+        snackbar?.dismiss()
+        snackbar = Snackbar.make(mCoordinatorLayout, getString(R.string.unmarked_as_favorite), Snackbar.LENGTH_SHORT)
+        snackbar?.show()
     }
 }
