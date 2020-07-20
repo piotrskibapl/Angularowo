@@ -178,12 +178,6 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
                         editor.putString(getString(R.string.pref_key_nickname), player.username)
                         editor.commit()
                     }
-
-                    Glide.with(requireContext())
-                            .load(buildBodyUrl(player.uuid, true))
-                            .signature(IntegerVersionSignature(getSignatureVersionNumber(1)))
-                            .placeholder(R.drawable.default_body)
-                            .into(mPlayerBodyImageView)
                 }
 
                 mPlayerBalanceTextView.text = getString(R.string.balance_format, player.balance.toInt())
@@ -284,6 +278,15 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
 
         val username = PreferenceUtils.getUsername(requireContext())
         mGreetingTextView.text = getString(R.string.greeting, username)
+
+        val uuid = PreferenceUtils.getUuid(requireContext())
+        if (uuid != null) {
+            Glide.with(requireContext())
+                    .load(buildBodyUrl(uuid, true))
+                    .signature(IntegerVersionSignature(getSignatureVersionNumber(1)))
+                    .placeholder(R.drawable.default_body)
+                    .into(mPlayerBodyImageView)
+        }
 
         val actionbar = (activity as AppCompatActivity?)?.supportActionBar
         actionbar?.setTitle(R.string.app_name)
