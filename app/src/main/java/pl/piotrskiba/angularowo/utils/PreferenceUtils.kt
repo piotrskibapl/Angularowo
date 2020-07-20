@@ -19,6 +19,18 @@ object PreferenceUtils {
     }
 
     /**
+     * Function for getting the UUID of user
+     *
+     * @param context
+     * @return an UUID or null if not set
+     */
+    @JvmStatic
+    fun getUuid(context: Context): String? {
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        return sharedPreferences.getString(context.getString(R.string.pref_key_uuid), null)
+    }
+
+    /**
      * Function for getting the username from the preferences
      *
      * @param context

@@ -15,8 +15,7 @@ import pl.piotrskiba.angularowo.models.*
 import pl.piotrskiba.angularowo.network.ServerAPIClient
 import pl.piotrskiba.angularowo.network.ServerAPIClient.retrofitInstance
 import pl.piotrskiba.angularowo.network.ServerAPIInterface
-import pl.piotrskiba.angularowo.utils.PreferenceUtils.getAccessToken
-import pl.piotrskiba.angularowo.utils.PreferenceUtils.getUsername
+import pl.piotrskiba.angularowo.utils.PreferenceUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -59,7 +58,7 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun loadServerStatus() {
-        val accessToken = getAccessToken(getApplication())
+        val accessToken = PreferenceUtils.getAccessToken(getApplication())
 
         if(accessToken != null) {
             val serverAPIInterface = retrofitInstance.create(ServerAPIInterface::class.java)
@@ -97,12 +96,12 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun loadPlayer() {
-        val accessToken = getAccessToken(getApplication())
-        val username = getUsername(getApplication())
+        val accessToken = PreferenceUtils.getAccessToken(getApplication())
+        val uuid = PreferenceUtils.getUuid(getApplication())
 
-        if(accessToken != null && username != null) {
+        if(accessToken != null && uuid != null) {
             val serverAPIInterface = retrofitInstance.create(ServerAPIInterface::class.java)
-            serverAPIInterface.getPlayerInfo(ServerAPIClient.API_KEY, username, accessToken).enqueue(object : Callback<DetailedPlayer?> {
+            serverAPIInterface.getPlayerInfoFromUuid(ServerAPIClient.API_KEY, uuid, accessToken).enqueue(object : Callback<DetailedPlayer?> {
                 override fun onResponse(call: Call<DetailedPlayer?>, response: Response<DetailedPlayer?>) {
                     if (response.isSuccessful && response.body() != null) {
                         player?.setValue(response.body())
@@ -136,8 +135,8 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun loadActivePlayerBans() {
-        val accessToken = getAccessToken(getApplication())
-        val username = getUsername(getApplication())
+        val accessToken = PreferenceUtils.getAccessToken(getApplication())
+        val username = PreferenceUtils.getUsername(getApplication())
 
         if(accessToken != null && username != null) {
             val serverAPIInterface = retrofitInstance.create(ServerAPIInterface::class.java)
@@ -175,7 +174,7 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun loadBanList() {
-        val accessToken = getAccessToken(getApplication())
+        val accessToken = PreferenceUtils.getAccessToken(getApplication())
 
         if(accessToken != null) {
             val serverAPIInterface = retrofitInstance.create(ServerAPIInterface::class.java)
@@ -213,7 +212,7 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun loadPlayerList() {
-        val accessToken = getAccessToken(getApplication())
+        val accessToken = PreferenceUtils.getAccessToken(getApplication())
 
         if(accessToken != null) {
             val serverAPIInterface = retrofitInstance.create(ServerAPIInterface::class.java)
@@ -251,7 +250,7 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun loadOffersInfo() {
-        val accessToken = getAccessToken(getApplication())
+        val accessToken = PreferenceUtils.getAccessToken(getApplication())
 
         if(accessToken != null) {
             val serverAPIInterface = retrofitInstance.create(ServerAPIInterface::class.java)
@@ -289,7 +288,7 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun loadUserReports() {
-        val accessToken = getAccessToken(getApplication())
+        val accessToken = PreferenceUtils.getAccessToken(getApplication())
 
         if(accessToken != null) {
             val serverAPIInterface = retrofitInstance.create(ServerAPIInterface::class.java)
@@ -327,7 +326,7 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun loadAllReports() {
-        val accessToken = getAccessToken(getApplication())
+        val accessToken = PreferenceUtils.getAccessToken(getApplication())
 
         if(accessToken != null) {
             val serverAPIInterface = retrofitInstance.create(ServerAPIInterface::class.java)

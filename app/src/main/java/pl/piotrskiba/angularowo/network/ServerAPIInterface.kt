@@ -22,7 +22,10 @@ interface ServerAPIInterface {
     fun registerDevice(@Query("api_key") apiKey: String, @Query("user_code") user_code: String): Call<AccessToken>
 
     @GET("get_player_info.php")
-    fun getPlayerInfo(@Query("api_key") apiKey: String, @Query("username") username: String, @Query("access_token") access_token: String): Call<DetailedPlayer>
+    fun getPlayerInfoFromUsername(@Query("api_key") apiKey: String, @Query("username") username: String, @Query("access_token") access_token: String): Call<DetailedPlayer>
+
+    @GET("get_player_info.php")
+    fun getPlayerInfoFromUuid(@Query("api_key") apiKey: String, @Query("uuid") uuid: String, @Query("access_token") access_token: String): Call<DetailedPlayer>
 
     @GET("get_offers_info.php")
     fun getOffersInfo(@Query("api_key") apiKey: String, @Query("access_token") access_token: String): Call<OffersInfo>

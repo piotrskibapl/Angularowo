@@ -9,6 +9,7 @@
     <string name="notification_channel_description_silent">Powiadomienia w aplikacji dla których wyłączony jest dźwięk oraz wibracje</string>
 
     <!-- preferences -->
+    <string name="pref_key_uuid" translatable="false">uuid</string>
     <string name="pref_key_nickname" translatable="false">nickname</string>
     <string name="pref_key_rank" translatable="false">rank</string>
     <string name="pref_key_access_token" translatable="false">access_token</string>

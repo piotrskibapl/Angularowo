@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
@@ -130,7 +129,7 @@ class PlayerDetailsActivity : AppCompatActivity(), OnRefreshListener {
 
         accessToken?.run {
             val serverAPIInterface = retrofitInstance.create(ServerAPIInterface::class.java)
-            serverAPIInterface.getPlayerInfo(ServerAPIClient.API_KEY, player.username, accessToken).enqueue(object : Callback<DetailedPlayer?> {
+            serverAPIInterface.getPlayerInfoFromUsername(ServerAPIClient.API_KEY, player.username, accessToken).enqueue(object : Callback<DetailedPlayer?> {
                 override fun onResponse(call: Call<DetailedPlayer?>, response: Response<DetailedPlayer?>) {
                     if (response.isSuccessful && response.body() != null) {
                         val detailedPlayer = response.body() as DetailedPlayer

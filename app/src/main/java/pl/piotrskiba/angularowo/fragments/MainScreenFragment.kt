@@ -35,7 +35,7 @@ import pl.piotrskiba.angularowo.interfaces.BanClickListener
 import pl.piotrskiba.angularowo.interfaces.NetworkErrorListener
 import pl.piotrskiba.angularowo.models.*
 import pl.piotrskiba.angularowo.utils.GlideUtils.getSignatureVersionNumber
-import pl.piotrskiba.angularowo.utils.PreferenceUtils.getUsername
+import pl.piotrskiba.angularowo.utils.PreferenceUtils
 import pl.piotrskiba.angularowo.utils.RankUtils.getRankFromPreferences
 import pl.piotrskiba.angularowo.utils.TextUtils
 import pl.piotrskiba.angularowo.utils.TextUtils.formatPlaytime
@@ -172,6 +172,13 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
                 showDefaultLayoutIfLoadedAllData()
 
                 if (context != null) {
+                    if (PreferenceUtils.getUsername(requireContext()) != player.username) {
+                        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+                        val editor = sharedPreferences.edit()
+                        editor.putString(getString(R.string.pref_key_nickname), player.username)
+                        editor.commit()
+                    }
+
                     Glide.with(requireContext())
                             .load(buildBodyUrl(player.uuid, true))
                             .signature(IntegerVersionSignature(getSignatureVersionNumber(1)))
@@ -225,7 +232,7 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
 
     override fun onResume() {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val username = getUsername(requireContext())
+        val username = PreferenceUtils.getUsername(requireContext())
         if (username != null) {
             // subscribe to current app version Firebase topic
             if (!sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_app_version_topic, BuildConfig.VERSION_CODE))) {
@@ -275,7 +282,7 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
     private fun populateUi() {
         showDefaultLayout()
 
-        val username = getUsername(requireContext())
+        val username = PreferenceUtils.getUsername(requireContext())
         mGreetingTextView.text = getString(R.string.greeting, username)
 
         val actionbar = (activity as AppCompatActivity?)?.supportActionBar

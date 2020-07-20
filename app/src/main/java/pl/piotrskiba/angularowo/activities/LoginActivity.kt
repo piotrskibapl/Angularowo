@@ -71,6 +71,7 @@ class LoginActivity : AppCompatActivity() {
                     if (accessToken != null) {
                         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
                         val editor = sharedPreferences.edit()
+                        editor.putString(getString(R.string.pref_key_uuid), accessToken.uuid)
                         editor.putString(getString(R.string.pref_key_nickname), accessToken.username)
                         editor.putString(getString(R.string.pref_key_access_token), accessToken.accessToken)
                         editor.commit()
