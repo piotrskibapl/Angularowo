@@ -98,7 +98,9 @@ class MainActivity : AppCompatActivity(), UnauthorizedResponseListener, Rewarded
         super.onResume()
         if (!waitingForLogin) {
             val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-            if (!sharedPreferences.contains(getString(R.string.pref_key_access_token))) {
+            // checking uuid to force relogin after upgrading to v3.3
+            if (!sharedPreferences.contains(getString(R.string.pref_key_access_token)) ||
+                    !sharedPreferences.contains(getString(R.string.pref_key_uuid))) {
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivityForResult(intent, Constants.REQUEST_CODE_REGISTER)
 
