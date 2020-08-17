@@ -54,6 +54,16 @@ class SettingsFragment : PreferenceFragmentCompat() {
                                 editor.remove(getString(R.string.pref_key_subscribed_to_events))
                             }
 
+                            if (sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_private_messages))) {
+                                FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_PRIVATE_MESSAGES_TOPIC)
+                                editor.remove(getString(R.string.pref_key_subscribed_to_private_messages))
+                            }
+
+                            if (sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_account_incidents))) {
+                                FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_ACCOUNT_INCIDENTS_TOPIC)
+                                editor.remove(getString(R.string.pref_key_subscribed_to_account_incidents))
+                            }
+
                             if (sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_new_reports))) {
                                 FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_NEW_REPORTS_TOPIC)
                                 editor.remove(getString(R.string.pref_key_subscribed_to_new_reports))

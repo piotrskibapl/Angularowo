@@ -269,6 +269,34 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
                             }
                         }
             }
+
+            // subscribe to private messages Firebase topic
+            if (!sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_private_messages))) {
+                FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_PRIVATE_MESSAGES_TOPIC)
+                        .addOnCompleteListener { task: Task<Void?> ->
+                            if (isAdded) {
+                                if (task.isSuccessful) {
+                                    val editor = sharedPreferences.edit()
+                                    editor.putBoolean(getString(R.string.pref_key_subscribed_to_private_messages), true)
+                                    editor.apply()
+                                }
+                            }
+                        }
+            }
+
+            // subscribe to account incidents Firebase topic
+            if (!sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_account_incidents))) {
+                FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_ACCOUNT_INCIDENTS_TOPIC)
+                        .addOnCompleteListener { task: Task<Void?> ->
+                            if (isAdded) {
+                                if (task.isSuccessful) {
+                                    val editor = sharedPreferences.edit()
+                                    editor.putBoolean(getString(R.string.pref_key_subscribed_to_account_incidents), true)
+                                    editor.apply()
+                                }
+                            }
+                        }
+            }
         }
         super.onResume()
     }

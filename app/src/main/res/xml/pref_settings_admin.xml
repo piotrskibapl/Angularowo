@@ -5,14 +5,24 @@
         android:title="@string/pref_category_notifications"
         android:icon="@drawable/ic_notifications">
         <CheckBoxPreference
-            android:key="@string/pref_key_subscribed_to_new_reports"
-            android:title="@string/pref_title_subscribed_to_new_reports"
-            android:summary="@string/pref_summary_subscribed_to_new_reports"
-            android:defaultValue="true" />
-        <CheckBoxPreference
             android:key="@string/pref_key_subscribed_to_events"
             android:title="@string/pref_title_subscribed_to_events"
             android:summary="@string/pref_summary_subscribed_to_events"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="@string/pref_key_subscribed_to_private_messages"
+            android:title="@string/pref_title_subscribed_to_private_messages"
+            android:summary="@string/pref_summary_subscribed_to_private_messages"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="@string/pref_key_subscribed_to_account_incidents"
+            android:title="@string/pref_title_subscribed_to_account_incidents"
+            android:summary="@string/pref_summary_subscribed_to_account_incidents"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="@string/pref_key_subscribed_to_new_reports"
+            android:title="@string/pref_title_subscribed_to_new_reports"
+            android:summary="@string/pref_summary_subscribed_to_new_reports"
             android:defaultValue="true" />
     </PreferenceCategory>
     <PreferenceCategory

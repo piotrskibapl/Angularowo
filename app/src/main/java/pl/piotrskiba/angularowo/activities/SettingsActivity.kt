@@ -57,6 +57,18 @@ class SettingsActivity : AppCompatActivity(), OnSharedPreferenceChangeListener {
             } else {
                 FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_NEW_REPORTS_TOPIC)
             }
+        } else if (s == getString(R.string.pref_key_subscribed_to_private_messages)) {
+            if (sharedPreferences.getBoolean(getString(R.string.pref_key_subscribed_to_private_messages), false)) {
+                FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_PRIVATE_MESSAGES_TOPIC)
+            } else {
+                FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_PRIVATE_MESSAGES_TOPIC)
+            }
+        } else if (s == getString(R.string.pref_key_subscribed_to_account_incidents)) {
+            if (sharedPreferences.getBoolean(getString(R.string.pref_key_subscribed_to_account_incidents), false)) {
+                FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_ACCOUNT_INCIDENTS_TOPIC)
+            } else {
+                FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_ACCOUNT_INCIDENTS_TOPIC)
+            }
         } else if (s == getString(R.string.pref_key_subscribed_to_events)) {
             if (sharedPreferences.getBoolean(getString(R.string.pref_key_subscribed_to_events), false)) {
                 FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_NEW_EVENT_TOPIC)
