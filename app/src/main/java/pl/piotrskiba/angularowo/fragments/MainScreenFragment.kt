@@ -398,7 +398,9 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
     private fun onMotdClick() {
         if (motd?.url != null) {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(motd!!.url))
-            startActivity(intent)
+            if (context != null && intent.resolveActivity(requireContext().packageManager) != null) {
+                startActivity(intent)
+            }
         }
     }
 
