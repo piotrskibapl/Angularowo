@@ -144,6 +144,7 @@ class OffersFragment : Fragment(), AdOfferClickListener, OfferClickListener, Net
     }
 
     private fun seekForOffersInfo() {
+        showLoadingIndicator()
         mViewModel.setNetworkErrorListener(this)
         mViewModel.getOffersInfo().observe(viewLifecycleOwner, Observer { offersInfo: OffersInfo? ->
             if (offersInfo != null) {
