@@ -257,11 +257,15 @@ class OffersFragment : Fragment(), AdOfferClickListener, OfferClickListener, Net
     }
 
     private fun showLoadingIndicator() {
-        mSwipeRefreshLayout.isRefreshing = true
+        if (this::mSwipeRefreshLayout.isInitialized) {
+            mSwipeRefreshLayout.isRefreshing = true
+        }
     }
 
     fun hideLoadingIndicator() {
-        mSwipeRefreshLayout.isRefreshing = false
+        if (this::mSwipeRefreshLayout.isInitialized) {
+            mSwipeRefreshLayout.isRefreshing = false
+        }
     }
 
     fun setRewardedVideoAd(ad: RewardedVideoAd) {
