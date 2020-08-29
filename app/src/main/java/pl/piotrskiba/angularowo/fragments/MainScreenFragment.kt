@@ -405,21 +405,23 @@ class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
     }
 
     override fun onBanClick(view: View, clickedBan: Ban) {
-        val banViewHolder = view.tag as BanViewHolder
+        if (!mSwipeRefreshLayout.isRefreshing) {
+            val banViewHolder = view.tag as BanViewHolder
 
-        val intent = Intent(context, BanDetailsActivity::class.java)
-        intent.putExtra(Constants.EXTRA_BAN, clickedBan)
+            val intent = Intent(context, BanDetailsActivity::class.java)
+            intent.putExtra(Constants.EXTRA_BAN, clickedBan)
 
-        if (banViewHolder.mPlayerAvatar.drawable != null) {
-            val avatarBitmap = (banViewHolder.mPlayerAvatar.drawable as BitmapDrawable).bitmap
-            intent.putExtra(Constants.EXTRA_BITMAP, avatarBitmap)
-        }
+            if (banViewHolder.mPlayerAvatar.drawable != null) {
+                val avatarBitmap = (banViewHolder.mPlayerAvatar.drawable as BitmapDrawable).bitmap
+                intent.putExtra(Constants.EXTRA_BITMAP, avatarBitmap)
+            }
 
-        if (activity != null) {
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), view, getString(R.string.ban_banner_transition_name))
-            startActivity(intent, options.toBundle())
-        } else {
-            startActivity(intent)
+            if (activity != null) {
+                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), view, getString(R.string.ban_banner_transition_name))
+                startActivity(intent, options.toBundle())
+            } else {
+                startActivity(intent)
+            }
         }
     }
 

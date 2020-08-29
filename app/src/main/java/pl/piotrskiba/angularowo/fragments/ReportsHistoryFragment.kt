@@ -174,14 +174,16 @@ class ReportsHistoryFragment : Fragment(), ReportClickListener, NetworkErrorList
     }
 
     override fun onReportClick(view: View, clickedReport: Report) {
-        val intent = Intent(context, ReportDetailsActivity::class.java)
-        intent.putExtra(Constants.EXTRA_REPORT, clickedReport)
+        if (!mSwipeRefreshLayout.isRefreshing) {
+            val intent = Intent(context, ReportDetailsActivity::class.java)
+            intent.putExtra(Constants.EXTRA_REPORT, clickedReport)
 
-        if (activity != null) {
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), view, getString(R.string.report_banner_transition_name))
-            startActivity(intent, options.toBundle())
-        } else {
-            startActivity(intent)
+            if (activity != null) {
+                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), view, getString(R.string.report_banner_transition_name))
+                startActivity(intent, options.toBundle())
+            } else {
+                startActivity(intent)
+            }
         }
     }
 
