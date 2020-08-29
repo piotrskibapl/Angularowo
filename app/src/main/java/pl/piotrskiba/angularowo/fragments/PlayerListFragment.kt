@@ -194,6 +194,7 @@ class PlayerListFragment : Fragment(), PlayerClickListener, NetworkErrorListener
         mSwipeRefreshLayout.isRefreshing = false
         mNoPlayersTextView.visibility = View.VISIBLE
         mPlayerList.visibility = View.GONE
+        mFavoritePlayerList.visibility = View.GONE
         mNoInternetLayout.visibility = View.GONE
         mServerErrorLayout.visibility = View.GONE
     }
@@ -202,6 +203,7 @@ class PlayerListFragment : Fragment(), PlayerClickListener, NetworkErrorListener
         mSwipeRefreshLayout.isRefreshing = false
         mNoPlayersTextView.visibility = View.GONE
         mPlayerList.visibility = View.GONE
+        mFavoritePlayerList.visibility = View.GONE
         mNoInternetLayout.visibility = View.VISIBLE
         mServerErrorLayout.visibility = View.GONE
     }
@@ -210,6 +212,7 @@ class PlayerListFragment : Fragment(), PlayerClickListener, NetworkErrorListener
         mSwipeRefreshLayout.isRefreshing = false
         mNoPlayersTextView.visibility = View.GONE
         mPlayerList.visibility = View.GONE
+        mFavoritePlayerList.visibility = View.GONE
         mNoInternetLayout.visibility = View.GONE
         mServerErrorLayout.visibility = View.VISIBLE
     }
