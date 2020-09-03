@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -15,6 +16,7 @@ import com.bumptech.glide.Glide
 import pl.piotrskiba.angularowo.IntegerVersionSignature
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.adapters.BanListAdapter.BanViewHolder
+import pl.piotrskiba.angularowo.adapters.diffcallbacks.BanListDiffCallback
 import pl.piotrskiba.angularowo.interfaces.BanClickListener
 import pl.piotrskiba.angularowo.models.Ban
 import pl.piotrskiba.angularowo.models.BanList
@@ -135,7 +137,10 @@ class BanListAdapter(private val context: Context, private val mClickListener: B
     }
 
     fun setBanList(banList: BanList) {
+        val diffCallback = BanListDiffCallback(this.banList, banList)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+
         this.banList = banList
-        notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
     }
 }
