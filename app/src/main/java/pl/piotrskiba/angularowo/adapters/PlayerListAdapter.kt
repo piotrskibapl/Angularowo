@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -16,13 +16,14 @@ import pl.piotrskiba.angularowo.AppViewModel
 import pl.piotrskiba.angularowo.IntegerVersionSignature
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.adapters.PlayerListAdapter.PlayerViewHolder
+import pl.piotrskiba.angularowo.adapters.diffcallbacks.PlayerListDiffCallback
 import pl.piotrskiba.angularowo.database.entity.Friend
 import pl.piotrskiba.angularowo.interfaces.PlayerClickListener
 import pl.piotrskiba.angularowo.models.Player
 import pl.piotrskiba.angularowo.models.PlayerList
 import pl.piotrskiba.angularowo.utils.ColorUtils.getColorFromCode
 import pl.piotrskiba.angularowo.utils.GlideUtils.getSignatureVersionNumber
-import pl.piotrskiba.angularowo.utils.RankUtils.allRanks
+import pl.piotrskiba.angularowo.utils.RankUtils
 import pl.piotrskiba.angularowo.utils.UrlUtils.buildAvatarUrl
 
 class PlayerListAdapter(
@@ -103,17 +104,18 @@ class PlayerListAdapter(
     }
 
     fun setPlayerList(playerList: PlayerList) {
-        val sorted: MutableList<Player> = ArrayList()
-        if (playerList.players.isNotEmpty()) {
-            val ranks = allRanks
-            for (rank in ranks) {
-                for (player in playerList.players) {
-                    if (player.rank.name == rank.name) sorted.add(player)
-                }
+        val newPlayerList: MutableList<Player> = ArrayList()
+        for (rank in RankUtils.allRanks) {
+            for (player in playerList.players) {
+                if (player.rank.name == rank.name) newPlayerList.add(player)
             }
         }
-        this.playerList = PlayerList(sorted)
-        notifyDataSetChanged()
+
+        val diffCallback = PlayerListDiffCallback(this.playerList, PlayerList(newPlayerList))
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+
+        this.playerList = PlayerList(newPlayerList)
+        diffResult.dispatchUpdatesTo(this)
     }
 
 }
