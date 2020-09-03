@@ -15,7 +15,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
@@ -31,6 +30,7 @@ import pl.piotrskiba.angularowo.*
 import pl.piotrskiba.angularowo.activities.BanDetailsActivity
 import pl.piotrskiba.angularowo.adapters.BanListAdapter
 import pl.piotrskiba.angularowo.adapters.BanListAdapter.BanViewHolder
+import pl.piotrskiba.angularowo.fragments.base.BaseFragment
 import pl.piotrskiba.angularowo.interfaces.BanClickListener
 import pl.piotrskiba.angularowo.interfaces.NetworkErrorListener
 import pl.piotrskiba.angularowo.models.*
@@ -43,7 +43,7 @@ import pl.piotrskiba.angularowo.utils.TextUtils.formatTps
 import pl.piotrskiba.angularowo.utils.TextUtils.normalize
 import pl.piotrskiba.angularowo.utils.UrlUtils.buildBodyUrl
 
-class MainScreenFragment : Fragment(), BanClickListener, NetworkErrorListener {
+class MainScreenFragment : BaseFragment(), BanClickListener, NetworkErrorListener {
 
     private lateinit var mViewModel: AppViewModel
     private lateinit var mBanListAdapter: BanListAdapter

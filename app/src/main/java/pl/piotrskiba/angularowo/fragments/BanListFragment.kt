@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -24,12 +23,13 @@ import pl.piotrskiba.angularowo.SpacesItemDecoration
 import pl.piotrskiba.angularowo.activities.BanDetailsActivity
 import pl.piotrskiba.angularowo.adapters.BanListAdapter
 import pl.piotrskiba.angularowo.adapters.BanListAdapter.BanViewHolder
+import pl.piotrskiba.angularowo.fragments.base.BaseFragment
 import pl.piotrskiba.angularowo.interfaces.BanClickListener
 import pl.piotrskiba.angularowo.interfaces.NetworkErrorListener
 import pl.piotrskiba.angularowo.models.Ban
 import pl.piotrskiba.angularowo.models.BanList
 
-class BanListFragment : Fragment(), BanClickListener, NetworkErrorListener {
+class BanListFragment : BaseFragment(), BanClickListener, NetworkErrorListener {
 
     private lateinit var mViewModel: AppViewModel
     private lateinit var mBanListAdapter: BanListAdapter

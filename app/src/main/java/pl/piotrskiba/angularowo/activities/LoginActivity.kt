@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.preference.PreferenceManager
@@ -17,16 +16,18 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
+import pl.piotrskiba.angularowo.activities.base.BaseActivity
 import pl.piotrskiba.angularowo.models.AccessToken
 import pl.piotrskiba.angularowo.network.ServerAPIClient
 import pl.piotrskiba.angularowo.network.ServerAPIClient.retrofitInstance
 import pl.piotrskiba.angularowo.network.ServerAPIInterface
+import pl.piotrskiba.angularowo.utils.AnalyticsUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity() {
 
     @BindView(R.id.toolbar)
     lateinit var mToolbar: Toolbar
@@ -76,6 +77,11 @@ class LoginActivity : AppCompatActivity() {
                         editor.putString(getString(R.string.pref_key_access_token), accessToken.accessToken)
                         editor.commit()
 
+                        AnalyticsUtils().logLogin(
+                                accessToken.uuid,
+                                accessToken.username
+                        )
+
                         setResult(Constants.RESULT_CODE_SUCCESS)
                         finish()
                     }
@@ -90,6 +96,11 @@ class LoginActivity : AppCompatActivity() {
                                 Snackbar.make(mCoordinatorLayout, getString(R.string.login_error_code_not_found), Snackbar.LENGTH_LONG).show()
                             else if (accessToken.message == getString(R.string.login_api_response_code_expired))
                                 Snackbar.make(mCoordinatorLayout, getString(R.string.login_error_code_expired), Snackbar.LENGTH_LONG).show()
+
+                            AnalyticsUtils().logLoginError(
+                                    accessToken.uuid,
+                                    accessToken.username
+                            )
                         } catch (e: IOException) {
                             e.printStackTrace()
                         }

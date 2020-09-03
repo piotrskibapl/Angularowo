@@ -10,7 +10,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -26,12 +25,13 @@ import pl.piotrskiba.angularowo.SpacesItemDecoration
 import pl.piotrskiba.angularowo.activities.PlayerDetailsActivity
 import pl.piotrskiba.angularowo.adapters.PlayerListAdapter
 import pl.piotrskiba.angularowo.database.entity.Friend
+import pl.piotrskiba.angularowo.fragments.base.BaseFragment
 import pl.piotrskiba.angularowo.interfaces.NetworkErrorListener
 import pl.piotrskiba.angularowo.interfaces.PlayerClickListener
 import pl.piotrskiba.angularowo.models.Player
 import pl.piotrskiba.angularowo.models.PlayerList
 
-class PlayerListFragment : Fragment(), PlayerClickListener, NetworkErrorListener {
+class PlayerListFragment : BaseFragment(), PlayerClickListener, NetworkErrorListener {
 
     private lateinit var mViewModel: AppViewModel
     private lateinit var mPlayerListAdapter: PlayerListAdapter

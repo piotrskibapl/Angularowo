@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -14,8 +13,9 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.tabs.TabLayoutMediator.TabConfigurationStrategy
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.adapters.ViewPagerFragmentAdapter
+import pl.piotrskiba.angularowo.fragments.base.BaseFragment
 
-class ReportsHistoryFragmentContainerFragment : Fragment() {
+class ReportsHistoryFragmentContainerFragment : BaseFragment() {
 
     @BindView(R.id.tablayout)
     lateinit var mTabLayout: TabLayout

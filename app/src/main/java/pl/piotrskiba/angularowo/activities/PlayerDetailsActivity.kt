@@ -7,7 +7,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -25,12 +24,14 @@ import pl.piotrskiba.angularowo.AppViewModel
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.IntegerVersionSignature
 import pl.piotrskiba.angularowo.R
+import pl.piotrskiba.angularowo.activities.base.BaseActivity
 import pl.piotrskiba.angularowo.database.entity.Friend
 import pl.piotrskiba.angularowo.models.DetailedPlayer
 import pl.piotrskiba.angularowo.models.Player
 import pl.piotrskiba.angularowo.network.ServerAPIClient
 import pl.piotrskiba.angularowo.network.ServerAPIClient.retrofitInstance
 import pl.piotrskiba.angularowo.network.ServerAPIInterface
+import pl.piotrskiba.angularowo.utils.AnalyticsUtils
 import pl.piotrskiba.angularowo.utils.ColorUtils.getColorFromCode
 import pl.piotrskiba.angularowo.utils.GlideUtils.getSignatureVersionNumber
 import pl.piotrskiba.angularowo.utils.PreferenceUtils
@@ -41,7 +42,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class PlayerDetailsActivity : AppCompatActivity(), OnRefreshListener {
+class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
 
     @BindView(R.id.swiperefresh)
     lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
@@ -256,6 +257,13 @@ class PlayerDetailsActivity : AppCompatActivity(), OnRefreshListener {
         snackbar?.dismiss()
         snackbar = Snackbar.make(mCoordinatorLayout, getString(R.string.marked_as_favorite), Snackbar.LENGTH_SHORT)
         snackbar?.show()
+
+        AnalyticsUtils().logFavorite(
+                PreferenceUtils.getUuid(this) ?: "",
+                PreferenceUtils.getUsername(this) ?: "",
+                mPlayer.uuid,
+                mPlayer.username
+        )
     }
 
     private fun onUnfavorite() {
@@ -264,5 +272,12 @@ class PlayerDetailsActivity : AppCompatActivity(), OnRefreshListener {
         snackbar?.dismiss()
         snackbar = Snackbar.make(mCoordinatorLayout, getString(R.string.unmarked_as_favorite), Snackbar.LENGTH_SHORT)
         snackbar?.show()
+
+        AnalyticsUtils().logUnfavorite(
+                PreferenceUtils.getUuid(this) ?: "",
+                PreferenceUtils.getUsername(this) ?: "",
+                mPlayer.uuid,
+                mPlayer.username
+        )
     }
 }

@@ -23,6 +23,7 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
+import pl.piotrskiba.angularowo.activities.base.BaseActivity
 import pl.piotrskiba.angularowo.fragments.*
 import pl.piotrskiba.angularowo.interfaces.UnauthorizedResponseListener
 import pl.piotrskiba.angularowo.network.ServerAPIClient
@@ -36,7 +37,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainActivity : AppCompatActivity(), UnauthorizedResponseListener, RewardedVideoAdListener {
+class MainActivity : BaseActivity(), UnauthorizedResponseListener, RewardedVideoAdListener {
 
     @BindView(R.id.toolbar)
     lateinit var mToolbar: Toolbar

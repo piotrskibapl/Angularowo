@@ -1,7 +1,6 @@
 package pl.piotrskiba.angularowo.fragments
 
 import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,11 +10,9 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import butterknife.BindView
@@ -26,12 +23,13 @@ import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.SpacesItemDecoration
 import pl.piotrskiba.angularowo.activities.ReportDetailsActivity
 import pl.piotrskiba.angularowo.adapters.ReportListAdapter
+import pl.piotrskiba.angularowo.fragments.base.BaseFragment
 import pl.piotrskiba.angularowo.interfaces.NetworkErrorListener
 import pl.piotrskiba.angularowo.interfaces.ReportClickListener
 import pl.piotrskiba.angularowo.models.Report
 import pl.piotrskiba.angularowo.models.ReportList
 
-class ReportsHistoryFragment : Fragment(), ReportClickListener, NetworkErrorListener {
+class ReportsHistoryFragment : BaseFragment(), ReportClickListener, NetworkErrorListener {
 
     private lateinit var mViewModel: AppViewModel
     private lateinit var mReportListAdapter: ReportListAdapter

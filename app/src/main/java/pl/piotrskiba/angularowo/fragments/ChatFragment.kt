@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +22,7 @@ import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.activities.PlayerDetailsActivity
 import pl.piotrskiba.angularowo.adapters.ChatAdapter
+import pl.piotrskiba.angularowo.fragments.base.BaseFragment
 import pl.piotrskiba.angularowo.interfaces.ChatMessageClickListener
 import pl.piotrskiba.angularowo.models.ChatMessage
 import pl.piotrskiba.angularowo.models.ChatMessageList
@@ -35,7 +35,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 
-class ChatFragment : Fragment(), ChatMessageClickListener {
+class ChatFragment : BaseFragment(), ChatMessageClickListener {
 
     private lateinit var mChatAdapter: ChatAdapter
     private lateinit var mOkHttpClient: OkHttpClient

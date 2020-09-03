@@ -9,9 +9,10 @@ import butterknife.ButterKnife
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
+import pl.piotrskiba.angularowo.activities.base.BaseActivity
 import pl.piotrskiba.angularowo.utils.RankUtils.getRankFromPreferences
 
-class ApplicationLockedActivity : AppCompatActivity() {
+class ApplicationLockedActivity : BaseActivity() {
 
     @BindView(R.id.toolbar)
     lateinit var mToolbar: Toolbar

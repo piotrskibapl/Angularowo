@@ -23,6 +23,10 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-7790074991647252~4144564614" />
 
+        <meta-data
+            android:name="firebase_analytics_collection_enabled"
+            android:value="true" />
+
         <activity
             android:name=".activities.BanDetailsActivity"
             android:parentActivityName=".activities.MainActivity" />

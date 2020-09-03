@@ -10,7 +10,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
@@ -25,6 +24,7 @@ import pl.piotrskiba.angularowo.AppViewModel
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.adapters.AdOffersAdapter
 import pl.piotrskiba.angularowo.adapters.OffersAdapter
+import pl.piotrskiba.angularowo.fragments.base.BaseFragment
 import pl.piotrskiba.angularowo.interfaces.AdOfferClickListener
 import pl.piotrskiba.angularowo.interfaces.NetworkErrorListener
 import pl.piotrskiba.angularowo.interfaces.OfferClickListener
@@ -38,7 +38,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class OffersFragment : Fragment(), AdOfferClickListener, OfferClickListener, NetworkErrorListener {
+class OffersFragment : BaseFragment(), AdOfferClickListener, OfferClickListener, NetworkErrorListener {
 
     private lateinit var mViewModel: AppViewModel
     private lateinit var mRewardedVideoAd: RewardedVideoAd
