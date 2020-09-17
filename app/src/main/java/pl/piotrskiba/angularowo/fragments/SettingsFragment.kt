@@ -35,7 +35,7 @@ class SettingsFragment : BasePreferenceFragmentCompat() {
                 val uuid = sharedPreferences.getString(getString(R.string.pref_key_uuid), null)
                 val username = sharedPreferences.getString(getString(R.string.pref_key_nickname), null)
 
-                AnalyticsUtils().logLogoutStart(
+                AnalyticsUtils().logLogoutDialogOpen(
                         uuid ?: "",
                         username ?: ""
                 )

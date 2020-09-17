@@ -29,11 +29,13 @@ import pl.piotrskiba.angularowo.interfaces.AdOfferClickListener
 import pl.piotrskiba.angularowo.interfaces.NetworkErrorListener
 import pl.piotrskiba.angularowo.interfaces.OfferClickListener
 import pl.piotrskiba.angularowo.models.AdOffer
+import pl.piotrskiba.angularowo.models.DetailedPlayer
 import pl.piotrskiba.angularowo.models.Offer
 import pl.piotrskiba.angularowo.models.OffersInfo
 import pl.piotrskiba.angularowo.network.ServerAPIClient
 import pl.piotrskiba.angularowo.network.ServerAPIClient.retrofitInstance
 import pl.piotrskiba.angularowo.network.ServerAPIInterface
+import pl.piotrskiba.angularowo.utils.AnalyticsUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -45,6 +47,7 @@ class OffersFragment : BaseFragment(), AdOfferClickListener, OfferClickListener,
     private lateinit var mOffersInfo: OffersInfo
     private lateinit var mAdOffersAdapter: AdOffersAdapter
     private lateinit var mOffersAdapter: OffersAdapter
+    private var mPlayer: DetailedPlayer? = null
 
     @BindView(R.id.swiperefresh)
     lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
@@ -89,6 +92,7 @@ class OffersFragment : BaseFragment(), AdOfferClickListener, OfferClickListener,
 
         setupAdOffersRecyclerView()
         setupOffersRecyclerView()
+        seekForPlayerUpdates()
         seekForOffersInfo()
 
         val actionbar = (activity as AppCompatActivity?)?.supportActionBar
@@ -123,30 +127,90 @@ class OffersFragment : BaseFragment(), AdOfferClickListener, OfferClickListener,
 
     override fun onAdOfferClick(view: View, clickedAdOffer: AdOffer) {
         if (context != null && !mSwipeRefreshLayout.isRefreshing && clickedAdOffer.timeleft == 0) {
+            AnalyticsUtils().logAdOfferDialogOpen(
+                    mPlayer?.uuid ?: "",
+                    mPlayer?.username ?: "",
+                    clickedAdOffer.id
+            )
+
             AlertDialog.Builder(requireContext())
                     .setTitle(R.string.ad_question)
                     .setMessage(R.string.ad_question_description)
-                    .setPositiveButton(R.string.button_yes) { _: DialogInterface?, _: Int -> loadRewardedVideoAd(clickedAdOffer.adId) }
-                    .setNegativeButton(R.string.button_no, null)
+                    .setPositiveButton(R.string.button_yes) { _: DialogInterface, _: Int ->
+                        AnalyticsUtils().logAdOfferProceed(
+                                mPlayer?.uuid ?: "",
+                                mPlayer?.username ?: "",
+                                clickedAdOffer.id
+                        )
+
+                        loadRewardedVideoAd(clickedAdOffer.adId)
+                    }
+                    .setNegativeButton(R.string.button_no) { _: DialogInterface, _: Int ->
+                        AnalyticsUtils().logAdOfferCancel(
+                                mPlayer?.uuid ?: "",
+                                mPlayer?.username ?: "",
+                                clickedAdOffer.id
+                        )
+                    }
+                    .setOnCancelListener {
+                        AnalyticsUtils().logAdOfferCancel(
+                                mPlayer?.uuid ?: "",
+                                mPlayer?.username ?: "",
+                                clickedAdOffer.id
+                        )
+                    }
                     .show()
         }
     }
 
     override fun onOfferClick(view: View, clickedOffer: Offer) {
         if (context != null && !mSwipeRefreshLayout.isRefreshing && clickedOffer.timeleft == 0 && clickedOffer.price <= mOffersInfo.points) {
+            AnalyticsUtils().logOfferDialogOpen(
+                    mPlayer?.uuid ?: "",
+                    mPlayer?.username ?: "",
+                    clickedOffer.id
+            )
+
             AlertDialog.Builder(requireContext())
                     .setTitle(R.string.offer_question)
                     .setMessage(resources.getQuantityString(R.plurals.offer_question_description, clickedOffer.price, clickedOffer.title, clickedOffer.price))
-                    .setPositiveButton(R.string.button_yes) { _: DialogInterface?, _: Int -> redeemOffer(clickedOffer) }
-                    .setNegativeButton(R.string.button_no, null)
+                    .setPositiveButton(R.string.button_yes) { _: DialogInterface, _: Int ->
+                        AnalyticsUtils().logOfferProceed(
+                                mPlayer?.uuid ?: "",
+                                mPlayer?.username ?: "",
+                                clickedOffer.id
+                        )
+
+                        redeemOffer(clickedOffer)
+                    }
+                    .setNegativeButton(R.string.button_no) { _: DialogInterface, _: Int ->
+                        AnalyticsUtils().logOfferCancel(
+                                mPlayer?.uuid ?: "",
+                                mPlayer?.username ?: "",
+                                clickedOffer.id
+                        )
+                    }
+                    .setOnCancelListener {
+                        AnalyticsUtils().logOfferCancel(
+                                mPlayer?.uuid ?: "",
+                                mPlayer?.username ?: "",
+                                clickedOffer.id
+                        )
+                    }
                     .show()
         }
+    }
+
+    private fun seekForPlayerUpdates() {
+        mViewModel.getPlayer().observe(viewLifecycleOwner, { player: DetailedPlayer? ->
+            mPlayer = player
+        })
     }
 
     private fun seekForOffersInfo() {
         showLoadingIndicator()
         mViewModel.setNetworkErrorListener(this)
-        mViewModel.getOffersInfo().observe(viewLifecycleOwner, Observer { offersInfo: OffersInfo? ->
+        mViewModel.getOffersInfo().observe(viewLifecycleOwner, { offersInfo: OffersInfo? ->
             if (offersInfo != null) {
                 mOffersInfo = offersInfo
                 populateUi()
