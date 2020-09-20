@@ -25,6 +25,7 @@ private const val EVENT_AD_OFFER_CANCEL = "ad_offer_cancel"
 private const val EVENT_OFFER_DIALOG_OPEN = "offer_dialog_open"
 private const val EVENT_OFFER_PROCEED = "offer_proceed"
 private const val EVENT_OFFER_CANCEL = "offer_cancel"
+private const val EVENT_ERROR_MESSAGE = "error_message"
 
 class AnalyticsUtils {
 
@@ -35,10 +36,9 @@ class AnalyticsUtils {
         Firebase.analytics.logEvent(EVENT_LOGIN, bundle)
     }
 
-    fun logLoginError(playerUuid: String, playerName: String) {
+    fun logLoginError(message: String?) {
         val bundle = Bundle()
-        bundle.putString(PLAYER_UUID, playerUuid)
-        bundle.putString(PLAYER_NAME, playerName)
+        bundle.putString(EVENT_ERROR_MESSAGE, message)
         Firebase.analytics.logEvent(EVENT_LOGIN_ERROR, bundle)
     }
 

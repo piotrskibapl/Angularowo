@@ -97,10 +97,7 @@ class LoginActivity : BaseActivity() {
                             else if (accessToken.message == getString(R.string.login_api_response_code_expired))
                                 Snackbar.make(mCoordinatorLayout, getString(R.string.login_error_code_expired), Snackbar.LENGTH_LONG).show()
 
-                            AnalyticsUtils().logLoginError(
-                                    accessToken.uuid,
-                                    accessToken.username
-                            )
+                            AnalyticsUtils().logLoginError(accessToken.message)
                         } catch (e: IOException) {
                             e.printStackTrace()
                         }
