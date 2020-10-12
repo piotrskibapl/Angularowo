@@ -56,7 +56,10 @@ class ApplicationLockedActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        if (mPlayer != null && mPlayer!!.hasPermission(Permissions.IGNORE_APP_LOCK))
+        if (mPlayer != null && mPlayer!!.hasPermission(Permissions.IGNORE_APP_LOCK)) {
             super.onBackPressed()
+        } else {
+            finishAffinity()
+        }
     }
 }
