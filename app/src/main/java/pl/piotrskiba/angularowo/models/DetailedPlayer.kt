@@ -2,6 +2,7 @@ package pl.piotrskiba.angularowo.models
 
 import com.google.gson.annotations.SerializedName
 import pl.piotrskiba.angularowo.utils.RankUtils
+import java.io.Serializable
 
 data class DetailedPlayer(
         val uuid: String,
@@ -13,7 +14,7 @@ data class DetailedPlayer(
         val playtime: Int,
         val tokens: Int,
         private val permissions: List<String>
-) {
+): Serializable {
 
     val rank: Rank
         get() = RankUtils.getRankFromName(rankKey)

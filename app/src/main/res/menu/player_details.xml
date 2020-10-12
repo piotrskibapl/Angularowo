@@ -4,14 +4,48 @@
 
     <item
         android:id="@+id/nav_favorite"
-        android:title="@string/mark_as_favorite"
         android:icon="@drawable/ic_favorite"
-        app:showAsAction="ifRoom"/>
+        android:orderInCategory="1"
+        android:title="@string/mark_as_favorite"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/nav_unfavorite"
-        android:title="@string/unmark_as_favorite"
         android:icon="@drawable/ic_unfavorite"
-        app:showAsAction="ifRoom"
-        android:visible="false"/>
+        android:orderInCategory="1"
+        android:title="@string/unmark_as_favorite"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/nav_mute"
+        android:icon="@drawable/ic_mute"
+        android:orderInCategory="3"
+        android:title="@string/mute_player"
+        android:visible="false"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/nav_kick"
+        android:icon="@drawable/ic_kick"
+        android:orderInCategory="2"
+        android:title="@string/kick_player"
+        android:visible="false"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/nav_warn"
+        android:icon="@drawable/ic_warning"
+        android:orderInCategory="4"
+        android:title="@string/warn_player"
+        android:visible="false"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/nav_ban"
+        android:icon="@drawable/ic_ban"
+        android:orderInCategory="5"
+        android:title="@string/ban_player"
+        android:visible="false"
+        app:showAsAction="never" />
 </menu>

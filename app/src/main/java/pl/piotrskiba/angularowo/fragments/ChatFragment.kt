@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +19,7 @@ import okhttp3.Request
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 import okio.ByteString
+import pl.piotrskiba.angularowo.AppViewModel
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.activities.PlayerDetailsActivity
@@ -40,6 +42,7 @@ class ChatFragment : BaseFragment(), ChatMessageClickListener {
     private lateinit var mChatAdapter: ChatAdapter
     private lateinit var mOkHttpClient: OkHttpClient
     private lateinit var mWebSocket: WebSocket
+    private lateinit var mViewModel: AppViewModel
 
     @BindView(R.id.rv_chat)
     lateinit var mChat: RecyclerView
@@ -60,6 +63,8 @@ class ChatFragment : BaseFragment(), ChatMessageClickListener {
         val view = inflater.inflate(R.layout.fragment_chat, container, false)
 
         ButterKnife.bind(this, view)
+
+        mViewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
 
         mChatAdapter = ChatAdapter(requireContext(), this)
         mChat.adapter = mChatAdapter
@@ -165,7 +170,8 @@ class ChatFragment : BaseFragment(), ChatMessageClickListener {
 
     override fun onChatMessageClick(view: View, clickedChatMessage: ChatMessage) {
         val intent = Intent(context, PlayerDetailsActivity::class.java)
-        intent.putExtra(Constants.EXTRA_PLAYER,
+        intent.putExtra(Constants.EXTRA_PLAYER, mViewModel.getPlayer().value)
+        intent.putExtra(Constants.EXTRA_PREVIEWED_PLAYER,
                 Player(
                         clickedChatMessage.uuid,
                         clickedChatMessage.username,

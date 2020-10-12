@@ -20,10 +20,7 @@ import butterknife.ButterKnife
 import com.bumptech.glide.Glide
 import com.github.florent37.tutoshowcase.TutoShowcase
 import com.google.android.material.snackbar.Snackbar
-import pl.piotrskiba.angularowo.AppViewModel
-import pl.piotrskiba.angularowo.Constants
-import pl.piotrskiba.angularowo.IntegerVersionSignature
-import pl.piotrskiba.angularowo.R
+import pl.piotrskiba.angularowo.*
 import pl.piotrskiba.angularowo.activities.base.BaseActivity
 import pl.piotrskiba.angularowo.database.entity.Friend
 import pl.piotrskiba.angularowo.models.DetailedPlayer
@@ -81,7 +78,8 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
     lateinit var mPlayerHeartIcon: ImageView
 
     private lateinit var mViewModel: AppViewModel
-    private lateinit var mPlayer: Player
+    private lateinit var mPlayer: DetailedPlayer
+    private lateinit var mPreviewedPlayer: Player
 
     private var snackbar: Snackbar? = null
 
@@ -89,22 +87,23 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_player_details)
-
         ButterKnife.bind(this)
-
         mViewModel = ViewModelProvider(this).get(AppViewModel::class.java)
 
         setSupportActionBar(mToolbar)
-
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setTitle(R.string.player_info)
 
         if (intent.hasExtra(Constants.EXTRA_PLAYER)) {
-            mPlayer = intent.getSerializableExtra(Constants.EXTRA_PLAYER) as Player
+            mPlayer = intent.getSerializableExtra(Constants.EXTRA_PLAYER) as DetailedPlayer
+        }
 
-            populatePlayer(mPlayer)
-            loadDetailedPlayerData(mPlayer)
+        if (intent.hasExtra(Constants.EXTRA_PREVIEWED_PLAYER)) {
+            mPreviewedPlayer = intent.getSerializableExtra(Constants.EXTRA_PREVIEWED_PLAYER) as Player
+
+            populatePlayer(mPreviewedPlayer)
+            loadDetailedPlayerData(mPreviewedPlayer)
         }
 
         mSwipeRefreshLayout.setOnRefreshListener(this)
@@ -113,10 +112,9 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
             invalidateOptionsMenu()
 
             val friends = mViewModel.allFriends.value
-            if (friends != null && friends.contains(Friend(mPlayer.uuid))) {
+            if (friends != null && friends.contains(Friend(mPreviewedPlayer.uuid))) {
                 mPlayerHeartIcon.visibility = View.VISIBLE
-            }
-            else {
+            } else {
                 mPlayerHeartIcon.visibility = View.GONE
             }
         })
@@ -205,28 +203,32 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
     }
 
     override fun onRefresh() {
-        if (intent.hasExtra(Constants.EXTRA_PLAYER)) {
-            val player = intent.getSerializableExtra(Constants.EXTRA_PLAYER) as Player
+        if (intent.hasExtra(Constants.EXTRA_PREVIEWED_PLAYER)) {
+            val player = intent.getSerializableExtra(Constants.EXTRA_PREVIEWED_PLAYER) as Player
             loadDetailedPlayerData(player)
         }
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
         val friends = mViewModel.allFriends.value
-        if (mPlayer.username != PreferenceUtils.getUsername(this)) {
-            if (friends != null && friends.contains(Friend(mPlayer.uuid))) {
+        if (mPreviewedPlayer.username != PreferenceUtils.getUsername(this)) {
+            if (friends != null && friends.contains(Friend(mPreviewedPlayer.uuid))) {
                 menu?.findItem(R.id.nav_favorite)?.isVisible = false
                 menu?.findItem(R.id.nav_unfavorite)?.isVisible = true
-            }
-            else {
+            } else {
                 menu?.findItem(R.id.nav_favorite)?.isVisible = true
                 menu?.findItem(R.id.nav_unfavorite)?.isVisible = false
             }
-        }
-        else {
+        } else {
             menu?.findItem(R.id.nav_favorite)?.isVisible = false
             menu?.findItem(R.id.nav_unfavorite)?.isVisible = false
         }
+
+        menu?.findItem(R.id.nav_mute)?.isVisible = mPlayer.hasPermission(Permissions.MUTE_PLAYERS)
+        menu?.findItem(R.id.nav_kick)?.isVisible = mPlayer.hasPermission(Permissions.KICK_PLAYERS)
+        menu?.findItem(R.id.nav_warn)?.isVisible = mPlayer.hasPermission(Permissions.WARN_PLAYERS)
+        menu?.findItem(R.id.nav_ban)?.isVisible = mPlayer.hasPermission(Permissions.BAN_PLAYERS)
+
         return super.onPrepareOptionsMenu(menu)
     }
 
@@ -247,12 +249,24 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
             R.id.nav_unfavorite -> {
                 onUnfavorite()
             }
+            R.id.nav_mute -> {
+                onMute()
+            }
+            R.id.nav_kick -> {
+                onKick()
+            }
+            R.id.nav_warn -> {
+                onWarn()
+            }
+            R.id.nav_ban -> {
+                onBan()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
 
     private fun onFavorite() {
-        mViewModel.insertFriend(Friend(mPlayer.uuid))
+        mViewModel.insertFriend(Friend(mPreviewedPlayer.uuid))
 
         snackbar?.dismiss()
         snackbar = Snackbar.make(mCoordinatorLayout, getString(R.string.marked_as_favorite), Snackbar.LENGTH_SHORT)
@@ -261,13 +275,13 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
         AnalyticsUtils().logFavorite(
                 PreferenceUtils.getUuid(this) ?: "",
                 PreferenceUtils.getUsername(this) ?: "",
-                mPlayer.uuid,
-                mPlayer.username
+                mPreviewedPlayer.uuid,
+                mPreviewedPlayer.username
         )
     }
 
     private fun onUnfavorite() {
-        mViewModel.deleteFriend(Friend(mPlayer.uuid))
+        mViewModel.deleteFriend(Friend(mPreviewedPlayer.uuid))
 
         snackbar?.dismiss()
         snackbar = Snackbar.make(mCoordinatorLayout, getString(R.string.unmarked_as_favorite), Snackbar.LENGTH_SHORT)
@@ -276,8 +290,24 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
         AnalyticsUtils().logUnfavorite(
                 PreferenceUtils.getUuid(this) ?: "",
                 PreferenceUtils.getUsername(this) ?: "",
-                mPlayer.uuid,
-                mPlayer.username
+                mPreviewedPlayer.uuid,
+                mPreviewedPlayer.username
         )
+    }
+
+    private fun onMute() {
+        throw NotImplementedError()
+    }
+
+    private fun onKick() {
+        throw NotImplementedError()
+    }
+
+    private fun onWarn() {
+        throw NotImplementedError()
+    }
+
+    private fun onBan() {
+        throw NotImplementedError()
     }
 }

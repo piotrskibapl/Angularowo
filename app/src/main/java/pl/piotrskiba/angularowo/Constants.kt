@@ -2,6 +2,7 @@ package pl.piotrskiba.angularowo
 
 object Constants {
     const val EXTRA_PLAYER = "extra_player"
+    const val EXTRA_PREVIEWED_PLAYER = "extra_previewed_player"
     const val EXTRA_BAN = "extra_ban"
     const val EXTRA_BITMAP = "extra_bitmap"
     const val EXTRA_REPORT = "extra_report"
@@ -48,4 +49,8 @@ object Constants {
 
 object Permissions {
     const val IGNORE_APP_LOCK = "ignore_app_lock"
+    const val MUTE_PLAYERS = "mute_players"
+    const val KICK_PLAYERS = "kick_players"
+    const val WARN_PLAYERS = "warn_players"
+    const val BAN_PLAYERS = "ban_players"
 }

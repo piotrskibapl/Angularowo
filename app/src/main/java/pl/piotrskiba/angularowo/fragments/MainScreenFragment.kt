@@ -42,6 +42,7 @@ import pl.piotrskiba.angularowo.utils.TextUtils.formatPlaytime
 import pl.piotrskiba.angularowo.utils.TextUtils.formatTps
 import pl.piotrskiba.angularowo.utils.TextUtils.normalize
 import pl.piotrskiba.angularowo.utils.UrlUtils.buildBodyUrl
+import pl.piotrskiba.angularowo.AppViewModel
 
 class MainScreenFragment : BaseFragment(), BanClickListener, NetworkErrorListener {
 

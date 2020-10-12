@@ -80,6 +80,10 @@
     <string name="unmarked_as_favorite">Gracz został usunięty z ulubionych.</string>
     <string name="showcase_favorite_title">Dodaj do ulubionych</string>
     <string name="showcase_favorite_description">Jeśli chcesz dodać gracza do ulubionych, kliknij ikonę serca.\nUlubieni gracze będą zawsze wyświetlani na początku listy!</string>
+    <string name="mute_player">Wycisz</string>
+    <string name="kick_player">Wyrzuć z gry</string>
+    <string name="warn_player">Nałóż ostrzeżenie</string>
+    <string name="ban_player">Zbanuj</string>
 
     <!-- fragment_ban_list.xml -->
     <string name="actionbar_title_ban_list">Ostatnie bany</string>
