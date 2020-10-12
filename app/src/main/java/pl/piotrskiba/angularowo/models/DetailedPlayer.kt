@@ -11,10 +11,13 @@ data class DetailedPlayer(
         @SerializedName(value = "vanished") val isVanished: Boolean,
         val balance: Float,
         val playtime: Int,
-        val tokens: Int
+        val tokens: Int,
+        private val permissions: List<String>
 ) {
 
     val rank: Rank
         get() = RankUtils.getRankFromName(rankKey)
+
+    fun hasPermission(permission: String) = permissions.contains(permission)
 
 }

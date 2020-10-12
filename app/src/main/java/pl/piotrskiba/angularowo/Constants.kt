@@ -45,3 +45,7 @@ object Constants {
     const val REMOTE_CONFIG_APP_LOCK_START_TIMESTAMP = "app_lock_start_timestamp"
     const val REMOTE_CONFIG_APP_LOCK_END_TIMESTAMP = "app_lock_end_timestamp"
 }
+
+object Permissions {
+    const val IGNORE_APP_LOCK = "ignore_app_lock"
+}
