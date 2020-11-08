@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="time_units">
+        <item>sekund</item>
+        <item>minut</item>
+        <item>godzin</item>
+        <item>dni</item>
+        <item>miesięcy</item>
+        <item>lat</item>
+    </array>
+</resources>

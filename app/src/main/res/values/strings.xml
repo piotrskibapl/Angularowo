@@ -84,6 +84,26 @@
     <string name="kick_player">Wyrzuć z gry</string>
     <string name="warn_player">Nałóż ostrzeżenie</string>
     <string name="ban_player">Zbanuj</string>
+    <string name="dialog_mute_reason_title">Powód wyciszenia</string>
+    <string name="dialog_mute_reason_description">Podaj powód wyciszenia.</string>
+    <string name="dialog_kick_reason_title">Powód wyrzucenia</string>
+    <string name="dialog_kick_reason_description">Podaj powód wyrzucenia z gry.</string>
+    <string name="dialog_warn_reason_title">Powód ostrzeżenia</string>
+    <string name="dialog_warn_reason_description">Podaj powód nałożenia ostrzeżenia.</string>
+    <string name="dialog_ban_reason_title">Powód zbanowania</string>
+    <string name="dialog_ban_reason_description">Podaj powód nałożenia bana.</string>
+    <string name="dialog_mute_time_title">Czas wyciszenia</string>
+    <string name="dialog_mute_time_description">Podaj czas trwania wyciszenia.</string>
+    <string name="dialog_ban_time_title">Czas zbanowania</string>
+    <string name="dialog_ban_time_description">Podaj czas trwania bana.</string>
+    <string name="dialog_mute_confirm_title">Potwierdź wyciszenie</string>
+    <string name="dialog_mute_confirm_description">Czy na pewno chcesz wyciszyć tego gracza?</string>
+    <string name="dialog_kick_confirm_title">Potwierdź wyrzucenie</string>
+    <string name="dialog_kick_confirm_description">Czy na pewno chcesz wyrzucić tego gracza z gry?</string>
+    <string name="dialog_warn_confirm_title">Potwierdź ostrzeżenie</string>
+    <string name="dialog_warn_confirm_description">Czy na pewno chcesz nałożyć ostrzeżenie na tego gracza?</string>
+    <string name="dialog_ban_confirm_title">Potwierdź bana</string>
+    <string name="dialog_ban_confirm_description">Czy na pewno chcesz zbanować tego gracza?</string>
 
     <!-- fragment_ban_list.xml -->
     <string name="actionbar_title_ban_list">Ostatnie bany</string>
@@ -114,9 +134,6 @@
     <string name="ad_question">Odbiór monet</string>
     <string name="ad_question_description">Czy chcesz obejrzeć reklamę w zamian za wybraną ilość monet?</string>
     <string name="offer_question">Aktywacja oferty</string>
-    <string name="button_yes">Tak</string>
-    <string name="button_no">Nie</string>
-    <string name="button_dismiss">Zamknij</string>
     <string name="earn_more_coins">Zdobądź więcej monet</string>
     <string name="exchange_coins_to_prizes">Wymień monety na nagrody</string>
     <string name="coin_limit_reached">Nie możesz zdobyć więcej monet!</string>
@@ -160,4 +177,9 @@
     <string name="no_internet">Wystąpił błąd przy pobieraniu danych.\nSprawdź czy masz połączenie z Internetem oraz spróbuj ponownie.</string>
     <string name="server_error">Wygląda na to, że nasze serwery chwilowo nie działają.\nSpróbuj ponownie później.</string>
     <string name="account_banned">Twoje konto jest zbanowane.\nDostęp do tej funkcjonalności zostanie przywrócony po wygaśnięciu bana.</string>
+    <string name="button_yes">Tak</string>
+    <string name="button_no">Nie</string>
+    <string name="button_dismiss">Zamknij</string>
+    <string name="button_cancel">Anuluj</string>
+    <string name="button_next">Dalej</string>
 </resources>

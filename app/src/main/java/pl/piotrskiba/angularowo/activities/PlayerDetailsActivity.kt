@@ -1,10 +1,15 @@
 package pl.piotrskiba.angularowo.activities
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
+import android.text.InputType
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
@@ -23,6 +28,7 @@ import com.google.android.material.snackbar.Snackbar
 import pl.piotrskiba.angularowo.*
 import pl.piotrskiba.angularowo.activities.base.BaseActivity
 import pl.piotrskiba.angularowo.database.entity.Friend
+import pl.piotrskiba.angularowo.layouts.TimeAmountPickerView
 import pl.piotrskiba.angularowo.models.DetailedPlayer
 import pl.piotrskiba.angularowo.models.Player
 import pl.piotrskiba.angularowo.network.ServerAPIClient
@@ -82,6 +88,8 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
     private lateinit var mPreviewedPlayer: Player
 
     private var snackbar: Snackbar? = null
+    private var punishReason: String = ""
+    private var punishTime: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -296,18 +304,122 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
     }
 
     private fun onMute() {
-        throw NotImplementedError()
+        showReasonDialog(
+                getString(R.string.dialog_mute_reason_title),
+                getString(R.string.dialog_mute_reason_description)
+        ) { _, _ ->
+            showTimeDialog(
+                    getString(R.string.dialog_mute_time_title),
+                    getString(R.string.dialog_mute_time_description)
+            ) { _, _ ->
+                showConfirmationDialog(
+                        getString(R.string.dialog_mute_confirm_title),
+                        getString(R.string.dialog_mute_confirm_description)
+                ) { _, _ ->
+                    throw NotImplementedError()
+                }
+            }
+        }
     }
 
     private fun onKick() {
-        throw NotImplementedError()
+        showReasonDialog(
+                getString(R.string.dialog_kick_reason_title),
+                getString(R.string.dialog_kick_reason_description)
+        ) { _, _ ->
+            showConfirmationDialog(
+                    getString(R.string.dialog_kick_confirm_title),
+                    getString(R.string.dialog_kick_confirm_description)
+            ) { _, _ ->
+                throw NotImplementedError()
+            }
+        }
     }
 
     private fun onWarn() {
-        throw NotImplementedError()
+        showReasonDialog(
+                getString(R.string.dialog_warn_reason_title),
+                getString(R.string.dialog_warn_reason_description)
+        ) { _, _ ->
+            // warn lasts 3 days by default
+            punishTime = 60 * 60 * 24 * 3
+            showConfirmationDialog(
+                    getString(R.string.dialog_warn_confirm_title),
+                    getString(R.string.dialog_warn_confirm_description)
+            ) { _, _ ->
+                throw NotImplementedError()
+            }
+        }
     }
 
     private fun onBan() {
-        throw NotImplementedError()
+        showReasonDialog(
+                getString(R.string.dialog_ban_reason_title),
+                getString(R.string.dialog_ban_reason_description)
+        ) { _, _ ->
+            showTimeDialog(
+                    getString(R.string.dialog_ban_time_title),
+                    getString(R.string.dialog_ban_time_description)
+            ) { _, _ ->
+                showConfirmationDialog(
+                        getString(R.string.dialog_ban_confirm_title),
+                        getString(R.string.dialog_ban_confirm_description)
+                ) { _, _ ->
+                    throw NotImplementedError()
+                }
+            }
+        }
+    }
+
+    private fun showReasonDialog(title: String, description: String, listener: DialogInterface.OnClickListener) {
+        val builder = AlertDialog.Builder(this)
+
+        val input = EditText(this)
+        input.inputType = InputType.TYPE_CLASS_TEXT
+
+        builder.setTitle(title)
+                .setMessage(description)
+                .setView(input)
+                .setPositiveButton(R.string.button_next) { dialog, which ->
+                    punishReason = input.text.toString().trim()
+                    if (punishReason.isNotEmpty()) {
+                        listener.onClick(dialog, which)
+                    } else {
+                        showReasonDialog(title, description, listener)
+                    }
+                }
+                .show()
+    }
+
+    private fun showTimeDialog(title: String, description: String, listener: DialogInterface.OnClickListener) {
+        val builder = AlertDialog.Builder(this)
+
+        val input = TimeAmountPickerView(this)
+        input.gravity = Gravity.CENTER_HORIZONTAL
+
+        builder.setTitle(title)
+                .setMessage(description)
+                .setView(input)
+                .setPositiveButton(R.string.button_next) { dialog, which ->
+                    punishTime = input.getTimeAmount()
+                    if (punishTime > 0) {
+                        listener.onClick(dialog, which)
+                    } else {
+                        showTimeDialog(title, description, listener)
+                    }
+                }
+                .show()
+    }
+
+    private fun showConfirmationDialog(title: String, description: String, listener: DialogInterface.OnClickListener) {
+        val builder = AlertDialog.Builder(this)
+
+        builder.setTitle(title)
+                .setMessage(description)
+                .setPositiveButton(R.string.button_yes) { dialog, which ->
+                    listener.onClick(dialog, which)
+                }
+                .setNegativeButton(R.string.button_cancel, null)
+                .show()
     }
 }
