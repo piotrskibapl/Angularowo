@@ -188,7 +188,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/D:/Programy/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_favorite_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/D:/Programy/Android%20Studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/remove_circle_outline/baseline_remove_circle_outline_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -198,8 +198,8 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_unfavorite" />
+                            <entry key="color" value="e0e0e0" />
+                            <entry key="outputName" value="ic_kick" />
                             <entry key="sourceFile" value="C:\Users\pskib\Documents\grafika\Projekty\Angularowo Android\coin.svg" />
                           </map>
                         </option>
