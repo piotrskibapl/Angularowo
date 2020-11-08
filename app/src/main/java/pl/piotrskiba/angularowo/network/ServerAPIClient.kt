@@ -1,6 +1,7 @@
 package pl.piotrskiba.angularowo.network
 
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -14,8 +15,11 @@ object ServerAPIClient {
         get() {
             if (retrofit == null) {
                 val unauthorizedInterceptor = UnauthorizedInterceptor()
+                val loggingInterceptor = HttpLoggingInterceptor()
+                loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC)
                 val client = OkHttpClient.Builder()
                         .addInterceptor(unauthorizedInterceptor)
+                        .addInterceptor(loggingInterceptor)
                         .build()
                 client.dispatcher.maxRequests = 1
                 retrofit = Retrofit.Builder()

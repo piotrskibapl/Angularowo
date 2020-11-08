@@ -75,7 +75,7 @@ class BanDetailsActivity : BaseActivity() {
             mPlayerAvatar.setImageBitmap(avatarBitmap)
         }
 
-        var reason = ban.reason.toLowerCase(Locale.getDefault())
+        var reason = ban.reason.toLowerCase(Locale.getDefault()).replace("&8", "")
         when (ban.type) {
             Ban.TYPE_BAN -> {
                 mBanTypeImageView.setImageResource(R.drawable.ic_ban)
@@ -95,7 +95,7 @@ class BanDetailsActivity : BaseActivity() {
 
         mBanTypeTextView.text = ban.type
         mBanBanner.text = ban.banner
-        mBanFullReason.text = ban.reason
+        mBanFullReason.text = ban.reason.replace("&8", "")
 
         val start = Date(ban.banTime.toLong() * 1000)
         val end = Date(ban.expireDate.toLong() * 1000)

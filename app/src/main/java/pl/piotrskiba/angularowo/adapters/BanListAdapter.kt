@@ -48,7 +48,7 @@ class BanListAdapter(private val context: Context, private val mClickListener: B
 
         holder.mPlayerName.text = ban.username
 
-        var reason = ban.reason.toLowerCase(Locale.getDefault())
+        var reason = ban.reason.toLowerCase(Locale.getDefault()).replace("&8", "")
 
         when (ban.type) {
             Ban.TYPE_BAN -> {

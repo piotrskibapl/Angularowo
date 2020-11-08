@@ -104,6 +104,11 @@
     <string name="dialog_warn_confirm_description">Czy na pewno chcesz nałożyć ostrzeżenie na tego gracza?</string>
     <string name="dialog_ban_confirm_title">Potwierdź bana</string>
     <string name="dialog_ban_confirm_description">Czy na pewno chcesz zbanować tego gracza?</string>
+    <string name="dialog_punish_success_title">Zakończono pomyślnie</string>
+    <string name="dialog_mute_success_description">Gracz został wyciszony.</string>
+    <string name="dialog_kick_success_description">Gracz został wyrzucony z gry.</string>
+    <string name="dialog_warn_success_description">Gracz został ostrzeżony.</string>
+    <string name="dialog_ban_success_description">Gracz został zbanowany.</string>
 
     <!-- fragment_ban_list.xml -->
     <string name="actionbar_title_ban_list">Ostatnie bany</string>
@@ -176,6 +181,8 @@
     <!-- universal -->
     <string name="no_internet">Wystąpił błąd przy pobieraniu danych.\nSprawdź czy masz połączenie z Internetem oraz spróbuj ponownie.</string>
     <string name="server_error">Wygląda na to, że nasze serwery chwilowo nie działają.\nSpróbuj ponownie później.</string>
+    <string name="dialog_error_title">Wystąpił błąd.</string>
+    <string name="dialog_error_description">Wystąpił nieoczekiwany błąd. Spróbuj ponownie.</string>
     <string name="account_banned">Twoje konto jest zbanowane.\nDostęp do tej funkcjonalności zostanie przywrócony po wygaśnięciu bana.</string>
     <string name="button_yes">Tak</string>
     <string name="button_no">Nie</string>

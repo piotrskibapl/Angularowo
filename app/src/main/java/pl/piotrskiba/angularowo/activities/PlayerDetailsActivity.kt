@@ -316,7 +316,26 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
                         getString(R.string.dialog_mute_confirm_title),
                         getString(R.string.dialog_mute_confirm_description)
                 ) { _, _ ->
-                    throw NotImplementedError()
+                    mSwipeRefreshLayout.isRefreshing = true
+
+                    val serverAPIInterface = retrofitInstance.create(ServerAPIInterface::class.java)
+                    serverAPIInterface.mutePlayer(
+                            ServerAPIClient.API_KEY,
+                            mPreviewedPlayer.uuid,
+                            punishReason,
+                            punishTime,
+                            PreferenceUtils.getAccessToken(this)!!
+                    ).enqueue(object : Callback<Void> {
+                        override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                            showSuccessDialog(getString(R.string.dialog_mute_success_description))
+                            mSwipeRefreshLayout.isRefreshing = false
+                        }
+
+                        override fun onFailure(call: Call<Void>, t: Throwable) {
+                            showErrorDialog()
+                            mSwipeRefreshLayout.isRefreshing = false
+                        }
+                    })
                 }
             }
         }
@@ -331,7 +350,25 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
                     getString(R.string.dialog_kick_confirm_title),
                     getString(R.string.dialog_kick_confirm_description)
             ) { _, _ ->
-                throw NotImplementedError()
+                mSwipeRefreshLayout.isRefreshing = true
+
+                val serverAPIInterface = retrofitInstance.create(ServerAPIInterface::class.java)
+                serverAPIInterface.kickPlayer(
+                        ServerAPIClient.API_KEY,
+                        mPreviewedPlayer.uuid,
+                        punishReason,
+                        PreferenceUtils.getAccessToken(this)!!
+                ).enqueue(object : Callback<Void> {
+                    override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                        showSuccessDialog(getString(R.string.dialog_kick_success_description))
+                        mSwipeRefreshLayout.isRefreshing = false
+                    }
+
+                    override fun onFailure(call: Call<Void>, t: Throwable) {
+                        showErrorDialog()
+                        mSwipeRefreshLayout.isRefreshing = false
+                    }
+                })
             }
         }
     }
@@ -347,7 +384,26 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
                     getString(R.string.dialog_warn_confirm_title),
                     getString(R.string.dialog_warn_confirm_description)
             ) { _, _ ->
-                throw NotImplementedError()
+                mSwipeRefreshLayout.isRefreshing = true
+
+                val serverAPIInterface = retrofitInstance.create(ServerAPIInterface::class.java)
+                serverAPIInterface.warnPlayer(
+                        ServerAPIClient.API_KEY,
+                        mPreviewedPlayer.uuid,
+                        punishReason,
+                        punishTime,
+                        PreferenceUtils.getAccessToken(this)!!
+                ).enqueue(object : Callback<Void> {
+                    override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                        showSuccessDialog(getString(R.string.dialog_warn_success_description))
+                        mSwipeRefreshLayout.isRefreshing = false
+                    }
+
+                    override fun onFailure(call: Call<Void>, t: Throwable) {
+                        showErrorDialog()
+                        mSwipeRefreshLayout.isRefreshing = false
+                    }
+                })
             }
         }
     }
@@ -365,7 +421,26 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
                         getString(R.string.dialog_ban_confirm_title),
                         getString(R.string.dialog_ban_confirm_description)
                 ) { _, _ ->
-                    throw NotImplementedError()
+                    mSwipeRefreshLayout.isRefreshing = true
+
+                    val serverAPIInterface = retrofitInstance.create(ServerAPIInterface::class.java)
+                    serverAPIInterface.banPlayer(
+                            ServerAPIClient.API_KEY,
+                            mPreviewedPlayer.uuid,
+                            punishReason,
+                            punishTime,
+                            PreferenceUtils.getAccessToken(this)!!
+                    ).enqueue(object : Callback<Void> {
+                        override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                            showSuccessDialog(getString(R.string.dialog_ban_success_description))
+                            mSwipeRefreshLayout.isRefreshing = false
+                        }
+
+                        override fun onFailure(call: Call<Void>, t: Throwable) {
+                            showErrorDialog()
+                            mSwipeRefreshLayout.isRefreshing = false
+                        }
+                    })
                 }
             }
         }
@@ -420,6 +495,24 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
                     listener.onClick(dialog, which)
                 }
                 .setNegativeButton(R.string.button_cancel, null)
+                .show()
+    }
+
+    private fun showSuccessDialog(description: String) {
+        val builder = AlertDialog.Builder(this)
+
+        builder.setTitle(getString(R.string.dialog_punish_success_title))
+                .setMessage(description)
+                .setPositiveButton(R.string.button_dismiss, null)
+                .show()
+    }
+
+    private fun showErrorDialog() {
+        val builder = AlertDialog.Builder(this)
+
+        builder.setTitle(getString(R.string.dialog_error_title))
+                .setMessage(getString(R.string.dialog_error_description))
+                .setPositiveButton(R.string.button_dismiss, null)
                 .show()
     }
 }

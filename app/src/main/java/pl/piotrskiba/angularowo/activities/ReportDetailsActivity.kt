@@ -87,7 +87,7 @@ class ReportDetailsActivity : BaseActivity() {
 
         // details
         mReportedPlayer.text = report.reported
-        mFullReportReason.text = report.reason
+        mFullReportReason.text = report.reason.replace("&8", "")
         mReportReporter.text = report.reporter
         mReportDate.text = report.date.replace('/', '.')
     }
