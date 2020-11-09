@@ -132,6 +132,7 @@ class PreferenceUtils(private val context: Context) {
             remove(context.getString(R.string.pref_key_nickname))
             remove(context.getString(R.string.pref_key_rank))
             remove(context.getString(R.string.pref_key_subscribed_to_uuid_topic))
+            apply()
         }
     }
 }
