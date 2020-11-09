@@ -44,6 +44,33 @@ class PreferenceUtils(private val context: Context) {
             }
         }
 
+    var balance: Float
+        get() = sharedPreferences.getFloat(context.getString(R.string.pref_key_balance), 0f)
+        set(value) {
+            sharedPreferences.edit().apply {
+                putFloat(context.getString(R.string.pref_key_balance), value)
+                apply()
+            }
+        }
+
+    var tokens: Int
+        get() = sharedPreferences.getInt(context.getString(R.string.pref_key_tokens), 0)
+        set(value) {
+            sharedPreferences.edit().apply {
+                putInt(context.getString(R.string.pref_key_tokens), value)
+                apply()
+            }
+        }
+
+    var playtime: Int
+        get() = sharedPreferences.getInt(context.getString(R.string.pref_key_playtime), 0)
+        set(value) {
+            sharedPreferences.edit().apply {
+                putInt(context.getString(R.string.pref_key_playtime), value)
+                apply()
+            }
+        }
+
     var hasSeenFavoriteShowcase: Boolean
         get() = sharedPreferences.getBoolean(context.getString(R.string.pref_key_showcase_favorite), false)
         set(value) {

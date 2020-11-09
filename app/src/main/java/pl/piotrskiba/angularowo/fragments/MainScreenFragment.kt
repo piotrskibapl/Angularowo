@@ -106,26 +106,44 @@ class MainScreenFragment : BaseFragment(), BanClickListener, NetworkErrorListene
         ButterKnife.bind(this, view)
 
         mBanListAdapter = BanListAdapter(requireContext(), this)
-        mBanList.adapter = mBanListAdapter
-
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(context)
+
+        mBanList.adapter = mBanListAdapter
         mBanList.layoutManager = layoutManager
-
         mBanList.setHasFixedSize(true)
+
         mSwipeRefreshLayout.setOnRefreshListener { refreshData() }
-
         mMotdTextView.setOnClickListener { onMotdClick() }
-
-        populateUi()
-
         mViewModel.setNetworkErrorListener(this)
 
         mSwipeRefreshLayout.isRefreshing = true
+        populateUi()
         seekForServerStatusUpdates()
         seekForPlayerUpdates()
         seekForLastPlayerBans()
 
         return view
+    }
+
+    private fun populateUi() {
+        showDefaultLayout()
+
+        mGreetingTextView.text = getString(R.string.greeting, preferenceUtils.username)
+        mPlayerBalanceTextView.text = getString(R.string.balance_format, preferenceUtils.balance.toInt())
+        mPlayerTokensTextView.text = preferenceUtils.tokens.toString()
+        mPlayerPlayTimeTextView.text = formatPlaytime(requireContext(), preferenceUtils.playtime)
+
+        val uuid = preferenceUtils.uuid
+        if (uuid != null) {
+            Glide.with(requireContext())
+                    .load(buildBodyUrl(uuid, true))
+                    .signature(IntegerVersionSignature(getSignatureVersionNumber(1)))
+                    .placeholder(R.drawable.default_body)
+                    .into(mPlayerBodyImageView)
+        }
+
+        val actionbar = (activity as AppCompatActivity?)?.supportActionBar
+        actionbar?.setTitle(R.string.app_name)
     }
 
     private fun seekForServerStatusUpdates() {
@@ -166,13 +184,16 @@ class MainScreenFragment : BaseFragment(), BanClickListener, NetworkErrorListene
     }
 
     private fun seekForPlayerUpdates() {
-        mViewModel.getPlayer().observe(viewLifecycleOwner, Observer { player: DetailedPlayer? ->
+        mViewModel.getPlayer().observe(viewLifecycleOwner, { player: DetailedPlayer? ->
             if (player != null) {
                 loadedPlayer = true
                 showDefaultLayoutIfLoadedAllData()
 
                 if (context != null) {
                     preferenceUtils.username = player.username
+                    preferenceUtils.balance = player.balance
+                    preferenceUtils.tokens = player.tokens
+                    preferenceUtils.playtime = player.playtime
                 }
 
                 mPlayerBalanceTextView.text = getString(R.string.balance_format, player.balance.toInt())
@@ -286,25 +307,6 @@ class MainScreenFragment : BaseFragment(), BanClickListener, NetworkErrorListene
             }
         }
         super.onResume()
-    }
-
-    private fun populateUi() {
-        showDefaultLayout()
-
-        val username = preferenceUtils.username
-        mGreetingTextView.text = getString(R.string.greeting, username)
-
-        val uuid = preferenceUtils.uuid
-        if (uuid != null) {
-            Glide.with(requireContext())
-                    .load(buildBodyUrl(uuid, true))
-                    .signature(IntegerVersionSignature(getSignatureVersionNumber(1)))
-                    .placeholder(R.drawable.default_body)
-                    .into(mPlayerBodyImageView)
-        }
-
-        val actionbar = (activity as AppCompatActivity?)?.supportActionBar
-        actionbar?.setTitle(R.string.app_name)
     }
 
     private fun subscribeToFirebaseRankTopic(rank: Rank) {
