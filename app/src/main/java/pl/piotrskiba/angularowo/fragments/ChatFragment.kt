@@ -179,6 +179,7 @@ class ChatFragment : BaseFragment(), ChatMessageClickListener {
         intent.putExtra(Constants.EXTRA_PREVIEWED_PLAYER,
                 Player(
                         clickedChatMessage.uuid,
+                        clickedChatMessage.uuid,
                         clickedChatMessage.username,
                         clickedChatMessage.rank,
                         false

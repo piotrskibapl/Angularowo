@@ -47,7 +47,7 @@ class PlayerListAdapter(
         val player = playerList.players[position]
 
         Glide.with(context)
-                .load(buildAvatarUrl(player.uuid, true))
+                .load(buildAvatarUrl(player.skinUuid, true))
                 .signature(IntegerVersionSignature(getSignatureVersionNumber(5)))
                 .placeholder(R.drawable.default_avatar)
                 .into(holder.mPlayerAvatar)

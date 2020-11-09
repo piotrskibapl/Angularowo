@@ -26,6 +26,15 @@ class PreferenceUtils(private val context: Context) {
             }
         }
 
+    var skinUuid: String?
+        get() = sharedPreferences.getString(context.getString(R.string.pref_key_skin_uuid), null)
+        set(value) {
+            sharedPreferences.edit().apply {
+                putString(context.getString(R.string.pref_key_skin_uuid), value)
+                apply()
+            }
+        }
+
     var username: String?
         get() = sharedPreferences.getString(context.getString(R.string.pref_key_nickname), null)
         set(value) {

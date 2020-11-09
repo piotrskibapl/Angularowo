@@ -162,13 +162,13 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
 
         if (canPopulate) {
             Glide.with(this)
-                    .load(buildAvatarUrl(player.uuid, true))
+                    .load(buildAvatarUrl(player.skinUuid, true))
                     .signature(IntegerVersionSignature(getSignatureVersionNumber(5)))
                     .placeholder(R.drawable.default_body)
                     .into(mPlayerAvatar)
 
             Glide.with(this)
-                    .load(buildBodyUrl(player.uuid, true))
+                    .load(buildBodyUrl(player.skinUuid, true))
                     .signature(IntegerVersionSignature(getSignatureVersionNumber(5)))
                     .placeholder(R.drawable.default_body)
                     .into(mPlayerBodyImageView)
@@ -187,8 +187,11 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
     }
 
     private fun populatePlayer(detailedPlayer: DetailedPlayer) {
-        val player = Player(detailedPlayer.uuid, detailedPlayer.username,
-                detailedPlayer.rank.name, detailedPlayer.isVanished)
+        val player = Player(detailedPlayer.uuid,
+                detailedPlayer.skinUuid,
+                detailedPlayer.username,
+                detailedPlayer.rank.name,
+                detailedPlayer.isVanished)
         populatePlayer(player)
 
         mPlayerBalanceTextView.text = getString(R.string.balance_format, detailedPlayer.balance.toInt())

@@ -133,10 +133,10 @@ class MainScreenFragment : BaseFragment(), BanClickListener, NetworkErrorListene
         mPlayerTokensTextView.text = preferenceUtils.tokens.toString()
         mPlayerPlayTimeTextView.text = formatPlaytime(requireContext(), preferenceUtils.playtime)
 
-        val uuid = preferenceUtils.uuid
-        if (uuid != null) {
+        val skinUuid = preferenceUtils.skinUuid ?: preferenceUtils.uuid
+        if (skinUuid != null) {
             Glide.with(requireContext())
-                    .load(buildBodyUrl(uuid, true))
+                    .load(buildBodyUrl(skinUuid, true))
                     .signature(IntegerVersionSignature(getSignatureVersionNumber(1)))
                     .placeholder(R.drawable.default_body)
                     .into(mPlayerBodyImageView)
@@ -190,10 +190,21 @@ class MainScreenFragment : BaseFragment(), BanClickListener, NetworkErrorListene
                 showDefaultLayoutIfLoadedAllData()
 
                 if (context != null) {
+                    val previousSkinUuid = preferenceUtils.skinUuid ?: preferenceUtils.uuid
+
+                    preferenceUtils.skinUuid = player.skinUuid
                     preferenceUtils.username = player.username
                     preferenceUtils.balance = player.balance
                     preferenceUtils.tokens = player.tokens
                     preferenceUtils.playtime = player.playtime
+
+                    if (player.skinUuid != previousSkinUuid) {
+                        Glide.with(requireContext())
+                                .load(buildBodyUrl(player.skinUuid, true))
+                                .signature(IntegerVersionSignature(getSignatureVersionNumber(1)))
+                                .placeholder(R.drawable.default_body)
+                                .into(mPlayerBodyImageView)
+                    }
                 }
 
                 mPlayerBalanceTextView.text = getString(R.string.balance_format, player.balance.toInt())

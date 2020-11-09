@@ -6,6 +6,7 @@ import java.io.Serializable
 
 data class DetailedPlayer(
         val uuid: String,
+        val skinUuid: String,
         val username: String,
         val status: String,
         @SerializedName(value = "rank") val rankKey: String,
