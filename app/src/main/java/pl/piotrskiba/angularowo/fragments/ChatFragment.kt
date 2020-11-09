@@ -9,7 +9,6 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
@@ -32,6 +31,7 @@ import pl.piotrskiba.angularowo.models.Player
 import pl.piotrskiba.angularowo.network.ServerAPIClient
 import pl.piotrskiba.angularowo.network.ServerAPIClient.retrofitInstance
 import pl.piotrskiba.angularowo.network.ServerAPIInterface
+import pl.piotrskiba.angularowo.utils.PreferenceUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -39,6 +39,7 @@ import java.util.*
 
 class ChatFragment : BaseFragment(), ChatMessageClickListener {
 
+    private lateinit var preferenceUtils: PreferenceUtils
     private lateinit var mChatAdapter: ChatAdapter
     private lateinit var mOkHttpClient: OkHttpClient
     private lateinit var mWebSocket: WebSocket
@@ -58,6 +59,12 @@ class ChatFragment : BaseFragment(), ChatMessageClickListener {
 
     @BindView(R.id.account_banned_layout)
     lateinit var mAccountBannedLayout: LinearLayout
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        preferenceUtils = PreferenceUtils(requireContext())
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_chat, container, false)
@@ -91,8 +98,7 @@ class ChatFragment : BaseFragment(), ChatMessageClickListener {
     }
 
     private fun preloadChatMessages() {
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val accessToken = sharedPreferences.getString(getString(R.string.pref_key_access_token), null)
+        val accessToken = preferenceUtils.accessToken
 
         val serverAPIInterface = retrofitInstance.create(ServerAPIInterface::class.java)
         serverAPIInterface.getLastChatMessages(ServerAPIClient.API_KEY, accessToken!!).enqueue(object : Callback<ChatMessageList?> {
@@ -154,8 +160,7 @@ class ChatFragment : BaseFragment(), ChatMessageClickListener {
     }
 
     private fun startChatWebSocket() {
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val accessToken = sharedPreferences.getString(getString(R.string.pref_key_access_token), null)
+        val accessToken = preferenceUtils.accessToken
 
         val request = Request.Builder()
                 .url(Constants.CHAT_WEBSOCKET_URL)

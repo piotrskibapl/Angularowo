@@ -4,72 +4,107 @@ import android.content.Context
 import androidx.preference.PreferenceManager
 import pl.piotrskiba.angularowo.R
 
-object PreferenceUtils {
+class PreferenceUtils(private val context: Context) {
 
-    /**
-     * Function for getting the access token from the preferences
-     *
-     * @param context
-     * @return an access token or null if not set
-     */
-    @JvmStatic
-    fun getAccessToken(context: Context): String? {
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        return sharedPreferences.getString(context.getString(R.string.pref_key_access_token), null)
-    }
+    private val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
-    /**
-     * Function for getting the UUID of user
-     *
-     * @param context
-     * @return an UUID or null if not set
-     */
-    @JvmStatic
-    fun getUuid(context: Context): String? {
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        return sharedPreferences.getString(context.getString(R.string.pref_key_uuid), null)
-    }
+    var accessToken: String?
+        get() = sharedPreferences.getString(context.getString(R.string.pref_key_access_token), null)
+        set(value) {
+            sharedPreferences.edit().apply {
+                putString(context.getString(R.string.pref_key_access_token), value)
+                apply()
+            }
+        }
 
-    /**
-     * Function for getting the username from the preferences
-     *
-     * @param context
-     * @return an username or null if not set
-     */
-    @JvmStatic
-    fun getUsername(context: Context): String? {
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        return sharedPreferences.getString(context.getString(R.string.pref_key_nickname), null)
-    }
+    var uuid: String?
+        get() = sharedPreferences.getString(context.getString(R.string.pref_key_uuid), null)
+        set(value) {
+            sharedPreferences.edit().apply {
+                putString(context.getString(R.string.pref_key_uuid), value)
+                apply()
+            }
+        }
 
-    /**
-     * Function for getting the rank name of user
-     *
-     * @param context
-     * @return a rank name or null if not set
-     */
-    @JvmStatic
-    fun getRankName(context: Context): String? {
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        return sharedPreferences.getString(context.getString(R.string.pref_key_rank), null)
-    }
+    var username: String?
+        get() = sharedPreferences.getString(context.getString(R.string.pref_key_nickname), null)
+        set(value) {
+            sharedPreferences.edit().apply {
+                putString(context.getString(R.string.pref_key_nickname), value)
+                apply()
+            }
+        }
 
-    /**
-     * Function for checking if user has been shown a "Favorite players" showcase
-     *
-     * @param context
-     * @return true if the showcase was shown, false otherwise
-     */
-    @JvmStatic
-    fun hasSeenFavoriteShowcase(context: Context): Boolean {
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        return sharedPreferences.getBoolean(context.getString(R.string.pref_key_showcase_favorite), false)
-    }
+    var rankName: String?
+        get() = sharedPreferences.getString(context.getString(R.string.pref_key_rank), null)
+        set(value) {
+            sharedPreferences.edit().apply {
+                putString(context.getString(R.string.pref_key_rank), value)
+                apply()
+            }
+        }
 
-    fun setHasSeenFavoriteShowcase(context: Context, seen: Boolean) {
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val editor = sharedPreferences.edit()
-        editor.putBoolean(context.getString(R.string.pref_key_showcase_favorite), seen)
-        editor.apply()
+    var hasSeenFavoriteShowcase: Boolean
+        get() = sharedPreferences.getBoolean(context.getString(R.string.pref_key_showcase_favorite), false)
+        set(value) {
+            sharedPreferences.edit().apply {
+                putBoolean(context.getString(R.string.pref_key_showcase_favorite), value)
+                apply()
+            }
+        }
+
+    var subscribedToFirebaseUuidTopic: Boolean
+        get() = sharedPreferences.getBoolean(context.getString(R.string.pref_key_subscribed_to_uuid_topic), false)
+        set(value) {
+            sharedPreferences.edit().apply {
+                putBoolean(context.getString(R.string.pref_key_subscribed_to_uuid_topic), value)
+                apply()
+            }
+        }
+
+    var subscribedToFirebaseEventsTopic: Boolean
+        get() = sharedPreferences.getBoolean(context.getString(R.string.pref_key_subscribed_to_events), false)
+        set(value) {
+            sharedPreferences.edit().apply {
+                putBoolean(context.getString(R.string.pref_key_subscribed_to_events), value)
+                apply()
+            }
+        }
+
+    var subscribedToFirebasePrivateMessagesTopic: Boolean
+        get() = sharedPreferences.getBoolean(context.getString(R.string.pref_key_subscribed_to_private_messages), false)
+        set(value) {
+            sharedPreferences.edit().apply {
+                putBoolean(context.getString(R.string.pref_key_subscribed_to_private_messages), value)
+                apply()
+            }
+        }
+
+    var subscribedToFirebaseAccountIncidentsTopic: Boolean
+        get() = sharedPreferences.getBoolean(context.getString(R.string.pref_key_subscribed_to_account_incidents), false)
+        set(value) {
+            sharedPreferences.edit().apply {
+                putBoolean(context.getString(R.string.pref_key_subscribed_to_account_incidents), value)
+                apply()
+            }
+        }
+
+    var subscribedToFirebaseNewReportsTopic: Boolean
+        get() = sharedPreferences.getBoolean(context.getString(R.string.pref_key_subscribed_to_new_reports), false)
+        set(value) {
+            sharedPreferences.edit().apply {
+                putBoolean(context.getString(R.string.pref_key_subscribed_to_new_reports), value)
+                apply()
+            }
+        }
+
+    fun clearUserData() {
+        sharedPreferences.edit().apply {
+            remove(context.getString(R.string.pref_key_access_token))
+            remove(context.getString(R.string.pref_key_uuid))
+            remove(context.getString(R.string.pref_key_nickname))
+            remove(context.getString(R.string.pref_key_rank))
+            remove(context.getString(R.string.pref_key_subscribed_to_uuid_topic))
+        }
     }
 }

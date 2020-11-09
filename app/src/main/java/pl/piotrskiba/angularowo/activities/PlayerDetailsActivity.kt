@@ -17,7 +17,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.preference.PreferenceManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import butterknife.BindView
@@ -83,6 +82,8 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
     @BindView(R.id.iv_heart)
     lateinit var mPlayerHeartIcon: ImageView
 
+    private lateinit var preferenceUtils: PreferenceUtils
+
     private lateinit var mViewModel: AppViewModel
     private lateinit var mPlayer: DetailedPlayer
     private lateinit var mPreviewedPlayer: Player
@@ -97,6 +98,7 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
         setContentView(R.layout.activity_player_details)
         ButterKnife.bind(this)
         mViewModel = ViewModelProvider(this).get(AppViewModel::class.java)
+        preferenceUtils = PreferenceUtils(this)
 
         setSupportActionBar(mToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -131,8 +133,7 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
     private fun loadDetailedPlayerData(player: Player) {
         mSwipeRefreshLayout.isRefreshing = true
 
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val accessToken = sharedPreferences.getString(getString(R.string.pref_key_access_token), null)
+        val accessToken = preferenceUtils.accessToken
 
         accessToken?.run {
             val serverAPIInterface = retrofitInstance.create(ServerAPIInterface::class.java)
@@ -198,7 +199,7 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
     }
 
     private fun showFavoriteShowcase() {
-        if (!PreferenceUtils.hasSeenFavoriteShowcase(this) && findViewById<View>(R.id.nav_favorite) != null) {
+        if (!preferenceUtils.hasSeenFavoriteShowcase && findViewById<View>(R.id.nav_favorite) != null) {
             TutoShowcase.from(this)
                     .setContentView(R.layout.showcase_favorite)
                     .on(R.id.nav_favorite)
@@ -206,7 +207,7 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
                     .withBorder()
                     .show()
 
-            PreferenceUtils.setHasSeenFavoriteShowcase(this, true)
+            preferenceUtils.hasSeenFavoriteShowcase = true
         }
     }
 
@@ -219,7 +220,7 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
         val friends = mViewModel.allFriends.value
-        if (mPreviewedPlayer.username != PreferenceUtils.getUsername(this)) {
+        if (mPreviewedPlayer.username != preferenceUtils.username) {
             if (friends != null && friends.contains(Friend(mPreviewedPlayer.uuid))) {
                 menu?.findItem(R.id.nav_favorite)?.isVisible = false
                 menu?.findItem(R.id.nav_unfavorite)?.isVisible = true
@@ -281,8 +282,8 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
         snackbar?.show()
 
         AnalyticsUtils().logFavorite(
-                PreferenceUtils.getUuid(this) ?: "",
-                PreferenceUtils.getUsername(this) ?: "",
+                preferenceUtils.uuid ?: "",
+                preferenceUtils.username ?: "",
                 mPreviewedPlayer.uuid,
                 mPreviewedPlayer.username
         )
@@ -296,8 +297,8 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
         snackbar?.show()
 
         AnalyticsUtils().logUnfavorite(
-                PreferenceUtils.getUuid(this) ?: "",
-                PreferenceUtils.getUsername(this) ?: "",
+                preferenceUtils.uuid ?: "",
+                preferenceUtils.username ?: "",
                 mPreviewedPlayer.uuid,
                 mPreviewedPlayer.username
         )
@@ -324,7 +325,7 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
                             mPreviewedPlayer.uuid,
                             punishReason,
                             punishTime,
-                            PreferenceUtils.getAccessToken(this)!!
+                            preferenceUtils.accessToken!!
                     ).enqueue(object : Callback<Void> {
                         override fun onResponse(call: Call<Void>, response: Response<Void>) {
                             showSuccessDialog(getString(R.string.dialog_mute_success_description))
@@ -357,7 +358,7 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
                         ServerAPIClient.API_KEY,
                         mPreviewedPlayer.uuid,
                         punishReason,
-                        PreferenceUtils.getAccessToken(this)!!
+                        preferenceUtils.accessToken!!
                 ).enqueue(object : Callback<Void> {
                     override fun onResponse(call: Call<Void>, response: Response<Void>) {
                         showSuccessDialog(getString(R.string.dialog_kick_success_description))
@@ -392,7 +393,7 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
                         mPreviewedPlayer.uuid,
                         punishReason,
                         punishTime,
-                        PreferenceUtils.getAccessToken(this)!!
+                        preferenceUtils.accessToken!!
                 ).enqueue(object : Callback<Void> {
                     override fun onResponse(call: Call<Void>, response: Response<Void>) {
                         showSuccessDialog(getString(R.string.dialog_warn_success_description))
@@ -429,7 +430,7 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
                             mPreviewedPlayer.uuid,
                             punishReason,
                             punishTime,
-                            PreferenceUtils.getAccessToken(this)!!
+                            preferenceUtils.accessToken!!
                     ).enqueue(object : Callback<Void> {
                         override fun onResponse(call: Call<Void>, response: Response<Void>) {
                             showSuccessDialog(getString(R.string.dialog_ban_success_description))

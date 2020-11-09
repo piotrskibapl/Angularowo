@@ -4,21 +4,27 @@ import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.Preference
-import androidx.preference.PreferenceManager
 import com.google.firebase.messaging.FirebaseMessaging
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.fragments.base.BasePreferenceFragmentCompat
 import pl.piotrskiba.angularowo.utils.AnalyticsUtils
+import pl.piotrskiba.angularowo.utils.PreferenceUtils
 import pl.piotrskiba.angularowo.utils.RankUtils.getRankFromName
 import pl.piotrskiba.angularowo.utils.TextUtils.normalize
 
 class SettingsFragment : BasePreferenceFragmentCompat() {
 
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+    private lateinit var preferenceUtils: PreferenceUtils
 
-        val rankName = sharedPreferences.getString(getString(R.string.pref_key_rank), "")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        preferenceUtils = PreferenceUtils(requireContext())
+    }
+
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        val rankName = preferenceUtils.rankName
         val rank = getRankFromName(rankName!!)
 
         if (rank.staff) {
@@ -31,9 +37,8 @@ class SettingsFragment : BasePreferenceFragmentCompat() {
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
         if (preference.key == getString(R.string.pref_key_logout)) {
             if (context != null) {
-                val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-                val uuid = sharedPreferences.getString(getString(R.string.pref_key_uuid), null)
-                val username = sharedPreferences.getString(getString(R.string.pref_key_nickname), null)
+                val uuid = preferenceUtils.uuid
+                val username = preferenceUtils.username
 
                 AnalyticsUtils().logLogoutDialogOpen(
                         uuid ?: "",
@@ -44,48 +49,16 @@ class SettingsFragment : BasePreferenceFragmentCompat() {
                         .setTitle(R.string.logout_question)
                         .setMessage(R.string.logout_question_description)
                         .setPositiveButton(R.string.button_yes) { _: DialogInterface?, _: Int ->
-                            val editor = sharedPreferences.edit()
-
-                            if (sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_uuid_topic))) {
-                                FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_PLAYER_TOPIC_PREFIX + uuid)
-                                editor.remove(getString(R.string.pref_key_subscribed_to_uuid_topic))
-                            }
-
-                            val rank = sharedPreferences.getString(getString(R.string.pref_key_rank), null)
-                            if (rank != null) {
-                                FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_RANK_TOPIC_PREFIX + normalize(rank))
-                                editor.remove(getString(R.string.pref_key_rank))
-                            }
-
-                            if (sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_events))) {
-                                FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_NEW_EVENT_TOPIC)
-                                editor.remove(getString(R.string.pref_key_subscribed_to_events))
-                            }
-
-                            if (sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_private_messages))) {
-                                FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_PRIVATE_MESSAGES_TOPIC)
-                                editor.remove(getString(R.string.pref_key_subscribed_to_private_messages))
-                            }
-
-                            if (sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_account_incidents))) {
-                                FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_ACCOUNT_INCIDENTS_TOPIC)
-                                editor.remove(getString(R.string.pref_key_subscribed_to_account_incidents))
-                            }
-
-                            if (sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_new_reports))) {
-                                FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_NEW_REPORTS_TOPIC)
-                                editor.remove(getString(R.string.pref_key_subscribed_to_new_reports))
-                            }
 
                             AnalyticsUtils().logLogoutProceed(
                                     uuid ?: "",
                                     username ?: ""
                             )
 
-                            editor.remove(getString(R.string.pref_key_nickname))
-                            editor.remove(getString(R.string.pref_key_access_token))
+                            FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_PLAYER_TOPIC_PREFIX + uuid)
+                            FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_RANK_TOPIC_PREFIX + normalize(preferenceUtils.rankName))
+                            preferenceUtils.clearUserData()
 
-                            editor.commit()
                             activity?.finish()
                         }
                         .setNegativeButton(R.string.button_no) { _: DialogInterface, _: Int ->

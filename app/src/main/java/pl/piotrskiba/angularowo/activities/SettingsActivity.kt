@@ -4,7 +4,6 @@ import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.preference.PreferenceManager
 import butterknife.BindView
@@ -51,26 +50,26 @@ class SettingsActivity : BaseActivity(), OnSharedPreferenceChangeListener {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, s: String) {
-        if (s == getString(R.string.pref_key_subscribed_to_new_reports)) {
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+        if (key == getString(R.string.pref_key_subscribed_to_new_reports)) {
             if (sharedPreferences.getBoolean(getString(R.string.pref_key_subscribed_to_new_reports), false)) {
                 FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_NEW_REPORTS_TOPIC)
             } else {
                 FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_NEW_REPORTS_TOPIC)
             }
-        } else if (s == getString(R.string.pref_key_subscribed_to_private_messages)) {
+        } else if (key == getString(R.string.pref_key_subscribed_to_private_messages)) {
             if (sharedPreferences.getBoolean(getString(R.string.pref_key_subscribed_to_private_messages), false)) {
                 FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_PRIVATE_MESSAGES_TOPIC)
             } else {
                 FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_PRIVATE_MESSAGES_TOPIC)
             }
-        } else if (s == getString(R.string.pref_key_subscribed_to_account_incidents)) {
+        } else if (key == getString(R.string.pref_key_subscribed_to_account_incidents)) {
             if (sharedPreferences.getBoolean(getString(R.string.pref_key_subscribed_to_account_incidents), false)) {
                 FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_ACCOUNT_INCIDENTS_TOPIC)
             } else {
                 FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_ACCOUNT_INCIDENTS_TOPIC)
             }
-        } else if (s == getString(R.string.pref_key_subscribed_to_events)) {
+        } else if (key == getString(R.string.pref_key_subscribed_to_events)) {
             if (sharedPreferences.getBoolean(getString(R.string.pref_key_subscribed_to_events), false)) {
                 FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_NEW_EVENT_TOPIC)
             } else {

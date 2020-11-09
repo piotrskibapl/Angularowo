@@ -11,7 +11,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModelProvider
-import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -35,12 +34,14 @@ import pl.piotrskiba.angularowo.network.ServerAPIClient
 import pl.piotrskiba.angularowo.network.ServerAPIClient.retrofitInstance
 import pl.piotrskiba.angularowo.network.ServerAPIInterface
 import pl.piotrskiba.angularowo.utils.AnalyticsUtils
+import pl.piotrskiba.angularowo.utils.PreferenceUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class OffersFragment : BaseFragment(), AdOfferClickListener, OfferClickListener, NetworkErrorListener {
 
+    private lateinit var preferenceUtils: PreferenceUtils
     private lateinit var mViewModel: AppViewModel
     private lateinit var mRewardedVideoAd: RewardedVideoAd
     private lateinit var mOffersInfo: OffersInfo
@@ -82,6 +83,7 @@ class OffersFragment : BaseFragment(), AdOfferClickListener, OfferClickListener,
         super.onCreate(savedInstanceState)
 
         mViewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
+        preferenceUtils = PreferenceUtils(requireContext())
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -239,8 +241,7 @@ class OffersFragment : BaseFragment(), AdOfferClickListener, OfferClickListener,
         }
         if (limitReached) {
             mOfferLimitReachedTextView.visibility = View.VISIBLE
-        }
-        else {
+        } else {
             mOfferLimitReachedTextView.visibility = View.GONE
         }
     }
@@ -252,8 +253,7 @@ class OffersFragment : BaseFragment(), AdOfferClickListener, OfferClickListener,
 
     private fun redeemOffer(offer: Offer) {
         showLoadingIndicator()
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val accessToken = sharedPreferences.getString(getString(R.string.pref_key_access_token), null)
+        val accessToken = preferenceUtils.accessToken
         val context = context
 
         val serverAPIInterface = retrofitInstance.create(ServerAPIInterface::class.java)

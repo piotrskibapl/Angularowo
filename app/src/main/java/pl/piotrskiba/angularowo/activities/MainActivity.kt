@@ -6,13 +6,11 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.multidex.MultiDex
-import androidx.preference.PreferenceManager
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.google.android.gms.ads.MobileAds
@@ -48,6 +46,7 @@ class MainActivity : BaseActivity(), UnauthorizedResponseListener, RewardedVideo
     @BindView(R.id.nav_view)
     lateinit var mNavigationView: NavigationView
 
+    private lateinit var preferenceUtils: PreferenceUtils
     private lateinit var mFirebaseRemoteConfig: FirebaseRemoteConfig
     private lateinit var mRewardedVideoAd: RewardedVideoAd
     private var waitingForLogin = false
@@ -68,8 +67,8 @@ class MainActivity : BaseActivity(), UnauthorizedResponseListener, RewardedVideo
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
-
         ButterKnife.bind(this)
+        preferenceUtils = PreferenceUtils(this)
 
         NotificationUtils(this).createNotificationChannels()
         setupRemoteConfig()
@@ -80,8 +79,7 @@ class MainActivity : BaseActivity(), UnauthorizedResponseListener, RewardedVideo
 
         setUnauthorizedListener(this)
 
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        if (sharedPreferences.contains(getString(R.string.pref_key_access_token))) {
+        if (preferenceUtils.accessToken != null) {
             if (savedInstanceState == null)
                 setupMainFragment()
 
@@ -98,20 +96,17 @@ class MainActivity : BaseActivity(), UnauthorizedResponseListener, RewardedVideo
     override fun onResume() {
         super.onResume()
         if (!waitingForLogin) {
-            val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
             // checking uuid to force relogin after upgrading to v3.3
-            if (!sharedPreferences.contains(getString(R.string.pref_key_access_token)) ||
-                    !sharedPreferences.contains(getString(R.string.pref_key_uuid))) {
+            if (preferenceUtils.accessToken == null || preferenceUtils.uuid == null) {
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivityForResult(intent, Constants.REQUEST_CODE_REGISTER)
 
                 waitingForLogin = true
-            }
-            else {
+            } else {
                 val navHeaderUsernameTextView = mNavigationView.getHeaderView(0).findViewById<TextView>(R.id.navheader_username)
                 val navHeaderRankTextView = mNavigationView.getHeaderView(0).findViewById<TextView>(R.id.navheader_rank)
-                navHeaderUsernameTextView.text = PreferenceUtils.getUsername(this)
-                navHeaderRankTextView.text = PreferenceUtils.getRankName(this)
+                navHeaderUsernameTextView.text = preferenceUtils.username
+                navHeaderRankTextView.text = preferenceUtils.rankName
             }
         }
         setNavigationItemSelectedListener()
@@ -279,9 +274,7 @@ class MainActivity : BaseActivity(), UnauthorizedResponseListener, RewardedVideo
     override fun onRewardedVideoAdClosed() {}
 
     override fun onRewarded(rewardItem: RewardItem) {
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-
-        val accessToken = sharedPreferences.getString(getString(R.string.pref_key_access_token), null)
+        val accessToken = preferenceUtils.accessToken
         val context: Context = this
 
         accessToken?.run {

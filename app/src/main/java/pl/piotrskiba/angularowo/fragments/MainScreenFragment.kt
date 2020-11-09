@@ -42,12 +42,12 @@ import pl.piotrskiba.angularowo.utils.TextUtils.formatPlaytime
 import pl.piotrskiba.angularowo.utils.TextUtils.formatTps
 import pl.piotrskiba.angularowo.utils.TextUtils.normalize
 import pl.piotrskiba.angularowo.utils.UrlUtils.buildBodyUrl
-import pl.piotrskiba.angularowo.AppViewModel
 
 class MainScreenFragment : BaseFragment(), BanClickListener, NetworkErrorListener {
 
     private lateinit var mViewModel: AppViewModel
     private lateinit var mBanListAdapter: BanListAdapter
+    private lateinit var preferenceUtils: PreferenceUtils
     private var loadedServerStatus = false
     private var loadedPlayer = false
     private var loadedActivePlayerBans = false
@@ -97,6 +97,7 @@ class MainScreenFragment : BaseFragment(), BanClickListener, NetworkErrorListene
         super.onCreate(savedInstanceState)
 
         mViewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
+        preferenceUtils = PreferenceUtils(requireContext())
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -154,12 +155,10 @@ class MainScreenFragment : BaseFragment(), BanClickListener, NetworkErrorListene
                         for (drawable in mMotdTextView.compoundDrawables) {
                             drawable?.colorFilter = PorterDuffColorFilter(Color.parseColor(motd!!.textColor), PorterDuff.Mode.SRC_IN)
                         }
-                    }
-                    else {
+                    } else {
                         mMotdTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
                     }
-                }
-                else {
+                } else {
                     mMotdTextView.visibility = View.GONE
                 }
             }
@@ -173,12 +172,7 @@ class MainScreenFragment : BaseFragment(), BanClickListener, NetworkErrorListene
                 showDefaultLayoutIfLoadedAllData()
 
                 if (context != null) {
-                    if (PreferenceUtils.getUsername(requireContext()) != player.username) {
-                        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-                        val editor = sharedPreferences.edit()
-                        editor.putString(getString(R.string.pref_key_nickname), player.username)
-                        editor.commit()
-                    }
+                    preferenceUtils.username = player.username
                 }
 
                 mPlayerBalanceTextView.text = getString(R.string.balance_format, player.balance.toInt())
@@ -227,7 +221,7 @@ class MainScreenFragment : BaseFragment(), BanClickListener, NetworkErrorListene
 
     override fun onResume() {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val uuid = PreferenceUtils.getUuid(requireContext())
+        val uuid = preferenceUtils.uuid
         if (uuid != null) {
             // subscribe to current app version Firebase topic
             if (!sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_app_version_topic, BuildConfig.VERSION_CODE))) {
@@ -249,9 +243,7 @@ class MainScreenFragment : BaseFragment(), BanClickListener, NetworkErrorListene
                         .addOnCompleteListener { task: Task<Void?> ->
                             if (isAdded) {
                                 if (task.isSuccessful) {
-                                    val editor = sharedPreferences.edit()
-                                    editor.putBoolean(getString(R.string.pref_key_subscribed_to_uuid_topic), true)
-                                    editor.apply()
+                                    preferenceUtils.subscribedToFirebaseUuidTopic = true
                                 }
                             }
                         }
@@ -263,9 +255,7 @@ class MainScreenFragment : BaseFragment(), BanClickListener, NetworkErrorListene
                         .addOnCompleteListener { task: Task<Void?> ->
                             if (isAdded) {
                                 if (task.isSuccessful) {
-                                    val editor = sharedPreferences.edit()
-                                    editor.putBoolean(getString(R.string.pref_key_subscribed_to_events), true)
-                                    editor.apply()
+                                    preferenceUtils.subscribedToFirebaseEventsTopic = true
                                 }
                             }
                         }
@@ -277,9 +267,7 @@ class MainScreenFragment : BaseFragment(), BanClickListener, NetworkErrorListene
                         .addOnCompleteListener { task: Task<Void?> ->
                             if (isAdded) {
                                 if (task.isSuccessful) {
-                                    val editor = sharedPreferences.edit()
-                                    editor.putBoolean(getString(R.string.pref_key_subscribed_to_private_messages), true)
-                                    editor.apply()
+                                    preferenceUtils.subscribedToFirebasePrivateMessagesTopic = true
                                 }
                             }
                         }
@@ -291,9 +279,7 @@ class MainScreenFragment : BaseFragment(), BanClickListener, NetworkErrorListene
                         .addOnCompleteListener { task: Task<Void?> ->
                             if (isAdded) {
                                 if (task.isSuccessful) {
-                                    val editor = sharedPreferences.edit()
-                                    editor.putBoolean(getString(R.string.pref_key_subscribed_to_account_incidents), true)
-                                    editor.apply()
+                                    preferenceUtils.subscribedToFirebaseAccountIncidentsTopic = true
                                 }
                             }
                         }
@@ -305,10 +291,10 @@ class MainScreenFragment : BaseFragment(), BanClickListener, NetworkErrorListene
     private fun populateUi() {
         showDefaultLayout()
 
-        val username = PreferenceUtils.getUsername(requireContext())
+        val username = preferenceUtils.username
         mGreetingTextView.text = getString(R.string.greeting, username)
 
-        val uuid = PreferenceUtils.getUuid(requireContext())
+        val uuid = preferenceUtils.uuid
         if (uuid != null) {
             Glide.with(requireContext())
                     .load(buildBodyUrl(uuid, true))
@@ -322,8 +308,7 @@ class MainScreenFragment : BaseFragment(), BanClickListener, NetworkErrorListene
     }
 
     private fun subscribeToFirebaseRankTopic(rank: Rank) {
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val previousRankName = sharedPreferences.getString(getString(R.string.pref_key_rank), null)
+        val previousRankName = preferenceUtils.rankName
 
         if (rank.name != previousRankName) {
             if (previousRankName != null) {
@@ -332,9 +317,7 @@ class MainScreenFragment : BaseFragment(), BanClickListener, NetworkErrorListene
 
             FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_RANK_TOPIC_PREFIX + normalize(rank.name))
 
-            val editor = sharedPreferences.edit()
-            editor.putString(getString(R.string.pref_key_rank), rank.name)
-            editor.apply()
+            preferenceUtils.rankName = rank.name
         }
     }
 
@@ -344,32 +327,16 @@ class MainScreenFragment : BaseFragment(), BanClickListener, NetworkErrorListene
             if (!sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_new_reports))) {
                 FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_NEW_REPORTS_TOPIC)
                         .addOnCompleteListener {
-                            if (isAdded) {
-                                val editor = sharedPreferences.edit()
-                                editor.putBoolean(getString(R.string.pref_key_subscribed_to_new_reports), true)
-                                editor.apply()
-                            } else if (activity != null) {
-                                val sharedPreferences1 = PreferenceManager.getDefaultSharedPreferences(requireActivity().applicationContext)
-                                val editor = sharedPreferences1.edit()
-                                editor.putBoolean(getString(R.string.pref_key_subscribed_to_new_reports), true)
-                                editor.apply()
-                            }
+                            preferenceUtils.subscribedToFirebaseNewReportsTopic = true
                         }
             }
         } else {
             if (sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_new_reports)) && sharedPreferences.getBoolean(getString(R.string.pref_key_subscribed_to_new_reports), false)) {
                 FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_NEW_REPORTS_TOPIC)
                         .addOnCompleteListener {
-                            if (isAdded) {
-                                val editor = sharedPreferences.edit()
-                                editor.remove(getString(R.string.pref_key_subscribed_to_new_reports))
-                                editor.apply()
-                            } else if (activity != null) {
-                                val sharedPreferences1 = PreferenceManager.getDefaultSharedPreferences(requireActivity().applicationContext)
-                                val editor = sharedPreferences1.edit()
-                                editor.remove(getString(R.string.pref_key_subscribed_to_new_reports))
-                                editor.apply()
-                            }
+                            val editor = sharedPreferences.edit()
+                            editor.remove(getString(R.string.pref_key_subscribed_to_new_reports))
+                            editor.apply()
                         }
             }
         }

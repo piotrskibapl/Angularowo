@@ -8,7 +8,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.preference.PreferenceManager
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.alimuzaffar.lib.pin.PinEntryEditText
@@ -22,6 +21,7 @@ import pl.piotrskiba.angularowo.network.ServerAPIClient
 import pl.piotrskiba.angularowo.network.ServerAPIClient.retrofitInstance
 import pl.piotrskiba.angularowo.network.ServerAPIInterface
 import pl.piotrskiba.angularowo.utils.AnalyticsUtils
+import pl.piotrskiba.angularowo.utils.PreferenceUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -70,12 +70,10 @@ class LoginActivity : BaseActivity() {
                     var accessToken = response.body()
 
                     if (accessToken != null) {
-                        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-                        val editor = sharedPreferences.edit()
-                        editor.putString(getString(R.string.pref_key_uuid), accessToken.uuid)
-                        editor.putString(getString(R.string.pref_key_nickname), accessToken.username)
-                        editor.putString(getString(R.string.pref_key_access_token), accessToken.accessToken)
-                        editor.commit()
+                        val preferenceUtils = PreferenceUtils(context)
+                        preferenceUtils.uuid = accessToken.uuid
+                        preferenceUtils.username = accessToken.username
+                        preferenceUtils.accessToken = accessToken.accessToken
 
                         AnalyticsUtils().logLogin(
                                 accessToken.uuid,
@@ -84,8 +82,7 @@ class LoginActivity : BaseActivity() {
 
                         setResult(Constants.RESULT_CODE_SUCCESS)
                         finish()
-                    }
-                    else if (response.errorBody() != null) {
+                    } else if (response.errorBody() != null) {
                         val gson = Gson()
                         val adapter = gson.getAdapter(AccessToken::class.java)
 

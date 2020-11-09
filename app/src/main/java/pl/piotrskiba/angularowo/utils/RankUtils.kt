@@ -28,7 +28,7 @@ object RankUtils {
      */
     @JvmStatic
     fun getRankFromPreferences(context: Context): Rank? {
-        val rankName = PreferenceUtils.getRankName(context)
+        val rankName = PreferenceUtils(context).rankName
 
         rankName?.run {
             return getRankFromName(rankName)

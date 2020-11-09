@@ -2,7 +2,6 @@ package pl.piotrskiba.angularowo.utils
 
 import android.content.Context
 import androidx.core.content.ContextCompat
-import androidx.preference.PreferenceManager
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import java.text.Normalizer
@@ -126,16 +125,14 @@ object TextUtils {
 
     fun replaceQualifiers(context: Context, s: String): String {
         return if (s.contains(Constants.USERNAME_QUALIFIER)) {
-            val username = PreferenceUtils.getUsername(context)
+            val username = PreferenceUtils(context).username
 
             if (username != null) {
                 s.replace(Constants.USERNAME_QUALIFIER, username)
-            }
-            else {
+            } else {
                 s
             }
-        }
-        else {
+        } else {
             s
         }
     }
