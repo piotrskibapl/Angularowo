@@ -17,13 +17,9 @@ class SettingsFragment : BasePreferenceFragmentCompat() {
 
     private lateinit var preferenceUtils: PreferenceUtils
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        preferenceUtils = PreferenceUtils(requireContext())
-    }
-
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        preferenceUtils = PreferenceUtils(requireContext())
+
         val rankName = preferenceUtils.rankName
         val rank = getRankFromName(rankName!!)
 
