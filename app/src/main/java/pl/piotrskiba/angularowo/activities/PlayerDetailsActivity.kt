@@ -105,7 +105,7 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setTitle(R.string.player_info)
 
-        if (intent.hasExtra(Constants.EXTRA_PLAYER)) {
+        if (intent.hasExtra(Constants.EXTRA_PLAYER) && intent.getSerializableExtra(Constants.EXTRA_PLAYER) != null) {
             mPlayer = intent.getSerializableExtra(Constants.EXTRA_PLAYER) as DetailedPlayer
         }
 
