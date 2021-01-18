@@ -15,7 +15,6 @@ import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
@@ -82,6 +81,9 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
     @BindView(R.id.iv_favorite)
     lateinit var mPlayerFavoriteIcon: ImageView
 
+    @BindView(R.id.iv_married)
+    lateinit var mPlayerMarriedIcon: ImageView
+
     private lateinit var preferenceUtils: PreferenceUtils
 
     private lateinit var mViewModel: AppViewModel
@@ -118,14 +120,20 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
 
         mSwipeRefreshLayout.setOnRefreshListener(this)
 
-        mViewModel.allFriends.observe(this, Observer<List<Friend>> {
+        mViewModel.allFriends.observe(this, {
             invalidateOptionsMenu()
 
-            val friends = mViewModel.allFriends.value
-            if (friends != null && friends.contains(Friend(mPreviewedPlayer.uuid))) {
-                mPlayerFavoriteIcon.visibility = View.VISIBLE
+            if (mPlayer.partnerUuid == mPreviewedPlayer.uuid) {
+                mPlayerMarriedIcon.visibility = View.VISIBLE
             } else {
-                mPlayerFavoriteIcon.visibility = View.GONE
+                mPlayerMarriedIcon.visibility = View.GONE
+
+                val friends = mViewModel.allFriends.value
+                if (friends != null && friends.contains(Friend(mPreviewedPlayer.uuid))) {
+                    mPlayerFavoriteIcon.visibility = View.VISIBLE
+                } else {
+                    mPlayerFavoriteIcon.visibility = View.GONE
+                }
             }
         })
     }
@@ -224,7 +232,7 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
         val friends = mViewModel.allFriends.value
-        if (mPreviewedPlayer.username != preferenceUtils.username) {
+        if (mPreviewedPlayer.username != preferenceUtils.username && mPlayer.partnerUuid != mPreviewedPlayer.uuid) {
             if (friends != null && friends.contains(Friend(mPreviewedPlayer.uuid))) {
                 menu?.findItem(R.id.nav_favorite)?.isVisible = false
                 menu?.findItem(R.id.nav_unfavorite)?.isVisible = true
