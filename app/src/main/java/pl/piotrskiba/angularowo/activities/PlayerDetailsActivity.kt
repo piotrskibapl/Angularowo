@@ -236,10 +236,12 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
             menu?.findItem(R.id.nav_unfavorite)?.isVisible = false
         }
 
-        menu?.findItem(R.id.nav_mute)?.isVisible = mPlayer.hasPermission(Permissions.MUTE_PLAYERS)
-        menu?.findItem(R.id.nav_kick)?.isVisible = mPlayer.hasPermission(Permissions.KICK_PLAYERS)
-        menu?.findItem(R.id.nav_warn)?.isVisible = mPlayer.hasPermission(Permissions.WARN_PLAYERS)
-        menu?.findItem(R.id.nav_ban)?.isVisible = mPlayer.hasPermission(Permissions.BAN_PLAYERS)
+        if (this::mPlayer.isInitialized) {
+            menu?.findItem(R.id.nav_mute)?.isVisible = mPlayer.hasPermission(Permissions.MUTE_PLAYERS)
+            menu?.findItem(R.id.nav_kick)?.isVisible = mPlayer.hasPermission(Permissions.KICK_PLAYERS)
+            menu?.findItem(R.id.nav_warn)?.isVisible = mPlayer.hasPermission(Permissions.WARN_PLAYERS)
+            menu?.findItem(R.id.nav_ban)?.isVisible = mPlayer.hasPermission(Permissions.BAN_PLAYERS)
+        }
 
         return super.onPrepareOptionsMenu(menu)
     }
