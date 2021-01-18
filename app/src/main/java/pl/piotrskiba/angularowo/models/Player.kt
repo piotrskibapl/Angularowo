@@ -7,6 +7,7 @@ import java.io.Serializable
 data class Player(
         val uuid: String,
         val skinUuid: String,
+        val partnerUuid: String,
         val username: String,
         @SerializedName("rank") val rankKey: String,
         @SerializedName(value = "vanished") val isVanished: Boolean
