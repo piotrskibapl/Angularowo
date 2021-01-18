@@ -80,7 +80,7 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
     lateinit var mPlayerVanishIcon: ImageView
 
     @BindView(R.id.iv_favorite)
-    lateinit var mPlayerHeartIcon: ImageView
+    lateinit var mPlayerFavoriteIcon: ImageView
 
     private lateinit var preferenceUtils: PreferenceUtils
 
@@ -123,9 +123,9 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
 
             val friends = mViewModel.allFriends.value
             if (friends != null && friends.contains(Friend(mPreviewedPlayer.uuid))) {
-                mPlayerHeartIcon.visibility = View.VISIBLE
+                mPlayerFavoriteIcon.visibility = View.VISIBLE
             } else {
-                mPlayerHeartIcon.visibility = View.GONE
+                mPlayerFavoriteIcon.visibility = View.GONE
             }
         })
     }

@@ -65,10 +65,10 @@ class PlayerListAdapter(
 
         val friends = mViewModel.allFriends.value
         if (friends != null && friends.contains(Friend(player.uuid))) {
-            holder.mPlayerHeartIcon.visibility = View.VISIBLE
+            holder.mPlayerFavoriteIcon.visibility = View.VISIBLE
         }
         else {
-            holder.mPlayerHeartIcon.visibility = View.GONE
+            holder.mPlayerFavoriteIcon.visibility = View.GONE
         }
     }
 
@@ -91,7 +91,7 @@ class PlayerListAdapter(
         lateinit var mPlayerVanishIcon: ImageView
 
         @BindView(R.id.iv_favorite)
-        lateinit var mPlayerHeartIcon: ImageView
+        lateinit var mPlayerFavoriteIcon: ImageView
 
         override fun onClick(view: View) {
             mClickListener.onPlayerClick(view, playerList.players[bindingAdapterPosition])
