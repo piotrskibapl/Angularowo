@@ -90,7 +90,7 @@ class PlayerListAdapter(
         @BindView(R.id.iv_vanish_status)
         lateinit var mPlayerVanishIcon: ImageView
 
-        @BindView(R.id.iv_heart)
+        @BindView(R.id.iv_favorite)
         lateinit var mPlayerHeartIcon: ImageView
 
         override fun onClick(view: View) {
