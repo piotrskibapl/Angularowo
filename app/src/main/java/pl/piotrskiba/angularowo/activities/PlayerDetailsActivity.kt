@@ -189,6 +189,7 @@ class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
     private fun populatePlayer(detailedPlayer: DetailedPlayer) {
         val player = Player(detailedPlayer.uuid,
                 detailedPlayer.skinUuid,
+                detailedPlayer.partnerUuid,
                 detailedPlayer.username,
                 detailedPlayer.rank.name,
                 detailedPlayer.isVanished)
