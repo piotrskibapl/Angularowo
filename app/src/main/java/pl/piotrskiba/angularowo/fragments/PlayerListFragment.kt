@@ -115,7 +115,7 @@ class PlayerListFragment : BaseFragment(), PlayerClickListener, NetworkErrorList
 
     private fun seekForPlayerList() {
         mViewModel.setNetworkErrorListener(this)
-        mViewModel.getPlayerList().observe(viewLifecycleOwner, Observer { playerList: PlayerList? ->
+        mViewModel.getPlayerList().observe(viewLifecycleOwner, { playerList: PlayerList? ->
             if (playerList != null) {
                 mSwipeRefreshLayout.isRefreshing = false
 
@@ -125,16 +125,25 @@ class PlayerListFragment : BaseFragment(), PlayerClickListener, NetworkErrorList
 
                 if (playerList.players.isEmpty()) {
                     showNoPlayersLayout()
-                }
-                else {
-                    mFriendsObserver = Observer {friends ->
+                } else {
+                    val mPlayer = mViewModel.getPlayer().value
+
+                    mFriendsObserver = Observer { friends ->
                         val newPlayerList = ArrayList<Player>()
                         newPlayerList.addAll(playerList.players)
                         val newFavoritePlayerList = ArrayList<Player>()
 
+                        if (mPlayer?.partnerUuid != null) {
+                            val partner = playerList.players.firstOrNull { it.uuid == mPlayer.partnerUuid }
+                            if (partner != null) {
+                                newPlayerList.remove(partner)
+                                newFavoritePlayerList.add(partner)
+                            }
+                        }
+
                         if (friends != null) {
                             playerList.players.forEach { player ->
-                                if (friends.contains(Friend(player.uuid))) {
+                                if (friends.contains(Friend(player.uuid)) && player.uuid != mPlayer?.partnerUuid) {
                                     newPlayerList.remove(player)
                                     newFavoritePlayerList.add(player)
                                 }
@@ -180,15 +189,13 @@ class PlayerListFragment : BaseFragment(), PlayerClickListener, NetworkErrorList
 
         if (hasPlayers) {
             mPlayerList.visibility = View.VISIBLE
-        }
-        else {
+        } else {
             mPlayerList.visibility = View.GONE
         }
 
         if (hasFavoritePlayers) {
             mFavoritePlayerList.visibility = View.VISIBLE
-        }
-        else {
+        } else {
             mFavoritePlayerList.visibility = View.GONE
         }
     }

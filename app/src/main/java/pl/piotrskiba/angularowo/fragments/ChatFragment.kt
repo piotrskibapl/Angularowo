@@ -180,6 +180,7 @@ class ChatFragment : BaseFragment(), ChatMessageClickListener {
                 Player(
                         clickedChatMessage.uuid,
                         clickedChatMessage.uuid,
+                        null,
                         clickedChatMessage.username,
                         clickedChatMessage.rank,
                         false
