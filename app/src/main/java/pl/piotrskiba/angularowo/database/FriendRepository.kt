@@ -8,11 +8,11 @@ class FriendRepository(private val friendDao: FriendDao) {
 
     val all: LiveData<List<Friend>> = friendDao.getAll()
 
-    suspend fun insert(friend: Friend) {
+    fun insert(friend: Friend) {
         friendDao.insert(friend)
     }
 
-    suspend fun delete(friend: Friend) {
+    fun delete(friend: Friend) {
         friendDao.delete(friend)
     }
 }

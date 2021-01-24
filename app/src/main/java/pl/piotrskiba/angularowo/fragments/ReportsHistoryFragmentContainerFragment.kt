@@ -39,12 +39,12 @@ class ReportsHistoryFragmentContainerFragment : BaseFragment() {
         mViewPager.isUserInputEnabled = false
         mViewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
 
-        TabLayoutMediator(mTabLayout, mViewPager, TabConfigurationStrategy { tab: TabLayout.Tab, position: Int ->
+        TabLayoutMediator(mTabLayout, mViewPager) { tab: TabLayout.Tab, position: Int ->
             if (position == 0)
                 tab.setText(R.string.reports_own)
             else
                 tab.setText(R.string.reports_others)
-        }).attach()
+        }.attach()
 
         return view
     }

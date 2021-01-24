@@ -147,7 +147,7 @@ class MainScreenFragment : BaseFragment(), BanClickListener, NetworkErrorListene
     }
 
     private fun seekForServerStatusUpdates() {
-        mViewModel.getServerStatus().observe(viewLifecycleOwner, Observer { serverStatus: ServerStatus? ->
+        mViewModel.getServerStatus().observe(viewLifecycleOwner, { serverStatus: ServerStatus? ->
             if (serverStatus != null) {
                 loadedServerStatus = true
                 showDefaultLayoutIfLoadedAllData()
@@ -218,7 +218,7 @@ class MainScreenFragment : BaseFragment(), BanClickListener, NetworkErrorListene
     }
 
     private fun seekForLastPlayerBans() {
-        mViewModel.getActivePlayerBans().observe(viewLifecycleOwner, Observer { banList: BanList? ->
+        mViewModel.getActivePlayerBans().observe(viewLifecycleOwner, { banList: BanList? ->
             if (banList != null) {
                 loadedActivePlayerBans = true
                 showDefaultLayoutIfLoadedAllData()

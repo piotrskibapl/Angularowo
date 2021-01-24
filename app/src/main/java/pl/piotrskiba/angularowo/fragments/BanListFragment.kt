@@ -83,7 +83,7 @@ class BanListFragment : BaseFragment(), BanClickListener, NetworkErrorListener {
 
     private fun seekForBanList() {
         mViewModel.setNetworkErrorListener(this)
-        mViewModel.getBanList().observe(viewLifecycleOwner, Observer { banList: BanList? ->
+        mViewModel.getBanList().observe(viewLifecycleOwner, { banList: BanList? ->
             if (banList != null) {
                 mSwipeRefreshLayout.isRefreshing = false
                 mBanListAdapter.setBanList(banList)

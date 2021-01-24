@@ -98,7 +98,7 @@ class ReportsHistoryFragment : BaseFragment(), ReportClickListener, NetworkError
         mViewModel.setNetworkErrorListener(this)
 
         if(admin) {
-            mViewModel.getAllReports().observe(viewLifecycleOwner, Observer { reportList: ReportList? ->
+            mViewModel.getAllReports().observe(viewLifecycleOwner, { reportList: ReportList? ->
                 if (reportList != null) {
                     mSwipeRefreshLayout.isRefreshing = false
                     mReportListAdapter.setReportList(reportList)
@@ -111,7 +111,7 @@ class ReportsHistoryFragment : BaseFragment(), ReportClickListener, NetworkError
             })
         }
         else {
-            mViewModel.getUserReports().observe(viewLifecycleOwner, Observer { reportList: ReportList? ->
+            mViewModel.getUserReports().observe(viewLifecycleOwner, { reportList: ReportList? ->
                 if (reportList != null) {
                     mSwipeRefreshLayout.isRefreshing = false
                     mReportListAdapter.setReportList(reportList)
