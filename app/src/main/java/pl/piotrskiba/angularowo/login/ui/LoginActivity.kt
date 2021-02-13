@@ -8,16 +8,22 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.lifecycle.ViewModelProvider
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.alimuzaffar.lib.pin.PinEntryEditText
 import com.google.android.material.snackbar.Snackbar
+import dagger.android.AndroidInjection
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.activities.base.BaseActivity
 import pl.piotrskiba.angularowo.base.di.obtainViewModel
 import pl.piotrskiba.angularowo.login.viewmodel.LoginViewModel
+import javax.inject.Inject
 
 class LoginActivity : BaseActivity() {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var viewModel: LoginViewModel
 
@@ -34,6 +40,7 @@ class LoginActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AndroidInjection.inject(this)
         setContentView(R.layout.activity_login)
         ButterKnife.bind(this)
         viewModel = viewModelFactory.obtainViewModel(this)

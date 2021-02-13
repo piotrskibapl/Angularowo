@@ -1,14 +1,11 @@
 package pl.piotrskiba.angularowo.activities.base
 
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import pl.piotrskiba.angularowo.utils.AnalyticsUtils
-import javax.inject.Inject
 
 open class BaseActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    // TODO: move viewModelFactory injections from all activities to the BaseActivity after architecture refactor
 
     override fun onResume() {
         super.onResume()
