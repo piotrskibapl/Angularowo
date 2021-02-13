@@ -14,5 +14,5 @@ abstract class AppModule {
     abstract fun bindContext(application: Application): Context
 
     @Binds
-    abstract fun providerScheduler(schedulersFacade: SchedulersFacade): SchedulersProvider
+    abstract fun bindSchedulersProvider(schedulersFacade: SchedulersFacade): SchedulersProvider
 }

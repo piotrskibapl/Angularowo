@@ -1,7 +1,6 @@
 package pl.piotrskiba.angularowo.activities.base
 
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import pl.piotrskiba.angularowo.utils.AnalyticsUtils
 import javax.inject.Inject

@@ -22,11 +22,13 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "API_KEY", API_KEY
         }
         debug {
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "API_KEY", API_KEY
         }
     }
     compileOptions {
@@ -53,10 +55,10 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     // Dagger
-    implementation 'com.google.dagger:dagger-android:2.15'
-    implementation 'com.google.dagger:dagger-android-support:2.15'
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.15'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.15'
+    implementation 'com.google.dagger:dagger-android:2.32'
+    implementation 'com.google.dagger:dagger-android-support:2.32'
+    kapt 'com.google.dagger:dagger-android-processor:2.32'
+    kapt 'com.google.dagger:dagger-compiler:2.32'
 
     // RecyclerView
     implementation 'androidx.recyclerview:recyclerview:1.2.0-beta01'
@@ -120,6 +122,10 @@ dependencies {
 
     // TutoShowcase
     implementation 'com.github.florent37:tutoshowcase:1.0.1'
+
+    // RxJava
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.6'
 }
 
 configurations.all {

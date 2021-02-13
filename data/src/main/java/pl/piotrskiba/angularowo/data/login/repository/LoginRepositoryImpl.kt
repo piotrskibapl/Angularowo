@@ -9,12 +9,11 @@ import javax.inject.Inject
 
 class LoginRepositoryImpl @Inject constructor(
     private val loginApi: LoginApiService,
-    private val accessTokenMapper: dagger.Lazy<AccessTokenMapper>
+    private val accessTokenMapper: AccessTokenMapper
 ) : LoginRepository {
 
-    override fun registerDevice(apiKey: String, userCode: String): Single<AccessToken> {
-        return loginApi.registerDevice(apiKey, userCode).map {
-            accessTokenMapper.get().toAccessToken(it)
-        }
-    }
+    override fun registerDevice(apiKey: String, userCode: String): Single<AccessToken> =
+        loginApi
+            .registerDevice(apiKey, userCode)
+            .map { accessTokenMapper.toAccessToken(it) }
 }

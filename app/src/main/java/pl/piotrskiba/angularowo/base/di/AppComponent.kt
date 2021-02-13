@@ -6,7 +6,8 @@ import dagger.Component
 import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
-import pl.piotrskiba.angularowo.data.login.di.LoginApiModule
+import pl.piotrskiba.angularowo.base.AngularowoApplication
+import pl.piotrskiba.angularowo.data.login.di.LoginModule
 import pl.piotrskiba.angularowo.data.network.di.NetworkModule
 import javax.inject.Singleton
 
@@ -14,14 +15,15 @@ import javax.inject.Singleton
 @Component(
     modules = [
         NetworkModule::class,
-        LoginApiModule::class,
+        LoginModule::class,
+        LoginModule::class,
         AppModule::class,
         AndroidSupportInjectionModule::class,
         AndroidInjectionModule::class,
         ActivityBindingModule::class
     ]
 )
-interface AppComponent : AndroidInjector<Application> {
+interface AppComponent : AndroidInjector<AngularowoApplication> {
 
     @Component.Builder
     interface Builder {

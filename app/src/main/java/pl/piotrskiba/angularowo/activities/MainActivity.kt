@@ -24,7 +24,7 @@ import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.activities.base.BaseActivity
 import pl.piotrskiba.angularowo.fragments.*
 import pl.piotrskiba.angularowo.interfaces.UnauthorizedResponseListener
-import pl.piotrskiba.angularowo.login.LoginActivity
+import pl.piotrskiba.angularowo.login.ui.LoginActivity
 import pl.piotrskiba.angularowo.network.ServerAPIClient
 import pl.piotrskiba.angularowo.network.ServerAPIClient.retrofitInstance
 import pl.piotrskiba.angularowo.network.ServerAPIInterface

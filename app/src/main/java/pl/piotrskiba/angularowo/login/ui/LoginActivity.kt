@@ -1,4 +1,4 @@
-package pl.piotrskiba.angularowo.login
+package pl.piotrskiba.angularowo.login.ui
 
 import android.content.Context
 import android.os.Bundle
@@ -6,31 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
-import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.alimuzaffar.lib.pin.PinEntryEditText
 import com.google.android.material.snackbar.Snackbar
-import com.google.gson.Gson
-import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.activities.base.BaseActivity
-import pl.piotrskiba.angularowo.models.AccessToken
-import pl.piotrskiba.angularowo.network.ServerAPIClient
-import pl.piotrskiba.angularowo.network.ServerAPIClient.retrofitInstance
-import pl.piotrskiba.angularowo.network.ServerAPIInterface
-import pl.piotrskiba.angularowo.utils.AnalyticsUtils
-import pl.piotrskiba.angularowo.utils.PreferenceUtils
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.io.IOException
+import pl.piotrskiba.angularowo.base.di.obtainViewModel
+import pl.piotrskiba.angularowo.login.viewmodel.LoginViewModel
 
 class LoginActivity : BaseActivity() {
 
-    private val viewModel: LoginViewModel by viewModels()
+    private lateinit var viewModel: LoginViewModel
 
     @BindView(R.id.toolbar)
     lateinit var mToolbar: Toolbar
@@ -45,33 +34,20 @@ class LoginActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_login)
-
         ButterKnife.bind(this)
-
+        viewModel = viewModelFactory.obtainViewModel(this)
         setSupportActionBar(mToolbar)
 
         context = this
 
-        accessTokenPeet.setOnPinEnteredListener { str: CharSequence ->
-            val pin = str.toString()
-
+        accessTokenPeet.setOnPinEnteredListener {
+            viewModel.onPinEntered(it.toString())
             accessTokenPeet.setText("")
             closeKeyboard()
-
-            // show loading snackbar
-            val snackbar = Snackbar.make(
-                mCoordinatorLayout,
-                getString(R.string.logging_in),
-                Snackbar.LENGTH_INDEFINITE
-            )
-            val contentLay =
-                snackbar.view.findViewById<View>(R.id.snackbar_text).parent as ViewGroup
-            val item = ProgressBar(context)
-            contentLay.addView(item, 0)
-            snackbar.show()
-
+            showLoadingSnackBar()
+        }
+        /*accessTokenPeet.setOnPinEnteredListener { pin: CharSequence ->
             val serverAPIInterface = retrofitInstance.create(ServerAPIInterface::class.java)
             serverAPIInterface.registerDevice(ServerAPIClient.API_KEY, pin)
                 .enqueue(object : Callback<AccessToken?> {
@@ -130,7 +106,19 @@ class LoginActivity : BaseActivity() {
                         t.printStackTrace()
                     }
                 })
-        }
+        }*/
+    }
+
+    private fun showLoadingSnackBar() {
+        val snackbar = Snackbar.make(
+            mCoordinatorLayout,
+            getString(R.string.logging_in),
+            Snackbar.LENGTH_INDEFINITE
+        )
+        val contentLayout = snackbar.view.findViewById<View>(R.id.snackbar_text).parent as ViewGroup
+        val progressBar = ProgressBar(context)
+        contentLayout.addView(progressBar, 0)
+        snackbar.show()
     }
 
     private fun closeKeyboard() {
