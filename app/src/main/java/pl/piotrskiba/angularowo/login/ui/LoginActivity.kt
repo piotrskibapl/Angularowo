@@ -8,6 +8,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -17,6 +18,7 @@ import dagger.android.AndroidInjection
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.activities.base.BaseActivity
 import pl.piotrskiba.angularowo.base.di.obtainViewModel
+import pl.piotrskiba.angularowo.databinding.ActivityLoginBinding
 import pl.piotrskiba.angularowo.login.viewmodel.LoginViewModel
 import javax.inject.Inject
 
@@ -41,9 +43,8 @@ class LoginActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
-        setContentView(R.layout.activity_login)
+        bindViewModel()
         ButterKnife.bind(this)
-        viewModel = viewModelFactory.obtainViewModel(this)
         setSupportActionBar(mToolbar)
 
         context = this
@@ -114,6 +115,13 @@ class LoginActivity : BaseActivity() {
                     }
                 })
         }*/
+    }
+
+    fun bindViewModel() {
+        viewModel = viewModelFactory.obtainViewModel(this)
+        val binding: ActivityLoginBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_login)
+        binding.viewModel = viewModel
     }
 
     private fun showLoadingSnackBar() {
