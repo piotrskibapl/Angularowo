@@ -19,6 +19,7 @@ import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.activities.base.BaseActivity
 import pl.piotrskiba.angularowo.base.di.obtainViewModel
 import pl.piotrskiba.angularowo.databinding.ActivityLoginBinding
+import pl.piotrskiba.angularowo.login.model.LoginState
 import pl.piotrskiba.angularowo.login.viewmodel.LoginViewModel
 import javax.inject.Inject
 
@@ -40,6 +41,8 @@ class LoginActivity : BaseActivity() {
 
     private lateinit var context: Context
 
+    private var snackbar: Snackbar? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
@@ -55,6 +58,14 @@ class LoginActivity : BaseActivity() {
             closeKeyboard()
             showLoadingSnackBar()
         }
+
+        viewModel.loginState.observe(this, { loginState ->
+            when (loginState) {
+                is LoginState.Loading -> showLoadingSnackBar()
+                is LoginState.Error -> showErrorSnackBar()
+                else -> snackbar?.dismiss()
+            }
+        })
         /*accessTokenPeet.setOnPinEnteredListener { pin: CharSequence ->
             val serverAPIInterface = retrofitInstance.create(ServerAPIInterface::class.java)
             serverAPIInterface.registerDevice(ServerAPIClient.API_KEY, pin)
@@ -125,15 +136,27 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun showLoadingSnackBar() {
-        val snackbar = Snackbar.make(
+        snackbar?.dismiss()
+        snackbar = Snackbar.make(
             mCoordinatorLayout,
             getString(R.string.logging_in),
             Snackbar.LENGTH_INDEFINITE
         )
-        val contentLayout = snackbar.view.findViewById<View>(R.id.snackbar_text).parent as ViewGroup
+        val contentLayout =
+            snackbar!!.view.findViewById<View>(R.id.snackbar_text).parent as ViewGroup
         val progressBar = ProgressBar(context)
         contentLayout.addView(progressBar, 0)
-        snackbar.show()
+        snackbar!!.show()
+    }
+
+    private fun showErrorSnackBar() {
+        snackbar?.dismiss()
+        snackbar = Snackbar.make(
+            mCoordinatorLayout,
+            getString(R.string.login_error_unknown),
+            Snackbar.LENGTH_LONG
+        )
+        snackbar!!.show()
     }
 
     private fun closeKeyboard() {
