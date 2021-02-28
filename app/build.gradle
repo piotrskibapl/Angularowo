@@ -10,10 +10,10 @@ android {
     compileSdkVersion Integer.parseInt(ANDROID_COMPILE_SDK_VERSION)
     defaultConfig {
         applicationId "pl.piotrskiba.angularowo"
-        minSdkVersion 16
-        targetSdkVersion 29
-        versionCode 64
-        versionName "3.4.4"
+        minSdkVersion Integer.parseInt(ANDROID_MIN_SDK_VERSION)
+        targetSdkVersion Integer.parseInt(ANDROID_TARGET_SDK_VERSION)
+        versionCode Integer.parseInt(VERSION_CODE)
+        versionName VERSION_NAME
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -38,7 +38,6 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
