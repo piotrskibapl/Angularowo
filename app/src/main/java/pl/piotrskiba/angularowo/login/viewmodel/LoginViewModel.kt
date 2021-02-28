@@ -6,6 +6,7 @@ import pl.piotrskiba.angularowo.BuildConfig
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
 import pl.piotrskiba.angularowo.domain.login.model.AccessToken
+import pl.piotrskiba.angularowo.domain.login.model.AccessTokenError
 import pl.piotrskiba.angularowo.domain.login.usecase.RegisterDeviceUseCase
 import pl.piotrskiba.angularowo.login.model.LoginState
 import pl.piotrskiba.angularowo.utils.AnalyticsUtils
@@ -32,8 +33,8 @@ class LoginViewModel @Inject constructor(
                     loginState.value = LoginState.Success(accessToken)
                 },
                 { error ->
-                    AnalyticsUtils().logLoginError(error.message)
-                    loginState.value = LoginState.Error
+                    AnalyticsUtils().logLoginError(error::class.simpleName)
+                    loginState.value = LoginState.Error(error as AccessTokenError)
                 }
             )
     }

@@ -20,6 +20,7 @@ import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.activities.base.BaseActivity
 import pl.piotrskiba.angularowo.base.di.obtainViewModel
 import pl.piotrskiba.angularowo.databinding.ActivityLoginBinding
+import pl.piotrskiba.angularowo.domain.login.model.AccessTokenError
 import pl.piotrskiba.angularowo.login.model.LoginState
 import pl.piotrskiba.angularowo.login.viewmodel.LoginViewModel
 import javax.inject.Inject
@@ -63,8 +64,8 @@ class LoginActivity : BaseActivity() {
         viewModel.loginState.observe(this, { loginState ->
             when (loginState) {
                 is LoginState.Loading -> showLoadingSnackBar()
-                is LoginState.Error -> showErrorSnackBar()
-                is LoginState.Success -> onSuccessLogin()
+                is LoginState.Success -> onLoginSuccess()
+                is LoginState.Error -> onLoginError(loginState.error)
                 else -> snackbar?.dismiss()
             }
         })
@@ -77,9 +78,18 @@ class LoginActivity : BaseActivity() {
         binding.viewModel = viewModel
     }
 
-    private fun onSuccessLogin() {
+    private fun onLoginSuccess() {
         setResult(Constants.RESULT_CODE_SUCCESS)
         finish()
+    }
+
+    private fun onLoginError(error: AccessTokenError) {
+        val message = when (error) {
+            is AccessTokenError.UnknownError -> getString(R.string.login_error_unknown)
+            is AccessTokenError.CodeNotFoundError -> getString(R.string.login_error_code_not_found)
+            is AccessTokenError.CodeExpiredError -> getString(R.string.login_error_code_expired)
+        }
+        showErrorSnackBar(message)
     }
 
     private fun showLoadingSnackBar() {
@@ -96,11 +106,11 @@ class LoginActivity : BaseActivity() {
         snackbar!!.show()
     }
 
-    private fun showErrorSnackBar() {
+    private fun showErrorSnackBar(message: String) {
         snackbar?.dismiss()
         snackbar = Snackbar.make(
             mCoordinatorLayout,
-            getString(R.string.login_error_unknown),
+            message,
             Snackbar.LENGTH_LONG
         )
         snackbar!!.show()
