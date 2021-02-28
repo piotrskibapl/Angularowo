@@ -15,6 +15,7 @@ import butterknife.ButterKnife
 import com.alimuzaffar.lib.pin.PinEntryEditText
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.AndroidInjection
+import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.activities.base.BaseActivity
 import pl.piotrskiba.angularowo.base.di.obtainViewModel
@@ -63,6 +64,7 @@ class LoginActivity : BaseActivity() {
             when (loginState) {
                 is LoginState.Loading -> showLoadingSnackBar()
                 is LoginState.Error -> showErrorSnackBar()
+                is LoginState.Success -> onSuccessLogin()
                 else -> snackbar?.dismiss()
             }
         })
@@ -133,6 +135,11 @@ class LoginActivity : BaseActivity() {
         val binding: ActivityLoginBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_login)
         binding.viewModel = viewModel
+    }
+
+    private fun onSuccessLogin() {
+        setResult(Constants.RESULT_CODE_SUCCESS)
+        finish()
     }
 
     private fun showLoadingSnackBar() {
