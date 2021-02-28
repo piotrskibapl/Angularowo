@@ -4,13 +4,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import pl.piotrskiba.angularowo.BuildConfig
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
+import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
+import pl.piotrskiba.angularowo.domain.login.model.AccessToken
 import pl.piotrskiba.angularowo.domain.login.usecase.RegisterDeviceUseCase
 import pl.piotrskiba.angularowo.login.model.LoginState
 import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(
     private val registerDeviceUseCase: RegisterDeviceUseCase,
-    private val facade: SchedulersProvider
+    private val facade: SchedulersProvider,
+    private val preferencesRepository: PreferencesRepository
 ) : ViewModel() {
 
     var loginState = MutableLiveData<LoginState>(LoginState.Unknown)
@@ -23,11 +26,18 @@ class LoginViewModel @Inject constructor(
             .observeOn(facade.ui())
             .subscribe(
                 { accessToken ->
+                    saveUserData(accessToken)
                     loginState.value = LoginState.Success(accessToken)
                 },
                 { error ->
                     loginState.value = LoginState.Error
                 }
             )
+    }
+
+    private fun saveUserData(accessToken: AccessToken) {
+        preferencesRepository.uuid = accessToken.uuid
+        preferencesRepository.username = accessToken.username
+        preferencesRepository.accessToken = accessToken.accessToken
     }
 }
