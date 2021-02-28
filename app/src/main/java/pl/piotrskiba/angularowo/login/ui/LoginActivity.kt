@@ -68,66 +68,6 @@ class LoginActivity : BaseActivity() {
                 else -> snackbar?.dismiss()
             }
         })
-        /*accessTokenPeet.setOnPinEnteredListener { pin: CharSequence ->
-            val serverAPIInterface = retrofitInstance.create(ServerAPIInterface::class.java)
-            serverAPIInterface.registerDevice(ServerAPIClient.API_KEY, pin)
-                .enqueue(object : Callback<AccessToken?> {
-                    override fun onResponse(
-                        call: Call<AccessToken?>,
-                        response: Response<AccessToken?>
-                    ) {
-                        var accessToken = response.body()
-
-                        if (accessToken != null) {
-                            val preferenceUtils = PreferenceUtils(context)
-                            preferenceUtils.uuid = accessToken.uuid
-                            preferenceUtils.username = accessToken.username
-                            preferenceUtils.accessToken = accessToken.accessToken
-
-                            AnalyticsUtils().logLogin(
-                                accessToken.uuid,
-                                accessToken.username
-                            )
-
-                            setResult(Constants.RESULT_CODE_SUCCESS)
-                            finish()
-                        } else if (response.errorBody() != null) {
-                            val gson = Gson()
-                            val adapter = gson.getAdapter(AccessToken::class.java)
-
-                            try {
-                                accessToken = adapter.fromJson(response.errorBody()?.string())
-
-                                if (accessToken.message == getString(R.string.login_api_response_code_not_found))
-                                    Snackbar.make(
-                                        mCoordinatorLayout,
-                                        getString(R.string.login_error_code_not_found),
-                                        Snackbar.LENGTH_LONG
-                                    ).show()
-                                else if (accessToken.message == getString(R.string.login_api_response_code_expired))
-                                    Snackbar.make(
-                                        mCoordinatorLayout,
-                                        getString(R.string.login_error_code_expired),
-                                        Snackbar.LENGTH_LONG
-                                    ).show()
-
-                                AnalyticsUtils().logLoginError(accessToken.message)
-                            } catch (e: IOException) {
-                                e.printStackTrace()
-                            }
-                        }
-                    }
-
-                    override fun onFailure(call: Call<AccessToken?>, t: Throwable) {
-                        Snackbar.make(
-                            mCoordinatorLayout,
-                            getString(R.string.login_error_unknown),
-                            Snackbar.LENGTH_LONG
-                        ).show()
-                        t.printStackTrace()
-                    }
-                })
-        }*/
     }
 
     fun bindViewModel() {
