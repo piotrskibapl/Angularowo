@@ -5,7 +5,6 @@ import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import pl.piotrskiba.angularowo.data.network.interceptors.UnauthorizedInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -19,8 +18,7 @@ class NetworkModule {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC)
 
-        return OkHttpClient.Builder()
-            .addInterceptor(UnauthorizedInterceptor())
+        return OkHttpClient.Builder() // TODO: unauthorized interceptor should be applied to some network requests
             .addInterceptor(loggingInterceptor)
             .build()
     }
