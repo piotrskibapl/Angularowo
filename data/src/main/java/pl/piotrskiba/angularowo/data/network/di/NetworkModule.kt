@@ -30,7 +30,7 @@ class NetworkModule {
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient) =
         Retrofit.Builder()
-            .baseUrl("https://piotrskiba.pl/angularowo/api/v1/")
+            .baseUrl("https://piotrskiba.pl/angularowo/api/v1.1/")
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .client(okHttpClient)

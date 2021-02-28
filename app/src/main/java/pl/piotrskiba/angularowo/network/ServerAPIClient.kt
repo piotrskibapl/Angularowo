@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object ServerAPIClient {
     const val API_KEY = "ySrfs3nAqaw28D8W1KJPz3HT8IAydXnY"
     private var retrofit: Retrofit? = null
-    private const val BASE_URL = "https://piotrskiba.pl/angularowo/api/v1/"
+    private const val BASE_URL = "https://piotrskiba.pl/angularowo/api/v1.1/"
 
     @JvmStatic
     val retrofitInstance: Retrofit
