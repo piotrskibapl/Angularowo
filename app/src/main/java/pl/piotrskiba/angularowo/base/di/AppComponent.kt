@@ -9,6 +9,7 @@ import dagger.android.support.AndroidSupportInjectionModule
 import pl.piotrskiba.angularowo.base.AngularowoApplication
 import pl.piotrskiba.angularowo.data.login.di.LoginModule
 import pl.piotrskiba.angularowo.data.network.di.NetworkModule
+import pl.piotrskiba.angularowo.data.player.di.PlayerModule
 import javax.inject.Singleton
 
 @Singleton
@@ -16,7 +17,7 @@ import javax.inject.Singleton
     modules = [
         NetworkModule::class,
         LoginModule::class,
-        LoginModule::class,
+        PlayerModule::class,
         AppModule::class,
         AndroidSupportInjectionModule::class,
         AndroidInjectionModule::class,
