@@ -12,7 +12,7 @@ class DetailedPlayerMapper {
         data.partnerUuid,
         data.username,
         data.status,
-        Rank("unknown", false, "f", "f"), // TODO: obtain rank
+        Rank.UnknownRank(data.rankName),
         data.isVanished,
         data.balance,
         data.playtime,

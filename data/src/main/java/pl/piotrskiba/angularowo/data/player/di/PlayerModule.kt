@@ -9,6 +9,7 @@ import pl.piotrskiba.angularowo.data.player.repository.PlayerRepositoryImpl
 import pl.piotrskiba.angularowo.domain.player.repository.PlayerRepository
 import pl.piotrskiba.angularowo.domain.player.usecase.GetPlayerDetailsFromUsernameUseCase
 import pl.piotrskiba.angularowo.domain.player.usecase.GetPlayerDetailsFromUuidUseCase
+import pl.piotrskiba.angularowo.domain.rank.repository.RankRepository
 import retrofit2.Retrofit
 
 @Module(includes = [NetworkModule::class])
@@ -23,10 +24,14 @@ class PlayerModule {
         PlayerRepositoryImpl(playerApiService, DetailedPlayerMapper())
 
     @Provides
-    fun provideGetPlayerDetailsFromUsernameDeviceUseCase(playerRepository: PlayerRepository) =
-        GetPlayerDetailsFromUsernameUseCase(playerRepository)
+    fun provideGetPlayerDetailsFromUsernameDeviceUseCase(
+        playerRepository: PlayerRepository,
+        rankRepository: RankRepository
+    ) = GetPlayerDetailsFromUsernameUseCase(playerRepository, rankRepository)
 
     @Provides
-    fun provideGetPlayerDetailsFromUuidDeviceUseCase(playerRepository: PlayerRepository) =
-        GetPlayerDetailsFromUuidUseCase(playerRepository)
+    fun provideGetPlayerDetailsFromUuidDeviceUseCase(
+        playerRepository: PlayerRepository,
+        rankRepository: RankRepository
+    ) = GetPlayerDetailsFromUuidUseCase(playerRepository, rankRepository)
 }

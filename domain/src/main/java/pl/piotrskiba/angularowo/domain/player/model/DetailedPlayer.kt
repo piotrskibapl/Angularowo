@@ -8,7 +8,7 @@ data class DetailedPlayer(
     val partnerUuid: String?,
     val username: String,
     val status: String,
-    val rank: Rank,
+    var rank: Rank,
     val isVanished: Boolean,
     val balance: Float,
     val playtime: Int,

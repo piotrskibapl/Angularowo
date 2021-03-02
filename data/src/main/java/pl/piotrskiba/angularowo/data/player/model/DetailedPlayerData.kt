@@ -8,7 +8,7 @@ data class DetailedPlayerData(
     val partnerUuid: String?,
     val username: String,
     val status: String,
-    @SerializedName(value = "rank") val rankKey: String,
+    @SerializedName(value = "rank") val rankName: String,
     @SerializedName(value = "vanished") val isVanished: Boolean,
     val balance: Float,
     val playtime: Int,

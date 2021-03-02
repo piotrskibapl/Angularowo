@@ -7,17 +7,21 @@ import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import pl.piotrskiba.angularowo.base.AngularowoApplication
+import pl.piotrskiba.angularowo.data.firebase.di.FirebaseModule
 import pl.piotrskiba.angularowo.data.login.di.LoginModule
 import pl.piotrskiba.angularowo.data.network.di.NetworkModule
 import pl.piotrskiba.angularowo.data.player.di.PlayerModule
+import pl.piotrskiba.angularowo.data.rank.di.RankModule
 import javax.inject.Singleton
 
 @Singleton
 @Component(
     modules = [
         NetworkModule::class,
+        FirebaseModule::class,
         LoginModule::class,
         PlayerModule::class,
+        RankModule::class,
         AppModule::class,
         AndroidSupportInjectionModule::class,
         AndroidInjectionModule::class,
