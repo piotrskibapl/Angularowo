@@ -2,6 +2,7 @@ package pl.piotrskiba.angularowo.domain.player.repository
 
 import io.reactivex.rxjava3.core.Single
 import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayer
+import pl.piotrskiba.angularowo.domain.player.model.Player
 
 interface PlayerRepository {
 
@@ -16,4 +17,9 @@ interface PlayerRepository {
         accessToken: String,
         uuid: String
     ): Single<DetailedPlayer>
+
+    fun getOnlinePlayerList(
+        apiKey: String,
+        accessToken: String
+    ): Single<List<Player>>
 }

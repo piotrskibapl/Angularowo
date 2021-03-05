@@ -5,8 +5,10 @@ import dagger.Provides
 import pl.piotrskiba.angularowo.data.network.di.NetworkModule
 import pl.piotrskiba.angularowo.data.player.PlayerApiService
 import pl.piotrskiba.angularowo.data.player.mapper.DetailedPlayerMapper
+import pl.piotrskiba.angularowo.data.player.mapper.PlayerMapper
 import pl.piotrskiba.angularowo.data.player.repository.PlayerRepositoryImpl
 import pl.piotrskiba.angularowo.domain.player.repository.PlayerRepository
+import pl.piotrskiba.angularowo.domain.player.usecase.GetOnlinePlayerListUseCase
 import pl.piotrskiba.angularowo.domain.player.usecase.GetPlayerDetailsFromUsernameUseCase
 import pl.piotrskiba.angularowo.domain.player.usecase.GetPlayerDetailsFromUuidUseCase
 import pl.piotrskiba.angularowo.domain.rank.repository.RankRepository
@@ -21,7 +23,7 @@ class PlayerModule {
 
     @Provides
     fun providePlayerRepository(playerApiService: PlayerApiService): PlayerRepository =
-        PlayerRepositoryImpl(playerApiService, DetailedPlayerMapper())
+        PlayerRepositoryImpl(playerApiService, DetailedPlayerMapper(), PlayerMapper())
 
     @Provides
     fun provideGetPlayerDetailsFromUsernameDeviceUseCase(
@@ -34,4 +36,10 @@ class PlayerModule {
         playerRepository: PlayerRepository,
         rankRepository: RankRepository
     ) = GetPlayerDetailsFromUuidUseCase(playerRepository, rankRepository)
+
+    @Provides
+    fun provideGetOnlinePlayerListUseCase(
+        playerRepository: PlayerRepository,
+        rankRepository: RankRepository
+    ) = GetOnlinePlayerListUseCase(playerRepository, rankRepository)
 }
