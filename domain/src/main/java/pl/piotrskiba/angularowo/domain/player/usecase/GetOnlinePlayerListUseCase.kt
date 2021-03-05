@@ -4,6 +4,7 @@ import io.reactivex.rxjava3.core.Single
 import pl.piotrskiba.angularowo.domain.player.model.Player
 import pl.piotrskiba.angularowo.domain.player.repository.PlayerRepository
 import pl.piotrskiba.angularowo.domain.rank.model.Rank
+import pl.piotrskiba.angularowo.domain.rank.model.toNewRank
 import pl.piotrskiba.angularowo.domain.rank.repository.RankRepository
 import javax.inject.Inject
 
@@ -20,17 +21,10 @@ class GetOnlinePlayerListUseCase @Inject constructor(
                     playerList.map { player ->
                         val rankName = (player.rank as Rank.UnknownRank).name
                         player.rank =
-                            rankList.firstOrNull { it.name == rankName } ?: createNewRank(rankName)
+                            rankList.firstOrNull { it.name == rankName } ?: rankName.toNewRank()
                         player
                     }
                 }
             }
     }
-
-    private fun createNewRank(name: String) = Rank.CustomRank(
-        name,
-        false,
-        "7", // TODO: get default color codes from strings.yml
-        "7"
-    )
 }

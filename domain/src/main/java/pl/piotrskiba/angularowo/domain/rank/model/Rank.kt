@@ -9,3 +9,10 @@ sealed class Rank {
         val chatColorCode: String
     ) : Rank()
 }
+
+fun String.toNewRank() = Rank.CustomRank(
+    this,
+    false,
+    "7", // TODO: get default color codes from strings.yml
+    "7"
+)
