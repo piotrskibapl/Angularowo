@@ -2,17 +2,14 @@ package pl.piotrskiba.angularowo.data.player.repository
 
 import io.reactivex.rxjava3.core.Single
 import pl.piotrskiba.angularowo.data.player.PlayerApiService
-import pl.piotrskiba.angularowo.data.player.mapper.DetailedPlayerMapper
-import pl.piotrskiba.angularowo.data.player.mapper.PlayerMapper
+import pl.piotrskiba.angularowo.data.player.model.toDomain
 import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayer
 import pl.piotrskiba.angularowo.domain.player.model.Player
 import pl.piotrskiba.angularowo.domain.player.repository.PlayerRepository
 import javax.inject.Inject
 
 class PlayerRepositoryImpl @Inject constructor(
-    private val playerApi: PlayerApiService,
-    private val detailedPlayerMapper: DetailedPlayerMapper,
-    private val playerMapper: PlayerMapper
+    private val playerApi: PlayerApiService
 ) : PlayerRepository {
 
     override fun getPlayerDetailsFromUsername(
@@ -22,7 +19,7 @@ class PlayerRepositoryImpl @Inject constructor(
     ): Single<DetailedPlayer> =
         playerApi
             .getPlayerInfoFromUsername(apiKey, username, accessToken)
-            .map { detailedPlayerMapper.toDetailedPlayer(it) }
+            .map { it.toDomain() }
 
     override fun getPlayerDetailsFromUuid(
         apiKey: String,
@@ -31,7 +28,7 @@ class PlayerRepositoryImpl @Inject constructor(
     ): Single<DetailedPlayer> =
         playerApi
             .getPlayerInfoFromUuid(apiKey, uuid, accessToken)
-            .map { detailedPlayerMapper.toDetailedPlayer(it) }
+            .map { it.toDomain() }
 
     override fun getOnlinePlayerList(
         apiKey: String,
@@ -40,8 +37,6 @@ class PlayerRepositoryImpl @Inject constructor(
         playerApi
             .getOnlinePlayerList(apiKey, accessToken)
             .map { playerList ->
-                playerList.map { player ->
-                    playerMapper.toPlayer(player)
-                }
+                playerList.map { it.toDomain() }
             }
 }

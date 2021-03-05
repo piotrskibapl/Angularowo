@@ -7,7 +7,6 @@ import dagger.Module
 import dagger.Provides
 import pl.piotrskiba.angularowo.data.base.preferences.repository.PreferencesRepositoryImpl
 import pl.piotrskiba.angularowo.data.login.LoginApiService
-import pl.piotrskiba.angularowo.data.login.mapper.AccessTokenMapper
 import pl.piotrskiba.angularowo.data.login.repository.LoginRepositoryImpl
 import pl.piotrskiba.angularowo.data.network.di.NetworkModule
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
@@ -28,7 +27,7 @@ class LoginModule {
 
     @Provides
     fun provideLoginRepository(loginApiService: LoginApiService): LoginRepository =
-        LoginRepositoryImpl(loginApiService, AccessTokenMapper())
+        LoginRepositoryImpl(loginApiService)
 
     @Provides
     fun providePreferencesRepository(sharedPreferences: SharedPreferences): PreferencesRepository =
