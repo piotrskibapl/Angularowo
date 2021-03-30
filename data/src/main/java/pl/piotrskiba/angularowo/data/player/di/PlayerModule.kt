@@ -16,7 +16,7 @@ import retrofit2.Retrofit
 class PlayerModule {
 
     @Provides
-    fun providePlayerApiService(retrofit: Retrofit) =
+    fun providePlayerApiService(retrofit: Retrofit): PlayerApiService =
         retrofit.create(PlayerApiService::class.java)
 
     @Provides

@@ -1,5 +1,6 @@
 package pl.piotrskiba.angularowo.data.network.di
 
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -25,10 +26,11 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideGson() = GsonBuilder().setLenient().create()
+    fun provideGson(): Gson =
+        GsonBuilder().setLenient().create()
 
     @Provides
-    fun provideRetrofit(okHttpClient: OkHttpClient) =
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
             .baseUrl("https://piotrskiba.pl/angularowo/api/v1.1/")
             .addConverterFactory(GsonConverterFactory.create())

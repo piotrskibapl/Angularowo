@@ -18,7 +18,7 @@ import retrofit2.Retrofit
 class LoginModule {
 
     @Provides
-    fun provideLoginApiService(retrofit: Retrofit) =
+    fun provideLoginApiService(retrofit: Retrofit): LoginApiService =
         retrofit.create(LoginApiService::class.java)
 
     @Provides
