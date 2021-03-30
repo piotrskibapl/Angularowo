@@ -1,4 +1,4 @@
-package pl.piotrskiba.angularowo.fragments
+package pl.piotrskiba.angularowo.main.ban.list.ui
 
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,10 +19,10 @@ import pl.piotrskiba.angularowo.AppViewModel
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.SpacesItemDecoration
-import pl.piotrskiba.angularowo.activities.BanDetailsActivity
+import pl.piotrskiba.angularowo.main.ban.details.BanDetailsActivity
 import pl.piotrskiba.angularowo.adapters.BanListAdapter
 import pl.piotrskiba.angularowo.adapters.BanListAdapter.BanViewHolder
-import pl.piotrskiba.angularowo.fragments.base.BaseFragment
+import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.interfaces.BanClickListener
 import pl.piotrskiba.angularowo.interfaces.NetworkErrorListener
 import pl.piotrskiba.angularowo.models.Ban

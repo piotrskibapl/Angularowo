@@ -1,4 +1,4 @@
-package pl.piotrskiba.angularowo.fragments
+package pl.piotrskiba.angularowo.main.chat.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -21,9 +21,9 @@ import okio.ByteString
 import pl.piotrskiba.angularowo.AppViewModel
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
-import pl.piotrskiba.angularowo.activities.PlayerDetailsActivity
+import pl.piotrskiba.angularowo.main.player.details.ui.PlayerDetailsActivity
 import pl.piotrskiba.angularowo.adapters.ChatAdapter
-import pl.piotrskiba.angularowo.fragments.base.BaseFragment
+import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.interfaces.ChatMessageClickListener
 import pl.piotrskiba.angularowo.models.ChatMessage
 import pl.piotrskiba.angularowo.models.ChatMessageList

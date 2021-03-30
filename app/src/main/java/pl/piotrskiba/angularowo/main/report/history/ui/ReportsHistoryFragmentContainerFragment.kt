@@ -1,4 +1,4 @@
-package pl.piotrskiba.angularowo.fragments
+package pl.piotrskiba.angularowo.main.report.history.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,10 +10,9 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.google.android.material.tabs.TabLayoutMediator.TabConfigurationStrategy
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.adapters.ViewPagerFragmentAdapter
-import pl.piotrskiba.angularowo.fragments.base.BaseFragment
+import pl.piotrskiba.angularowo.base.ui.BaseFragment
 
 class ReportsHistoryFragmentContainerFragment : BaseFragment() {
 

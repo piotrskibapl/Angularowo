@@ -13,7 +13,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
-import pl.piotrskiba.angularowo.activities.MainActivity
+import pl.piotrskiba.angularowo.main.base.ui.MainActivity
 
 class NotificationUtils(private val context: Context) {
 

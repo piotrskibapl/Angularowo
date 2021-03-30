@@ -1,4 +1,4 @@
-package pl.piotrskiba.angularowo.fragments
+package pl.piotrskiba.angularowo.main.report.history.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,7 +10,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.os.bundleOf
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,9 +20,9 @@ import pl.piotrskiba.angularowo.AppViewModel
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.SpacesItemDecoration
-import pl.piotrskiba.angularowo.activities.ReportDetailsActivity
+import pl.piotrskiba.angularowo.main.report.details.ui.ReportDetailsActivity
 import pl.piotrskiba.angularowo.adapters.ReportListAdapter
-import pl.piotrskiba.angularowo.fragments.base.BaseFragment
+import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.interfaces.NetworkErrorListener
 import pl.piotrskiba.angularowo.interfaces.ReportClickListener
 import pl.piotrskiba.angularowo.models.Report

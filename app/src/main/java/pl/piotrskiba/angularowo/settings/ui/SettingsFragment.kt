@@ -1,4 +1,4 @@
-package pl.piotrskiba.angularowo.fragments
+package pl.piotrskiba.angularowo.settings.ui
 
 import android.content.DialogInterface
 import android.os.Bundle
@@ -7,7 +7,7 @@ import androidx.preference.Preference
 import com.google.firebase.messaging.FirebaseMessaging
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
-import pl.piotrskiba.angularowo.fragments.base.BasePreferenceFragmentCompat
+import pl.piotrskiba.angularowo.base.ui.BasePreferenceFragmentCompat
 import pl.piotrskiba.angularowo.utils.AnalyticsUtils
 import pl.piotrskiba.angularowo.utils.PreferenceUtils
 import pl.piotrskiba.angularowo.utils.RankUtils.getRankFromName

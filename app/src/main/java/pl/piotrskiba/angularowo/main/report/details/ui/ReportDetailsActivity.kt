@@ -1,4 +1,4 @@
-package pl.piotrskiba.angularowo.activities
+package pl.piotrskiba.angularowo.main.report.details.ui
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -9,7 +9,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
-import pl.piotrskiba.angularowo.activities.base.BaseActivity
+import pl.piotrskiba.angularowo.base.ui.BaseActivity
 import pl.piotrskiba.angularowo.models.Report
 
 class ReportDetailsActivity : BaseActivity() {

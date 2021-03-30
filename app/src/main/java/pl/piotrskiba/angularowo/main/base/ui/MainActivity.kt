@@ -1,4 +1,4 @@
-package pl.piotrskiba.angularowo.activities
+package pl.piotrskiba.angularowo.main.base.ui
 
 import android.content.Context
 import android.content.Intent
@@ -21,10 +21,18 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
-import pl.piotrskiba.angularowo.activities.base.BaseActivity
-import pl.piotrskiba.angularowo.fragments.*
+import pl.piotrskiba.angularowo.applock.ui.ApplicationLockedActivity
+import pl.piotrskiba.angularowo.settings.ui.SettingsActivity
+import pl.piotrskiba.angularowo.base.ui.BaseActivity
 import pl.piotrskiba.angularowo.interfaces.UnauthorizedResponseListener
 import pl.piotrskiba.angularowo.login.ui.LoginActivity
+import pl.piotrskiba.angularowo.main.ban.list.ui.BanListFragment
+import pl.piotrskiba.angularowo.main.chat.ui.ChatFragment
+import pl.piotrskiba.angularowo.main.mainscreen.ui.MainScreenFragment
+import pl.piotrskiba.angularowo.main.offers.ui.OffersFragment
+import pl.piotrskiba.angularowo.main.player.list.ui.PlayerListFragment
+import pl.piotrskiba.angularowo.main.report.history.ui.ReportsHistoryFragment
+import pl.piotrskiba.angularowo.main.report.history.ui.ReportsHistoryFragmentContainerFragment
 import pl.piotrskiba.angularowo.network.ServerAPIClient
 import pl.piotrskiba.angularowo.network.ServerAPIClient.retrofitInstance
 import pl.piotrskiba.angularowo.network.ServerAPIInterface
@@ -146,7 +154,9 @@ class MainActivity : BaseActivity(), UnauthorizedResponseListener, RewardedVideo
             mainScreenFragment = frag1
         }
 
-        val frag2: PlayerListFragment? = supportFragmentManager.findFragmentByTag(TAG_PLAYER_LIST_FRAGMENT) as PlayerListFragment?
+        val frag2: PlayerListFragment? = supportFragmentManager.findFragmentByTag(
+            TAG_PLAYER_LIST_FRAGMENT
+        ) as PlayerListFragment?
         frag2?.run {
             playerListFragment = frag2
         }
@@ -161,12 +171,16 @@ class MainActivity : BaseActivity(), UnauthorizedResponseListener, RewardedVideo
             banListFragment = frag4
         }
 
-        val frag5: OffersFragment? = supportFragmentManager.findFragmentByTag(TAG_FREE_RANKS_FRAGMENT) as OffersFragment?
+        val frag5: OffersFragment? = supportFragmentManager.findFragmentByTag(
+            TAG_FREE_RANKS_FRAGMENT
+        ) as OffersFragment?
         frag5?.run {
             offersFragment = frag5
         }
 
-        reportsHistoryFragment = supportFragmentManager.findFragmentByTag(TAG_REPORTS_HISTORY_FRAGMENT)
+        reportsHistoryFragment = supportFragmentManager.findFragmentByTag(
+            TAG_REPORTS_HISTORY_FRAGMENT
+        )
 
         offersFragment.setRewardedVideoAd(mRewardedVideoAd)
 

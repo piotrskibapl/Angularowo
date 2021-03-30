@@ -81,4 +81,4 @@
 }
 
 # Other
--keep class pl.piotrskiba.angularowo.fragments.SettingsFragment
+-keep class pl.piotrskiba.angularowo.settings.ui.SettingsFragment

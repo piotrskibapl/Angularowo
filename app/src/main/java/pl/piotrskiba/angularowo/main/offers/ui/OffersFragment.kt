@@ -1,4 +1,4 @@
-package pl.piotrskiba.angularowo.fragments
+package pl.piotrskiba.angularowo.main.offers.ui
 
 import android.content.DialogInterface
 import android.os.Bundle
@@ -22,7 +22,7 @@ import pl.piotrskiba.angularowo.AppViewModel
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.adapters.AdOffersAdapter
 import pl.piotrskiba.angularowo.adapters.OffersAdapter
-import pl.piotrskiba.angularowo.fragments.base.BaseFragment
+import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.interfaces.AdOfferClickListener
 import pl.piotrskiba.angularowo.interfaces.NetworkErrorListener
 import pl.piotrskiba.angularowo.interfaces.OfferClickListener

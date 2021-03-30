@@ -1,4 +1,4 @@
-package pl.piotrskiba.angularowo.activities
+package pl.piotrskiba.angularowo.main.player.details.ui
 
 import android.app.AlertDialog
 import android.content.DialogInterface
@@ -24,7 +24,7 @@ import com.bumptech.glide.Glide
 import com.github.florent37.tutoshowcase.TutoShowcase
 import com.google.android.material.snackbar.Snackbar
 import pl.piotrskiba.angularowo.*
-import pl.piotrskiba.angularowo.activities.base.BaseActivity
+import pl.piotrskiba.angularowo.base.ui.BaseActivity
 import pl.piotrskiba.angularowo.database.entity.Friend
 import pl.piotrskiba.angularowo.layouts.TimeAmountPickerView
 import pl.piotrskiba.angularowo.models.DetailedPlayer

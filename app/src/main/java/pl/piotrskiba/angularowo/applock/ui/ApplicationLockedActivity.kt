@@ -1,4 +1,4 @@
-package pl.piotrskiba.angularowo.activities
+package pl.piotrskiba.angularowo.applock.ui
 
 import android.os.Bundle
 import android.widget.TextView
@@ -11,7 +11,7 @@ import pl.piotrskiba.angularowo.AppViewModel
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.Permissions
 import pl.piotrskiba.angularowo.R
-import pl.piotrskiba.angularowo.activities.base.BaseActivity
+import pl.piotrskiba.angularowo.base.ui.BaseActivity
 import pl.piotrskiba.angularowo.models.DetailedPlayer
 
 class ApplicationLockedActivity : BaseActivity() {

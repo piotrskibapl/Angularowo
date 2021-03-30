@@ -1,4 +1,4 @@
-package pl.piotrskiba.angularowo.activities
+package pl.piotrskiba.angularowo.main.ban.details
 
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -10,7 +10,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
-import pl.piotrskiba.angularowo.activities.base.BaseActivity
+import pl.piotrskiba.angularowo.base.ui.BaseActivity
 import pl.piotrskiba.angularowo.models.Ban
 import java.text.DateFormat
 import java.text.SimpleDateFormat

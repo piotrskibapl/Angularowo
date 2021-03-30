@@ -17,8 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".activities.ApplicationLockedActivity" />
-        <activity android:name=".activities.ReportDetailsActivity" />
+        <activity android:name=".applock.ui.ApplicationLockedActivity" />
+        <activity android:name=".main.report.details.ui.ReportDetailsActivity" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
@@ -29,15 +29,15 @@
             android:value="true" />
 
         <activity
-            android:name=".activities.BanDetailsActivity"
-            android:parentActivityName=".activities.MainActivity" />
-        <activity android:name=".activities.SettingsActivity" />
+            android:name=".main.ban.details.BanDetailsActivity"
+            android:parentActivityName=".main.base.ui.MainActivity" />
+        <activity android:name=".settings.ui.SettingsActivity" />
         <activity
-            android:name=".activities.PlayerDetailsActivity"
-            android:parentActivityName=".activities.MainActivity" />
+            android:name=".main.player.details.ui.PlayerDetailsActivity"
+            android:parentActivityName=".main.base.ui.MainActivity" />
         <activity android:name=".login.ui.LoginActivity" />
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".main.base.ui.MainActivity"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

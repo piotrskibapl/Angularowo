@@ -1,4 +1,4 @@
-package pl.piotrskiba.angularowo.activities.base
+package pl.piotrskiba.angularowo.base.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import pl.piotrskiba.angularowo.utils.AnalyticsUtils

@@ -1,10 +1,9 @@
-package pl.piotrskiba.angularowo.fragments.base
+package pl.piotrskiba.angularowo.base.ui
 
-import android.os.Bundle
-import androidx.preference.PreferenceFragmentCompat
+import androidx.fragment.app.Fragment
 import pl.piotrskiba.angularowo.utils.AnalyticsUtils
 
-open class BasePreferenceFragmentCompat: PreferenceFragmentCompat() {
+open class BaseFragment: Fragment() {
 
     override fun onResume() {
         super.onResume()
@@ -16,6 +15,4 @@ open class BasePreferenceFragmentCompat: PreferenceFragmentCompat() {
             )
         }
     }
-
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {}
 }

@@ -1,4 +1,4 @@
-package pl.piotrskiba.angularowo.activities
+package pl.piotrskiba.angularowo.settings.ui
 
 import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
@@ -11,7 +11,7 @@ import butterknife.ButterKnife
 import com.google.firebase.messaging.FirebaseMessaging
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
-import pl.piotrskiba.angularowo.activities.base.BaseActivity
+import pl.piotrskiba.angularowo.base.ui.BaseActivity
 
 class SettingsActivity : BaseActivity(), OnSharedPreferenceChangeListener {
 

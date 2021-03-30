@@ -17,7 +17,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.android.AndroidInjection
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
-import pl.piotrskiba.angularowo.activities.base.BaseActivity
+import pl.piotrskiba.angularowo.base.ui.BaseActivity
 import pl.piotrskiba.angularowo.base.di.obtainViewModel
 import pl.piotrskiba.angularowo.databinding.ActivityLoginBinding
 import pl.piotrskiba.angularowo.domain.login.model.AccessTokenError
