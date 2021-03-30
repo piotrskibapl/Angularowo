@@ -3,8 +3,6 @@ package pl.piotrskiba.angularowo.domain.player.usecase
 import io.reactivex.rxjava3.core.Single
 import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayer
 import pl.piotrskiba.angularowo.domain.player.repository.PlayerRepository
-import pl.piotrskiba.angularowo.domain.rank.model.Rank
-import pl.piotrskiba.angularowo.domain.rank.model.Rank.CustomRank
 import pl.piotrskiba.angularowo.domain.rank.model.Rank.UnknownRank
 import pl.piotrskiba.angularowo.domain.rank.model.toNewRank
 import pl.piotrskiba.angularowo.domain.rank.repository.RankRepository
