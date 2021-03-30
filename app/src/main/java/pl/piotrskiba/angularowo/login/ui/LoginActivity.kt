@@ -71,7 +71,7 @@ class LoginActivity : BaseActivity() {
         })
     }
 
-    fun bindViewModel() {
+    private fun bindViewModel() {
         viewModel = viewModelFactory.obtainViewModel(this)
         val binding: ActivityLoginBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_login)
