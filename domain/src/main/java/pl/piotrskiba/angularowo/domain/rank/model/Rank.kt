@@ -1,13 +1,13 @@
 package pl.piotrskiba.angularowo.domain.rank.model
 
-sealed class Rank(open val name: String) {
-    data class UnknownRank(override val name: String) : Rank(name)
+sealed class Rank(val name: String) {
+    data class UnknownRank(private val rankName: String) : Rank(rankName)
     data class CustomRank(
-        override val name: String,
+        private val rankName: String,
         val staff: Boolean,
         val colorCode: String,
         val chatColorCode: String
-    ) : Rank(name)
+    ) : Rank(rankName)
 }
 
 fun String.toNewRank() = Rank.CustomRank(
