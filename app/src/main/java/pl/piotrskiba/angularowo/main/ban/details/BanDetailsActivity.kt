@@ -10,13 +10,13 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
-import pl.piotrskiba.angularowo.base.ui.BaseActivity
+import pl.piotrskiba.angularowo.base.ui.OldBaseActivity
 import pl.piotrskiba.angularowo.models.Ban
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-class BanDetailsActivity : BaseActivity() {
+class BanDetailsActivity : OldBaseActivity() {
 
     @BindView(R.id.toolbar)
     lateinit var mToolbar: Toolbar

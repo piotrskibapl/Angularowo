@@ -23,7 +23,7 @@ import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.main.player.details.ui.PlayerDetailsActivity
 import pl.piotrskiba.angularowo.adapters.ChatAdapter
-import pl.piotrskiba.angularowo.base.ui.BaseFragment
+import pl.piotrskiba.angularowo.base.ui.OldBaseFragment
 import pl.piotrskiba.angularowo.interfaces.ChatMessageClickListener
 import pl.piotrskiba.angularowo.models.ChatMessage
 import pl.piotrskiba.angularowo.models.ChatMessageList
@@ -37,7 +37,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 
-class ChatFragment : BaseFragment(), ChatMessageClickListener {
+class ChatFragment : OldBaseFragment(), ChatMessageClickListener {
 
     private lateinit var preferenceUtils: PreferenceUtils
     private lateinit var mChatAdapter: ChatAdapter

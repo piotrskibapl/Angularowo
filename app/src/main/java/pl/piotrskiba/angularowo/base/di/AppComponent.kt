@@ -25,7 +25,8 @@ import javax.inject.Singleton
         AppModule::class,
         AndroidSupportInjectionModule::class,
         AndroidInjectionModule::class,
-        ActivityBindingModule::class
+        ActivityBindingModule::class,
+        FragmentBindingModule::class
     ]
 )
 interface AppComponent : AndroidInjector<AngularowoApplication> {

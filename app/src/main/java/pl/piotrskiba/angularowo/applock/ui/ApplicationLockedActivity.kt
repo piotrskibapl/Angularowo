@@ -11,10 +11,10 @@ import pl.piotrskiba.angularowo.AppViewModel
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.Permissions
 import pl.piotrskiba.angularowo.R
-import pl.piotrskiba.angularowo.base.ui.BaseActivity
+import pl.piotrskiba.angularowo.base.ui.OldBaseActivity
 import pl.piotrskiba.angularowo.models.DetailedPlayer
 
-class ApplicationLockedActivity : BaseActivity() {
+class ApplicationLockedActivity : OldBaseActivity() {
 
     @BindView(R.id.toolbar)
     lateinit var mToolbar: Toolbar

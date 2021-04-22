@@ -22,13 +22,13 @@ import pl.piotrskiba.angularowo.SpacesItemDecoration
 import pl.piotrskiba.angularowo.main.ban.details.BanDetailsActivity
 import pl.piotrskiba.angularowo.adapters.BanListAdapter
 import pl.piotrskiba.angularowo.adapters.BanListAdapter.BanViewHolder
-import pl.piotrskiba.angularowo.base.ui.BaseFragment
+import pl.piotrskiba.angularowo.base.ui.OldBaseFragment
 import pl.piotrskiba.angularowo.interfaces.BanClickListener
 import pl.piotrskiba.angularowo.interfaces.NetworkErrorListener
 import pl.piotrskiba.angularowo.models.Ban
 import pl.piotrskiba.angularowo.models.BanList
 
-class BanListFragment : BaseFragment(), BanClickListener, NetworkErrorListener {
+class BanListFragment : OldBaseFragment(), BanClickListener, NetworkErrorListener {
 
     private lateinit var mViewModel: AppViewModel
     private lateinit var mBanListAdapter: BanListAdapter

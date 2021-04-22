@@ -1,58 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/swiperefresh"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".main.base.ui.MainActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout
+    <data>
+
+        <variable
+            name="viewModel"
+            type="pl.piotrskiba.angularowo.main.player.list.viewmodel.PlayerListViewModel" />
+    </data>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swiperefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context=".main.base.ui.MainActivity">
 
-        <androidx.core.widget.NestedScrollView
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
-            <LinearLayout
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_players_favorite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_default"
+                        android:visibility="gone" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_players"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_default" />
+
+                </LinearLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+            <TextView
+                android:id="@+id/tv_no_players"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:text="@string/error_no_players"
+                android:textSize="@dimen/error_text_size"
+                android:textAlignment="center"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/error_margin"
+                android:layout_marginStart="@dimen/margin_default"
+                android:layout_marginEnd="@dimen/margin_default"
+                android:gravity="center_horizontal" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_players_favorite"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_default"
-                    android:visibility="gone" />
+            <include layout="@layout/no_internet_layout" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_players"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_default" />
+            <include layout="@layout/server_error_layout" />
 
-            </LinearLayout>
-
-        </androidx.core.widget.NestedScrollView>
-
-        <TextView
-            android:id="@+id/tv_no_players"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/error_no_players"
-            android:textSize="@dimen/error_text_size"
-            android:textAlignment="center"
-            android:visibility="gone"
-            android:layout_marginTop="@dimen/error_margin"
-            android:layout_marginStart="@dimen/margin_default"
-            android:layout_marginEnd="@dimen/margin_default"
-            android:gravity="center_horizontal" />
-
-        <include layout="@layout/no_internet_layout" />
-
-        <include layout="@layout/server_error_layout" />
-
-    </FrameLayout>
-
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        </FrameLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</layout>

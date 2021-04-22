@@ -24,7 +24,7 @@ import com.bumptech.glide.Glide
 import com.github.florent37.tutoshowcase.TutoShowcase
 import com.google.android.material.snackbar.Snackbar
 import pl.piotrskiba.angularowo.*
-import pl.piotrskiba.angularowo.base.ui.BaseActivity
+import pl.piotrskiba.angularowo.base.ui.OldBaseActivity
 import pl.piotrskiba.angularowo.database.entity.Friend
 import pl.piotrskiba.angularowo.layouts.TimeAmountPickerView
 import pl.piotrskiba.angularowo.models.DetailedPlayer
@@ -43,7 +43,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class PlayerDetailsActivity : BaseActivity(), OnRefreshListener {
+class PlayerDetailsActivity : OldBaseActivity(), OnRefreshListener {
 
     @BindView(R.id.swiperefresh)
     lateinit var mSwipeRefreshLayout: SwipeRefreshLayout

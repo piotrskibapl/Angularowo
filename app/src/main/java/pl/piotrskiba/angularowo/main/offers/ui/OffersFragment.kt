@@ -22,7 +22,7 @@ import pl.piotrskiba.angularowo.AppViewModel
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.adapters.AdOffersAdapter
 import pl.piotrskiba.angularowo.adapters.OffersAdapter
-import pl.piotrskiba.angularowo.base.ui.BaseFragment
+import pl.piotrskiba.angularowo.base.ui.OldBaseFragment
 import pl.piotrskiba.angularowo.interfaces.AdOfferClickListener
 import pl.piotrskiba.angularowo.interfaces.NetworkErrorListener
 import pl.piotrskiba.angularowo.interfaces.OfferClickListener
@@ -39,7 +39,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class OffersFragment : BaseFragment(), AdOfferClickListener, OfferClickListener, NetworkErrorListener {
+class OffersFragment : OldBaseFragment(), AdOfferClickListener, OfferClickListener, NetworkErrorListener {
 
     private lateinit var preferenceUtils: PreferenceUtils
     private lateinit var mViewModel: AppViewModel

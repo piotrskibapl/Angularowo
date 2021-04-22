@@ -22,8 +22,9 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.applock.ui.ApplicationLockedActivity
-import pl.piotrskiba.angularowo.settings.ui.SettingsActivity
 import pl.piotrskiba.angularowo.base.ui.BaseActivity
+import pl.piotrskiba.angularowo.settings.ui.SettingsActivity
+import pl.piotrskiba.angularowo.base.ui.OldBaseActivity
 import pl.piotrskiba.angularowo.interfaces.UnauthorizedResponseListener
 import pl.piotrskiba.angularowo.login.ui.LoginActivity
 import pl.piotrskiba.angularowo.main.ban.list.ui.BanListFragment

@@ -11,9 +11,9 @@ import butterknife.ButterKnife
 import com.google.firebase.messaging.FirebaseMessaging
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
-import pl.piotrskiba.angularowo.base.ui.BaseActivity
+import pl.piotrskiba.angularowo.base.ui.OldBaseActivity
 
-class SettingsActivity : BaseActivity(), OnSharedPreferenceChangeListener {
+class SettingsActivity : OldBaseActivity(), OnSharedPreferenceChangeListener {
 
     @BindView(R.id.toolbar)
     lateinit var mToolbar: Toolbar

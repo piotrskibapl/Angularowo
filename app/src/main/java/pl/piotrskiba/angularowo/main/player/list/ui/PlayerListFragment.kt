@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -22,16 +23,19 @@ import pl.piotrskiba.angularowo.AppViewModel
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.SpacesItemDecoration
-import pl.piotrskiba.angularowo.main.player.details.ui.PlayerDetailsActivity
 import pl.piotrskiba.angularowo.adapters.PlayerListAdapter
-import pl.piotrskiba.angularowo.database.entity.Friend
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
+import pl.piotrskiba.angularowo.database.entity.Friend
+import pl.piotrskiba.angularowo.databinding.FragmentPlayerListBinding
 import pl.piotrskiba.angularowo.interfaces.NetworkErrorListener
 import pl.piotrskiba.angularowo.interfaces.PlayerClickListener
+import pl.piotrskiba.angularowo.main.player.details.ui.PlayerDetailsActivity
+import pl.piotrskiba.angularowo.main.player.list.viewmodel.PlayerListViewModel
 import pl.piotrskiba.angularowo.models.Player
 import pl.piotrskiba.angularowo.models.PlayerList
 
-class PlayerListFragment : BaseFragment(), PlayerClickListener, NetworkErrorListener {
+class PlayerListFragment : BaseFragment<PlayerListViewModel>(PlayerListViewModel::class),
+    PlayerClickListener, NetworkErrorListener {
 
     private lateinit var mViewModel: AppViewModel
     private lateinit var mPlayerListAdapter: PlayerListAdapter
@@ -61,8 +65,13 @@ class PlayerListFragment : BaseFragment(), PlayerClickListener, NetworkErrorList
         mViewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_player_list, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        val binding = bindViewModel(layoutInflater, container)
+        val view = binding.root
 
         ButterKnife.bind(this, view)
 
@@ -77,6 +86,16 @@ class PlayerListFragment : BaseFragment(), PlayerClickListener, NetworkErrorList
         val actionbar = (activity as AppCompatActivity?)?.supportActionBar
         actionbar?.setTitle(R.string.actionbar_title_player_list)
         return view
+    }
+
+    private fun bindViewModel(
+        layoutInflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentPlayerListBinding {
+        val binding: FragmentPlayerListBinding =
+            DataBindingUtil.inflate(layoutInflater, R.layout.fragment_player_list, container, false)
+        binding.viewModel = viewModel
+        return binding
     }
 
     private fun setupPlayerListRecyclerView() {
@@ -134,7 +153,8 @@ class PlayerListFragment : BaseFragment(), PlayerClickListener, NetworkErrorList
                         val newFavoritePlayerList = ArrayList<Player>()
 
                         if (mPlayer?.partnerUuid != null) {
-                            val partner = playerList.players.firstOrNull { it.uuid == mPlayer.partnerUuid }
+                            val partner =
+                                playerList.players.firstOrNull { it.uuid == mPlayer.partnerUuid }
                             if (partner != null) {
                                 newPlayerList.remove(partner)
                                 newFavoritePlayerList.add(partner)
@@ -153,7 +173,10 @@ class PlayerListFragment : BaseFragment(), PlayerClickListener, NetworkErrorList
                         mPlayerListAdapter.setPlayerList(PlayerList(newPlayerList))
                         mFavoritePlayerListAdapter.setPlayerList(PlayerList(newFavoritePlayerList))
 
-                        showDefaultLayout(newPlayerList.isNotEmpty(), newFavoritePlayerList.isNotEmpty())
+                        showDefaultLayout(
+                            newPlayerList.isNotEmpty(),
+                            newFavoritePlayerList.isNotEmpty()
+                        )
                     }
 
                     mViewModel.allFriends.observe(viewLifecycleOwner, mFriendsObserver)
@@ -173,7 +196,11 @@ class PlayerListFragment : BaseFragment(), PlayerClickListener, NetworkErrorList
             intent.putExtra(Constants.EXTRA_PLAYER, mViewModel.getPlayer().value)
             intent.putExtra(Constants.EXTRA_PREVIEWED_PLAYER, clickedPlayer)
             if (activity != null) {
-                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), view, getString(R.string.player_banner_transition_name))
+                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    requireActivity(),
+                    view,
+                    getString(R.string.player_banner_transition_name)
+                )
                 startActivity(intent, options.toBundle())
             } else {
                 startActivity(intent)

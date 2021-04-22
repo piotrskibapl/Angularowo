@@ -9,10 +9,10 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
-import pl.piotrskiba.angularowo.base.ui.BaseActivity
+import pl.piotrskiba.angularowo.base.ui.OldBaseActivity
 import pl.piotrskiba.angularowo.models.Report
 
-class ReportDetailsActivity : BaseActivity() {
+class ReportDetailsActivity : OldBaseActivity() {
 
     @BindView(R.id.toolbar)
     lateinit var mToolbar: Toolbar

@@ -12,9 +12,9 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.adapters.ViewPagerFragmentAdapter
-import pl.piotrskiba.angularowo.base.ui.BaseFragment
+import pl.piotrskiba.angularowo.base.ui.OldBaseFragment
 
-class ReportsHistoryFragmentContainerFragment : BaseFragment() {
+class ReportsHistoryFragmentContainerFragment : OldBaseFragment() {
 
     @BindView(R.id.tablayout)
     lateinit var mTabLayout: TabLayout

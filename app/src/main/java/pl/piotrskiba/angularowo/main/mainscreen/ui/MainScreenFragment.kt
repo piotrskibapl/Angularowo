@@ -29,7 +29,7 @@ import pl.piotrskiba.angularowo.*
 import pl.piotrskiba.angularowo.main.ban.details.BanDetailsActivity
 import pl.piotrskiba.angularowo.adapters.BanListAdapter
 import pl.piotrskiba.angularowo.adapters.BanListAdapter.BanViewHolder
-import pl.piotrskiba.angularowo.base.ui.BaseFragment
+import pl.piotrskiba.angularowo.base.ui.OldBaseFragment
 import pl.piotrskiba.angularowo.interfaces.BanClickListener
 import pl.piotrskiba.angularowo.interfaces.NetworkErrorListener
 import pl.piotrskiba.angularowo.models.*
@@ -42,7 +42,7 @@ import pl.piotrskiba.angularowo.utils.TextUtils.formatTps
 import pl.piotrskiba.angularowo.utils.TextUtils.normalize
 import pl.piotrskiba.angularowo.utils.UrlUtils.buildBodyUrl
 
-class MainScreenFragment : BaseFragment(), BanClickListener, NetworkErrorListener {
+class MainScreenFragment : OldBaseFragment(), BanClickListener, NetworkErrorListener {
 
     private lateinit var mViewModel: AppViewModel
     private lateinit var mBanListAdapter: BanListAdapter

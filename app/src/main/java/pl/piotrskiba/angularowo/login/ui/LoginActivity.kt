@@ -14,11 +14,10 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.alimuzaffar.lib.pin.PinEntryEditText
 import com.google.android.material.snackbar.Snackbar
-import dagger.android.AndroidInjection
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
-import pl.piotrskiba.angularowo.base.ui.BaseActivity
 import pl.piotrskiba.angularowo.base.di.obtainViewModel
+import pl.piotrskiba.angularowo.base.ui.BaseActivity
 import pl.piotrskiba.angularowo.databinding.ActivityLoginBinding
 import pl.piotrskiba.angularowo.domain.login.model.AccessTokenError
 import pl.piotrskiba.angularowo.login.model.LoginState
@@ -47,7 +46,6 @@ class LoginActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AndroidInjection.inject(this)
         bindViewModel()
         ButterKnife.bind(this)
         setSupportActionBar(mToolbar)

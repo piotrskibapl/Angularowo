@@ -22,13 +22,13 @@ import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.SpacesItemDecoration
 import pl.piotrskiba.angularowo.main.report.details.ui.ReportDetailsActivity
 import pl.piotrskiba.angularowo.adapters.ReportListAdapter
-import pl.piotrskiba.angularowo.base.ui.BaseFragment
+import pl.piotrskiba.angularowo.base.ui.OldBaseFragment
 import pl.piotrskiba.angularowo.interfaces.NetworkErrorListener
 import pl.piotrskiba.angularowo.interfaces.ReportClickListener
 import pl.piotrskiba.angularowo.models.Report
 import pl.piotrskiba.angularowo.models.ReportList
 
-class ReportsHistoryFragment : BaseFragment(), ReportClickListener, NetworkErrorListener {
+class ReportsHistoryFragment : OldBaseFragment(), ReportClickListener, NetworkErrorListener {
 
     private lateinit var mViewModel: AppViewModel
     private lateinit var mReportListAdapter: ReportListAdapter
