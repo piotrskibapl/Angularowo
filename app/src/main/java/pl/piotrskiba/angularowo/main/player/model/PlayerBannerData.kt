@@ -4,7 +4,7 @@ import android.view.View
 import pl.piotrskiba.angularowo.domain.player.model.Player
 
 data class PlayerBannerData(
-    val avatarUrl: String,
+    val skinUuid: String,
     val username: String,
     val rankName: String,
     private val isVanished: Boolean
