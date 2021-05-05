@@ -1,12 +1,18 @@
 package pl.piotrskiba.angularowo.main.player.list.viewmodel
 
+import androidx.databinding.ObservableArrayList
+import androidx.databinding.ObservableList
 import androidx.lifecycle.MutableLiveData
+import me.tatarka.bindingcollectionadapter2.ItemBinding
+import pl.piotrskiba.angularowo.BR
 import pl.piotrskiba.angularowo.BuildConfig
+import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
 import pl.piotrskiba.angularowo.domain.player.usecase.GetOnlinePlayerListUseCase
 import pl.piotrskiba.angularowo.main.player.list.model.PlayerListState
+import pl.piotrskiba.angularowo.main.player.model.PlayerBannerData
 import pl.piotrskiba.angularowo.main.player.model.toUi
 import javax.inject.Inject
 
@@ -17,6 +23,8 @@ class PlayerListViewModel @Inject constructor(
 ) : LifecycleViewModel() {
 
     val state = MutableLiveData<PlayerListState>(PlayerListState.Loading)
+    val players: ObservableList<PlayerBannerData> = ObservableArrayList()
+    val playersBinding = ItemBinding.of<PlayerBannerData>(BR.player, R.layout.player_list_item)
 
     override fun onFirstCreate() {
         getOnlinePlayerListUseCase
@@ -27,6 +35,9 @@ class PlayerListViewModel @Inject constructor(
                 { playerList ->
                     val bannerList = playerList.map { it.toUi() }
                     state.value = PlayerListState.Loaded(bannerList)
+                    // TODO: use DiffObservableList
+                    players.clear()
+                    players.addAll(bannerList)
                 },
                 { error ->
                     // TODO: provide error handling

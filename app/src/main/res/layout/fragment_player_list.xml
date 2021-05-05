@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -29,17 +30,18 @@
                     android:orientation="vertical">
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_players_favorite"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/margin_default"
                         android:visibility="gone" />
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_players"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/margin_default" />
+                        android:layout_marginBottom="@dimen/margin_default"
+                        app:itemBinding="@{viewModel.playersBinding}"
+                        app:items="@{viewModel.players}"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                 </LinearLayout>
 
@@ -49,14 +51,14 @@
                 android:id="@+id/tv_no_players"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/error_no_players"
-                android:textSize="@dimen/error_text_size"
-                android:textAlignment="center"
-                android:visibility="gone"
-                android:layout_marginTop="@dimen/error_margin"
                 android:layout_marginStart="@dimen/margin_default"
+                android:layout_marginTop="@dimen/error_margin"
                 android:layout_marginEnd="@dimen/margin_default"
-                android:gravity="center_horizontal" />
+                android:gravity="center_horizontal"
+                android:text="@string/error_no_players"
+                android:textAlignment="center"
+                android:textSize="@dimen/error_text_size"
+                android:visibility="gone" />
 
             <include layout="@layout/no_internet_layout" />
 
