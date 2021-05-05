@@ -2,6 +2,7 @@ package pl.piotrskiba.angularowo.main.player.model
 
 import android.view.View
 import pl.piotrskiba.angularowo.domain.player.model.Player
+import pl.piotrskiba.angularowo.utils.UrlUtils
 
 data class PlayerBannerData(
     val skinUuid: String,
@@ -14,6 +15,8 @@ data class PlayerBannerData(
         true -> View.VISIBLE
         false -> View.GONE
     }
+
+    fun avatarUrl() = UrlUtils.buildAvatarUrl(skinUuid, true)
 }
 
 fun Player.toUi() = PlayerBannerData(
