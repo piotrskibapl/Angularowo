@@ -8,6 +8,7 @@ import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import pl.piotrskiba.angularowo.base.AngularowoApplication
 import pl.piotrskiba.angularowo.data.firebase.di.FirebaseModule
+import pl.piotrskiba.angularowo.data.friend.di.FriendModule
 import pl.piotrskiba.angularowo.data.login.di.LoginModule
 import pl.piotrskiba.angularowo.data.network.di.NetworkModule
 import pl.piotrskiba.angularowo.data.player.di.PlayerModule
@@ -21,6 +22,7 @@ import javax.inject.Singleton
         FirebaseModule::class,
         LoginModule::class,
         PlayerModule::class,
+        FriendModule::class,
         RankModule::class,
         AppModule::class,
         AndroidSupportInjectionModule::class,

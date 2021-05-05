@@ -48,4 +48,8 @@ dependencies {
 
     implementation platform('com.google.firebase:firebase-bom:26.3.0')
     implementation 'com.google.firebase:firebase-config-ktx'
+
+    implementation 'androidx.room:room-runtime:2.3.0'
+    implementation 'androidx.room:room-rxjava3:2.3.0'
+    kapt 'androidx.room:room-compiler:2.3.0'
 }
