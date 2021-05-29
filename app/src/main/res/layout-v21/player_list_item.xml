@@ -17,9 +17,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_small"
-        android:background="@color/color_minecraft_7"
         android:padding="@dimen/padding_default"
-        android:transitionName="@string/player_banner_transition_name">
+        android:transitionName="@string/player_banner_transition_name"
+        app:backgroundColor="@{player.rankColorResId(context)}"
+        tools:background="@color/color_minecraft_7">
 
         <ImageView
             android:id="@+id/iv_player_avatar"

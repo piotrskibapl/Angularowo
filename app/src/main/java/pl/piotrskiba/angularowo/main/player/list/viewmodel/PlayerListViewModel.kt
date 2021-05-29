@@ -1,5 +1,6 @@
 package pl.piotrskiba.angularowo.main.player.list.viewmodel
 
+import android.util.Log
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableList
 import androidx.lifecycle.MutableLiveData
@@ -33,6 +34,7 @@ class PlayerListViewModel @Inject constructor(
             .observeOn(facade.ui())
             .subscribe(
                 { playerList ->
+                    Log.d("asdasd", playerList.toString())
                     val bannerList = playerList.map { it.toUi() }
                     state.value = PlayerListState.Loaded(bannerList)
                     // TODO: use DiffObservableList
@@ -40,6 +42,7 @@ class PlayerListViewModel @Inject constructor(
                     players.addAll(bannerList)
                 },
                 { error ->
+                    Log.d("asdasd", error.toString())
                     // TODO: provide error handling
                 }
             )

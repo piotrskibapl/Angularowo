@@ -2,7 +2,7 @@ package pl.piotrskiba.angularowo.data.player.model
 
 import com.google.gson.annotations.SerializedName
 import pl.piotrskiba.angularowo.domain.player.model.Player
-import pl.piotrskiba.angularowo.domain.rank.model.Rank
+import pl.piotrskiba.angularowo.domain.rank.model.Rank.UnknownRank
 
 data class PlayerData(
     val uuid: String,
@@ -18,6 +18,6 @@ fun PlayerData.toDomain() = Player(
     skinUuid,
     partnerUuid,
     username,
-    Rank.UnknownRank(rankName),
+    UnknownRank(rankName),
     isVanished
 )

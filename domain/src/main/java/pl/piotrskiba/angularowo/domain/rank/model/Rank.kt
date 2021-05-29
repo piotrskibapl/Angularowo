@@ -1,18 +1,16 @@
 package pl.piotrskiba.angularowo.domain.rank.model
 
-sealed class Rank(val name: String) {
-    data class UnknownRank(private val rankName: String) : Rank(rankName)
+sealed class Rank(
+    val name: String,
+    val staff: Boolean,
+    val colorCode: String,
+    val chatColorCode: String
+) {
+    data class UnknownRank(val _name: String) : Rank(_name, false, "7", "7")
     data class CustomRank(
-        private val rankName: String,
-        val staff: Boolean,
-        val colorCode: String,
-        val chatColorCode: String
-    ) : Rank(rankName)
+        val _name: String,
+        val _staff: Boolean,
+        val _colorCode: String,
+        val _chatColorCode: String
+    ) : Rank(_name, _staff, _colorCode, _chatColorCode)
 }
-
-fun String.toNewRank() = Rank.CustomRank(
-    this,
-    false,
-    "7", // TODO: get default color codes from strings.yml
-    "7"
-)
