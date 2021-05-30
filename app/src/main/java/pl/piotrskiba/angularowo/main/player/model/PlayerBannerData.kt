@@ -1,7 +1,6 @@
 package pl.piotrskiba.angularowo.main.player.model
 
 import android.content.Context
-import android.view.View
 import androidx.annotation.ColorRes
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.domain.player.model.Player
@@ -13,8 +12,8 @@ data class PlayerBannerData(
     val skinUuid: String,
     val username: String,
     val rankName: String,
-    val rankColorCode: String,
-    private val isVanished: Boolean
+    val isVanished: Boolean,
+    private val rankColorCode: String
 ) {
 
     @ColorRes
@@ -30,11 +29,6 @@ data class PlayerBannerData(
         }
     }
 
-    fun vanishIconVisibility() = when (isVanished) {
-        true -> View.VISIBLE
-        false -> View.GONE
-    }
-
     fun avatarUrl() = UrlUtils.buildAvatarUrl(skinUuid, true)
 }
 
@@ -42,6 +36,6 @@ fun Player.toUi() = PlayerBannerData(
     skinUuid,
     username,
     rank.name,
-    rank.colorCode,
-    isVanished
+    isVanished,
+    rank.colorCode
 )

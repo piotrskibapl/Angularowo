@@ -14,3 +14,14 @@ fun setBackgroundColor(
         ContextCompat.getColor(view.context, colorResId)
     )
 }
+
+@BindingAdapter("visible")
+fun setVisibility(
+    view: View,
+    visible: Boolean
+) {
+    view.visibility = when (visible) {
+        true -> View.VISIBLE
+        false -> View.GONE
+    }
+}
