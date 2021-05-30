@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableList
 import androidx.lifecycle.MutableLiveData
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import me.tatarka.bindingcollectionadapter2.ItemBinding
 import pl.piotrskiba.angularowo.BR
 import pl.piotrskiba.angularowo.BuildConfig
@@ -26,13 +27,18 @@ class PlayerListViewModel @Inject constructor(
     val state = MutableLiveData<PlayerListState>(PlayerListState.Loading)
     val players: ObservableList<PlayerBannerData> = ObservableArrayList()
     val playersBinding = ItemBinding.of<PlayerBannerData>(BR.player, R.layout.player_list_item)
+    private val disposables = CompositeDisposable()
 
     init {
         playersBinding.bindExtra(BR.viewModel, this)
     }
 
+    override fun onCleared() {
+        disposables.clear()
+    }
+
     override fun onFirstCreate() {
-        getOnlinePlayerListUseCase
+        disposables.add(getOnlinePlayerListUseCase
             .execute(BuildConfig.API_KEY, preferencesRepository.accessToken!!)
             .subscribeOn(facade.io())
             .observeOn(facade.ui())
@@ -50,6 +56,7 @@ class PlayerListViewModel @Inject constructor(
                     // TODO: provide error handling
                 }
             )
+        )
     }
 
     fun onPlayerClick(player: PlayerBannerData) {
