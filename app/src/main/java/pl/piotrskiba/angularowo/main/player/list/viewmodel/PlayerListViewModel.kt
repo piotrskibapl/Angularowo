@@ -27,6 +27,10 @@ class PlayerListViewModel @Inject constructor(
     val players: ObservableList<PlayerBannerData> = ObservableArrayList()
     val playersBinding = ItemBinding.of<PlayerBannerData>(BR.player, R.layout.player_list_item)
 
+    init {
+        playersBinding.bindExtra(BR.viewModel, this)
+    }
+
     override fun onFirstCreate() {
         getOnlinePlayerListUseCase
             .execute(BuildConfig.API_KEY, preferencesRepository.accessToken!!)
@@ -46,5 +50,8 @@ class PlayerListViewModel @Inject constructor(
                     // TODO: provide error handling
                 }
             )
+    }
+
+    fun onPlayerClick(player: PlayerBannerData) {
     }
 }
