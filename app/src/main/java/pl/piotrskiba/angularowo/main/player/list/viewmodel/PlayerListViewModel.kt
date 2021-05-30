@@ -14,6 +14,7 @@ import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
 import pl.piotrskiba.angularowo.domain.player.usecase.GetOnlinePlayerListUseCase
 import pl.piotrskiba.angularowo.main.player.list.model.PlayerListState
+import pl.piotrskiba.angularowo.main.player.list.nav.PlayerListNavigator
 import pl.piotrskiba.angularowo.main.player.model.PlayerBannerData
 import pl.piotrskiba.angularowo.main.player.model.toUi
 import javax.inject.Inject
@@ -27,6 +28,7 @@ class PlayerListViewModel @Inject constructor(
     val state = MutableLiveData<PlayerListState>(PlayerListState.Loading)
     val players: ObservableList<PlayerBannerData> = ObservableArrayList()
     val playersBinding = ItemBinding.of<PlayerBannerData>(BR.player, R.layout.player_list_item)
+    var navigator: PlayerListNavigator? = null
     private val disposables = CompositeDisposable()
 
     init {
@@ -60,5 +62,6 @@ class PlayerListViewModel @Inject constructor(
     }
 
     fun onPlayerClick(player: PlayerBannerData) {
+        navigator?.onPlayerClick(player)
     }
 }
