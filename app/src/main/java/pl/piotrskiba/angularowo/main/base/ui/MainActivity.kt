@@ -10,6 +10,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.multidex.MultiDex
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -22,12 +23,12 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.applock.ui.ApplicationLockedActivity
+import pl.piotrskiba.angularowo.base.di.obtainViewModel
 import pl.piotrskiba.angularowo.base.ui.BaseActivity
-import pl.piotrskiba.angularowo.settings.ui.SettingsActivity
-import pl.piotrskiba.angularowo.base.ui.OldBaseActivity
 import pl.piotrskiba.angularowo.interfaces.UnauthorizedResponseListener
 import pl.piotrskiba.angularowo.login.ui.LoginActivity
 import pl.piotrskiba.angularowo.main.ban.list.ui.BanListFragment
+import pl.piotrskiba.angularowo.main.base.viewmodel.MainViewModel
 import pl.piotrskiba.angularowo.main.chat.ui.ChatFragment
 import pl.piotrskiba.angularowo.main.mainscreen.ui.MainScreenFragment
 import pl.piotrskiba.angularowo.main.offers.ui.OffersFragment
@@ -38,14 +39,19 @@ import pl.piotrskiba.angularowo.network.ServerAPIClient
 import pl.piotrskiba.angularowo.network.ServerAPIClient.retrofitInstance
 import pl.piotrskiba.angularowo.network.ServerAPIInterface
 import pl.piotrskiba.angularowo.network.UnauthorizedInterceptor.Companion.setUnauthorizedListener
+import pl.piotrskiba.angularowo.settings.ui.SettingsActivity
 import pl.piotrskiba.angularowo.utils.NotificationUtils
 import pl.piotrskiba.angularowo.utils.PreferenceUtils
 import pl.piotrskiba.angularowo.utils.RankUtils.getRankFromPreferences
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
 class MainActivity : BaseActivity(), UnauthorizedResponseListener, RewardedVideoAdListener {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     @BindView(R.id.toolbar)
     lateinit var mToolbar: Toolbar
@@ -59,6 +65,7 @@ class MainActivity : BaseActivity(), UnauthorizedResponseListener, RewardedVideo
     private lateinit var preferenceUtils: PreferenceUtils
     private lateinit var mFirebaseRemoteConfig: FirebaseRemoteConfig
     private lateinit var mRewardedVideoAd: RewardedVideoAd
+    private lateinit var viewModel: MainViewModel
     private var waitingForLogin = false
 
     private var mainScreenFragment: MainScreenFragment = MainScreenFragment()
@@ -75,6 +82,7 @@ class MainActivity : BaseActivity(), UnauthorizedResponseListener, RewardedVideo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        bindViewModel()
 
         setContentView(R.layout.activity_main)
         ButterKnife.bind(this)
@@ -120,6 +128,10 @@ class MainActivity : BaseActivity(), UnauthorizedResponseListener, RewardedVideo
             }
         }
         setNavigationItemSelectedListener()
+    }
+
+    private fun bindViewModel() {
+        viewModel = viewModelFactory.obtainViewModel(this)
     }
 
     private fun setupRemoteConfig() {
