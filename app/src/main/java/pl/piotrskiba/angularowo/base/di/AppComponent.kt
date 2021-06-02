@@ -13,6 +13,7 @@ import pl.piotrskiba.angularowo.data.login.di.LoginModule
 import pl.piotrskiba.angularowo.data.network.di.NetworkModule
 import pl.piotrskiba.angularowo.data.player.di.PlayerModule
 import pl.piotrskiba.angularowo.data.rank.di.RankModule
+import pl.piotrskiba.angularowo.data.server.di.ServerModule
 import javax.inject.Singleton
 
 @Singleton
@@ -20,6 +21,7 @@ import javax.inject.Singleton
     modules = [
         NetworkModule::class,
         FirebaseModule::class,
+        ServerModule::class,
         LoginModule::class,
         PlayerModule::class,
         FriendModule::class,
