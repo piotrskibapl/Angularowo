@@ -11,7 +11,11 @@ import pl.piotrskiba.angularowo.database.AppDatabase
 import pl.piotrskiba.angularowo.database.FriendRepository
 import pl.piotrskiba.angularowo.database.entity.Friend
 import pl.piotrskiba.angularowo.interfaces.NetworkErrorListener
-import pl.piotrskiba.angularowo.models.*
+import pl.piotrskiba.angularowo.models.BanList
+import pl.piotrskiba.angularowo.models.DetailedPlayer
+import pl.piotrskiba.angularowo.models.OffersInfo
+import pl.piotrskiba.angularowo.models.ReportList
+import pl.piotrskiba.angularowo.models.ServerStatus
 import pl.piotrskiba.angularowo.network.ServerAPIClient
 import pl.piotrskiba.angularowo.network.ServerAPIClient.retrofitInstance
 import pl.piotrskiba.angularowo.network.ServerAPIInterface
@@ -31,7 +35,6 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     private var player: MutableLiveData<DetailedPlayer?>? = null
     private var activePlayerBans: MutableLiveData<BanList?>? = null
     private var banList: MutableLiveData<BanList?>? = null
-    private var playerList: MutableLiveData<PlayerList?>? = null
     private var offersInfo: MutableLiveData<OffersInfo?>? = null
     private var userReports: MutableLiveData<ReportList?>? = null
     private var allReports: MutableLiveData<ReportList?>? = null
@@ -191,44 +194,6 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
 
                 override fun onFailure(call: Call<BanList?>, t: Throwable) {
                     banList?.value = null
-                    mNetworkErrorListener?.onNoInternet()
-                    t.printStackTrace()
-                }
-            })
-        }
-    }
-
-    fun getPlayerList(): LiveData<PlayerList?> {
-        if (playerList == null) {
-            playerList = MutableLiveData()
-            loadPlayerList()
-        } else if (playerList!!.value == null) {
-            refreshPlayerList()
-        }
-        return playerList!!
-    }
-
-    fun refreshPlayerList() {
-        loadPlayerList()
-    }
-
-    private fun loadPlayerList() {
-        val accessToken = preferenceUtils.accessToken
-
-        if (accessToken != null) {
-            val serverAPIInterface = retrofitInstance.create(ServerAPIInterface::class.java)
-            serverAPIInterface.getPlayers(ServerAPIClient.API_KEY, accessToken).enqueue(object : Callback<PlayerList?> {
-                override fun onResponse(call: Call<PlayerList?>, response: Response<PlayerList?>) {
-                    if (response.isSuccessful && response.body() != null) {
-                        playerList?.setValue(response.body())
-                    } else {
-                        playerList?.value = null
-                        mNetworkErrorListener?.onServerError()
-                    }
-                }
-
-                override fun onFailure(call: Call<PlayerList?>, t: Throwable) {
-                    playerList?.value = null
                     mNetworkErrorListener?.onNoInternet()
                     t.printStackTrace()
                 }
