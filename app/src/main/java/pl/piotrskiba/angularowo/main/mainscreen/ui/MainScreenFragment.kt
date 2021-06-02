@@ -25,14 +25,24 @@ import butterknife.ButterKnife
 import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.Task
 import com.google.firebase.messaging.FirebaseMessaging
-import pl.piotrskiba.angularowo.*
-import pl.piotrskiba.angularowo.main.ban.details.BanDetailsActivity
+import pl.piotrskiba.angularowo.AppViewModel
+import pl.piotrskiba.angularowo.BuildConfig
+import pl.piotrskiba.angularowo.Constants
+import pl.piotrskiba.angularowo.IntegerVersionSignature
+import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.adapters.BanListAdapter
 import pl.piotrskiba.angularowo.adapters.BanListAdapter.BanViewHolder
-import pl.piotrskiba.angularowo.base.ui.OldBaseFragment
+import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.interfaces.BanClickListener
 import pl.piotrskiba.angularowo.interfaces.NetworkErrorListener
-import pl.piotrskiba.angularowo.models.*
+import pl.piotrskiba.angularowo.main.ban.details.BanDetailsActivity
+import pl.piotrskiba.angularowo.main.mainscreen.viewmodel.MainScreenViewModel
+import pl.piotrskiba.angularowo.models.Ban
+import pl.piotrskiba.angularowo.models.BanList
+import pl.piotrskiba.angularowo.models.DetailedPlayer
+import pl.piotrskiba.angularowo.models.Motd
+import pl.piotrskiba.angularowo.models.Rank
+import pl.piotrskiba.angularowo.models.ServerStatus
 import pl.piotrskiba.angularowo.utils.GlideUtils.getSignatureVersionNumber
 import pl.piotrskiba.angularowo.utils.PreferenceUtils
 import pl.piotrskiba.angularowo.utils.RankUtils.getRankFromPreferences
@@ -42,7 +52,7 @@ import pl.piotrskiba.angularowo.utils.TextUtils.formatTps
 import pl.piotrskiba.angularowo.utils.TextUtils.normalize
 import pl.piotrskiba.angularowo.utils.UrlUtils.buildBodyUrl
 
-class MainScreenFragment : OldBaseFragment(), BanClickListener, NetworkErrorListener {
+class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel::class), BanClickListener, NetworkErrorListener {
 
     private lateinit var mViewModel: AppViewModel
     private lateinit var mBanListAdapter: BanListAdapter
