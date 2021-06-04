@@ -128,12 +128,6 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel
         mMotdTextView.setOnClickListener { onMotdClick() }
         mViewModel.setNetworkErrorListener(this)
 
-        mSwipeRefreshLayout.isRefreshing = true
-        populateUi()
-        seekForServerStatusUpdates()
-        seekForPlayerUpdates()
-        seekForLastPlayerBans()
-
         return view
     }
 
