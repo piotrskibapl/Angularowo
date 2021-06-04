@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="state"
+            type="pl.piotrskiba.angularowo.base.model.ViewModelState" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/no_internet_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/windowBackground"
+        android:orientation="vertical"
+        app:visible="@{state.anyError}"
+        tools:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/error_margin"
+            android:contentDescription="@string/error_icon_content_description"
+            app:imageResource="@{state.errorImage()}"
+            tools:src="@drawable/ic_error" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingStart="@dimen/padding_default"
+            android:paddingEnd="@dimen/padding_default"
+            android:text="@{state.errorText()}"
+            android:textAlignment="center"
+            tools:text="@string/server_error" />
+    </LinearLayout>
+</layout>
