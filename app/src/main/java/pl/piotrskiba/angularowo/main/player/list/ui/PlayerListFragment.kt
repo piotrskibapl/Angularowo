@@ -9,9 +9,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.databinding.DataBindingUtil
 import butterknife.ButterKnife
+import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
+import pl.piotrskiba.angularowo.base.di.obtainViewModel
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.databinding.FragmentPlayerListBinding
+import pl.piotrskiba.angularowo.main.base.viewmodel.MainViewModel
 import pl.piotrskiba.angularowo.main.player.details.ui.PlayerDetailsActivity
 import pl.piotrskiba.angularowo.main.player.list.nav.PlayerListNavigator
 import pl.piotrskiba.angularowo.main.player.list.viewmodel.PlayerListViewModel
@@ -20,9 +23,12 @@ import pl.piotrskiba.angularowo.main.player.model.PlayerBannerData
 class PlayerListFragment : BaseFragment<PlayerListViewModel>(PlayerListViewModel::class),
     PlayerListNavigator {
 
+    private lateinit var mainViewModel: MainViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.navigator = this
+        mainViewModel = viewModelFactory.obtainViewModel(requireActivity())
     }
 
     override fun onCreateView(
@@ -46,8 +52,9 @@ class PlayerListFragment : BaseFragment<PlayerListViewModel>(PlayerListViewModel
     }
 
     override fun onPlayerClick(player: PlayerBannerData) {
-        // TODO: pass additional data
+        // TODO: pass clicked player
         val intent = Intent(context, PlayerDetailsActivity::class.java)
+        intent.putExtra(Constants.EXTRA_PLAYER, mainViewModel.player.value!!)
         when (activity) {
             null -> startActivity(intent)
             else -> {

@@ -1,6 +1,7 @@
 package pl.piotrskiba.angularowo.domain.player.model
 
 import pl.piotrskiba.angularowo.domain.rank.model.Rank
+import java.io.Serializable
 
 data class DetailedPlayer(
     val uuid: String,
@@ -14,4 +15,4 @@ data class DetailedPlayer(
     val playtime: Int,
     val tokens: Int,
     val permissions: List<String>
-)
+) : Serializable
