@@ -48,7 +48,7 @@ class PlayerListViewModel @Inject constructor(
                 { playerList ->
                     Log.d("asdasd", playerList.toString())
                     val bannerList = playerList.map { it.toUi() }
-                    state.value = PlayerListState.Loaded(bannerList)
+                    state.value = PlayerListState.Loaded
                     // TODO: use DiffObservableList
                     players.clear()
                     players.addAll(bannerList)
