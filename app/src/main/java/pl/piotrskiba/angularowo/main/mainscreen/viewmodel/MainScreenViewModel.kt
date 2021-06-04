@@ -10,6 +10,7 @@ import pl.piotrskiba.angularowo.domain.player.usecase.GetPlayerDetailsFromUuidUs
 import pl.piotrskiba.angularowo.domain.punishment.usecase.GetActivePlayerPunishmentsUseCase
 import pl.piotrskiba.angularowo.domain.server.usecase.GetServerStatusUseCase
 import pl.piotrskiba.angularowo.main.mainscreen.model.MainScreenPlayerData
+import pl.piotrskiba.angularowo.main.mainscreen.model.MainScreenServerData
 import pl.piotrskiba.angularowo.main.mainscreen.model.toUi
 import javax.inject.Inject
 
@@ -29,6 +30,7 @@ class MainScreenViewModel @Inject constructor(
         preferencesRepository.playtime
     )
     val playerData = MutableLiveData(lastPlayerData)
+    val serverData = MutableLiveData<MainScreenServerData>()
     private val disposables = CompositeDisposable()
 
     override fun onFirstCreate() {
@@ -51,7 +53,7 @@ class MainScreenViewModel @Inject constructor(
             .observeOn(facade.ui())
             .subscribe(
                 { serverStatus ->
-                    // TODO: process server status
+                    serverData.value = serverStatus.toUi()
                 },
                 { error ->
                     // TODO: provide error handling
