@@ -1,8 +1,14 @@
 package pl.piotrskiba.angularowo.main.mainscreen.viewmodel
 
 import androidx.lifecycle.MutableLiveData
+import com.github.magneticflux.livedata.map
+import com.github.magneticflux.livedata.zipTo
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import pl.piotrskiba.angularowo.BuildConfig
+import pl.piotrskiba.angularowo.base.model.ViewModelState
+import pl.piotrskiba.angularowo.base.model.ViewModelState.Error
+import pl.piotrskiba.angularowo.base.model.ViewModelState.Loaded
+import pl.piotrskiba.angularowo.base.model.ViewModelState.Loading
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
@@ -22,6 +28,21 @@ class MainScreenViewModel @Inject constructor(
     private val facade: SchedulersProvider
 ) : LifecycleViewModel() {
 
+    private val playerDataState = MutableLiveData<ViewModelState>(Loading)
+    private val serverDataState = MutableLiveData<ViewModelState>(Loading)
+    private val punishmentsDataState = MutableLiveData<ViewModelState>(Loading)
+    val state = playerDataState
+        .zipTo(serverDataState)
+        .zipTo(punishmentsDataState)
+        .map { state ->
+            when (state.first.first == Error || state.first.second == Error || state.second == Error) {
+                true -> Error
+                false -> when (state.first.first == Loading || state.first.second == Loading || state.second == Loading) {
+                    true -> Loading
+                    false -> Loaded
+                }
+            }
+        }
     private val lastPlayerData = MainScreenPlayerData(
         preferencesRepository.username!!,
         preferencesRepository.tokens,
@@ -53,10 +74,11 @@ class MainScreenViewModel @Inject constructor(
             .observeOn(facade.ui())
             .subscribe(
                 { serverStatus ->
+                    serverDataState.value = Loaded
                     serverData.value = serverStatus.toUi()
                 },
                 { error ->
-                    // TODO: provide error handling
+                    serverDataState.value = Error
                 }
             )
         )
@@ -73,11 +95,12 @@ class MainScreenViewModel @Inject constructor(
             .observeOn(facade.ui())
             .subscribe(
                 { detailedPlayer ->
+                    playerDataState.value = Loaded
                     playerData.value = detailedPlayer.toUi()
                     // TODO: save data in preferences
                 },
                 { error ->
-                    // TODO: provide error handling
+                    playerDataState.value = Error
                 }
             )
         )
@@ -94,10 +117,11 @@ class MainScreenViewModel @Inject constructor(
             .observeOn(facade.ui())
             .subscribe(
                 { punishments ->
+                    punishmentsDataState.value = Loaded
                     // TODO: process punishment list
                 },
                 { error ->
-                    // TODO: provide error handling
+                    punishmentsDataState.value = Error
                 }
             )
         )
