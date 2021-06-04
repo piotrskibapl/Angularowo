@@ -51,6 +51,8 @@ class MainScreenViewModel @Inject constructor(
                 }
             }
         }
+    // exposed for MainViewModel synchronization
+    val player = MutableLiveData<DetailedPlayer>()
     private val lastPlayerData = MainScreenPlayerData(
         preferencesRepository.username!!,
         preferencesRepository.tokens,
@@ -111,6 +113,7 @@ class MainScreenViewModel @Inject constructor(
                 { detailedPlayer ->
                     playerDataState.value = Loaded
                     playerData.value = detailedPlayer.toUi()
+                    player.value = detailedPlayer
                     savePlayer(detailedPlayer)
                 },
                 { error ->

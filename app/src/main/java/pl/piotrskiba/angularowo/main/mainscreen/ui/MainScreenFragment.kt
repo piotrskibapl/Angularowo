@@ -11,7 +11,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
@@ -33,11 +32,13 @@ import pl.piotrskiba.angularowo.IntegerVersionSignature
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.adapters.BanListAdapter
 import pl.piotrskiba.angularowo.adapters.BanListAdapter.BanViewHolder
+import pl.piotrskiba.angularowo.base.di.obtainViewModel
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.databinding.FragmentMainScreenBinding
 import pl.piotrskiba.angularowo.interfaces.BanClickListener
 import pl.piotrskiba.angularowo.interfaces.NetworkErrorListener
 import pl.piotrskiba.angularowo.main.ban.details.BanDetailsActivity
+import pl.piotrskiba.angularowo.main.base.viewmodel.MainViewModel
 import pl.piotrskiba.angularowo.main.mainscreen.viewmodel.MainScreenViewModel
 import pl.piotrskiba.angularowo.models.Ban
 import pl.piotrskiba.angularowo.models.BanList
@@ -57,6 +58,7 @@ import pl.piotrskiba.angularowo.utils.UrlUtils.buildBodyUrl
 class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel::class), BanClickListener, NetworkErrorListener {
 
     private lateinit var mViewModel: AppViewModel
+    private lateinit var mainViewModel: MainViewModel
     private lateinit var mBanListAdapter: BanListAdapter
     private lateinit var preferenceUtils: PreferenceUtils
     private var loadedServerStatus = false
@@ -102,7 +104,10 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel
         super.onCreate(savedInstanceState)
 
         mViewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
+        mainViewModel = viewModelFactory.obtainViewModel(requireActivity())
         preferenceUtils = PreferenceUtils(requireContext())
+
+        viewModel.player.observe(this, { mainViewModel.player.value = it })
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
