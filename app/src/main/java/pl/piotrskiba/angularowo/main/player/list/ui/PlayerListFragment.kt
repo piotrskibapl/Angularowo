@@ -67,6 +67,7 @@ class PlayerListFragment : BaseFragment<PlayerListViewModel>(PlayerListViewModel
     ): FragmentPlayerListBinding {
         val binding: FragmentPlayerListBinding =
             DataBindingUtil.inflate(layoutInflater, R.layout.fragment_player_list, container, false)
+        binding.lifecycleOwner = this
         binding.viewModel = viewModel
         return binding
     }

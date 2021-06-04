@@ -73,6 +73,7 @@ class LoginActivity : BaseActivity() {
         viewModel = viewModelFactory.obtainViewModel(this)
         val binding: ActivityLoginBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_login)
+        binding.lifecycleOwner = this
         binding.viewModel = viewModel
     }
 

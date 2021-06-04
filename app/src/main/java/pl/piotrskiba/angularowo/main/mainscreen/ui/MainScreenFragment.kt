@@ -137,6 +137,7 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel
     ): FragmentMainScreenBinding {
         val binding: FragmentMainScreenBinding =
             DataBindingUtil.inflate(layoutInflater, R.layout.fragment_main_screen, container, false)
+        binding.lifecycleOwner = this
         binding.viewModel = viewModel
         return binding
     }
