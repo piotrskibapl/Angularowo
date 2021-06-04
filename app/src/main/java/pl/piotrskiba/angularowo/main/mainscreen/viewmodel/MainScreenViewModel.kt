@@ -12,6 +12,7 @@ import pl.piotrskiba.angularowo.base.model.ViewModelState.Loading
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
+import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayer
 import pl.piotrskiba.angularowo.domain.player.usecase.GetPlayerDetailsFromUuidUseCase
 import pl.piotrskiba.angularowo.domain.punishment.usecase.GetActivePlayerPunishmentsUseCase
 import pl.piotrskiba.angularowo.domain.server.usecase.GetServerStatusUseCase
@@ -110,13 +111,21 @@ class MainScreenViewModel @Inject constructor(
                 { detailedPlayer ->
                     playerDataState.value = Loaded
                     playerData.value = detailedPlayer.toUi()
-                    // TODO: save data in preferences
+                    savePlayer(detailedPlayer)
                 },
                 { error ->
                     playerDataState.value = Error(error)
                 }
             )
         )
+    }
+
+    private fun savePlayer(player: DetailedPlayer) {
+        preferencesRepository.skinUuid = player.skinUuid
+        preferencesRepository.username = player.username
+        preferencesRepository.balance = player.balance
+        preferencesRepository.tokens = player.tokens
+        preferencesRepository.playtime = player.playtime
     }
 
     private fun loadActivePunishments() {
