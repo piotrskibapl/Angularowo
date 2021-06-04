@@ -15,6 +15,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,6 +34,7 @@ import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.adapters.BanListAdapter
 import pl.piotrskiba.angularowo.adapters.BanListAdapter.BanViewHolder
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
+import pl.piotrskiba.angularowo.databinding.FragmentMainScreenBinding
 import pl.piotrskiba.angularowo.interfaces.BanClickListener
 import pl.piotrskiba.angularowo.interfaces.NetworkErrorListener
 import pl.piotrskiba.angularowo.main.ban.details.BanDetailsActivity
@@ -110,7 +112,8 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_main_screen, container, false)
+        val binding = bindViewModel(layoutInflater, container)
+        val view = binding.root
 
         ButterKnife.bind(this, view)
 
@@ -132,6 +135,16 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel
         seekForLastPlayerBans()
 
         return view
+    }
+
+    private fun bindViewModel(
+        layoutInflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentMainScreenBinding {
+        val binding: FragmentMainScreenBinding =
+            DataBindingUtil.inflate(layoutInflater, R.layout.fragment_main_screen, container, false)
+        binding.viewModel = viewModel
+        return binding
     }
 
     private fun populateUi() {

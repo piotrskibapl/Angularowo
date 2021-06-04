@@ -1,5 +1,6 @@
 package pl.piotrskiba.angularowo.main.mainscreen.viewmodel
 
+import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import pl.piotrskiba.angularowo.BuildConfig
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
@@ -8,6 +9,8 @@ import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRe
 import pl.piotrskiba.angularowo.domain.player.usecase.GetPlayerDetailsFromUuidUseCase
 import pl.piotrskiba.angularowo.domain.punishment.usecase.GetActivePlayerPunishmentsUseCase
 import pl.piotrskiba.angularowo.domain.server.usecase.GetServerStatusUseCase
+import pl.piotrskiba.angularowo.main.mainscreen.model.MainScreenPlayerData
+import pl.piotrskiba.angularowo.main.mainscreen.model.toUi
 import javax.inject.Inject
 
 class MainScreenViewModel @Inject constructor(
@@ -18,6 +21,14 @@ class MainScreenViewModel @Inject constructor(
     private val facade: SchedulersProvider
 ) : LifecycleViewModel() {
 
+    private val lastPlayerData = MainScreenPlayerData(
+        preferencesRepository.username!!,
+        preferencesRepository.tokens,
+        preferencesRepository.balance,
+        preferencesRepository.skinUuid!!,
+        preferencesRepository.playtime
+    )
+    val playerData = MutableLiveData(lastPlayerData)
     private val disposables = CompositeDisposable()
 
     override fun onFirstCreate() {
@@ -60,7 +71,8 @@ class MainScreenViewModel @Inject constructor(
             .observeOn(facade.ui())
             .subscribe(
                 { detailedPlayer ->
-                    // TODO: process player
+                    playerData.value = detailedPlayer.toUi()
+                    // TODO: save data in preferences
                 },
                 { error ->
                     // TODO: provide error handling
