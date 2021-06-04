@@ -55,16 +55,21 @@ class MainScreenViewModel @Inject constructor(
     private val disposables = CompositeDisposable()
 
     override fun onFirstCreate() {
-        loadServerStatus()
-        loadPlayer()
-        loadActivePunishments()
+        onRefresh()
     }
 
     override fun onCleared() {
         disposables.clear()
     }
 
+    fun onRefresh() {
+        loadServerStatus()
+        loadPlayer()
+        loadActivePunishments()
+    }
+
     private fun loadServerStatus() {
+        serverDataState.value = Loading
         disposables.add(getServerStatusUseCase
             .execute(
                 BuildConfig.API_KEY,
@@ -85,6 +90,7 @@ class MainScreenViewModel @Inject constructor(
     }
 
     private fun loadPlayer() {
+        playerDataState.value = Loading
         disposables.add(getPlayerDetailsFromUuidUseCase
             .execute(
                 BuildConfig.API_KEY,
@@ -107,6 +113,7 @@ class MainScreenViewModel @Inject constructor(
     }
 
     private fun loadActivePunishments() {
+        punishmentsDataState.value = Loading
         disposables.add(getActivePlayerPunishmentsUseCase
             .execute(
                 BuildConfig.API_KEY,
