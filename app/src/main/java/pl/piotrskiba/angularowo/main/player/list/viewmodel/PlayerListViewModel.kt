@@ -67,7 +67,7 @@ class PlayerListViewModel @Inject constructor(
                 },
                 { error ->
                     Log.d("asdasd", error.toString())
-                    state.value = Error
+                    state.value = Error(error)
                     // TODO: provide error handling
                 }
             )

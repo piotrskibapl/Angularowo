@@ -35,9 +35,16 @@ class MainScreenViewModel @Inject constructor(
         .zipTo(serverDataState)
         .zipTo(punishmentsDataState)
         .map { state ->
-            when (state.first.first == Error || state.first.second == Error || state.second == Error) {
-                true -> Error
-                false -> when (state.first.first == Loading || state.first.second == Loading || state.second == Loading) {
+            val errorState = state.first.first as? Error
+                ?: state.first.second as? Error
+                ?: state.second as? Error
+            val loadingState = state.first.first as? Loading
+                ?: state.first.second as? Loading
+                ?: state.second as? Loading
+
+            when (errorState != null) {
+                true -> errorState
+                false -> when (loadingState != null) {
                     true -> Loading
                     false -> Loaded
                 }
@@ -83,7 +90,7 @@ class MainScreenViewModel @Inject constructor(
                     serverData.value = serverStatus.toUi()
                 },
                 { error ->
-                    serverDataState.value = Error
+                    serverDataState.value = Error(error)
                 }
             )
         )
@@ -106,7 +113,7 @@ class MainScreenViewModel @Inject constructor(
                     // TODO: save data in preferences
                 },
                 { error ->
-                    playerDataState.value = Error
+                    playerDataState.value = Error(error)
                 }
             )
         )
@@ -128,7 +135,7 @@ class MainScreenViewModel @Inject constructor(
                     // TODO: process punishment list
                 },
                 { error ->
-                    punishmentsDataState.value = Error
+                    punishmentsDataState.value = Error(error)
                 }
             )
         )
