@@ -1,10 +1,91 @@
 package pl.piotrskiba.angularowo.main.mainscreen.viewmodel
 
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import pl.piotrskiba.angularowo.BuildConfig
+import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
+import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
+import pl.piotrskiba.angularowo.domain.player.usecase.GetPlayerDetailsFromUuidUseCase
+import pl.piotrskiba.angularowo.domain.punishment.usecase.GetActivePlayerPunishmentsUseCase
+import pl.piotrskiba.angularowo.domain.server.usecase.GetServerStatusUseCase
 import javax.inject.Inject
 
-class MainScreenViewModel @Inject constructor() : LifecycleViewModel() {
+class MainScreenViewModel @Inject constructor(
+    private val getServerStatusUseCase: GetServerStatusUseCase,
+    private val getPlayerDetailsFromUuidUseCase: GetPlayerDetailsFromUuidUseCase,
+    private val getActivePlayerPunishmentsUseCase: GetActivePlayerPunishmentsUseCase,
+    private val preferencesRepository: PreferencesRepository,
+    private val facade: SchedulersProvider
+) : LifecycleViewModel() {
+
+    private val disposables = CompositeDisposable()
 
     override fun onFirstCreate() {
+        loadServerStatus()
+        loadPlayer()
+        loadActivePunishments()
+    }
+
+    override fun onCleared() {
+        disposables.clear()
+    }
+
+    private fun loadServerStatus() {
+        disposables.add(getServerStatusUseCase
+            .execute(
+                BuildConfig.API_KEY,
+                preferencesRepository.accessToken!!
+            )
+            .subscribeOn(facade.io())
+            .observeOn(facade.ui())
+            .subscribe(
+                { serverStatus ->
+                    // TODO: process server status
+                },
+                { error ->
+                    // TODO: provide error handling
+                }
+            )
+        )
+    }
+
+    private fun loadPlayer() {
+        disposables.add(getPlayerDetailsFromUuidUseCase
+            .execute(
+                BuildConfig.API_KEY,
+                preferencesRepository.accessToken!!,
+                preferencesRepository.uuid!!
+            )
+            .subscribeOn(facade.io())
+            .observeOn(facade.ui())
+            .subscribe(
+                { detailedPlayer ->
+                    // TODO: process player
+                },
+                { error ->
+                    // TODO: provide error handling
+                }
+            )
+        )
+    }
+
+    private fun loadActivePunishments() {
+        disposables.add(getActivePlayerPunishmentsUseCase
+            .execute(
+                BuildConfig.API_KEY,
+                preferencesRepository.accessToken!!,
+                preferencesRepository.username!!
+            )
+            .subscribeOn(facade.io())
+            .observeOn(facade.ui())
+            .subscribe(
+                { punishments ->
+                    // TODO: process punishment list
+                },
+                { error ->
+                    // TODO: provide error handling
+                }
+            )
+        )
     }
 }
