@@ -186,9 +186,10 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <include layout="@layout/no_internet_layout" />
-
-                <include layout="@layout/server_error_layout" />
+                <include
+                    android:id="@+id/errorLayout"
+                    layout="@layout/error_layout"
+                    app:state="@{viewModel.state}" />
             </FrameLayout>
         </ScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

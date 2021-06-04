@@ -98,12 +98,6 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel
     @BindView(R.id.default_layout)
     lateinit var mDefaultLayout: View
 
-    @BindView(R.id.no_internet_layout)
-    lateinit var mNoInternetLayout: LinearLayout
-
-    @BindView(R.id.server_error_layout)
-    lateinit var mServerErrorLayout: LinearLayout
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -374,22 +368,16 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel
 
     private fun showDefaultLayout() {
         mDefaultLayout.visibility = View.VISIBLE
-        mNoInternetLayout.visibility = View.GONE
-        mServerErrorLayout.visibility = View.GONE
     }
 
     private fun showNoInternetLayout() {
         mSwipeRefreshLayout.isRefreshing = false
         mDefaultLayout.visibility = View.GONE
-        mNoInternetLayout.visibility = View.VISIBLE
-        mServerErrorLayout.visibility = View.GONE
     }
 
     private fun showServerErrorLayout() {
         mSwipeRefreshLayout.isRefreshing = false
         mDefaultLayout.visibility = View.GONE
-        mNoInternetLayout.visibility = View.GONE
-        mServerErrorLayout.visibility = View.VISIBLE
     }
 
     private fun showLastBans() {
