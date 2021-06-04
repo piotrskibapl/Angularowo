@@ -47,7 +47,7 @@ class MainScreenViewModel @Inject constructor(
         preferencesRepository.username!!,
         preferencesRepository.tokens,
         preferencesRepository.balance,
-        preferencesRepository.skinUuid!!,
+        preferencesRepository.skinUuid ?: preferencesRepository.uuid!!,
         preferencesRepository.playtime
     )
     val playerData = MutableLiveData(lastPlayerData)
