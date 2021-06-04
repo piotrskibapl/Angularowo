@@ -10,6 +10,7 @@ import pl.piotrskiba.angularowo.BR
 import pl.piotrskiba.angularowo.BuildConfig
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.model.ViewModelState
+import pl.piotrskiba.angularowo.base.model.ViewModelState.Error
 import pl.piotrskiba.angularowo.base.model.ViewModelState.Loaded
 import pl.piotrskiba.angularowo.base.model.ViewModelState.Loading
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
@@ -42,6 +43,15 @@ class PlayerListViewModel @Inject constructor(
     }
 
     override fun onFirstCreate() {
+        onRefresh()
+    }
+
+    fun onRefresh() {
+        loadPlayerList()
+    }
+
+    private fun loadPlayerList() {
+        state.value = Loading
         disposables.add(getOnlinePlayerListUseCase
             .execute(BuildConfig.API_KEY, preferencesRepository.accessToken!!)
             .subscribeOn(facade.io())
@@ -57,6 +67,7 @@ class PlayerListViewModel @Inject constructor(
                 },
                 { error ->
                     Log.d("asdasd", error.toString())
+                    state.value = Error
                     // TODO: provide error handling
                 }
             )
