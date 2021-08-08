@@ -5,6 +5,7 @@ import androidx.annotation.ColorRes
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.domain.player.model.Player
 import pl.piotrskiba.angularowo.utils.UrlUtils
+import java.io.Serializable
 
 private const val COLOR_CODE_RES_PREFIX = "color_minecraft_"
 
@@ -14,7 +15,7 @@ data class PlayerBannerData(
     val rankName: String,
     val isVanished: Boolean,
     private val rankColorCode: String
-) {
+) : Serializable {
 
     @ColorRes
     fun rankColorResId(context: Context): Int {
