@@ -1,20 +1,16 @@
 package pl.piotrskiba.angularowo.main.player.details.ui
 
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
-import android.text.InputType
-import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
@@ -23,25 +19,18 @@ import butterknife.ButterKnife
 import com.bumptech.glide.Glide
 import com.github.florent37.tutoshowcase.TutoShowcase
 import com.google.android.material.snackbar.Snackbar
-import pl.piotrskiba.angularowo.*
+import pl.piotrskiba.angularowo.AppViewModel
+import pl.piotrskiba.angularowo.Constants
+import pl.piotrskiba.angularowo.IntegerVersionSignature
+import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.ui.OldBaseActivity
-import pl.piotrskiba.angularowo.database.entity.Friend
-import pl.piotrskiba.angularowo.layouts.TimeAmountPickerView
-import pl.piotrskiba.angularowo.models.DetailedPlayer
-import pl.piotrskiba.angularowo.models.Player
-import pl.piotrskiba.angularowo.network.ServerAPIClient
-import pl.piotrskiba.angularowo.network.ServerAPIClient.retrofitInstance
-import pl.piotrskiba.angularowo.network.ServerAPIInterface
-import pl.piotrskiba.angularowo.utils.AnalyticsUtils
-import pl.piotrskiba.angularowo.utils.ColorUtils.getColorFromCode
+import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayer
+import pl.piotrskiba.angularowo.main.player.model.PlayerBannerData
 import pl.piotrskiba.angularowo.utils.GlideUtils.getSignatureVersionNumber
 import pl.piotrskiba.angularowo.utils.PreferenceUtils
 import pl.piotrskiba.angularowo.utils.TextUtils.formatPlaytime
 import pl.piotrskiba.angularowo.utils.UrlUtils.buildAvatarUrl
 import pl.piotrskiba.angularowo.utils.UrlUtils.buildBodyUrl
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class PlayerDetailsActivity : OldBaseActivity(), OnRefreshListener {
 
@@ -88,7 +77,7 @@ class PlayerDetailsActivity : OldBaseActivity(), OnRefreshListener {
 
     private lateinit var mViewModel: AppViewModel
     private lateinit var mPlayer: DetailedPlayer
-    private lateinit var mPreviewedPlayer: Player
+    private lateinit var mPreviewedPlayer: PlayerBannerData
 
     private var snackbar: Snackbar? = null
     private var punishReason: String = ""
@@ -112,7 +101,7 @@ class PlayerDetailsActivity : OldBaseActivity(), OnRefreshListener {
         }
 
         if (intent.hasExtra(Constants.EXTRA_PREVIEWED_PLAYER)) {
-            mPreviewedPlayer = intent.getSerializableExtra(Constants.EXTRA_PREVIEWED_PLAYER) as Player
+            mPreviewedPlayer = intent.getSerializableExtra(Constants.EXTRA_PREVIEWED_PLAYER) as PlayerBannerData
 
             populatePlayer(mPreviewedPlayer)
             loadDetailedPlayerData(mPreviewedPlayer)
@@ -123,7 +112,8 @@ class PlayerDetailsActivity : OldBaseActivity(), OnRefreshListener {
         mViewModel.allFriends.observe(this, {
             invalidateOptionsMenu()
 
-            if (mPlayer.partnerUuid == mPreviewedPlayer.uuid) {
+            // TODO: show favorite & married icons
+            /*if (mPlayer.partnerUuid == mPreviewedPlayer.uuid) {
                 mPlayerMarriedIcon.visibility = View.VISIBLE
             } else {
                 mPlayerMarriedIcon.visibility = View.GONE
@@ -134,11 +124,13 @@ class PlayerDetailsActivity : OldBaseActivity(), OnRefreshListener {
                 } else {
                     mPlayerFavoriteIcon.visibility = View.GONE
                 }
-            }
+            }*/
         })
     }
 
-    private fun loadDetailedPlayerData(player: Player) {
+    private fun loadDetailedPlayerData(player: PlayerBannerData) {
+        // TODO: load detailed data
+        /*
         mSwipeRefreshLayout.isRefreshing = true
 
         val accessToken = preferenceUtils.accessToken
@@ -159,10 +151,10 @@ class PlayerDetailsActivity : OldBaseActivity(), OnRefreshListener {
                     t.printStackTrace()
                 }
             })
-        }
+        }*/
     }
 
-    private fun populatePlayer(player: Player) {
+    private fun populatePlayer(player: PlayerBannerData) {
         var canPopulate = !isFinishing
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             canPopulate = !isFinishing && !isDestroyed
@@ -182,10 +174,10 @@ class PlayerDetailsActivity : OldBaseActivity(), OnRefreshListener {
                     .into(mPlayerBodyImageView)
 
             mPlayerName.text = player.username
-            mPlayerRank.text = player.rank.name
+            mPlayerRank.text = player.rankName
 
-            val color = getColorFromCode(this, player.rank.colorCode)
-            (mPlayerAvatar.parent as ConstraintLayout).setBackgroundColor(color)
+            val color = player.rankColorResId(this)
+            (mPlayerAvatar.parent as ConstraintLayout).setBackgroundColor(ContextCompat.getColor(this, color))
 
             if (player.isVanished)
                 mPlayerVanishIcon.visibility = View.VISIBLE
@@ -195,12 +187,11 @@ class PlayerDetailsActivity : OldBaseActivity(), OnRefreshListener {
     }
 
     private fun populatePlayer(detailedPlayer: DetailedPlayer) {
-        val player = Player(detailedPlayer.uuid,
-                detailedPlayer.skinUuid,
-                detailedPlayer.partnerUuid,
+        val player = PlayerBannerData(detailedPlayer.skinUuid,
                 detailedPlayer.username,
                 detailedPlayer.rank.name,
-                detailedPlayer.isVanished)
+                detailedPlayer.isVanished,
+                detailedPlayer.rank.colorCode)
         populatePlayer(player)
 
         mPlayerBalanceTextView.text = getString(R.string.balance_format, detailedPlayer.balance.toInt())
@@ -225,13 +216,14 @@ class PlayerDetailsActivity : OldBaseActivity(), OnRefreshListener {
 
     override fun onRefresh() {
         if (intent.hasExtra(Constants.EXTRA_PREVIEWED_PLAYER)) {
-            val player = intent.getSerializableExtra(Constants.EXTRA_PREVIEWED_PLAYER) as Player
+            val player = intent.getSerializableExtra(Constants.EXTRA_PREVIEWED_PLAYER) as PlayerBannerData
             loadDetailedPlayerData(player)
         }
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        val friends = mViewModel.allFriends.value
+        // TODO: show favorite icon
+        /*val friends = mViewModel.allFriends.value
         if (mPreviewedPlayer.username != preferenceUtils.username && mPlayer.partnerUuid != mPreviewedPlayer.uuid) {
             if (friends != null && friends.contains(Friend(mPreviewedPlayer.uuid))) {
                 menu?.findItem(R.id.nav_favorite)?.isVisible = false
@@ -243,14 +235,15 @@ class PlayerDetailsActivity : OldBaseActivity(), OnRefreshListener {
         } else {
             menu?.findItem(R.id.nav_favorite)?.isVisible = false
             menu?.findItem(R.id.nav_unfavorite)?.isVisible = false
-        }
+        }*/
 
-        if (this::mPlayer.isInitialized) {
+        // TODO: set menu items visibility based on permissions
+        /*if (this::mPlayer.isInitialized) {
             menu?.findItem(R.id.nav_mute)?.isVisible = mPlayer.hasPermission(Permissions.MUTE_PLAYERS)
             menu?.findItem(R.id.nav_kick)?.isVisible = mPlayer.hasPermission(Permissions.KICK_PLAYERS)
             menu?.findItem(R.id.nav_warn)?.isVisible = mPlayer.hasPermission(Permissions.WARN_PLAYERS)
             menu?.findItem(R.id.nav_ban)?.isVisible = mPlayer.hasPermission(Permissions.BAN_PLAYERS)
-        }
+        }*/
 
         return super.onPrepareOptionsMenu(menu)
     }
@@ -261,6 +254,7 @@ class PlayerDetailsActivity : OldBaseActivity(), OnRefreshListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // TODO: handle punishments
         when (item.itemId) {
             android.R.id.home -> {
                 supportFinishAfterTransition()
@@ -273,23 +267,24 @@ class PlayerDetailsActivity : OldBaseActivity(), OnRefreshListener {
                 onUnfavorite()
             }
             R.id.nav_mute -> {
-                onMute()
+                // onMute()
             }
             R.id.nav_kick -> {
-                onKick()
+                // onKick()
             }
             R.id.nav_warn -> {
-                onWarn()
+                // onWarn()
             }
             R.id.nav_ban -> {
-                onBan()
+                // onBan()
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
     private fun onFavorite() {
-        mViewModel.insertFriend(Friend(mPreviewedPlayer.uuid))
+        // TODO: handle marking player as favorite
+        /*mViewModel.insertFriend(Friend(mPreviewedPlayer.uuid))
 
         snackbar?.dismiss()
         snackbar = Snackbar.make(mCoordinatorLayout, getString(R.string.marked_as_favorite), Snackbar.LENGTH_SHORT)
@@ -300,11 +295,12 @@ class PlayerDetailsActivity : OldBaseActivity(), OnRefreshListener {
                 preferenceUtils.username ?: "",
                 mPreviewedPlayer.uuid,
                 mPreviewedPlayer.username
-        )
+        )*/
     }
 
     private fun onUnfavorite() {
-        mViewModel.deleteFriend(Friend(mPreviewedPlayer.uuid))
+        // TODO: handle unmarking player as favorite
+        /*mViewModel.deleteFriend(Friend(mPreviewedPlayer.uuid))
 
         snackbar?.dismiss()
         snackbar = Snackbar.make(mCoordinatorLayout, getString(R.string.unmarked_as_favorite), Snackbar.LENGTH_SHORT)
@@ -316,8 +312,11 @@ class PlayerDetailsActivity : OldBaseActivity(), OnRefreshListener {
                 mPreviewedPlayer.uuid,
                 mPreviewedPlayer.username
         )
+        */
     }
 
+    // TODO: handle punishments
+    /*
     private fun onMute() {
         showReasonDialog(
                 getString(R.string.dialog_mute_reason_title),
@@ -529,5 +528,5 @@ class PlayerDetailsActivity : OldBaseActivity(), OnRefreshListener {
                 .setMessage(getString(R.string.dialog_error_description))
                 .setPositiveButton(R.string.button_dismiss, null)
                 .show()
-    }
+    }*/
 }
