@@ -16,7 +16,6 @@ import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.databinding.FragmentPlayerListBinding
 import pl.piotrskiba.angularowo.main.base.viewmodel.MainViewModel
 import pl.piotrskiba.angularowo.main.player.details.ui.PlayerDetailsActivity
-import pl.piotrskiba.angularowo.main.player.details.ui.PlayerDetailsFragment
 import pl.piotrskiba.angularowo.main.player.list.nav.PlayerListNavigator
 import pl.piotrskiba.angularowo.main.player.list.viewmodel.PlayerListViewModel
 import pl.piotrskiba.angularowo.main.player.model.PlayerBannerData
@@ -27,9 +26,9 @@ class PlayerListFragment : BaseFragment<PlayerListViewModel>(PlayerListViewModel
     private lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         viewModel.navigator = this
         mainViewModel = viewModelFactory.obtainViewModel(requireActivity())
+        super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(
@@ -45,11 +44,6 @@ class PlayerListFragment : BaseFragment<PlayerListViewModel>(PlayerListViewModel
         val actionbar = (activity as AppCompatActivity?)?.supportActionBar
         actionbar?.setTitle(R.string.actionbar_title_player_list)
         return view
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        viewModel.navigator = null
     }
 
     override fun onPlayerClick(player: PlayerBannerData) {

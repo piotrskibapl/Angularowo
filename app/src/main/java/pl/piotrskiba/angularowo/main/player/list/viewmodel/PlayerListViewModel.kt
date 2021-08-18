@@ -31,18 +31,15 @@ class PlayerListViewModel @Inject constructor(
     val state = MutableLiveData<ViewModelState>(Loading)
     val players: ObservableList<PlayerBannerData> = ObservableArrayList()
     val playersBinding = ItemBinding.of<PlayerBannerData>(BR.player, R.layout.player_list_item)
-    var navigator: PlayerListNavigator? = null
+    lateinit var navigator: PlayerListNavigator
     private val disposables = CompositeDisposable()
-
-    init {
-        playersBinding.bindExtra(BR.viewModel, this)
-    }
 
     override fun onCleared() {
         disposables.clear()
     }
 
     override fun onFirstCreate() {
+        playersBinding.bindExtra(BR.navigator, navigator)
         onRefresh()
     }
 
@@ -72,9 +69,5 @@ class PlayerListViewModel @Inject constructor(
                 }
             )
         )
-    }
-
-    fun onPlayerClick(player: PlayerBannerData) {
-        navigator?.onPlayerClick(player)
     }
 }
