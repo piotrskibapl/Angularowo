@@ -18,7 +18,7 @@ import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRe
 import pl.piotrskiba.angularowo.domain.player.usecase.GetOnlinePlayerListUseCase
 import pl.piotrskiba.angularowo.main.player.list.nav.PlayerListNavigator
 import pl.piotrskiba.angularowo.main.player.model.PlayerBannerData
-import pl.piotrskiba.angularowo.main.player.model.toUi
+import pl.piotrskiba.angularowo.main.player.model.toPlayerBannerData
 import javax.inject.Inject
 
 class PlayerListViewModel @Inject constructor(
@@ -54,7 +54,7 @@ class PlayerListViewModel @Inject constructor(
             .observeOn(facade.ui())
             .subscribe(
                 { playerList ->
-                    val bannerList = playerList.map { it.toUi() }
+                    val bannerList = playerList.map { it.toPlayerBannerData() }
                     state.value = Loaded
                     // TODO: use DiffObservableList
                     players.clear()
