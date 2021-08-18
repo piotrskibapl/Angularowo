@@ -54,6 +54,7 @@ class PlayerListFragment : BaseFragment<PlayerListViewModel>(PlayerListViewModel
 
     override fun onPlayerClick(player: PlayerBannerData) {
         val intent = Intent(context, PlayerDetailsActivity::class.java)
+        intent.putExtra(Constants.EXTRA_PREVIEWED_PLAYER, player)
         when (activity) {
             null -> startActivity(intent)
             else -> {

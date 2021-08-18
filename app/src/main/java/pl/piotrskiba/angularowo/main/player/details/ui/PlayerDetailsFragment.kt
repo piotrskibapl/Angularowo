@@ -9,10 +9,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import pl.piotrskiba.angularowo.AppViewModel
+import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.databinding.FragmentPlayerDetailsBinding
 import pl.piotrskiba.angularowo.main.player.details.viewmodel.PlayerDetailsViewModel
+import pl.piotrskiba.angularowo.main.player.model.PlayerBannerData
 import pl.piotrskiba.angularowo.utils.PreferenceUtils
 
 class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetailsViewModel::class) {
@@ -22,9 +24,15 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
     private lateinit var mViewModel: AppViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         mViewModel = ViewModelProvider(this).get(AppViewModel::class.java)
         preferenceUtils = PreferenceUtils(requireActivity())
+        loadArguments()
+        super.onCreate(savedInstanceState)
+    }
+
+    private fun loadArguments() {
+        val previewedPlayer = requireArguments().getSerializable(Constants.EXTRA_PREVIEWED_PLAYER) as PlayerBannerData
+        viewModel.previewedPlayer = previewedPlayer
     }
 
     override fun onCreateView(
