@@ -21,7 +21,7 @@ import okio.ByteString
 import pl.piotrskiba.angularowo.AppViewModel
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
-import pl.piotrskiba.angularowo.main.player.details.ui.PlayerDetailsActivity
+import pl.piotrskiba.angularowo.main.player.details.ui.PlayerDetailsFragment
 import pl.piotrskiba.angularowo.adapters.ChatAdapter
 import pl.piotrskiba.angularowo.base.ui.OldBaseFragment
 import pl.piotrskiba.angularowo.interfaces.ChatMessageClickListener
@@ -174,7 +174,7 @@ class ChatFragment : OldBaseFragment(), ChatMessageClickListener {
     }
 
     override fun onChatMessageClick(view: View, clickedChatMessage: ChatMessage) {
-        val intent = Intent(context, PlayerDetailsActivity::class.java)
+        val intent = Intent(context, PlayerDetailsFragment::class.java)
         intent.putExtra(Constants.EXTRA_PLAYER, mViewModel.getPlayer().value)
         intent.putExtra(Constants.EXTRA_PREVIEWED_PLAYER,
                 Player(
