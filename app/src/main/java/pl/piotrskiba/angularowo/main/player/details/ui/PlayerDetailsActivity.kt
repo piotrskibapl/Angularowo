@@ -8,6 +8,7 @@ import butterknife.ButterKnife
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.ui.BaseActivity
+import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayer
 import pl.piotrskiba.angularowo.main.player.model.PlayerBannerData
 
 class PlayerDetailsActivity : BaseActivity() {
@@ -15,6 +16,7 @@ class PlayerDetailsActivity : BaseActivity() {
     @BindView(R.id.toolbar)
     lateinit var mToolbar: Toolbar
 
+    private lateinit var player: DetailedPlayer
     private lateinit var previewedPlayer: PlayerBannerData
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,6 +37,7 @@ class PlayerDetailsActivity : BaseActivity() {
     }
 
     private fun loadArguments() {
+        player = intent.getSerializableExtra(Constants.EXTRA_PLAYER) as DetailedPlayer
         previewedPlayer = intent.getSerializableExtra(Constants.EXTRA_PREVIEWED_PLAYER) as PlayerBannerData
     }
 
@@ -48,6 +51,7 @@ class PlayerDetailsActivity : BaseActivity() {
     private fun setupMainFragment() {
         val playerDetailsFragment = PlayerDetailsFragment()
         val bundle = Bundle()
+        bundle.putSerializable(Constants.EXTRA_PLAYER, player)
         bundle.putSerializable(Constants.EXTRA_PREVIEWED_PLAYER, previewedPlayer)
         playerDetailsFragment.arguments = bundle
         supportFragmentManager.beginTransaction()

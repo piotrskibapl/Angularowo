@@ -12,6 +12,7 @@ import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.di.obtainViewModel
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.databinding.FragmentPlayerDetailsBinding
+import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayer
 import pl.piotrskiba.angularowo.main.base.viewmodel.MainViewModel
 import pl.piotrskiba.angularowo.main.player.details.viewmodel.PlayerDetailsViewModel
 import pl.piotrskiba.angularowo.main.player.model.PlayerBannerData
@@ -26,7 +27,6 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
         mainViewModel = viewModelFactory.obtainViewModel(requireActivity())
         preferenceUtils = PreferenceUtils(requireActivity())
         loadArguments()
-        observePlayer()
         super.onCreate(savedInstanceState)
     }
 
@@ -46,14 +46,10 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
         return view
     }
 
-    private fun observePlayer() {
-        mainViewModel.player.observe(viewLifecycleOwner, {
-            viewModel.player = it
-        })
-    }
-
     private fun loadArguments() {
+        val player = requireArguments().getSerializable(Constants.EXTRA_PLAYER) as DetailedPlayer
         val previewedPlayer = requireArguments().getSerializable(Constants.EXTRA_PREVIEWED_PLAYER) as PlayerBannerData
+        viewModel.player = player
         viewModel.previewedPlayer = previewedPlayer
     }
 
