@@ -30,11 +30,6 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
         super.onCreate(savedInstanceState)
     }
 
-    private fun loadArguments() {
-        val previewedPlayer = requireArguments().getSerializable(Constants.EXTRA_PREVIEWED_PLAYER) as PlayerBannerData
-        viewModel.previewedPlayer = previewedPlayer
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -49,6 +44,11 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
         actionbar?.setDisplayShowHomeEnabled(true)
 
         return view
+    }
+
+    private fun loadArguments() {
+        val previewedPlayer = requireArguments().getSerializable(Constants.EXTRA_PREVIEWED_PLAYER) as PlayerBannerData
+        viewModel.previewedPlayer = previewedPlayer
     }
 
     private fun bindViewModel(
