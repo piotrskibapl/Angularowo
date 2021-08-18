@@ -16,9 +16,10 @@ import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayer
 import pl.piotrskiba.angularowo.domain.player.usecase.GetPlayerDetailsFromUuidUseCase
 import pl.piotrskiba.angularowo.domain.punishment.usecase.GetActivePlayerPunishmentsUseCase
 import pl.piotrskiba.angularowo.domain.server.usecase.GetServerStatusUseCase
-import pl.piotrskiba.angularowo.main.mainscreen.model.MainScreenPlayerData
 import pl.piotrskiba.angularowo.main.mainscreen.model.MainScreenServerData
 import pl.piotrskiba.angularowo.main.mainscreen.model.toUi
+import pl.piotrskiba.angularowo.main.player.details.model.DetailedPlayerData
+import pl.piotrskiba.angularowo.main.player.details.model.toUi
 import javax.inject.Inject
 
 class MainScreenViewModel @Inject constructor(
@@ -53,7 +54,7 @@ class MainScreenViewModel @Inject constructor(
         }
     // exposed for MainViewModel synchronization
     val player = MutableLiveData<DetailedPlayer>()
-    private val lastPlayerData = MainScreenPlayerData(
+    private val lastPlayerData = DetailedPlayerData(
         preferencesRepository.username!!,
         preferencesRepository.tokens,
         preferencesRepository.balance,

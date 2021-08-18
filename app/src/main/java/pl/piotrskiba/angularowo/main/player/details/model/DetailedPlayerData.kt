@@ -1,4 +1,4 @@
-package pl.piotrskiba.angularowo.main.mainscreen.model
+package pl.piotrskiba.angularowo.main.player.details.model
 
 import android.content.Context
 import pl.piotrskiba.angularowo.R
@@ -7,7 +7,7 @@ import pl.piotrskiba.angularowo.utils.TextUtils
 import pl.piotrskiba.angularowo.utils.UrlUtils
 import java.text.NumberFormat
 
-data class MainScreenPlayerData(
+data class DetailedPlayerData(
     val username: String,
     private val tokens: Int,
     private val balance: Float,
@@ -26,7 +26,7 @@ data class MainScreenPlayerData(
     fun playtimeText(context: Context) = TextUtils.formatPlaytime(context, playtime)
 }
 
-fun DetailedPlayer.toUi() = MainScreenPlayerData(
+fun DetailedPlayer.toUi() = DetailedPlayerData(
     username,
     tokens,
     balance,
