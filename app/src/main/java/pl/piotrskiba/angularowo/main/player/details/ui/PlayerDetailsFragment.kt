@@ -87,6 +87,14 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
                 requireActivity().supportFinishAfterTransition()
                 return true
             }
+            R.id.nav_favorite -> {
+                viewModel.onFavoriteClick()
+                return true
+            }
+            R.id.nav_unfavorite -> {
+                viewModel.onUnfavoriteClick()
+                return true
+            }
         }
         return super.onOptionsItemSelected(item)
     }

@@ -35,6 +35,14 @@ class PlayerDetailsViewModel @Inject constructor(
         loadPlayerDetails()
     }
 
+    fun onFavoriteClick() {
+        // TODO: mark player as favorite
+    }
+
+    fun onUnfavoriteClick() {
+        // TODO: mark player as not favorite
+    }
+
     private fun loadPlayerDetails() {
         state.value = ViewModelState.Loading
         disposables.add(getPlayerDetailsFromUuidUseCase
