@@ -46,21 +46,16 @@ class PlayerListFragment : BaseFragment<PlayerListViewModel>(PlayerListViewModel
         return view
     }
 
-    override fun onPlayerClick(player: PlayerBannerData) {
+    override fun onPlayerClick(view: View, player: PlayerBannerData) {
         val intent = Intent(context, PlayerDetailsActivity::class.java)
         intent.putExtra(Constants.EXTRA_PLAYER, mainViewModel.player.value!!)
         intent.putExtra(Constants.EXTRA_PREVIEWED_PLAYER, player)
-        when (activity) {
-            null -> startActivity(intent)
-            else -> {
-                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                    requireActivity(),
-                    requireView(),
-                    getString(R.string.player_banner_transition_name)
-                )
-                startActivity(intent, options.toBundle())
-            }
-        }
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+            requireActivity(),
+            view,
+            getString(R.string.player_banner_transition_name)
+        )
+        startActivity(intent, options.toBundle())
     }
 
     private fun bindViewModel(
