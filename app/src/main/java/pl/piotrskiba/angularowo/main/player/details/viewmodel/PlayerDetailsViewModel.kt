@@ -12,6 +12,7 @@ import pl.piotrskiba.angularowo.domain.player.usecase.GetPlayerDetailsFromUuidUs
 import pl.piotrskiba.angularowo.main.player.details.model.DetailedPlayerData
 import pl.piotrskiba.angularowo.main.player.details.model.toUi
 import pl.piotrskiba.angularowo.main.player.model.PlayerBannerData
+import pl.piotrskiba.angularowo.main.player.model.toPlayerBannerData
 import javax.inject.Inject
 
 class PlayerDetailsViewModel @Inject constructor(
@@ -21,7 +22,7 @@ class PlayerDetailsViewModel @Inject constructor(
 ) : LifecycleViewModel() {
 
     lateinit var player: DetailedPlayer
-    lateinit var previewedPlayer: PlayerBannerData
+    val previewedPlayerBanner: MutableLiveData<PlayerBannerData> = MutableLiveData()
     val previewedPlayerDetails: MutableLiveData<DetailedPlayerData> = MutableLiveData()
     val state = MutableLiveData<ViewModelState>(ViewModelState.Loading)
     private val disposables = CompositeDisposable()
@@ -43,6 +44,7 @@ class PlayerDetailsViewModel @Inject constructor(
             .subscribe(
                 { detailedPlayer ->
                     state.value = ViewModelState.Loaded
+                    previewedPlayerBanner.value = detailedPlayer.toPlayerBannerData()
                     previewedPlayerDetails.value = detailedPlayer.toUi()
                 },
                 { error ->

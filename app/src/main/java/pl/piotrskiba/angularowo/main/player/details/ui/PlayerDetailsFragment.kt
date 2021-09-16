@@ -50,7 +50,7 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
         val player = requireArguments().getSerializable(Constants.EXTRA_PLAYER) as DetailedPlayer
         val previewedPlayer = requireArguments().getSerializable(Constants.EXTRA_PREVIEWED_PLAYER) as PlayerBannerData
         viewModel.player = player
-        viewModel.previewedPlayer = previewedPlayer
+        viewModel.previewedPlayerBanner.value = previewedPlayer
     }
 
     private fun bindViewModel(
