@@ -2,6 +2,8 @@ package pl.piotrskiba.angularowo.main.player.details.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +29,7 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
         mainViewModel = viewModelFactory.obtainViewModel(requireActivity())
         preferenceUtils = PreferenceUtils(requireActivity())
         loadArguments()
+        setHasOptionsMenu(true)
         super.onCreate(savedInstanceState)
     }
 
@@ -44,6 +47,19 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
         actionbar?.setDisplayShowHomeEnabled(true)
 
         return view
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.player_details, menu)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        // TODO: hide favorite icons when previewing self or partner
+        // TODO: manage favorite icons visibility based on whether a player is marked as favorite or not
+        menu.findItem(R.id.nav_favorite)?.isVisible = true
+        menu.findItem(R.id.nav_unfavorite)?.isVisible = true
     }
 
     private fun loadArguments() {
