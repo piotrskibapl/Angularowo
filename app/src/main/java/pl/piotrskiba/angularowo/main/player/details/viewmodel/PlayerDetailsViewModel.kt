@@ -1,5 +1,6 @@
 package pl.piotrskiba.angularowo.main.player.details.viewmodel
 
+import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import pl.piotrskiba.angularowo.BuildConfig
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
@@ -20,7 +21,7 @@ class PlayerDetailsViewModel @Inject constructor(
 
     lateinit var player: DetailedPlayer
     lateinit var previewedPlayer: PlayerBannerData
-    lateinit var previewedPlayerDetails: DetailedPlayerData
+    val previewedPlayerDetails: MutableLiveData<DetailedPlayerData> = MutableLiveData()
     private val disposables = CompositeDisposable()
 
     override fun onFirstCreate() {
@@ -39,7 +40,7 @@ class PlayerDetailsViewModel @Inject constructor(
             .observeOn(facade.ui())
             .subscribe(
                 { detailedPlayer ->
-                    previewedPlayerDetails = detailedPlayer.toUi()
+                    previewedPlayerDetails.value = detailedPlayer.toUi()
                 },
                 { error ->
                     // TODO: provide error handling

@@ -3,11 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Inne/Projekty/Android Studio/Angularowo/app/src/main/res/layout-land/fragment_player_details.xml" value="0.25" />
-        <entry key="..\:/Inne/Projekty/Android Studio/Angularowo/app/src/main/res/layout-v21/player_list_item.xml" value="0.12681159420289856" />
-        <entry key="..\:/Inne/Projekty/Android Studio/Angularowo/app/src/main/res/layout/activity_main.xml" value="0.17147922998986828" />
-        <entry key="..\:/Inne/Projekty/Android Studio/Angularowo/app/src/main/res/layout/activity_player_details.xml" value="0.3070652173913043" />
-        <entry key="..\:/Inne/Projekty/Android Studio/Angularowo/app/src/main/res/layout/fragment_player_details.xml" value="0.17831813576494426" />
+        <entry key="..\:/Inne/Projekty/Android Studio/Angularowo/app/src/main/res/layout-land/fragment_main_screen.xml" value="0.13125" />
+        <entry key="..\:/Inne/Projekty/Android Studio/Angularowo/app/src/main/res/layout-land/fragment_player_details.xml" value="0.30885416666666665" />
+        <entry key="..\:/Inne/Projekty/Android Studio/Angularowo/app/src/main/res/layout/fragment_main_screen.xml" value="0.17831813576494426" />
+        <entry key="..\:/Inne/Projekty/Android Studio/Angularowo/app/src/main/res/layout/fragment_player_details.xml" value="0.26856884057971014" />
       </map>
     </option>
   </component>
@@ -57,7 +56,7 @@
       </value>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

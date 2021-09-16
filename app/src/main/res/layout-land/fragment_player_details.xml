@@ -41,7 +41,9 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/section_margin"
                         android:contentDescription="@string/player_body_image_description"
-                        android:src="@drawable/default_body" />
+                        app:imageUrl="@{viewModel.previewedPlayerDetails.bodyImageUrl()}"
+                        app:placeholderImage="@{R.drawable.default_body}"
+                        tools:src="@drawable/default_body" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -68,10 +70,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/margin_small"
+                            android:text="@{viewModel.previewedPlayerDetails.balanceText()}"
                             android:textSize="@dimen/content_text_size"
                             app:layout_constraintEnd_toEndOf="@id/tv_balance_title"
                             app:layout_constraintStart_toStartOf="@id/tv_balance_title"
-                            app:layout_constraintTop_toBottomOf="@id/tv_balance_title" />
+                            app:layout_constraintTop_toBottomOf="@id/tv_balance_title"
+                            tools:text="$1 000" />
 
                         <TextView
                             android:id="@+id/tv_tokens_title"
@@ -93,10 +97,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/margin_small"
+                            android:text="@{viewModel.previewedPlayerDetails.tokensText()}"
                             android:textSize="@dimen/content_text_size"
                             app:layout_constraintEnd_toEndOf="@id/tv_tokens_title"
                             app:layout_constraintStart_toStartOf="@id/tv_tokens_title"
-                            app:layout_constraintTop_toBottomOf="@id/tv_tokens_title" />
+                            app:layout_constraintTop_toBottomOf="@id/tv_tokens_title"
+                            tools:text="25" />
 
                         <TextView
                             android:id="@+id/tv_playtime_title"
@@ -119,11 +125,13 @@
                             android:gravity="center_horizontal"
                             android:paddingStart="@dimen/padding_default"
                             android:paddingEnd="@dimen/padding_default"
+                            android:text="@{viewModel.previewedPlayerDetails.playtimeText(context)}"
                             android:textAlignment="center"
                             android:textSize="@dimen/content_text_size"
                             app:layout_constraintEnd_toEndOf="@id/tv_playtime_title"
                             app:layout_constraintStart_toStartOf="@id/tv_playtime_title"
-                            app:layout_constraintTop_toBottomOf="@id/tv_playtime_title" />
+                            app:layout_constraintTop_toBottomOf="@id/tv_playtime_title"
+                            tools:text="3 dni, 5 godzin i 17 minut" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>

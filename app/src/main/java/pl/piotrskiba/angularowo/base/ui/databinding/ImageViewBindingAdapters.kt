@@ -10,10 +10,10 @@ import pl.piotrskiba.angularowo.utils.GlideUtils
 @BindingAdapter("imageUrl", "placeholderImage", requireAll = false)
 fun loadImage(
     view: ImageView,
-    url: String,
+    url: String?,
     @DrawableRes placeholder: Int?
 ) {
-    if (url.isNotEmpty()) {
+    if (!url.isNullOrEmpty()) {
         Glide.with(view.context)
             .load(url)
             .signature(IntegerVersionSignature(GlideUtils.getSignatureVersionNumber(5)))
