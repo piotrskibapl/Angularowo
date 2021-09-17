@@ -11,6 +11,7 @@ import java.io.Serializable
 private const val COLOR_CODE_RES_PREFIX = "color_minecraft_"
 
 data class PlayerBannerData(
+    val uuid: String,
     val skinUuid: String,
     val username: String,
     val rankName: String,
@@ -35,6 +36,7 @@ data class PlayerBannerData(
 }
 
 fun Player.toPlayerBannerData() = PlayerBannerData(
+    uuid,
     skinUuid,
     username,
     rank.name,
@@ -43,6 +45,7 @@ fun Player.toPlayerBannerData() = PlayerBannerData(
 )
 
 fun DetailedPlayer.toPlayerBannerData() = PlayerBannerData(
+    uuid,
     skinUuid,
     username,
     rank.name,

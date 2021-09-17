@@ -56,28 +56,9 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
-        // TODO: hide favorite icons when previewing self or partner
         // TODO: manage favorite icons visibility based on whether a player is marked as favorite or not
-        menu.findItem(R.id.nav_favorite)?.isVisible = true
-        menu.findItem(R.id.nav_unfavorite)?.isVisible = true
-    }
-
-    private fun loadArguments() {
-        val player = requireArguments().getSerializable(Constants.EXTRA_PLAYER) as DetailedPlayer
-        val previewedPlayer = requireArguments().getSerializable(Constants.EXTRA_PREVIEWED_PLAYER) as PlayerBannerData
-        viewModel.player = player
-        viewModel.previewedPlayerBanner.value = previewedPlayer
-    }
-
-    private fun bindViewModel(
-        layoutInflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentPlayerDetailsBinding {
-        val binding: FragmentPlayerDetailsBinding =
-            DataBindingUtil.inflate(layoutInflater, R.layout.fragment_player_details, container, false)
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
-        return binding
+        menu.findItem(R.id.nav_favorite)?.isVisible = !isPreviewingSelfOrPartner()
+        menu.findItem(R.id.nav_unfavorite)?.isVisible = !isPreviewingSelfOrPartner()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -98,4 +79,26 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
         }
         return super.onOptionsItemSelected(item)
     }
+
+    private fun loadArguments() {
+        val player = requireArguments().getSerializable(Constants.EXTRA_PLAYER) as DetailedPlayer
+        val previewedPlayer = requireArguments().getSerializable(Constants.EXTRA_PREVIEWED_PLAYER) as PlayerBannerData
+        viewModel.player = player
+        viewModel.previewedPlayerBanner.value = previewedPlayer
+    }
+
+    private fun bindViewModel(
+        layoutInflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentPlayerDetailsBinding {
+        val binding: FragmentPlayerDetailsBinding =
+            DataBindingUtil.inflate(layoutInflater, R.layout.fragment_player_details, container, false)
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+        return binding
+    }
+
+    private fun isPreviewingSelfOrPartner() =
+        viewModel.player.uuid == viewModel.previewedPlayerBanner.value?.uuid ||
+            viewModel.player.partnerUuid == viewModel.previewedPlayerBanner.value?.uuid
 }
