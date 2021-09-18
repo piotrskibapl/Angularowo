@@ -29,7 +29,7 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
         mainViewModel = viewModelFactory.obtainViewModel(requireActivity())
         preferenceUtils = PreferenceUtils(requireActivity())
         loadArguments()
-        setHasOptionsMenu(true)
+        setupOptionsMenu()
         super.onCreate(savedInstanceState)
     }
 
@@ -56,13 +56,12 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
-        // TODO: manage favorite icons visibility based on whether a player is marked as favorite or not
-        menu.findItem(R.id.nav_favorite)?.isVisible = !isPreviewingSelfOrPartner()
-        menu.findItem(R.id.nav_unfavorite)?.isVisible = !isPreviewingSelfOrPartner()
+        menu.findItem(R.id.nav_favorite)?.isVisible = !isPreviewingSelfOrPartner() && !isPreviewedPlayerFavorite()
+        menu.findItem(R.id.nav_unfavorite)?.isVisible = !isPreviewingSelfOrPartner() && isPreviewedPlayerFavorite()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // TODO: handle punishments and favorite/unfavorite
+        // TODO: handle punishments
         when (item.itemId) {
             android.R.id.home -> {
                 requireActivity().supportFinishAfterTransition()
@@ -87,6 +86,13 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
         viewModel.previewedPlayerBanner.value = previewedPlayer
     }
 
+    private fun setupOptionsMenu() {
+        setHasOptionsMenu(true)
+        viewModel.isPreviewedPlayerFavorite.observe(this, {
+            requireActivity().invalidateOptionsMenu()
+        })
+    }
+
     private fun bindViewModel(
         layoutInflater: LayoutInflater,
         container: ViewGroup?
@@ -101,4 +107,7 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
     private fun isPreviewingSelfOrPartner() =
         viewModel.player.uuid == viewModel.previewedPlayerBanner.value?.uuid ||
             viewModel.player.partnerUuid == viewModel.previewedPlayerBanner.value?.uuid
+
+    private fun isPreviewedPlayerFavorite() =
+        viewModel.isPreviewedPlayerFavorite.value!!
 }

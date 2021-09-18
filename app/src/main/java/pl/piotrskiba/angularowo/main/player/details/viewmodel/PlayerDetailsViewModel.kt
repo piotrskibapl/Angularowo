@@ -7,6 +7,7 @@ import pl.piotrskiba.angularowo.base.model.ViewModelState
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
+import pl.piotrskiba.angularowo.domain.friend.usecase.ObserveIfPlayerIsFavoriteUseCase
 import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayer
 import pl.piotrskiba.angularowo.domain.player.usecase.GetPlayerDetailsFromUuidUseCase
 import pl.piotrskiba.angularowo.main.player.details.model.DetailedPlayerData
@@ -17,6 +18,7 @@ import javax.inject.Inject
 
 class PlayerDetailsViewModel @Inject constructor(
     private val getPlayerDetailsFromUuidUseCase: GetPlayerDetailsFromUuidUseCase,
+    private val observeIfPlayerIsFavoriteUseCase: ObserveIfPlayerIsFavoriteUseCase,
     private val preferencesRepository: PreferencesRepository,
     private val facade: SchedulersProvider,
 ) : LifecycleViewModel() {
@@ -24,11 +26,13 @@ class PlayerDetailsViewModel @Inject constructor(
     lateinit var player: DetailedPlayer
     val previewedPlayerBanner: MutableLiveData<PlayerBannerData> = MutableLiveData()
     val previewedPlayerDetails: MutableLiveData<DetailedPlayerData> = MutableLiveData()
+    val isPreviewedPlayerFavorite: MutableLiveData<Boolean> = MutableLiveData()
     val state = MutableLiveData<ViewModelState>(ViewModelState.Loading)
     private val disposables = CompositeDisposable()
 
     override fun onFirstCreate() {
         onRefresh()
+        observeIfPlayerIsFavorite()
     }
 
     fun onRefresh() {
@@ -64,5 +68,13 @@ class PlayerDetailsViewModel @Inject constructor(
                 }
             )
         )
+    }
+
+    private fun observeIfPlayerIsFavorite() {
+        observeIfPlayerIsFavoriteUseCase
+            .execute(previewedPlayerBanner.value!!.uuid)
+            .subscribeOn(facade.io())
+            .observeOn(facade.ui())
+            .subscribe { isPreviewedPlayerFavorite.value = it }
     }
 }
