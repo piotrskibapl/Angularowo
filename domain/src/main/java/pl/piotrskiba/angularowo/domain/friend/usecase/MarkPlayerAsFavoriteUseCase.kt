@@ -9,7 +9,7 @@ class MarkPlayerAsFavoriteUseCase @Inject constructor(
     private val friendRepository: FriendRepository
 ) {
 
-    fun execute(friend: Friend): Completable {
-        return friendRepository.insert(friend)
+    fun execute(uuid: String): Completable {
+        return friendRepository.insert(Friend(uuid))
     }
 }

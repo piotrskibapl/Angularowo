@@ -9,7 +9,7 @@ class UnmarkPlayerAsFavoriteUseCase @Inject constructor(
     private val friendRepository: FriendRepository
 ) {
 
-    fun execute(friend: Friend): Completable {
-        return friendRepository.delete(friend)
+    fun execute(uuid: String): Completable {
+        return friendRepository.delete(Friend(uuid))
     }
 }

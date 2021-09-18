@@ -7,7 +7,9 @@ import pl.piotrskiba.angularowo.base.model.ViewModelState
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
+import pl.piotrskiba.angularowo.domain.friend.usecase.MarkPlayerAsFavoriteUseCase
 import pl.piotrskiba.angularowo.domain.friend.usecase.ObserveIfPlayerIsFavoriteUseCase
+import pl.piotrskiba.angularowo.domain.friend.usecase.UnmarkPlayerAsFavoriteUseCase
 import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayer
 import pl.piotrskiba.angularowo.domain.player.usecase.GetPlayerDetailsFromUuidUseCase
 import pl.piotrskiba.angularowo.main.player.details.model.DetailedPlayerData
@@ -19,6 +21,8 @@ import javax.inject.Inject
 class PlayerDetailsViewModel @Inject constructor(
     private val getPlayerDetailsFromUuidUseCase: GetPlayerDetailsFromUuidUseCase,
     private val observeIfPlayerIsFavoriteUseCase: ObserveIfPlayerIsFavoriteUseCase,
+    private val markPlayerAsFavoriteUseCase: MarkPlayerAsFavoriteUseCase,
+    private val unmarkPlayerAsFavoriteUseCase: UnmarkPlayerAsFavoriteUseCase,
     private val preferencesRepository: PreferencesRepository,
     private val facade: SchedulersProvider,
 ) : LifecycleViewModel() {
@@ -40,11 +44,33 @@ class PlayerDetailsViewModel @Inject constructor(
     }
 
     fun onFavoriteClick() {
-        // TODO: mark player as favorite
+        markPlayerAsFavoriteUseCase
+            .execute(previewedPlayerBanner.value!!.uuid)
+            .subscribeOn(facade.io())
+            .observeOn(facade.ui())
+            .subscribe(
+                {
+                    // TODO: show snackbar
+                },
+                {
+                    // TODO: provide error handling
+                }
+            )
     }
 
     fun onUnfavoriteClick() {
-        // TODO: mark player as not favorite
+        unmarkPlayerAsFavoriteUseCase
+            .execute(previewedPlayerBanner.value!!.uuid)
+            .subscribeOn(facade.io())
+            .observeOn(facade.ui())
+            .subscribe(
+                {
+                    // TODO: show snackbar
+                },
+                {
+                    // TODO: provide error handling
+                }
+            )
     }
 
     private fun loadPlayerDetails() {
