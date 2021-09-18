@@ -46,7 +46,11 @@ class PlayerDetailsViewModel @Inject constructor(
     private fun loadPlayerDetails() {
         state.value = ViewModelState.Loading
         disposables.add(getPlayerDetailsFromUuidUseCase
-            .execute(BuildConfig.API_KEY, preferencesRepository.accessToken!!, player.uuid)
+            .execute(
+                BuildConfig.API_KEY,
+                preferencesRepository.accessToken!!,
+                previewedPlayerBanner.value!!.uuid
+            )
             .subscribeOn(facade.io())
             .observeOn(facade.ui())
             .subscribe(
