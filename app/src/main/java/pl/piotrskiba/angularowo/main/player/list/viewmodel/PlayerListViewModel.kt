@@ -15,7 +15,7 @@ import pl.piotrskiba.angularowo.base.model.ViewModelState.Loading
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
-import pl.piotrskiba.angularowo.domain.player.usecase.ObserveOnlinePlayerListUseCase
+import pl.piotrskiba.angularowo.domain.player.usecase.ObserveOnlinePlayerListWithFavoriteInformationUseCase
 import pl.piotrskiba.angularowo.domain.player.usecase.RefreshOnlinePlayerListUseCase
 import pl.piotrskiba.angularowo.main.player.list.nav.PlayerListNavigator
 import pl.piotrskiba.angularowo.main.player.model.PlayerBannerData
@@ -23,7 +23,7 @@ import pl.piotrskiba.angularowo.main.player.model.toPlayerBannerData
 import javax.inject.Inject
 
 class PlayerListViewModel @Inject constructor(
-    private val observeOnlinePlayerListUseCase: ObserveOnlinePlayerListUseCase,
+    private val observeOnlinePlayerListWithFavoriteInformationUseCase: ObserveOnlinePlayerListWithFavoriteInformationUseCase,
     private val refreshOnlinePlayerListUseCase: RefreshOnlinePlayerListUseCase,
     private val preferencesRepository: PreferencesRepository,
     private val facade: SchedulersProvider
@@ -31,7 +31,9 @@ class PlayerListViewModel @Inject constructor(
 
     val state = MutableLiveData<ViewModelState>(Loading)
     val players: ObservableList<PlayerBannerData> = ObservableArrayList()
+    val favoritePlayers: ObservableList<PlayerBannerData> = ObservableArrayList()
     val playersBinding = ItemBinding.of<PlayerBannerData>(BR.player, R.layout.player_list_item)
+    var isFavoritePlayerListNotEmpty = MutableLiveData(false)
     lateinit var navigator: PlayerListNavigator
     private val disposables = CompositeDisposable()
 
@@ -51,17 +53,25 @@ class PlayerListViewModel @Inject constructor(
 
     private fun observePlayerList() {
         state.value = Loading
-        disposables.add(observeOnlinePlayerListUseCase
+        disposables.add(observeOnlinePlayerListWithFavoriteInformationUseCase
             .execute()
             .subscribeOn(facade.io())
             .observeOn(facade.ui())
             .subscribe(
                 { playerList ->
-                    val bannerList = playerList.map { it.toPlayerBannerData() }
+                    val bannerList = playerList
+                        .filter { !it.second }
+                        .map { it.first.toPlayerBannerData(false) }
+                    val favoriteBannerList = playerList
+                        .filter { it.second }
+                        .map { it.first.toPlayerBannerData(true) }
                     state.value = Loaded
                     // TODO: use DiffObservableList
                     players.clear()
+                    favoritePlayers.clear()
                     players.addAll(bannerList)
+                    favoritePlayers.addAll(favoriteBannerList)
+                    isFavoritePlayerListNotEmpty.value = favoritePlayers.isNotEmpty()
                 },
                 { error ->
                     state.value = Error(error)

@@ -36,13 +36,13 @@ data class PlayerBannerData(
     fun avatarUrl() = UrlUtils.buildAvatarUrl(skinUuid, true)
 }
 
-fun Player.toPlayerBannerData() = PlayerBannerData(
+fun Player.toPlayerBannerData(isFavorite: Boolean) = PlayerBannerData(
     uuid,
     skinUuid,
     username,
     rank.name,
     isVanished,
-    false, // TODO: should be mapped properly
+    isFavorite,
     rank.colorCode
 )
 

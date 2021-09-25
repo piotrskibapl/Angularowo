@@ -5,8 +5,9 @@ import dagger.Provides
 import pl.piotrskiba.angularowo.data.network.di.NetworkModule
 import pl.piotrskiba.angularowo.data.player.PlayerApiService
 import pl.piotrskiba.angularowo.data.player.repository.PlayerRepositoryImpl
+import pl.piotrskiba.angularowo.domain.friend.repository.FriendRepository
 import pl.piotrskiba.angularowo.domain.player.repository.PlayerRepository
-import pl.piotrskiba.angularowo.domain.player.usecase.ObserveOnlinePlayerListUseCase
+import pl.piotrskiba.angularowo.domain.player.usecase.ObserveOnlinePlayerListWithFavoriteInformationUseCase
 import pl.piotrskiba.angularowo.domain.player.usecase.GetPlayerDetailsFromUsernameUseCase
 import pl.piotrskiba.angularowo.domain.player.usecase.GetPlayerDetailsFromUuidUseCase
 import pl.piotrskiba.angularowo.domain.rank.repository.RankRepository
@@ -40,6 +41,7 @@ class PlayerModule {
     @Provides
     fun provideGetOnlinePlayerListUseCase(
         playerRepository: PlayerRepository,
-        rankRepository: RankRepository
-    ) = ObserveOnlinePlayerListUseCase(playerRepository, rankRepository)
+        rankRepository: RankRepository,
+        friendRepository: FriendRepository
+    ) = ObserveOnlinePlayerListWithFavoriteInformationUseCase(playerRepository, rankRepository, friendRepository)
 }
