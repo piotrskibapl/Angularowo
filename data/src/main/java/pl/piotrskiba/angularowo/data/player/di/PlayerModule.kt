@@ -6,11 +6,12 @@ import pl.piotrskiba.angularowo.data.network.di.NetworkModule
 import pl.piotrskiba.angularowo.data.player.PlayerApiService
 import pl.piotrskiba.angularowo.data.player.repository.PlayerRepositoryImpl
 import pl.piotrskiba.angularowo.domain.player.repository.PlayerRepository
-import pl.piotrskiba.angularowo.domain.player.usecase.GetOnlinePlayerListUseCase
+import pl.piotrskiba.angularowo.domain.player.usecase.ObserveOnlinePlayerListUseCase
 import pl.piotrskiba.angularowo.domain.player.usecase.GetPlayerDetailsFromUsernameUseCase
 import pl.piotrskiba.angularowo.domain.player.usecase.GetPlayerDetailsFromUuidUseCase
 import pl.piotrskiba.angularowo.domain.rank.repository.RankRepository
 import retrofit2.Retrofit
+import javax.inject.Singleton
 
 @Module(includes = [NetworkModule::class])
 class PlayerModule {
@@ -20,6 +21,7 @@ class PlayerModule {
         retrofit.create(PlayerApiService::class.java)
 
     @Provides
+    @Singleton // TODO: use proper scope
     fun providePlayerRepository(playerApiService: PlayerApiService): PlayerRepository =
         PlayerRepositoryImpl(playerApiService)
 
@@ -39,5 +41,5 @@ class PlayerModule {
     fun provideGetOnlinePlayerListUseCase(
         playerRepository: PlayerRepository,
         rankRepository: RankRepository
-    ) = GetOnlinePlayerListUseCase(playerRepository, rankRepository)
+    ) = ObserveOnlinePlayerListUseCase(playerRepository, rankRepository)
 }

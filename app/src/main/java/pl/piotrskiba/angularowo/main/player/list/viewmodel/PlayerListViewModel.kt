@@ -15,14 +15,16 @@ import pl.piotrskiba.angularowo.base.model.ViewModelState.Loading
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
-import pl.piotrskiba.angularowo.domain.player.usecase.GetOnlinePlayerListUseCase
+import pl.piotrskiba.angularowo.domain.player.usecase.ObserveOnlinePlayerListUseCase
+import pl.piotrskiba.angularowo.domain.player.usecase.RefreshOnlinePlayerListUseCase
 import pl.piotrskiba.angularowo.main.player.list.nav.PlayerListNavigator
 import pl.piotrskiba.angularowo.main.player.model.PlayerBannerData
 import pl.piotrskiba.angularowo.main.player.model.toPlayerBannerData
 import javax.inject.Inject
 
 class PlayerListViewModel @Inject constructor(
-    private val getOnlinePlayerListUseCase: GetOnlinePlayerListUseCase,
+    private val observeOnlinePlayerListUseCase: ObserveOnlinePlayerListUseCase,
+    private val refreshOnlinePlayerListUseCase: RefreshOnlinePlayerListUseCase,
     private val preferencesRepository: PreferencesRepository,
     private val facade: SchedulersProvider
 ) : LifecycleViewModel() {
@@ -39,17 +41,18 @@ class PlayerListViewModel @Inject constructor(
 
     override fun onFirstCreate() {
         playersBinding.bindExtra(BR.navigator, navigator)
-        onRefresh()
+        observePlayerList()
+        refreshPlayerList()
     }
 
     fun onRefresh() {
-        loadPlayerList()
+        refreshPlayerList()
     }
 
-    private fun loadPlayerList() {
+    private fun observePlayerList() {
         state.value = Loading
-        disposables.add(getOnlinePlayerListUseCase
-            .execute(BuildConfig.API_KEY, preferencesRepository.accessToken!!)
+        disposables.add(observeOnlinePlayerListUseCase
+            .execute()
             .subscribeOn(facade.io())
             .observeOn(facade.ui())
             .subscribe(
@@ -62,9 +65,24 @@ class PlayerListViewModel @Inject constructor(
                 },
                 { error ->
                     state.value = Error(error)
-                    // TODO: provide error handling
                 }
             )
         )
+    }
+
+    private fun refreshPlayerList() {
+        refreshOnlinePlayerListUseCase
+            .execute(BuildConfig.API_KEY, preferencesRepository.accessToken!!)
+            .subscribeOn(facade.io())
+            .observeOn(facade.ui())
+            .subscribe(
+                {
+                    state.value = Loaded
+                },
+                { error ->
+                    state.value = Error(error)
+                    // TODO: provide error handling
+                }
+            )
     }
 }

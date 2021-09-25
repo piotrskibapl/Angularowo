@@ -1,7 +1,11 @@
 package pl.piotrskiba.angularowo.data.player.repository
 
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 import pl.piotrskiba.angularowo.data.player.PlayerApiService
+import pl.piotrskiba.angularowo.data.player.model.PlayerData
 import pl.piotrskiba.angularowo.data.player.model.toDomain
 import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayer
 import pl.piotrskiba.angularowo.domain.player.model.Player
@@ -11,6 +15,8 @@ import javax.inject.Inject
 class PlayerRepositoryImpl @Inject constructor(
     private val playerApi: PlayerApiService
 ) : PlayerRepository {
+
+    private var onlinePlayerList: BehaviorSubject<List<PlayerData>> = BehaviorSubject.create()
 
     override fun getPlayerDetailsFromUsername(
         apiKey: String,
@@ -30,13 +36,18 @@ class PlayerRepositoryImpl @Inject constructor(
             .getPlayerInfoFromUuid(apiKey, uuid, accessToken)
             .map { it.toDomain() }
 
-    override fun getOnlinePlayerList(
+    override fun refreshOnlinePlayerList(
         apiKey: String,
         accessToken: String
-    ): Single<List<Player>> =
-        playerApi
-            .getOnlinePlayerList(apiKey, accessToken)
-            .map { playerList ->
-                playerList.map { it.toDomain() }
-            }
+    ): Completable =
+        Completable.fromSingle(
+            playerApi
+                .getOnlinePlayerList(apiKey, accessToken)
+                .doAfterSuccess { onlinePlayerList.onNext(it) }
+        )
+
+    override fun observeOnlinePlayerList(): Observable<List<Player>> =
+        onlinePlayerList.map { playerList ->
+            playerList.map { it.toDomain() }
+        }
 }
