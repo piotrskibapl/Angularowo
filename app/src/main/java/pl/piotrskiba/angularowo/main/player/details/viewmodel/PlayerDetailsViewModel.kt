@@ -30,8 +30,8 @@ class PlayerDetailsViewModel @Inject constructor(
     lateinit var player: DetailedPlayer
     val previewedPlayerBanner: MutableLiveData<PlayerBannerData> = MutableLiveData()
     val previewedPlayerDetails: MutableLiveData<DetailedPlayerData> = MutableLiveData()
-    val isPreviewedPlayerFavorite: MutableLiveData<Boolean> = MutableLiveData()
     val state = MutableLiveData<ViewModelState>(ViewModelState.Loading)
+    private var isPreviewedPlayerFavorite: Boolean = false
     private val disposables = CompositeDisposable()
 
     override fun onFirstCreate() {
@@ -86,7 +86,7 @@ class PlayerDetailsViewModel @Inject constructor(
             .subscribe(
                 { detailedPlayer ->
                     state.value = ViewModelState.Loaded
-                    previewedPlayerBanner.value = detailedPlayer.toPlayerBannerData()
+                    previewedPlayerBanner.value = detailedPlayer.toPlayerBannerData(isPreviewedPlayerFavorite)
                     previewedPlayerDetails.value = detailedPlayer.toUi()
                 },
                 { error ->
@@ -101,6 +101,9 @@ class PlayerDetailsViewModel @Inject constructor(
             .execute(previewedPlayerBanner.value!!.uuid)
             .subscribeOn(facade.io())
             .observeOn(facade.ui())
-            .subscribe { isPreviewedPlayerFavorite.value = it }
+            .subscribe {
+                isPreviewedPlayerFavorite = it
+                previewedPlayerBanner.value = previewedPlayerBanner.value?.copy(isFavorite = it)
+            }
     }
 }

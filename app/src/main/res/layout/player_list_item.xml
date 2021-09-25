@@ -93,7 +93,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:visible="@{false}" />
+            app:visible="@{player.favorite}" />
 
         <ImageView
             android:id="@+id/iv_married"

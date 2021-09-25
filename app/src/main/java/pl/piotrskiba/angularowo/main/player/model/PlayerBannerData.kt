@@ -16,6 +16,7 @@ data class PlayerBannerData(
     val username: String,
     val rankName: String,
     val isVanished: Boolean,
+    val isFavorite: Boolean,
     private val rankColorCode: String
 ) : Serializable {
 
@@ -41,14 +42,16 @@ fun Player.toPlayerBannerData() = PlayerBannerData(
     username,
     rank.name,
     isVanished,
+    false, // TODO: should be mapped properly
     rank.colorCode
 )
 
-fun DetailedPlayer.toPlayerBannerData() = PlayerBannerData(
+fun DetailedPlayer.toPlayerBannerData(isFavorite: Boolean) = PlayerBannerData(
     uuid,
     skinUuid,
     username,
     rank.name,
     isVanished,
+    isFavorite,
     rank.colorCode
 )

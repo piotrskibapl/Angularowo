@@ -1,6 +1,7 @@
 package pl.piotrskiba.angularowo.main.player.details.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.github.magneticflux.livedata.map
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.di.obtainViewModel
@@ -88,7 +90,7 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
 
     private fun setupOptionsMenu() {
         setHasOptionsMenu(true)
-        viewModel.isPreviewedPlayerFavorite.observe(this, {
+        viewModel.previewedPlayerBanner.observe(this, {
             requireActivity().invalidateOptionsMenu()
         })
     }
@@ -109,5 +111,5 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
             viewModel.player.partnerUuid == viewModel.previewedPlayerBanner.value?.uuid
 
     private fun isPreviewedPlayerFavorite() =
-        viewModel.isPreviewedPlayerFavorite.value!!
+        viewModel.previewedPlayerBanner.value?.isFavorite == true
 }
