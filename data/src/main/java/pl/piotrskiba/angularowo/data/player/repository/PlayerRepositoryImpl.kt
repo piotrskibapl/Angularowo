@@ -6,7 +6,7 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import pl.piotrskiba.angularowo.data.BuildConfig
 import pl.piotrskiba.angularowo.data.player.PlayerApiService
-import pl.piotrskiba.angularowo.data.player.model.PlayerData
+import pl.piotrskiba.angularowo.data.player.model.PlayerRemote
 import pl.piotrskiba.angularowo.data.player.model.toDomain
 import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayer
 import pl.piotrskiba.angularowo.domain.player.model.Player
@@ -17,7 +17,7 @@ class PlayerRepositoryImpl @Inject constructor(
     private val playerApi: PlayerApiService
 ) : PlayerRepository {
 
-    private var onlinePlayerList: BehaviorSubject<List<PlayerData>> = BehaviorSubject.create()
+    private var onlinePlayerList: BehaviorSubject<List<PlayerRemote>> = BehaviorSubject.create()
 
     override fun getPlayerDetailsFromUsername(
         accessToken: String,

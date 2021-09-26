@@ -3,11 +3,11 @@ package pl.piotrskiba.angularowo.data.login.model
 import org.junit.Test
 import pl.piotrskiba.angularowo.domain.login.model.AccessToken
 
-class AccessTokenDataTest {
+class AccessTokenRemoteTest {
 
     @Test
     fun `SHOULD map AccessTokenData to AccessToken WHEN toDomain called`() {
-        val tested = AccessTokenData(
+        val tested = AccessTokenRemote(
             "uuid",
             "username",
             "accessToken",

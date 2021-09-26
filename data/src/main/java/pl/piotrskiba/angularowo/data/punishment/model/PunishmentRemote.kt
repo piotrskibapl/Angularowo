@@ -5,7 +5,7 @@ import pl.piotrskiba.angularowo.domain.punishment.model.Punishment
 import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentType
 import java.util.Date
 
-class PunishmentData(
+class PunishmentRemote(
     @field:SerializedName("name") val username: String,
     val uuid: String?,
     val reason: String,
@@ -15,7 +15,7 @@ class PunishmentData(
     val type: String
 )
 
-fun PunishmentData.toDomain() = Punishment(
+fun PunishmentRemote.toDomain() = Punishment(
     username,
     uuid,
     reason,
@@ -25,6 +25,6 @@ fun PunishmentData.toDomain() = Punishment(
     type.toPunishmentType()
 )
 
-fun List<PunishmentData>.toDomain() = map { it.toDomain() }
+fun List<PunishmentRemote>.toDomain() = map { it.toDomain() }
 
 private fun String.toPunishmentType() = PunishmentType.valueOf(this)

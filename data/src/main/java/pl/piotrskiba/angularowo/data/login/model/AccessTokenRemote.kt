@@ -3,7 +3,7 @@ package pl.piotrskiba.angularowo.data.login.model
 import com.google.gson.annotations.SerializedName
 import pl.piotrskiba.angularowo.domain.login.model.AccessToken
 
-data class AccessTokenData(
+data class AccessTokenRemote(
     val uuid: String? = null,
     val username: String? = null,
     @SerializedName("access_token")
@@ -11,7 +11,7 @@ data class AccessTokenData(
     val message: String? = null
 )
 
-fun AccessTokenData.toDomain() = AccessToken(
+fun AccessTokenRemote.toDomain() = AccessToken(
     uuid ?: "",
     username ?: "",
     accessToken ?: "",

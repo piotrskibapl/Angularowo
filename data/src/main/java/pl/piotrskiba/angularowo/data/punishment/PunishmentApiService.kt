@@ -1,7 +1,7 @@
 package pl.piotrskiba.angularowo.data.punishment
 
 import io.reactivex.rxjava3.core.Single
-import pl.piotrskiba.angularowo.data.punishment.model.PunishmentData
+import pl.piotrskiba.angularowo.data.punishment.model.PunishmentRemote
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -14,5 +14,5 @@ interface PunishmentApiService {
         @Query("username") username: String?,
         @Query("type") type: String,
         @Query("type") filter: String
-    ): Single<List<PunishmentData>>
+    ): Single<List<PunishmentRemote>>
 }
