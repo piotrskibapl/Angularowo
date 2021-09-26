@@ -2,7 +2,6 @@ package pl.piotrskiba.angularowo.login.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import pl.piotrskiba.angularowo.BuildConfig
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
 import pl.piotrskiba.angularowo.domain.login.model.AccessToken
@@ -23,7 +22,7 @@ class LoginViewModel @Inject constructor(
     fun onPinEntered(pin: String) {
         loginState.value = LoginState.Loading
         registerDeviceUseCase
-            .execute(BuildConfig.API_KEY, pin)
+            .execute(pin)
             .subscribeOn(facade.io())
             .observeOn(facade.ui())
             .subscribe(

@@ -8,6 +8,6 @@ class RefreshOnlinePlayerListUseCase @Inject constructor(
     private val playerRepository: PlayerRepository,
 ) {
 
-    fun execute(apiKey: String, accessToken: String): Completable =
-        playerRepository.refreshOnlinePlayerList(apiKey, accessToken)
+    fun execute(accessToken: String): Completable =
+        playerRepository.refreshOnlinePlayerList(accessToken)
 }

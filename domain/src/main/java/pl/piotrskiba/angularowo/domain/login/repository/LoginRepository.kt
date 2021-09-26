@@ -5,5 +5,5 @@ import pl.piotrskiba.angularowo.domain.login.model.AccessToken
 
 interface LoginRepository {
 
-    fun registerDevice(apiKey: String, userCode: String): Single<AccessToken>
+    fun registerDevice(userCode: String): Single<AccessToken>
 }

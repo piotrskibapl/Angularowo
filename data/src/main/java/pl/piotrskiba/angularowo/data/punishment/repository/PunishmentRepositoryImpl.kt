@@ -1,6 +1,7 @@
 package pl.piotrskiba.angularowo.data.punishment.repository
 
 import io.reactivex.rxjava3.core.Single
+import pl.piotrskiba.angularowo.data.BuildConfig
 import pl.piotrskiba.angularowo.data.punishment.PunishmentApiService
 import pl.piotrskiba.angularowo.data.punishment.model.toDomain
 import pl.piotrskiba.angularowo.domain.punishment.model.Punishment
@@ -15,14 +16,13 @@ class PunishmentRepositoryImpl @Inject constructor(
 ) : PunishmentRepository {
 
     override fun getPunishments(
-        apiKey: String,
         accessToken: String,
         punishmentTypes: List<PunishmentType>,
         filter: PunishmentFilter
     ): Single<List<Punishment>> =
         punishmentApi
             .getBanList(
-                apiKey,
+                BuildConfig.API_KEY,
                 accessToken,
                 null,
                 punishmentTypes.joinToString(
@@ -34,7 +34,6 @@ class PunishmentRepositoryImpl @Inject constructor(
             .map { it.toDomain() }
 
     override fun getPlayerPunishments(
-        apiKey: String,
         accessToken: String,
         username: String,
         punishmentTypes: List<PunishmentType>,
@@ -42,7 +41,7 @@ class PunishmentRepositoryImpl @Inject constructor(
     ): Single<List<Punishment>> =
         punishmentApi
             .getBanList(
-                apiKey,
+                BuildConfig.API_KEY,
                 accessToken,
                 username,
                 punishmentTypes.joinToString(

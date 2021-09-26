@@ -2,7 +2,6 @@ package pl.piotrskiba.angularowo.main.player.details.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import pl.piotrskiba.angularowo.BuildConfig
 import pl.piotrskiba.angularowo.base.model.ViewModelState
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
@@ -77,7 +76,6 @@ class PlayerDetailsViewModel @Inject constructor(
         state.value = ViewModelState.Loading
         disposables.add(getPlayerDetailsFromUuidUseCase
             .execute(
-                BuildConfig.API_KEY,
                 preferencesRepository.accessToken!!,
                 previewedPlayerBanner.value!!.uuid
             )

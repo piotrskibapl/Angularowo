@@ -9,8 +9,8 @@ class GetServerStatusUseCase @Inject constructor(
     private val serverRepository: ServerRepository
 ) {
 
-    fun execute(apiKey: String, accessToken: String): Single<ServerStatus> {
+    fun execute(accessToken: String): Single<ServerStatus> {
         return serverRepository
-            .getServerStatus(apiKey, accessToken)
+            .getServerStatus(accessToken)
     }
 }

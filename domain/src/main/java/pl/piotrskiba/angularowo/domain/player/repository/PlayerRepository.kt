@@ -9,13 +9,11 @@ import pl.piotrskiba.angularowo.domain.player.model.Player
 interface PlayerRepository {
 
     fun getPlayerDetailsFromUsername(
-        apiKey: String,
         accessToken: String,
         username: String
     ): Single<DetailedPlayer>
 
     fun getPlayerDetailsFromUuid(
-        apiKey: String,
         accessToken: String,
         uuid: String
     ): Single<DetailedPlayer>
@@ -23,7 +21,6 @@ interface PlayerRepository {
     fun observeOnlinePlayerList(): Observable<List<Player>>
 
     fun refreshOnlinePlayerList(
-        apiKey: String,
         accessToken: String
     ): Completable
 }

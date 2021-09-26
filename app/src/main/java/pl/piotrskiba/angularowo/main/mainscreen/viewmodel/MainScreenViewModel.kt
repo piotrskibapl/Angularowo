@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import com.github.magneticflux.livedata.map
 import com.github.magneticflux.livedata.zipTo
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import pl.piotrskiba.angularowo.BuildConfig
 import pl.piotrskiba.angularowo.base.model.ViewModelState
 import pl.piotrskiba.angularowo.base.model.ViewModelState.Error
 import pl.piotrskiba.angularowo.base.model.ViewModelState.Loaded
@@ -82,10 +81,7 @@ class MainScreenViewModel @Inject constructor(
     private fun loadServerStatus() {
         serverDataState.value = Loading
         disposables.add(getServerStatusUseCase
-            .execute(
-                BuildConfig.API_KEY,
-                preferencesRepository.accessToken!!
-            )
+            .execute(preferencesRepository.accessToken!!)
             .subscribeOn(facade.io())
             .observeOn(facade.ui())
             .subscribe(
@@ -104,7 +100,6 @@ class MainScreenViewModel @Inject constructor(
         playerDataState.value = Loading
         disposables.add(getPlayerDetailsFromUuidUseCase
             .execute(
-                BuildConfig.API_KEY,
                 preferencesRepository.accessToken!!,
                 preferencesRepository.uuid!!
             )
@@ -136,7 +131,6 @@ class MainScreenViewModel @Inject constructor(
         punishmentsDataState.value = Loading
         disposables.add(getActivePlayerPunishmentsUseCase
             .execute(
-                BuildConfig.API_KEY,
                 preferencesRepository.accessToken!!,
                 preferencesRepository.username!!
             )

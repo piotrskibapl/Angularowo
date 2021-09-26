@@ -11,9 +11,9 @@ class GetPlayerDetailsFromUuidUseCase @Inject constructor(
     private val rankRepository: RankRepository
 ) {
 
-    fun execute(apiKey: String, accessToken: String, uuid: String): Single<DetailedPlayer> {
+    fun execute(accessToken: String, uuid: String): Single<DetailedPlayer> {
         return playerRepository
-            .getPlayerDetailsFromUuid(apiKey, accessToken, uuid)
+            .getPlayerDetailsFromUuid(accessToken, uuid)
             .concatMap { player ->
                 rankRepository.getAllRanks().map { rankList ->
                     player.rank = rankList.firstOrNull { it.name == player.rank.name } ?: player.rank

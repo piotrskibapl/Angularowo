@@ -11,10 +11,9 @@ class GetActivePlayerPunishmentsUseCase @Inject constructor(
     private val punishmentRepository: PunishmentRepository
 ) {
 
-    fun execute(apiKey: String, accessToken: String, username: String): Single<List<Punishment>> {
+    fun execute(accessToken: String, username: String): Single<List<Punishment>> {
         return punishmentRepository
             .getPlayerPunishments(
-                apiKey,
                 accessToken,
                 username,
                 listOf(PunishmentType.MUTE, PunishmentType.WARN, PunishmentType.BAN),

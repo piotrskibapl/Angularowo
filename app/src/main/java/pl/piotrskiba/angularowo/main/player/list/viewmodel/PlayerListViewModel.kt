@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import me.tatarka.bindingcollectionadapter2.ItemBinding
 import pl.piotrskiba.angularowo.BR
-import pl.piotrskiba.angularowo.BuildConfig
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.model.ViewModelState
 import pl.piotrskiba.angularowo.base.model.ViewModelState.Error
@@ -82,7 +81,7 @@ class PlayerListViewModel @Inject constructor(
 
     private fun refreshPlayerList() {
         refreshOnlinePlayerListUseCase
-            .execute(BuildConfig.API_KEY, preferencesRepository.accessToken!!)
+            .execute(preferencesRepository.accessToken!!)
             .subscribeOn(facade.io())
             .observeOn(facade.ui())
             .subscribe(

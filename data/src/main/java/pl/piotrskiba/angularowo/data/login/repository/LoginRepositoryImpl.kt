@@ -1,6 +1,7 @@
 package pl.piotrskiba.angularowo.data.login.repository
 
 import io.reactivex.rxjava3.core.Single
+import pl.piotrskiba.angularowo.data.BuildConfig
 import pl.piotrskiba.angularowo.data.login.LoginApiService
 import pl.piotrskiba.angularowo.data.login.model.toDomain
 import pl.piotrskiba.angularowo.domain.login.model.AccessToken
@@ -12,9 +13,9 @@ class LoginRepositoryImpl @Inject constructor(
     private val loginApi: LoginApiService
 ) : LoginRepository {
 
-    override fun registerDevice(apiKey: String, userCode: String): Single<AccessToken> =
+    override fun registerDevice(userCode: String): Single<AccessToken> =
         loginApi
-            .registerDevice(apiKey, userCode)
+            .registerDevice(BuildConfig.API_KEY, userCode)
             .map { it.toDomain() }
             .onErrorResumeNext { Single.error(it.toAccessTokenError()) }
 }

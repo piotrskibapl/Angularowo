@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class RegisterDeviceUseCase @Inject constructor(private val loginRepository: LoginRepository) {
 
-    fun execute(apiKey: String, userCode: String): Single<AccessToken> {
-        return loginRepository.registerDevice(apiKey, userCode)
+    fun execute(userCode: String): Single<AccessToken> {
+        return loginRepository.registerDevice(userCode)
     }
 }
