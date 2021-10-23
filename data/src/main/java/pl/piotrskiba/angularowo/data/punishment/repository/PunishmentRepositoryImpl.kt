@@ -7,8 +7,8 @@ import pl.piotrskiba.angularowo.data.punishment.model.toDomain
 import pl.piotrskiba.angularowo.domain.punishment.model.Punishment
 import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentFilter
 import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentType
+import pl.piotrskiba.angularowo.domain.punishment.model.toRemote
 import pl.piotrskiba.angularowo.domain.punishment.repository.PunishmentRepository
-import java.util.Locale
 import javax.inject.Inject
 
 class PunishmentRepositoryImpl @Inject constructor(
@@ -25,11 +25,8 @@ class PunishmentRepositoryImpl @Inject constructor(
                 BuildConfig.API_KEY,
                 accessToken,
                 null,
-                punishmentTypes.joinToString(
-                    separator = ",",
-                    transform = { it.toString().toLowerCase(Locale.ROOT) }
-                ),
-                filter.toString().toLowerCase(Locale.ROOT)
+                punishmentTypes.toRemote(),
+                filter.toRemote()
             )
             .map { it.toDomain() }
 
@@ -44,11 +41,8 @@ class PunishmentRepositoryImpl @Inject constructor(
                 BuildConfig.API_KEY,
                 accessToken,
                 username,
-                punishmentTypes.joinToString(
-                    separator = ",",
-                    transform = { it.toString().toLowerCase(Locale.ROOT) }
-                ),
-                filter.toString().toLowerCase(Locale.ROOT)
+                punishmentTypes.toRemote(),
+                filter.toRemote()
             )
             .map { it.toDomain() }
 }
