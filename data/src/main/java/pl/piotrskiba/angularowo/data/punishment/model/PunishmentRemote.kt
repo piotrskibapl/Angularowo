@@ -6,22 +6,22 @@ import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentType
 import java.util.Date
 
 class PunishmentRemote(
-    @field:SerializedName("name") val username: String,
+    val name: String,
     val uuid: String?,
     val reason: String,
-    @field:SerializedName("banner") val actorName: String,
-    @field:SerializedName("bantime") val banTime: Long,
-    @field:SerializedName("expires") val expireDate: Long,
+    val actor_name: String,
+    val start: Long,
+    val end: Long,
     val type: String
 )
 
 fun PunishmentRemote.toDomain() = PunishmentModel(
-    username,
+    name,
     uuid,
     reason,
-    actorName,
-    Date(banTime),
-    Date(expireDate),
+    actor_name,
+    Date(start),
+    Date(end),
     type.toPunishmentType()
 )
 
