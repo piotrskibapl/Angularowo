@@ -1,7 +1,7 @@
 package pl.piotrskiba.angularowo.data.player.model
 
 import com.google.gson.annotations.SerializedName
-import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayer
+import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
 import pl.piotrskiba.angularowo.domain.rank.model.Rank
 
 data class DetailedPlayerRemote(
@@ -18,7 +18,7 @@ data class DetailedPlayerRemote(
     val permissions: List<String>
 )
 
-fun DetailedPlayerRemote.toDomain() = DetailedPlayer(
+fun DetailedPlayerRemote.toDomain() = DetailedPlayerModel(
     uuid,
     skinUuid,
     partnerUuid,

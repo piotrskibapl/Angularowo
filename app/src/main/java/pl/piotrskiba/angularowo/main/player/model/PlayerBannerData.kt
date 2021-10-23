@@ -3,8 +3,8 @@ package pl.piotrskiba.angularowo.main.player.model
 import android.content.Context
 import androidx.annotation.ColorRes
 import pl.piotrskiba.angularowo.R
-import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayer
-import pl.piotrskiba.angularowo.domain.player.model.Player
+import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
+import pl.piotrskiba.angularowo.domain.player.model.PlayerModel
 import pl.piotrskiba.angularowo.utils.UrlUtils
 import java.io.Serializable
 
@@ -36,7 +36,7 @@ data class PlayerBannerData(
     fun avatarUrl() = UrlUtils.buildAvatarUrl(skinUuid, true)
 }
 
-fun Player.toPlayerBannerData(isFavorite: Boolean) = PlayerBannerData(
+fun PlayerModel.toPlayerBannerData(isFavorite: Boolean) = PlayerBannerData(
     uuid,
     skinUuid,
     username,
@@ -46,7 +46,7 @@ fun Player.toPlayerBannerData(isFavorite: Boolean) = PlayerBannerData(
     rank.colorCode
 )
 
-fun DetailedPlayer.toPlayerBannerData(isFavorite: Boolean) = PlayerBannerData(
+fun DetailedPlayerModel.toPlayerBannerData(isFavorite: Boolean) = PlayerBannerData(
     uuid,
     skinUuid,
     username,

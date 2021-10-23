@@ -3,7 +3,7 @@ package pl.piotrskiba.angularowo.domain.player.model
 import pl.piotrskiba.angularowo.domain.rank.model.Rank
 import java.io.Serializable
 
-data class DetailedPlayer(
+data class DetailedPlayerModel(
     val uuid: String,
     val skinUuid: String,
     val partnerUuid: String?,

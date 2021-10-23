@@ -11,7 +11,7 @@ import pl.piotrskiba.angularowo.base.model.ViewModelState.Loading
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
-import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayer
+import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
 import pl.piotrskiba.angularowo.domain.player.usecase.GetPlayerDetailsFromUuidUseCase
 import pl.piotrskiba.angularowo.domain.punishment.usecase.GetActivePlayerPunishmentsUseCase
 import pl.piotrskiba.angularowo.domain.server.usecase.GetServerStatusUseCase
@@ -52,7 +52,7 @@ class MainScreenViewModel @Inject constructor(
             }
         }
     // exposed for MainViewModel synchronization
-    val player = MutableLiveData<DetailedPlayer>()
+    val player = MutableLiveData<DetailedPlayerModel>()
     private val lastPlayerData = DetailedPlayerData(
         preferencesRepository.username!!,
         preferencesRepository.tokens,
@@ -119,7 +119,7 @@ class MainScreenViewModel @Inject constructor(
         )
     }
 
-    private fun savePlayer(player: DetailedPlayer) {
+    private fun savePlayer(player: DetailedPlayerModel) {
         preferencesRepository.skinUuid = player.skinUuid
         preferencesRepository.username = player.username
         preferencesRepository.balance = player.balance

@@ -2,7 +2,7 @@ package pl.piotrskiba.angularowo.domain.player.usecase
 
 import io.reactivex.rxjava3.core.Observable
 import pl.piotrskiba.angularowo.domain.friend.repository.FriendRepository
-import pl.piotrskiba.angularowo.domain.player.model.Player
+import pl.piotrskiba.angularowo.domain.player.model.PlayerModel
 import pl.piotrskiba.angularowo.domain.player.repository.PlayerRepository
 import pl.piotrskiba.angularowo.domain.rank.repository.RankRepository
 import javax.inject.Inject
@@ -13,7 +13,7 @@ class ObserveOnlinePlayerListWithFavoriteInformationUseCase @Inject constructor(
     private val friendRepository: FriendRepository,
 ) {
 
-    fun execute(): Observable<List<Pair<Player, Boolean>>> =
+    fun execute(): Observable<List<Pair<PlayerModel, Boolean>>> =
         rankRepository
             .getAllRanks()
             .flatMapObservable { rankList ->
@@ -29,7 +29,7 @@ class ObserveOnlinePlayerListWithFavoriteInformationUseCase @Inject constructor(
                                 }
                             }
                             .map { playerList ->
-                                val sortedPlayerList: MutableList<Player> = mutableListOf()
+                                val sortedPlayerList: MutableList<PlayerModel> = mutableListOf()
                                 rankList.forEach { rank ->
                                     sortedPlayerList.addAll(playerList.filter { it.rank.name == rank.name })
                                 }

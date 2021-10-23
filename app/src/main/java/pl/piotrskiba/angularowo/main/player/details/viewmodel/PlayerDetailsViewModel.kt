@@ -9,7 +9,7 @@ import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRe
 import pl.piotrskiba.angularowo.domain.friend.usecase.MarkPlayerAsFavoriteUseCase
 import pl.piotrskiba.angularowo.domain.friend.usecase.ObserveIfPlayerIsFavoriteUseCase
 import pl.piotrskiba.angularowo.domain.friend.usecase.UnmarkPlayerAsFavoriteUseCase
-import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayer
+import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
 import pl.piotrskiba.angularowo.domain.player.usecase.GetPlayerDetailsFromUuidUseCase
 import pl.piotrskiba.angularowo.main.player.details.model.DetailedPlayerData
 import pl.piotrskiba.angularowo.main.player.details.model.toUi
@@ -26,7 +26,7 @@ class PlayerDetailsViewModel @Inject constructor(
     private val facade: SchedulersProvider,
 ) : LifecycleViewModel() {
 
-    lateinit var player: DetailedPlayer
+    lateinit var player: DetailedPlayerModel
     val previewedPlayerBanner: MutableLiveData<PlayerBannerData> = MutableLiveData()
     val previewedPlayerDetails: MutableLiveData<DetailedPlayerData> = MutableLiveData()
     val state = MutableLiveData<ViewModelState>(ViewModelState.Loading)

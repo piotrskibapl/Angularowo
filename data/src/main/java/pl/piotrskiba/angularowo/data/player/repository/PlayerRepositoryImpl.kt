@@ -8,8 +8,8 @@ import pl.piotrskiba.angularowo.data.BuildConfig
 import pl.piotrskiba.angularowo.data.player.PlayerApiService
 import pl.piotrskiba.angularowo.data.player.model.PlayerRemote
 import pl.piotrskiba.angularowo.data.player.model.toDomain
-import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayer
-import pl.piotrskiba.angularowo.domain.player.model.Player
+import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
+import pl.piotrskiba.angularowo.domain.player.model.PlayerModel
 import pl.piotrskiba.angularowo.domain.player.repository.PlayerRepository
 import javax.inject.Inject
 
@@ -22,7 +22,7 @@ class PlayerRepositoryImpl @Inject constructor(
     override fun getPlayerDetailsFromUsername(
         accessToken: String,
         username: String
-    ): Single<DetailedPlayer> =
+    ): Single<DetailedPlayerModel> =
         playerApi
             .getPlayerInfoFromUsername(BuildConfig.API_KEY, username, accessToken)
             .map { it.toDomain() }
@@ -30,7 +30,7 @@ class PlayerRepositoryImpl @Inject constructor(
     override fun getPlayerDetailsFromUuid(
         accessToken: String,
         uuid: String
-    ): Single<DetailedPlayer> =
+    ): Single<DetailedPlayerModel> =
         playerApi
             .getPlayerInfoFromUuid(BuildConfig.API_KEY, uuid, accessToken)
             .map { it.toDomain() }
@@ -44,7 +44,7 @@ class PlayerRepositoryImpl @Inject constructor(
                 .doAfterSuccess { onlinePlayerList.onNext(it) }
         )
 
-    override fun observeOnlinePlayerList(): Observable<List<Player>> =
+    override fun observeOnlinePlayerList(): Observable<List<PlayerModel>> =
         onlinePlayerList.map { playerList ->
             playerList.map { it.toDomain() }
         }

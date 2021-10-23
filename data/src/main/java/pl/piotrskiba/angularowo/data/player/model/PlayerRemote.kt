@@ -1,7 +1,7 @@
 package pl.piotrskiba.angularowo.data.player.model
 
 import com.google.gson.annotations.SerializedName
-import pl.piotrskiba.angularowo.domain.player.model.Player
+import pl.piotrskiba.angularowo.domain.player.model.PlayerModel
 import pl.piotrskiba.angularowo.domain.rank.model.Rank.UnknownRank
 
 data class PlayerRemote(
@@ -13,7 +13,7 @@ data class PlayerRemote(
     @SerializedName(value = "vanished") val isVanished: Boolean
 )
 
-fun PlayerRemote.toDomain() = Player(
+fun PlayerRemote.toDomain() = PlayerModel(
     uuid,
     skinUuid,
     partnerUuid,

@@ -1,7 +1,6 @@
 package pl.piotrskiba.angularowo.main.player.details.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -10,13 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.github.magneticflux.livedata.map
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.di.obtainViewModel
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.databinding.FragmentPlayerDetailsBinding
-import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayer
+import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
 import pl.piotrskiba.angularowo.main.base.viewmodel.MainViewModel
 import pl.piotrskiba.angularowo.main.player.details.viewmodel.PlayerDetailsViewModel
 import pl.piotrskiba.angularowo.main.player.model.PlayerBannerData
@@ -82,7 +80,7 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
     }
 
     private fun loadArguments() {
-        val player = requireArguments().getSerializable(Constants.EXTRA_PLAYER) as DetailedPlayer
+        val player = requireArguments().getSerializable(Constants.EXTRA_PLAYER) as DetailedPlayerModel
         val previewedPlayer = requireArguments().getSerializable(Constants.EXTRA_PREVIEWED_PLAYER) as PlayerBannerData
         viewModel.player = player
         viewModel.previewedPlayerBanner.value = previewedPlayer
