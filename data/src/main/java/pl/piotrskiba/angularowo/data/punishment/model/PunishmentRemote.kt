@@ -1,7 +1,7 @@
 package pl.piotrskiba.angularowo.data.punishment.model
 
 import com.google.gson.annotations.SerializedName
-import pl.piotrskiba.angularowo.domain.punishment.model.Punishment
+import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentModel
 import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentType
 import java.util.Date
 
@@ -15,7 +15,7 @@ class PunishmentRemote(
     val type: String
 )
 
-fun PunishmentRemote.toDomain() = Punishment(
+fun PunishmentRemote.toDomain() = PunishmentModel(
     username,
     uuid,
     reason,

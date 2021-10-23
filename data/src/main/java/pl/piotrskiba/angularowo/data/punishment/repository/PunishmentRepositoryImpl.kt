@@ -4,7 +4,7 @@ import io.reactivex.rxjava3.core.Single
 import pl.piotrskiba.angularowo.data.BuildConfig
 import pl.piotrskiba.angularowo.data.punishment.PunishmentApiService
 import pl.piotrskiba.angularowo.data.punishment.model.toDomain
-import pl.piotrskiba.angularowo.domain.punishment.model.Punishment
+import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentModel
 import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentFilter
 import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentType
 import pl.piotrskiba.angularowo.domain.punishment.model.toRemote
@@ -19,7 +19,7 @@ class PunishmentRepositoryImpl @Inject constructor(
         accessToken: String,
         punishmentTypes: List<PunishmentType>,
         filter: PunishmentFilter
-    ): Single<List<Punishment>> =
+    ): Single<List<PunishmentModel>> =
         punishmentApi
             .getBanList(
                 BuildConfig.API_KEY,
@@ -35,7 +35,7 @@ class PunishmentRepositoryImpl @Inject constructor(
         username: String,
         punishmentTypes: List<PunishmentType>,
         filter: PunishmentFilter
-    ): Single<List<Punishment>> =
+    ): Single<List<PunishmentModel>> =
         punishmentApi
             .getBanList(
                 BuildConfig.API_KEY,

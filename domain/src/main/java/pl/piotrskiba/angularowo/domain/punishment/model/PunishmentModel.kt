@@ -2,7 +2,7 @@ package pl.piotrskiba.angularowo.domain.punishment.model
 
 import java.util.Date
 
-data class Punishment(
+data class PunishmentModel(
     val username: String,
     val uuid: String?,
     val reason: String,
