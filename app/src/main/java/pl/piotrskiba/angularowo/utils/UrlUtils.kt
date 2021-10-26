@@ -1,6 +1,9 @@
 package pl.piotrskiba.angularowo.utils
 
 import android.net.Uri
+import android.content.ContentResolver
+import android.content.Context
+import pl.piotrskiba.angularowo.R
 
 object UrlUtils {
     private const val BASE_CRAFATAR_URL = "https://crafatar.com/"
@@ -14,15 +17,26 @@ object UrlUtils {
     private const val DEFAULT_AVATAR_SIZE = 100
 
     @JvmStatic
-    fun buildAvatarUrl(uuid: String, showOverlay: Boolean): String {
-        val uriBuilder = Uri.parse(BASE_CRAFATAR_URL).buildUpon()
-                .path(BASE_AVATAR_PATH + uuid)
-                .appendQueryParameter(PARAM_SIZE, DEFAULT_AVATAR_SIZE.toString())
+    fun buildAvatarUrl(uuid: String?, showOverlay: Boolean, context: Context): String {
+        return when (uuid == null) {
+            true -> Uri.Builder()
+                .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
+                .authority(context.resources.getResourcePackageName(R.drawable.default_avatar))
+                .appendPath(context.resources.getResourceTypeName(R.drawable.default_avatar))
+                .appendPath(context.resources.getResourceEntryName(R.drawable.default_avatar))
+                .build()
+                .toString()
+            false -> {
+                val uriBuilder = Uri.parse(BASE_CRAFATAR_URL).buildUpon()
+                    .path(BASE_AVATAR_PATH + uuid)
+                    .appendQueryParameter(PARAM_SIZE, DEFAULT_AVATAR_SIZE.toString())
 
-        if (showOverlay)
-            uriBuilder.appendQueryParameter(PARAM_SHOW_OVERLAY, true.toString())
+                if (showOverlay)
+                    uriBuilder.appendQueryParameter(PARAM_SHOW_OVERLAY, true.toString())
 
-        return uriBuilder.build().toString()
+                uriBuilder.build().toString()
+            }
+        }
     }
 
     @JvmStatic

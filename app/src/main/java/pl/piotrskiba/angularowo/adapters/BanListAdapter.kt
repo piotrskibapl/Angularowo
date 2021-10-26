@@ -82,7 +82,7 @@ class BanListAdapter(private val context: Context, private val mClickListener: B
 
                             mojangProfile?.run {
                                 Glide.with(context)
-                                        .load(buildAvatarUrl(mojangProfile.id, true))
+                                        .load(buildAvatarUrl(mojangProfile.id, true, context))
                                         .signature(IntegerVersionSignature(getSignatureVersionNumber(5)))
                                         .placeholder(R.drawable.default_avatar)
                                         .into(holder.mPlayerAvatar)
@@ -97,7 +97,7 @@ class BanListAdapter(private val context: Context, private val mClickListener: B
             })
         } else {
             Glide.with(context)
-                    .load(buildAvatarUrl(ban.uuid, true))
+                    .load(buildAvatarUrl(ban.uuid, true, context))
                     .signature(IntegerVersionSignature(getSignatureVersionNumber(5)))
                     .placeholder(R.drawable.default_avatar)
                     .into(holder.mPlayerAvatar)

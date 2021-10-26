@@ -34,7 +34,7 @@
             android:layout_height="@dimen/avatar_size"
             android:contentDescription="@string/player_avatar_image_description"
             android:src="@drawable/default_avatar"
-            app:imageUrl="@{player.avatarUrl}"
+            app:imageUrl="@{player.avatarUrl(context)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

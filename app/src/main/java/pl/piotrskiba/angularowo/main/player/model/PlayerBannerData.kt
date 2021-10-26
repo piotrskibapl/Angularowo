@@ -33,7 +33,7 @@ data class PlayerBannerData(
         }
     }
 
-    fun avatarUrl() = UrlUtils.buildAvatarUrl(skinUuid, true)
+    fun avatarUrl(context: Context) = UrlUtils.buildAvatarUrl(skinUuid, true, context)
 }
 
 fun PlayerModel.toPlayerBannerData(isFavorite: Boolean) = PlayerBannerData(
