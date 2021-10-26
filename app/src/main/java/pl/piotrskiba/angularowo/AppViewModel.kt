@@ -34,7 +34,6 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     private var serverStatus: MutableLiveData<ServerStatus?>? = null
     private var player: MutableLiveData<DetailedPlayer?>? = null
     private var activePlayerBans: MutableLiveData<BanList?>? = null
-    private var banList: MutableLiveData<BanList?>? = null
     private var offersInfo: MutableLiveData<OffersInfo?>? = null
     private var userReports: MutableLiveData<ReportList?>? = null
     private var allReports: MutableLiveData<ReportList?>? = null
@@ -156,44 +155,6 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
 
                 override fun onFailure(call: Call<BanList?>, t: Throwable) {
                     activePlayerBans?.value = null
-                    mNetworkErrorListener?.onNoInternet()
-                    t.printStackTrace()
-                }
-            })
-        }
-    }
-
-    fun getBanList(): LiveData<BanList?> {
-        if (banList == null) {
-            banList = MutableLiveData()
-            loadBanList()
-        } else if (banList!!.value == null) {
-            refreshBanList()
-        }
-        return banList!!
-    }
-
-    fun refreshBanList() {
-        loadBanList()
-    }
-
-    private fun loadBanList() {
-        val accessToken = preferenceUtils.accessToken
-
-        if (accessToken != null) {
-            val serverAPIInterface = retrofitInstance.create(ServerAPIInterface::class.java)
-            serverAPIInterface.getActiveBans(ServerAPIClient.API_KEY, Constants.BAN_TYPES, null, accessToken).enqueue(object : Callback<BanList?> {
-                override fun onResponse(call: Call<BanList?>, response: Response<BanList?>) {
-                    if (response.isSuccessful && response.body() != null) {
-                        banList?.value = response.body()
-                    } else {
-                        banList?.value = null
-                        mNetworkErrorListener?.onServerError()
-                    }
-                }
-
-                override fun onFailure(call: Call<BanList?>, t: Throwable) {
-                    banList?.value = null
                     mNetworkErrorListener?.onNoInternet()
                     t.printStackTrace()
                 }
