@@ -6,6 +6,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 import pl.piotrskiba.angularowo.login.viewmodel.LoginViewModel
+import pl.piotrskiba.angularowo.main.ban.list.viewmodel.BanListViewModel
 import pl.piotrskiba.angularowo.main.base.viewmodel.MainViewModel
 import pl.piotrskiba.angularowo.main.mainscreen.viewmodel.MainScreenViewModel
 import pl.piotrskiba.angularowo.main.player.details.viewmodel.PlayerDetailsViewModel
@@ -41,4 +42,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(PlayerDetailsViewModel::class)
     abstract fun bindPlayerDetailsViewModel(viewModel: PlayerDetailsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(BanListViewModel::class)
+    abstract fun bindBanListViewModel(viewModel: BanListViewModel): ViewModel
 }
