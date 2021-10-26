@@ -13,6 +13,6 @@ interface PunishmentApiService {
         @Query("access_token") accessToken: String,
         @Query("username") username: String?,
         @Query("type") type: String,
-        @Query("type") filter: String
+        @Query("filter") filter: String
     ): Single<List<PunishmentRemote>>
 }
