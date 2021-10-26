@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName
 import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentModel
 import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentType
 import java.util.Date
+import java.util.Locale
 
 class PunishmentRemote(
     val name: String,
@@ -27,4 +28,4 @@ fun PunishmentRemote.toDomain() = PunishmentModel(
 
 fun List<PunishmentRemote>.toDomain() = map { it.toDomain() }
 
-private fun String.toPunishmentType() = PunishmentType.valueOf(this)
+private fun String.toPunishmentType() = PunishmentType.valueOf(this.toUpperCase(Locale.ROOT))
