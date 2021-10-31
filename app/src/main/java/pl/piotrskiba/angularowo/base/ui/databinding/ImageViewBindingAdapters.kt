@@ -9,15 +9,23 @@ import pl.piotrskiba.angularowo.utils.GlideUtils
 
 @BindingAdapter("imageUrl", "placeholderImage", requireAll = false)
 fun loadImage(
-    view: ImageView,
+    imageView: ImageView,
     url: String?,
-    @DrawableRes placeholder: Int?
+    @DrawableRes placeholder: Int?,
 ) {
     if (!url.isNullOrEmpty()) {
-        Glide.with(view.context)
+        Glide.with(imageView.context)
             .load(url)
             .signature(IntegerVersionSignature(GlideUtils.getSignatureVersionNumber(5)))
             .placeholder(placeholder ?: 0)
-            .into(view)
+            .into(imageView)
     }
+}
+
+@BindingAdapter("android:src")
+fun setImageResource(
+    imageView: ImageView,
+    @DrawableRes resource: Int,
+) {
+    imageView.setImageResource(resource)
 }
