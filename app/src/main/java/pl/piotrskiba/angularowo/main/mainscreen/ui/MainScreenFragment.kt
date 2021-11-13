@@ -1,5 +1,6 @@
 package pl.piotrskiba.angularowo.main.mainscreen.ui
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
@@ -115,6 +116,12 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel
         return view
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val actionbar = (activity as AppCompatActivity?)?.supportActionBar
+        actionbar?.setTitle(R.string.app_name)
+    }
+
     private fun bindViewModel(
         layoutInflater: LayoutInflater,
         container: ViewGroup?
@@ -142,9 +149,6 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel
                     .placeholder(R.drawable.default_body)
                     .into(mPlayerBodyImageView)
         }
-
-        val actionbar = (activity as AppCompatActivity?)?.supportActionBar
-        actionbar?.setTitle(R.string.app_name)
     }
 
     private fun seekForServerStatusUpdates() {
