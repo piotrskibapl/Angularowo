@@ -1,9 +1,14 @@
 package pl.piotrskiba.angularowo.main.mainscreen.viewmodel
 
+import androidx.databinding.ObservableArrayList
+import androidx.databinding.ObservableList
 import androidx.lifecycle.MutableLiveData
 import com.github.magneticflux.livedata.map
 import com.github.magneticflux.livedata.zipTo
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import me.tatarka.bindingcollectionadapter2.ItemBinding
+import pl.piotrskiba.angularowo.BR
+import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.model.ViewModelState
 import pl.piotrskiba.angularowo.base.model.ViewModelState.Error
 import pl.piotrskiba.angularowo.base.model.ViewModelState.Loaded
@@ -15,6 +20,8 @@ import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
 import pl.piotrskiba.angularowo.domain.player.usecase.GetPlayerDetailsFromUuidUseCase
 import pl.piotrskiba.angularowo.domain.punishment.usecase.GetActivePlayerPunishmentsUseCase
 import pl.piotrskiba.angularowo.domain.server.usecase.GetServerStatusUseCase
+import pl.piotrskiba.angularowo.main.ban.model.BanBannerData
+import pl.piotrskiba.angularowo.main.ban.model.toUi
 import pl.piotrskiba.angularowo.main.mainscreen.model.MainScreenServerData
 import pl.piotrskiba.angularowo.main.mainscreen.model.toUi
 import pl.piotrskiba.angularowo.main.player.details.model.DetailedPlayerData
@@ -62,6 +69,8 @@ class MainScreenViewModel @Inject constructor(
     )
     val playerData = MutableLiveData(lastPlayerData)
     val serverData = MutableLiveData<MainScreenServerData>()
+    val bans: ObservableList<BanBannerData> = ObservableArrayList()
+    val bansBinding = ItemBinding.of<BanBannerData>(BR.ban, R.layout.ban_list_item)
     private val disposables = CompositeDisposable()
 
     override fun onFirstCreate() {
@@ -137,9 +146,10 @@ class MainScreenViewModel @Inject constructor(
             .subscribeOn(facade.io())
             .observeOn(facade.ui())
             .subscribe(
-                { punishments ->
+                { punishmentModels ->
                     punishmentsDataState.value = Loaded
-                    // TODO: process punishment list
+                    bans.clear()
+                    bans.addAll(punishmentModels.toUi())
                 },
                 { error ->
                     punishmentsDataState.value = Error(error)

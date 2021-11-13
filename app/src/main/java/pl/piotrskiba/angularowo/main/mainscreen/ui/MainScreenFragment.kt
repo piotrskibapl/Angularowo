@@ -17,8 +17,6 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -30,7 +28,6 @@ import pl.piotrskiba.angularowo.BuildConfig
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.IntegerVersionSignature
 import pl.piotrskiba.angularowo.R
-import pl.piotrskiba.angularowo.adapters.BanListAdapter
 import pl.piotrskiba.angularowo.adapters.BanListAdapter.BanViewHolder
 import pl.piotrskiba.angularowo.base.di.obtainViewModel
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
@@ -41,7 +38,6 @@ import pl.piotrskiba.angularowo.main.ban.details.BanDetailsActivity
 import pl.piotrskiba.angularowo.main.base.viewmodel.MainViewModel
 import pl.piotrskiba.angularowo.main.mainscreen.viewmodel.MainScreenViewModel
 import pl.piotrskiba.angularowo.models.Ban
-import pl.piotrskiba.angularowo.models.BanList
 import pl.piotrskiba.angularowo.models.DetailedPlayer
 import pl.piotrskiba.angularowo.models.Motd
 import pl.piotrskiba.angularowo.models.Rank
@@ -59,7 +55,6 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel
 
     private lateinit var mViewModel: AppViewModel
     private lateinit var mainViewModel: MainViewModel
-    private lateinit var mBanListAdapter: BanListAdapter
     private lateinit var preferenceUtils: PreferenceUtils
     private var loadedServerStatus = false
     private var loadedPlayer = false
@@ -94,9 +89,6 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel
     @BindView(R.id.tv_last_bans_title)
     lateinit var mLastBansTitleTextView: TextView
 
-    @BindView(R.id.rv_bans)
-    lateinit var mBanList: RecyclerView
-
     @BindView(R.id.default_layout)
     lateinit var mDefaultLayout: View
 
@@ -115,13 +107,6 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel
         val view = binding.root
 
         ButterKnife.bind(this, view)
-
-        mBanListAdapter = BanListAdapter(requireContext(), this)
-        val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(context)
-
-        mBanList.adapter = mBanListAdapter
-        mBanList.layoutManager = layoutManager
-        mBanList.setHasFixedSize(true)
 
         mSwipeRefreshLayout.setOnRefreshListener { refreshData() }
         mMotdTextView.setOnClickListener { onMotdClick() }
@@ -229,22 +214,6 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel
 
                 subscribeToFirebaseRankTopic(player.rank)
                 checkFirebaseNewReportsTopicSubscription(player.rank)
-            }
-        })
-    }
-
-    private fun seekForLastPlayerBans() {
-        mViewModel.getActivePlayerBans().observe(viewLifecycleOwner, { banList: BanList? ->
-            if (banList != null) {
-                loadedActivePlayerBans = true
-                showDefaultLayoutIfLoadedAllData()
-
-                mBanListAdapter.setBanList(banList)
-
-                if (banList.banList.isNotEmpty())
-                    showLastBans()
-                else
-                    hideLastBans()
             }
         })
     }
@@ -383,16 +352,6 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel
     private fun showServerErrorLayout() {
         mSwipeRefreshLayout.isRefreshing = false
         mDefaultLayout.visibility = View.GONE
-    }
-
-    private fun showLastBans() {
-        mLastBansTitleTextView.visibility = View.VISIBLE
-        mBanList.visibility = View.VISIBLE
-    }
-
-    private fun hideLastBans() {
-        mLastBansTitleTextView.visibility = View.GONE
-        mBanList.visibility = View.GONE
     }
 
     override fun onBanClick(view: View, clickedBan: Ban) {

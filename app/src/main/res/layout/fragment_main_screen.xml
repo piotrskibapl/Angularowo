@@ -177,11 +177,12 @@
                         app:layout_constraintTop_toBottomOf="@+id/tv_playtime" />
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_bans"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginTop="@dimen/margin_default"
-                        android:visibility="gone"
+                        app:itemBinding="@{viewModel.bansBinding}"
+                        app:items="@{viewModel.bans}"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintTop_toBottomOf="@+id/tv_last_bans_title" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
