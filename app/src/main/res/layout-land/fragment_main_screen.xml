@@ -189,7 +189,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginTop="@dimen/margin_default"
                         app:itemBinding="@{viewModel.punishmentsBinding}"
-                        app:items="@{viewModel.punishments}"
+                        app:items="@{viewModel.punishmentBanners}"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintTop_toBottomOf="@+id/tv_last_bans_title"
                         app:visible="@{viewModel.isPunishmentListNotEmpty()}"

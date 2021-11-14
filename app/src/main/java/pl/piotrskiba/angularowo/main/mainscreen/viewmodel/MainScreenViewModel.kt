@@ -27,6 +27,8 @@ import pl.piotrskiba.angularowo.main.mainscreen.model.MainScreenServerData
 import pl.piotrskiba.angularowo.main.mainscreen.model.toUi
 import pl.piotrskiba.angularowo.main.player.details.model.DetailedPlayerData
 import pl.piotrskiba.angularowo.main.player.details.model.toUi
+import pl.piotrskiba.angularowo.main.punishment.details.DetailedPunishmentData
+import pl.piotrskiba.angularowo.main.punishment.details.toUi
 import javax.inject.Inject
 
 class MainScreenViewModel @Inject constructor(
@@ -70,7 +72,8 @@ class MainScreenViewModel @Inject constructor(
     )
     val playerData = MutableLiveData(lastPlayerData)
     val serverData = MutableLiveData<MainScreenServerData>()
-    val punishments: ObservableList<PunishmentBannerData> = ObservableArrayList()
+    val punishments: MutableList<DetailedPunishmentData> = mutableListOf()
+    val punishmentBanners: ObservableList<PunishmentBannerData> = ObservableArrayList()
     val punishmentsBinding = ItemBinding.of<PunishmentBannerData>(BR.punishment, R.layout.punishment_list_item)
     val isPunishmentListNotEmpty = MutableLiveData(false)
     lateinit var navigator: PunishmentListNavigator
@@ -160,8 +163,10 @@ class MainScreenViewModel @Inject constructor(
                 { punishmentModels ->
                     punishmentsDataState.value = Loaded
                     punishments.clear()
-                    punishments.addAll(punishmentModels.toPunishmentBannerData())
-                    isPunishmentListNotEmpty.value = punishments.isNotEmpty()
+                    punishments.addAll(punishmentModels.toUi())
+                    punishmentBanners.clear()
+                    punishmentBanners.addAll(punishmentModels.toPunishmentBannerData())
+                    isPunishmentListNotEmpty.value = punishmentBanners.isNotEmpty()
                 },
                 { error ->
                     punishmentsDataState.value = Error(error)

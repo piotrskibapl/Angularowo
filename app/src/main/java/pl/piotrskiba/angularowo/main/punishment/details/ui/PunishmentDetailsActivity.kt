@@ -8,6 +8,7 @@ import butterknife.ButterKnife
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.ui.OldBaseActivity
+import pl.piotrskiba.angularowo.main.punishment.details.DetailedPunishmentData
 import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBannerData
 
 class PunishmentDetailsActivity : OldBaseActivity() {
@@ -15,7 +16,7 @@ class PunishmentDetailsActivity : OldBaseActivity() {
     @BindView(R.id.toolbar)
     lateinit var mToolbar: Toolbar
 
-    private lateinit var previewedPunishment: PunishmentBannerData
+    private lateinit var previewedPunishment: DetailedPunishmentData
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +36,7 @@ class PunishmentDetailsActivity : OldBaseActivity() {
     }
 
     private fun loadArguments() {
-        previewedPunishment = intent.getSerializableExtra(Constants.EXTRA_PUNISHMENT) as PunishmentBannerData
+        previewedPunishment = intent.getSerializableExtra(Constants.EXTRA_PUNISHMENT) as DetailedPunishmentData
     }
 
     private fun setupToolbar() {

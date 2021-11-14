@@ -185,7 +185,7 @@
                         tools:visibility="gone"
                         app:visible="@{viewModel.isPunishmentListNotEmpty()}"
                         app:itemBinding="@{viewModel.punishmentsBinding}"
-                        app:items="@{viewModel.punishments}"
+                        app:items="@{viewModel.punishmentBanners}"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintTop_toBottomOf="@+id/tv_last_bans_title" />
 

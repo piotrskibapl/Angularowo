@@ -15,6 +15,8 @@ import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
 import pl.piotrskiba.angularowo.domain.punishment.usecase.GetActivePunishmentsUseCase
+import pl.piotrskiba.angularowo.main.punishment.details.DetailedPunishmentData
+import pl.piotrskiba.angularowo.main.punishment.details.toUi
 import pl.piotrskiba.angularowo.main.punishment.list.nav.PunishmentListNavigator
 import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBannerData
 import pl.piotrskiba.angularowo.main.punishment.model.toPunishmentBannerData
@@ -27,7 +29,8 @@ class PunishmentListViewModel @Inject constructor(
 ) : LifecycleViewModel() {
 
     val state = MutableLiveData<ViewModelState>(Loading)
-    val punishments: ObservableList<PunishmentBannerData> = ObservableArrayList()
+    val punishments: MutableList<DetailedPunishmentData> = mutableListOf()
+    val punishmentBanners: ObservableList<PunishmentBannerData> = ObservableArrayList()
     val punishmentsBinding = ItemBinding.of<PunishmentBannerData>(BR.punishment, R.layout.punishment_list_item)
     lateinit var navigator: PunishmentListNavigator
     private val disposables = CompositeDisposable()
@@ -55,7 +58,9 @@ class PunishmentListViewModel @Inject constructor(
                 { punishmentModels ->
                     state.value = Loaded
                     punishments.clear()
-                    punishments.addAll(punishmentModels.toPunishmentBannerData())
+                    punishments.addAll(punishmentModels.toUi())
+                    punishmentBanners.clear()
+                    punishmentBanners.addAll(punishmentModels.toPunishmentBannerData())
                 },
                 { error ->
                     state.value = Error(error)
