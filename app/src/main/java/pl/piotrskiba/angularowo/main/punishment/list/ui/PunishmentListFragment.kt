@@ -13,7 +13,7 @@ import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.databinding.FragmentPunishmentListBinding
-import pl.piotrskiba.angularowo.main.punishment.details.PunishmentDetailsActivity
+import pl.piotrskiba.angularowo.main.punishment.details.ui.PunishmentDetailsActivity
 import pl.piotrskiba.angularowo.main.punishment.list.nav.PunishmentListNavigator
 import pl.piotrskiba.angularowo.main.punishment.list.viewmodel.PunishmentListViewModel
 import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBannerData

@@ -20,7 +20,7 @@ import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.di.obtainViewModel
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.databinding.FragmentMainScreenBinding
-import pl.piotrskiba.angularowo.main.punishment.details.PunishmentDetailsActivity
+import pl.piotrskiba.angularowo.main.punishment.details.ui.PunishmentDetailsActivity
 import pl.piotrskiba.angularowo.main.punishment.list.nav.PunishmentListNavigator
 import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBannerData
 import pl.piotrskiba.angularowo.main.base.viewmodel.MainViewModel

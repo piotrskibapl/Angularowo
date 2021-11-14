@@ -1,4 +1,4 @@
-package pl.piotrskiba.angularowo.main.punishment.details
+package pl.piotrskiba.angularowo.main.punishment.details.ui
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -23,6 +23,15 @@ class PunishmentDetailsActivity : OldBaseActivity() {
         ButterKnife.bind(this)
         loadArguments()
         setupToolbar()
+        setupMainFragment()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        android.R.id.home -> {
+            supportFinishAfterTransition()
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
     }
 
     private fun loadArguments() {
@@ -36,11 +45,13 @@ class PunishmentDetailsActivity : OldBaseActivity() {
         supportActionBar?.setTitle(R.string.punishment_info)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            supportFinishAfterTransition()
-            return true
-        }
-        return super.onOptionsItemSelected(item)
+    private fun setupMainFragment() {
+        val punishmentDetailsFragment = PunishmentDetailsFragment()
+        val bundle = Bundle()
+        bundle.putSerializable(Constants.EXTRA_PUNISHMENT, previewedPunishment)
+        punishmentDetailsFragment.arguments = bundle
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, punishmentDetailsFragment)
+            .commit()
     }
 }
