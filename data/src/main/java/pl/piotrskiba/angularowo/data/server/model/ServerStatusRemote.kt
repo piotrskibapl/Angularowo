@@ -1,7 +1,7 @@
 package pl.piotrskiba.angularowo.data.server.model
 
 import com.google.gson.annotations.SerializedName
-import pl.piotrskiba.angularowo.domain.server.model.ServerStatus
+import pl.piotrskiba.angularowo.domain.server.model.ServerStatusModel
 
 class ServerStatusRemote(
     @field:SerializedName("player_count") val playerCount: Int,
@@ -9,7 +9,7 @@ class ServerStatusRemote(
     val motd: MotdRemote?
 )
 
-fun ServerStatusRemote.toDomain() = ServerStatus(
+fun ServerStatusRemote.toDomain() = ServerStatusModel(
     playerCount,
     tps,
     motd?.toDomain()

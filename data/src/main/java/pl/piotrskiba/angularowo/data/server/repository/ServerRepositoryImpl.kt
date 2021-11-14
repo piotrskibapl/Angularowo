@@ -4,7 +4,7 @@ import io.reactivex.rxjava3.core.Single
 import pl.piotrskiba.angularowo.data.BuildConfig
 import pl.piotrskiba.angularowo.data.server.ServerApiService
 import pl.piotrskiba.angularowo.data.server.model.toDomain
-import pl.piotrskiba.angularowo.domain.server.model.ServerStatus
+import pl.piotrskiba.angularowo.domain.server.model.ServerStatusModel
 import pl.piotrskiba.angularowo.domain.server.repository.ServerRepository
 import javax.inject.Inject
 
@@ -14,7 +14,7 @@ class ServerRepositoryImpl @Inject constructor(
 
     override fun getServerStatus(
         accessToken: String
-    ): Single<ServerStatus> =
+    ): Single<ServerStatusModel> =
         serverApi
             .getServerStatus(BuildConfig.API_KEY, accessToken)
             .map { it.toDomain() }

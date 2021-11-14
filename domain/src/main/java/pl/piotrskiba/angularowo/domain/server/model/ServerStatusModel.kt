@@ -1,7 +1,7 @@
 package pl.piotrskiba.angularowo.domain.server.model
 
-data class ServerStatus(
+data class ServerStatusModel(
     val playerCount: Int,
     val tps: Double,
-    val motd: Motd?
+    val motd: MotdModel?
 )

@@ -1,6 +1,6 @@
 package pl.piotrskiba.angularowo.data.server.model
 
-import pl.piotrskiba.angularowo.domain.server.model.Motd
+import pl.piotrskiba.angularowo.domain.server.model.MotdModel
 
 class MotdRemote(
     val text: String,
@@ -9,7 +9,7 @@ class MotdRemote(
     val backgroundColor: String
 )
 
-fun MotdRemote.toDomain() = Motd(
+fun MotdRemote.toDomain() = MotdModel(
     text,
     url,
     textColor,
