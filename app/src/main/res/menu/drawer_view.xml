@@ -13,7 +13,7 @@
             android:id="@+id/nav_chat"
             android:title="@string/chat" />
         <item
-            android:id="@+id/nav_last_bans"
+            android:id="@+id/nav_last_punishments"
             android:title="@string/last_bans" />
         <item
             android:id="@+id/nav_free_ranks"

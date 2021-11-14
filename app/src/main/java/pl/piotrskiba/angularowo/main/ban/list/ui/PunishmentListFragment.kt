@@ -12,13 +12,13 @@ import butterknife.ButterKnife
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
-import pl.piotrskiba.angularowo.databinding.FragmentBanListBinding
+import pl.piotrskiba.angularowo.databinding.FragmentPunishmentListBinding
 import pl.piotrskiba.angularowo.main.ban.details.BanDetailsActivity
 import pl.piotrskiba.angularowo.main.ban.list.nav.PunishmentListNavigator
 import pl.piotrskiba.angularowo.main.ban.list.viewmodel.PunishmentListViewModel
 import pl.piotrskiba.angularowo.main.ban.model.BanBannerData
 
-class BanListFragment : BaseFragment<PunishmentListViewModel>(PunishmentListViewModel::class),
+class PunishmentListFragment : BaseFragment<PunishmentListViewModel>(PunishmentListViewModel::class),
     PunishmentListNavigator {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,9 +40,9 @@ class BanListFragment : BaseFragment<PunishmentListViewModel>(PunishmentListView
     private fun bindViewModel(
         layoutInflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentBanListBinding {
-        val binding: FragmentBanListBinding =
-            DataBindingUtil.inflate(layoutInflater, R.layout.fragment_ban_list, container, false)
+    ): FragmentPunishmentListBinding {
+        val binding: FragmentPunishmentListBinding =
+            DataBindingUtil.inflate(layoutInflater, R.layout.fragment_punishment_list, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         return binding

@@ -27,7 +27,7 @@ import pl.piotrskiba.angularowo.base.di.obtainViewModel
 import pl.piotrskiba.angularowo.base.ui.BaseActivity
 import pl.piotrskiba.angularowo.interfaces.UnauthorizedResponseListener
 import pl.piotrskiba.angularowo.login.ui.LoginActivity
-import pl.piotrskiba.angularowo.main.ban.list.ui.BanListFragment
+import pl.piotrskiba.angularowo.main.ban.list.ui.PunishmentListFragment
 import pl.piotrskiba.angularowo.main.base.viewmodel.MainViewModel
 import pl.piotrskiba.angularowo.main.chat.ui.ChatFragment
 import pl.piotrskiba.angularowo.main.mainscreen.ui.MainScreenFragment
@@ -71,7 +71,7 @@ class MainActivity : BaseActivity(), UnauthorizedResponseListener, RewardedVideo
     private var mainScreenFragment: MainScreenFragment = MainScreenFragment()
     private var playerListFragment: PlayerListFragment = PlayerListFragment()
     private var chatFragment: ChatFragment = ChatFragment()
-    private var banListFragment: BanListFragment = BanListFragment()
+    private var punishmentListFragment: PunishmentListFragment = PunishmentListFragment()
     private var offersFragment: OffersFragment = OffersFragment()
     private var reportsHistoryFragment: Fragment? = null
 
@@ -179,9 +179,9 @@ class MainActivity : BaseActivity(), UnauthorizedResponseListener, RewardedVideo
             chatFragment = frag3
         }
 
-        val frag4: BanListFragment? = supportFragmentManager.findFragmentByTag(TAG_BAN_LIST_FRAGMENT) as BanListFragment?
+        val frag4: PunishmentListFragment? = supportFragmentManager.findFragmentByTag(TAG_BAN_LIST_FRAGMENT) as PunishmentListFragment?
         frag4?.run {
-            banListFragment = frag4
+            punishmentListFragment = frag4
         }
 
         val frag5: OffersFragment? = supportFragmentManager.findFragmentByTag(
@@ -237,9 +237,9 @@ class MainActivity : BaseActivity(), UnauthorizedResponseListener, RewardedVideo
                                 .replace(R.id.fragment_container, chatFragment, TAG_CHAT_FRAGMENT)
                                 .commit()
                     }
-                    R.id.nav_last_bans -> {
+                    R.id.nav_last_punishments -> {
                         supportFragmentManager.beginTransaction()
-                                .replace(R.id.fragment_container, banListFragment, TAG_BAN_LIST_FRAGMENT)
+                                .replace(R.id.fragment_container, punishmentListFragment, TAG_BAN_LIST_FRAGMENT)
                                 .commit()
                     }
                     R.id.nav_free_ranks -> {
