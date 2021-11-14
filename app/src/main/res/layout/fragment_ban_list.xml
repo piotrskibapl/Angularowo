@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="pl.piotrskiba.angularowo.main.ban.list.viewmodel.BanListViewModel" />
+            type="pl.piotrskiba.angularowo.main.ban.list.viewmodel.PunishmentListViewModel" />
     </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -25,8 +25,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:itemBinding="@{viewModel.bansBinding}"
-                app:items="@{viewModel.bans}"
+                app:itemBinding="@{viewModel.punishmentsBinding}"
+                app:items="@{viewModel.punishments}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             <include

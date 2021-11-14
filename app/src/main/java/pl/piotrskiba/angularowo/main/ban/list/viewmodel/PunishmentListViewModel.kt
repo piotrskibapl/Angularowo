@@ -18,24 +18,23 @@ import pl.piotrskiba.angularowo.domain.punishment.usecase.GetActivePunishmentsUs
 import pl.piotrskiba.angularowo.main.ban.list.nav.PunishmentListNavigator
 import pl.piotrskiba.angularowo.main.ban.model.BanBannerData
 import pl.piotrskiba.angularowo.main.ban.model.toUi
-import pl.piotrskiba.angularowo.main.player.list.nav.PlayerListNavigator
 import javax.inject.Inject
 
-class BanListViewModel @Inject constructor(
+class PunishmentListViewModel @Inject constructor(
     private val getActivePunishmentsUseCase: GetActivePunishmentsUseCase,
     private val preferencesRepository: PreferencesRepository,
     private val facade: SchedulersProvider,
 ) : LifecycleViewModel() {
 
     val state = MutableLiveData<ViewModelState>(Loading)
-    val bans: ObservableList<BanBannerData> = ObservableArrayList()
-    val bansBinding = ItemBinding.of<BanBannerData>(BR.ban, R.layout.ban_list_item)
+    val punishments: ObservableList<BanBannerData> = ObservableArrayList()
+    val punishmentsBinding = ItemBinding.of<BanBannerData>(BR.ban, R.layout.ban_list_item)
     lateinit var navigator: PunishmentListNavigator
     private val disposables = CompositeDisposable()
 
     override fun onFirstCreate() {
-        bansBinding.bindExtra(BR.navigator, navigator)
-        loadBanList()
+        punishmentsBinding.bindExtra(BR.navigator, navigator)
+        loadPunishmentList()
     }
 
     override fun onCleared() {
@@ -43,10 +42,10 @@ class BanListViewModel @Inject constructor(
     }
 
     fun onRefresh() {
-        loadBanList()
+        loadPunishmentList()
     }
 
-    private fun loadBanList() {
+    private fun loadPunishmentList() {
         state.value = Loading
         disposables.add(getActivePunishmentsUseCase
             .execute(preferencesRepository.accessToken!!)
@@ -55,8 +54,8 @@ class BanListViewModel @Inject constructor(
             .subscribe(
                 { punishmentModels ->
                     state.value = Loaded
-                    bans.clear()
-                    bans.addAll(punishmentModels.toUi())
+                    punishments.clear()
+                    punishments.addAll(punishmentModels.toUi())
                 },
                 { error ->
                     state.value = Error(error)

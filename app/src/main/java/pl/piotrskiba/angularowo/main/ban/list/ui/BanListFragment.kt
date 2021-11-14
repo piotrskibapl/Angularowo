@@ -15,10 +15,10 @@ import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.databinding.FragmentBanListBinding
 import pl.piotrskiba.angularowo.main.ban.details.BanDetailsActivity
 import pl.piotrskiba.angularowo.main.ban.list.nav.PunishmentListNavigator
-import pl.piotrskiba.angularowo.main.ban.list.viewmodel.BanListViewModel
+import pl.piotrskiba.angularowo.main.ban.list.viewmodel.PunishmentListViewModel
 import pl.piotrskiba.angularowo.main.ban.model.BanBannerData
 
-class BanListFragment : BaseFragment<BanListViewModel>(BanListViewModel::class),
+class BanListFragment : BaseFragment<PunishmentListViewModel>(PunishmentListViewModel::class),
     PunishmentListNavigator {
 
     override fun onCreate(savedInstanceState: Bundle?) {
