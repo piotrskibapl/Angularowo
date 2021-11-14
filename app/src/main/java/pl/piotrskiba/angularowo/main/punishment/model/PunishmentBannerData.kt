@@ -27,7 +27,7 @@ data class PunishmentBannerData(
         }
 }
 
-fun PunishmentModel.toUi() =
+fun PunishmentModel.toPunishmentBannerData() =
     PunishmentBannerData(
         uuid,
         username,
@@ -35,5 +35,5 @@ fun PunishmentModel.toUi() =
         type,
     )
 
-fun List<PunishmentModel>.toUi() =
-    map { it.toUi() }
+fun List<PunishmentModel>.toPunishmentBannerData() =
+    map { it.toPunishmentBannerData() }

@@ -17,7 +17,7 @@ import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRe
 import pl.piotrskiba.angularowo.domain.punishment.usecase.GetActivePunishmentsUseCase
 import pl.piotrskiba.angularowo.main.punishment.list.nav.PunishmentListNavigator
 import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBannerData
-import pl.piotrskiba.angularowo.main.punishment.model.toUi
+import pl.piotrskiba.angularowo.main.punishment.model.toPunishmentBannerData
 import javax.inject.Inject
 
 class PunishmentListViewModel @Inject constructor(
@@ -55,7 +55,7 @@ class PunishmentListViewModel @Inject constructor(
                 { punishmentModels ->
                     state.value = Loaded
                     punishments.clear()
-                    punishments.addAll(punishmentModels.toUi())
+                    punishments.addAll(punishmentModels.toPunishmentBannerData())
                 },
                 { error ->
                     state.value = Error(error)
