@@ -7,7 +7,6 @@ import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentModel
 import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentType
 import pl.piotrskiba.angularowo.utils.UrlUtils
 
-// TODO: map ban type icon
 data class BanBannerData(
     val uuid: String?,
     val username: String,

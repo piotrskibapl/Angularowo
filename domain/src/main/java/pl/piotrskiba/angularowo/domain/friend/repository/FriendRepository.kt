@@ -2,13 +2,13 @@ package pl.piotrskiba.angularowo.domain.friend.repository
 
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
-import pl.piotrskiba.angularowo.domain.friend.model.Friend
+import pl.piotrskiba.angularowo.domain.friend.model.FriendModel
 
 interface FriendRepository {
 
-    fun getAllFriends(): Observable<List<Friend>>
+    fun getAllFriends(): Observable<List<FriendModel>>
 
-    fun insert(friend: Friend): Completable
+    fun insert(friend: FriendModel): Completable
 
-    fun delete(friend: Friend): Completable
+    fun delete(friend: FriendModel): Completable
 }

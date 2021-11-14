@@ -16,7 +16,6 @@
             type="pl.piotrskiba.angularowo.main.player.model.PlayerBannerData" />
     </data>
 
-    <!-- TODO: map all data -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main_layout"
         android:layout_width="match_parent"
@@ -95,6 +94,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:visible="@{player.favorite}" />
 
+        <!-- map married icon visibility -->
         <ImageView
             android:id="@+id/iv_married"
             android:layout_width="wrap_content"

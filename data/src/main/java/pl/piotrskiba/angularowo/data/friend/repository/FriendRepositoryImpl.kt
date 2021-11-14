@@ -5,7 +5,7 @@ import io.reactivex.rxjava3.core.Observable
 import pl.piotrskiba.angularowo.data.friend.dao.FriendDao
 import pl.piotrskiba.angularowo.data.friend.model.toData
 import pl.piotrskiba.angularowo.data.friend.model.toDomain
-import pl.piotrskiba.angularowo.domain.friend.model.Friend
+import pl.piotrskiba.angularowo.domain.friend.model.FriendModel
 import pl.piotrskiba.angularowo.domain.friend.repository.FriendRepository
 import javax.inject.Inject
 
@@ -13,12 +13,12 @@ class FriendRepositoryImpl @Inject constructor(
     private val friendDao: FriendDao
 ) : FriendRepository {
 
-    override fun getAllFriends(): Observable<List<Friend>> =
+    override fun getAllFriends(): Observable<List<FriendModel>> =
         friendDao.getAllFriends().map { it.toDomain() }
 
-    override fun insert(friend: Friend): Completable =
+    override fun insert(friend: FriendModel): Completable =
         friendDao.insert(friend.toData())
 
-    override fun delete(friend: Friend): Completable =
+    override fun delete(friend: FriendModel): Completable =
         friendDao.delete(friend.toData())
 }
