@@ -33,6 +33,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+                    <!-- map motd -->
                     <TextView
                         android:id="@+id/tv_motd"
                         android:layout_width="match_parent"
@@ -172,6 +173,7 @@
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </LinearLayout>
 
+                    <!-- TODO: map view visibility -->
                     <TextView
                         android:id="@+id/tv_last_bans_title"
                         android:layout_width="wrap_content"
@@ -181,6 +183,7 @@
                         android:textSize="@dimen/title_text_size"
                         android:visibility="gone" />
 
+                    <!-- TODO: handle clicks -->
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"

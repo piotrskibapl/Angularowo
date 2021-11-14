@@ -2,96 +2,37 @@ package pl.piotrskiba.angularowo.main.mainscreen.ui
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityOptionsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.preference.PreferenceManager
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.bumptech.glide.Glide
-import com.google.android.gms.tasks.Task
-import com.google.firebase.messaging.FirebaseMessaging
 import pl.piotrskiba.angularowo.AppViewModel
-import pl.piotrskiba.angularowo.BuildConfig
-import pl.piotrskiba.angularowo.Constants
-import pl.piotrskiba.angularowo.IntegerVersionSignature
 import pl.piotrskiba.angularowo.R
-import pl.piotrskiba.angularowo.adapters.BanListAdapter.BanViewHolder
 import pl.piotrskiba.angularowo.base.di.obtainViewModel
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.databinding.FragmentMainScreenBinding
-import pl.piotrskiba.angularowo.interfaces.BanClickListener
-import pl.piotrskiba.angularowo.interfaces.NetworkErrorListener
-import pl.piotrskiba.angularowo.main.ban.details.BanDetailsActivity
 import pl.piotrskiba.angularowo.main.base.viewmodel.MainViewModel
 import pl.piotrskiba.angularowo.main.mainscreen.viewmodel.MainScreenViewModel
-import pl.piotrskiba.angularowo.models.Ban
-import pl.piotrskiba.angularowo.models.DetailedPlayer
 import pl.piotrskiba.angularowo.models.Motd
-import pl.piotrskiba.angularowo.models.Rank
-import pl.piotrskiba.angularowo.models.ServerStatus
-import pl.piotrskiba.angularowo.utils.GlideUtils.getSignatureVersionNumber
 import pl.piotrskiba.angularowo.utils.PreferenceUtils
-import pl.piotrskiba.angularowo.utils.RankUtils.getRankFromPreferences
-import pl.piotrskiba.angularowo.utils.TextUtils
-import pl.piotrskiba.angularowo.utils.TextUtils.formatPlaytime
-import pl.piotrskiba.angularowo.utils.TextUtils.formatTps
-import pl.piotrskiba.angularowo.utils.TextUtils.normalize
-import pl.piotrskiba.angularowo.utils.UrlUtils.buildBodyUrl
 
-class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel::class), BanClickListener, NetworkErrorListener {
+class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel::class) {
 
     private lateinit var mViewModel: AppViewModel
     private lateinit var mainViewModel: MainViewModel
     private lateinit var preferenceUtils: PreferenceUtils
-    private var loadedServerStatus = false
-    private var loadedPlayer = false
-    private var loadedActivePlayerBans = false
 
     private var motd: Motd? = null
 
-    @BindView(R.id.swiperefresh)
-    lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
-
     @BindView(R.id.tv_motd)
     lateinit var mMotdTextView: TextView
-
-    @BindView(R.id.tv_greeting)
-    lateinit var mGreetingTextView: TextView
-
-    @BindView(R.id.tv_playercount)
-    lateinit var mPlayerCountTextView: TextView
-
-    @BindView(R.id.iv_player_body)
-    lateinit var mPlayerBodyImageView: ImageView
-
-    @BindView(R.id.tv_balance)
-    lateinit var mPlayerBalanceTextView: TextView
-
-    @BindView(R.id.tv_tokens)
-    lateinit var mPlayerTokensTextView: TextView
-
-    @BindView(R.id.tv_playtime)
-    lateinit var mPlayerPlayTimeTextView: TextView
-
-    @BindView(R.id.tv_last_bans_title)
-    lateinit var mLastBansTitleTextView: TextView
-
-    @BindView(R.id.default_layout)
-    lateinit var mDefaultLayout: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -109,9 +50,7 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel
 
         ButterKnife.bind(this, view)
 
-        mSwipeRefreshLayout.setOnRefreshListener { refreshData() }
         mMotdTextView.setOnClickListener { onMotdClick() }
-        mViewModel.setNetworkErrorListener(this)
 
         return view
     }
@@ -133,252 +72,6 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel
         return binding
     }
 
-    private fun populateUi() {
-        showDefaultLayout()
-
-        mGreetingTextView.text = getString(R.string.greeting, preferenceUtils.username)
-        mPlayerBalanceTextView.text = getString(R.string.balance_format, preferenceUtils.balance.toInt())
-        mPlayerTokensTextView.text = preferenceUtils.tokens.toString()
-        mPlayerPlayTimeTextView.text = formatPlaytime(requireContext(), preferenceUtils.playtime)
-
-        val skinUuid = preferenceUtils.skinUuid ?: preferenceUtils.uuid
-        if (skinUuid != null) {
-            Glide.with(requireContext())
-                    .load(buildBodyUrl(skinUuid, true))
-                    .signature(IntegerVersionSignature(getSignatureVersionNumber(1)))
-                    .placeholder(R.drawable.default_body)
-                    .into(mPlayerBodyImageView)
-        }
-    }
-
-    private fun seekForServerStatusUpdates() {
-        mViewModel.getServerStatus().observe(viewLifecycleOwner, { serverStatus: ServerStatus? ->
-            if (serverStatus != null) {
-                loadedServerStatus = true
-                showDefaultLayoutIfLoadedAllData()
-
-                val rank = getRankFromPreferences(requireContext())
-                if (rank != null && rank.staff) {
-                    val tps = formatTps(serverStatus.tps)
-                    mPlayerCountTextView.text = resources.getQuantityString(R.plurals.playercount_tps, serverStatus.playerCount, serverStatus.playerCount, tps)
-                } else {
-                    mPlayerCountTextView.text = resources.getQuantityString(R.plurals.playercount, serverStatus.playerCount, serverStatus.playerCount)
-                }
-
-                motd = serverStatus.motd
-                if (motd != null && context != null) {
-                    mMotdTextView.visibility = View.VISIBLE
-                    mMotdTextView.text = TextUtils.replaceQualifiers(requireContext(), motd!!.text)
-                    mMotdTextView.setTextColor(Color.parseColor(motd!!.textColor))
-                    mMotdTextView.setBackgroundColor(Color.parseColor(motd!!.backgroundColor))
-
-                    if (motd?.url != null) {
-                        mMotdTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_chevron_right, 0)
-
-                        for (drawable in mMotdTextView.compoundDrawables) {
-                            drawable?.colorFilter = PorterDuffColorFilter(Color.parseColor(motd!!.textColor), PorterDuff.Mode.SRC_IN)
-                        }
-                    } else {
-                        mMotdTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
-                    }
-                } else {
-                    mMotdTextView.visibility = View.GONE
-                }
-            }
-        })
-    }
-
-    private fun seekForPlayerUpdates() {
-        mViewModel.getPlayer().observe(viewLifecycleOwner, { player: DetailedPlayer? ->
-            if (player != null) {
-                loadedPlayer = true
-                showDefaultLayoutIfLoadedAllData()
-
-                if (context != null) {
-                    val previousSkinUuid = preferenceUtils.skinUuid ?: preferenceUtils.uuid
-
-                    preferenceUtils.skinUuid = player.skinUuid
-                    preferenceUtils.username = player.username
-                    preferenceUtils.balance = player.balance
-                    preferenceUtils.tokens = player.tokens
-                    preferenceUtils.playtime = player.playtime
-
-                    if (player.skinUuid != previousSkinUuid) {
-                        Glide.with(requireContext())
-                                .load(buildBodyUrl(player.skinUuid, true))
-                                .signature(IntegerVersionSignature(getSignatureVersionNumber(1)))
-                                .placeholder(R.drawable.default_body)
-                                .into(mPlayerBodyImageView)
-                    }
-                }
-
-                mPlayerBalanceTextView.text = getString(R.string.balance_format, player.balance.toInt())
-                mPlayerTokensTextView.text = player.tokens.toString()
-                mPlayerPlayTimeTextView.text = formatPlaytime(requireContext(), player.playtime)
-
-                subscribeToFirebaseRankTopic(player.rank)
-                checkFirebaseNewReportsTopicSubscription(player.rank)
-            }
-        })
-    }
-
-    private fun showDefaultLayoutIfLoadedAllData() {
-        if (loadedServerStatus && loadedPlayer && loadedActivePlayerBans) {
-            showDefaultLayout()
-
-            mSwipeRefreshLayout.isRefreshing = false
-        }
-    }
-
-    private fun refreshData() {
-        loadedServerStatus = false
-        loadedPlayer = false
-        loadedActivePlayerBans = false
-
-        mViewModel.refreshServerStatus()
-        mViewModel.refreshPlayer()
-        mViewModel.refreshActivePlayerBans()
-    }
-
-    override fun onResume() {
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val uuid = preferenceUtils.uuid
-        if (uuid != null) {
-            // subscribe to current app version Firebase topic
-            if (!sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_app_version_topic, BuildConfig.VERSION_CODE))) {
-                FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_APP_VERSION_TOPIC_PREFIX + BuildConfig.VERSION_CODE)
-                        .addOnCompleteListener { task: Task<Void?> ->
-                            if (isAdded) {
-                                if (task.isSuccessful) {
-                                    val editor = sharedPreferences.edit()
-                                    editor.putBoolean(getString(R.string.pref_key_subscribed_to_app_version_topic, BuildConfig.VERSION_CODE), true)
-                                    editor.apply()
-                                }
-                            }
-                        }
-            }
-
-            // subscribe to player's individual Firebase topic
-            if (!sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_uuid_topic))) {
-                FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_PLAYER_TOPIC_PREFIX + uuid)
-                        .addOnCompleteListener { task: Task<Void?> ->
-                            if (isAdded) {
-                                if (task.isSuccessful) {
-                                    preferenceUtils.subscribedToFirebaseUuidTopic = true
-                                }
-                            }
-                        }
-            }
-
-            // subscribe to new events Firebase topic
-            if (!sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_events))) {
-                FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_NEW_EVENT_TOPIC)
-                        .addOnCompleteListener { task: Task<Void?> ->
-                            if (isAdded) {
-                                if (task.isSuccessful) {
-                                    preferenceUtils.subscribedToFirebaseEventsTopic = true
-                                }
-                            }
-                        }
-            }
-
-            // subscribe to private messages Firebase topic
-            if (!sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_private_messages))) {
-                FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_PRIVATE_MESSAGES_TOPIC)
-                        .addOnCompleteListener { task: Task<Void?> ->
-                            if (isAdded) {
-                                if (task.isSuccessful) {
-                                    preferenceUtils.subscribedToFirebasePrivateMessagesTopic = true
-                                }
-                            }
-                        }
-            }
-
-            // subscribe to account incidents Firebase topic
-            if (!sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_account_incidents))) {
-                FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_ACCOUNT_INCIDENTS_TOPIC)
-                        .addOnCompleteListener { task: Task<Void?> ->
-                            if (isAdded) {
-                                if (task.isSuccessful) {
-                                    preferenceUtils.subscribedToFirebaseAccountIncidentsTopic = true
-                                }
-                            }
-                        }
-            }
-        }
-        super.onResume()
-    }
-
-    private fun subscribeToFirebaseRankTopic(rank: Rank) {
-        val previousRankName = preferenceUtils.rankName
-
-        if (rank.name != previousRankName) {
-            if (previousRankName != null) {
-                FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_RANK_TOPIC_PREFIX + normalize(previousRankName))
-            }
-
-            FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_RANK_TOPIC_PREFIX + normalize(rank.name))
-
-            preferenceUtils.rankName = rank.name
-        }
-    }
-
-    private fun checkFirebaseNewReportsTopicSubscription(rank: Rank?) {
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        if (rank != null && rank.staff) {
-            if (!sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_new_reports))) {
-                FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_NEW_REPORTS_TOPIC)
-                        .addOnCompleteListener {
-                            preferenceUtils.subscribedToFirebaseNewReportsTopic = true
-                        }
-            }
-        } else {
-            if (sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_new_reports)) && sharedPreferences.getBoolean(getString(R.string.pref_key_subscribed_to_new_reports), false)) {
-                FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_NEW_REPORTS_TOPIC)
-                        .addOnCompleteListener {
-                            val editor = sharedPreferences.edit()
-                            editor.remove(getString(R.string.pref_key_subscribed_to_new_reports))
-                            editor.apply()
-                        }
-            }
-        }
-    }
-
-    private fun showDefaultLayout() {
-        mDefaultLayout.visibility = View.VISIBLE
-    }
-
-    private fun showNoInternetLayout() {
-        mSwipeRefreshLayout.isRefreshing = false
-        mDefaultLayout.visibility = View.GONE
-    }
-
-    private fun showServerErrorLayout() {
-        mSwipeRefreshLayout.isRefreshing = false
-        mDefaultLayout.visibility = View.GONE
-    }
-
-    override fun onBanClick(view: View, clickedBan: Ban) {
-        if (!mSwipeRefreshLayout.isRefreshing) {
-            val banViewHolder = view.tag as BanViewHolder
-
-            val intent = Intent(context, BanDetailsActivity::class.java)
-            intent.putExtra(Constants.EXTRA_BAN, clickedBan)
-
-            if (banViewHolder.mPlayerAvatar.drawable != null) {
-                val avatarBitmap = (banViewHolder.mPlayerAvatar.drawable as BitmapDrawable).bitmap
-                intent.putExtra(Constants.EXTRA_BITMAP, avatarBitmap)
-            }
-
-            if (activity != null) {
-                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), view, getString(R.string.ban_banner_transition_name))
-                startActivity(intent, options.toBundle())
-            } else {
-                startActivity(intent)
-            }
-        }
-    }
-
     private fun onMotdClick() {
         if (motd?.url != null) {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(motd!!.url))
@@ -386,13 +79,5 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel
                 startActivity(intent)
             }
         }
-    }
-
-    override fun onNoInternet() {
-        showNoInternetLayout()
-    }
-
-    override fun onServerError() {
-        showServerErrorLayout()
     }
 }

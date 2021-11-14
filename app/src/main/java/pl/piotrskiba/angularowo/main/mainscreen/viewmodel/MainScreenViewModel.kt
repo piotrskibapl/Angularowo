@@ -75,6 +75,11 @@ class MainScreenViewModel @Inject constructor(
 
     override fun onFirstCreate() {
         onRefresh()
+        // TODO: subscribe to Firebase app version topic
+        // TODO: subscribe to Firebase player uuid topic
+        // TODO: subscribe to Firebase new events topic
+        // TODO: subscribe to Firebase private messages topic
+        // TODO: subscribe to Firebase account incidents topic
     }
 
     override fun onCleared() {
@@ -120,6 +125,8 @@ class MainScreenViewModel @Inject constructor(
                     playerData.value = detailedPlayer.toUi()
                     player.value = detailedPlayer
                     savePlayer(detailedPlayer)
+                    // TODO: subscribe to Firebase rank topic
+                    // TODO: subscribe/unsubscribe to Firebase new reports topic
                 },
                 { error ->
                     playerDataState.value = Error(error)
