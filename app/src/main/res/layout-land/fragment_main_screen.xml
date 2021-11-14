@@ -173,7 +173,6 @@
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </LinearLayout>
 
-                    <!-- TODO: map view visibility -->
                     <TextView
                         android:id="@+id/tv_last_bans_title"
                         android:layout_width="wrap_content"
@@ -181,7 +180,9 @@
                         android:layout_gravity="center_horizontal"
                         android:text="@string/last_player_bans"
                         android:textSize="@dimen/title_text_size"
-                        android:visibility="gone" />
+                        android:visibility="gone"
+                        app:visible="@{viewModel.isBanListNotEmpty()}"
+                        tools:visibility="gone" />
 
                     <!-- TODO: handle clicks -->
                     <androidx.recyclerview.widget.RecyclerView
@@ -191,7 +192,9 @@
                         app:itemBinding="@{viewModel.bansBinding}"
                         app:items="@{viewModel.bans}"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_last_bans_title" />
+                        app:layout_constraintTop_toBottomOf="@+id/tv_last_bans_title"
+                        app:visible="@{viewModel.isBanListNotEmpty()}"
+                        tools:visibility="gone" />
                 </LinearLayout>
 
                 <include

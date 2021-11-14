@@ -71,6 +71,7 @@ class MainScreenViewModel @Inject constructor(
     val serverData = MutableLiveData<MainScreenServerData>()
     val bans: ObservableList<BanBannerData> = ObservableArrayList()
     val bansBinding = ItemBinding.of<BanBannerData>(BR.ban, R.layout.ban_list_item)
+    val isBanListNotEmpty = MutableLiveData(false)
     private val disposables = CompositeDisposable()
 
     override fun onFirstCreate() {
@@ -157,6 +158,7 @@ class MainScreenViewModel @Inject constructor(
                     punishmentsDataState.value = Loaded
                     bans.clear()
                     bans.addAll(punishmentModels.toUi())
+                    isBanListNotEmpty.value = bans.isNotEmpty()
                 },
                 { error ->
                     punishmentsDataState.value = Error(error)
