@@ -28,7 +28,7 @@ class PunishmentListViewModel @Inject constructor(
 
     val state = MutableLiveData<ViewModelState>(Loading)
     val punishments: ObservableList<BanBannerData> = ObservableArrayList()
-    val punishmentsBinding = ItemBinding.of<BanBannerData>(BR.ban, R.layout.ban_list_item)
+    val punishmentsBinding = ItemBinding.of<BanBannerData>(BR.ban, R.layout.punishment_list_item)
     lateinit var navigator: PunishmentListNavigator
     private val disposables = CompositeDisposable()
 

@@ -71,7 +71,7 @@ class MainScreenViewModel @Inject constructor(
     val playerData = MutableLiveData(lastPlayerData)
     val serverData = MutableLiveData<MainScreenServerData>()
     val bans: ObservableList<BanBannerData> = ObservableArrayList()
-    val bansBinding = ItemBinding.of<BanBannerData>(BR.ban, R.layout.ban_list_item)
+    val bansBinding = ItemBinding.of<BanBannerData>(BR.ban, R.layout.punishment_list_item)
     val isBanListNotEmpty = MutableLiveData(false)
     lateinit var navigator: PunishmentListNavigator
     private val disposables = CompositeDisposable()

@@ -27,10 +27,10 @@ class BanDetailsActivity : OldBaseActivity() {
     @BindView(R.id.tv_player_name)
     lateinit var mPlayerName: TextView
 
-    @BindView(R.id.tv_ban_description)
+    @BindView(R.id.tv_punishment_description)
     lateinit var mBanReason: TextView
 
-    @BindView(R.id.iv_ban_type)
+    @BindView(R.id.iv_punishment_type)
     lateinit var mBanTypeImageView: ImageView
 
     @BindView(R.id.tv_ban_type)

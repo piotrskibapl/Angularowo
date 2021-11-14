@@ -22,7 +22,7 @@
 
         <include
             android:id="@+id/ban_banner"
-            layout="@layout/ban_list_item"/>
+            layout="@layout/punishment_list_item"/>
 
         <TextView
             android:id="@+id/tv_ban_type"
