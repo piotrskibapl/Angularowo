@@ -60,8 +60,8 @@ class PunishmentDetailsActivity : OldBaseActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setTitle(R.string.punishment_info)
 
-        if (intent.hasExtra(Constants.EXTRA_BAN)) {
-            val ban = intent.getSerializableExtra(Constants.EXTRA_BAN) as Ban
+        if (intent.hasExtra(Constants.EXTRA_PUNISHMENT)) {
+            val ban = intent.getSerializableExtra(Constants.EXTRA_PUNISHMENT) as Ban
             populateBan(ban)
         }
     }

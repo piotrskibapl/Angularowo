@@ -50,7 +50,7 @@ class PunishmentListFragment : BaseFragment<PunishmentListViewModel>(PunishmentL
 
     override fun onPunishmentClick(view: View, punishment: PunishmentBannerData) {
         val intent = Intent(context, PunishmentDetailsActivity::class.java)
-        intent.putExtra(Constants.EXTRA_BAN, punishment)
+        intent.putExtra(Constants.EXTRA_PUNISHMENT, punishment)
         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
             requireActivity(),
             view,
