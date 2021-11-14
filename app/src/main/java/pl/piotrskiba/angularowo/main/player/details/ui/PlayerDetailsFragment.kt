@@ -7,7 +7,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
@@ -40,12 +39,6 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
     ): View {
         val binding = bindViewModel(layoutInflater, container)
         val view = binding.root
-
-        val actionbar = (activity as AppCompatActivity?)?.supportActionBar
-        actionbar?.setTitle(R.string.player_info)
-        actionbar?.setDisplayHomeAsUpEnabled(true)
-        actionbar?.setDisplayShowHomeEnabled(true)
-
         return view
     }
 
