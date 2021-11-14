@@ -16,7 +16,7 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-class BanDetailsActivity : OldBaseActivity() {
+class PunishmentDetailsActivity : OldBaseActivity() {
 
     @BindView(R.id.toolbar)
     lateinit var mToolbar: Toolbar
@@ -33,32 +33,32 @@ class BanDetailsActivity : OldBaseActivity() {
     @BindView(R.id.iv_punishment_type)
     lateinit var mBanTypeImageView: ImageView
 
-    @BindView(R.id.tv_ban_type)
+    @BindView(R.id.tv_punishment_type)
     lateinit var mBanTypeTextView: TextView
 
-    @BindView(R.id.tv_ban_description_full)
+    @BindView(R.id.tv_punishment_description_full)
     lateinit var mBanFullReason: TextView
 
-    @BindView(R.id.tv_ban_banner)
+    @BindView(R.id.tv_punishment_banner)
     lateinit var mBanBanner: TextView
 
-    @BindView(R.id.tv_ban_start_date)
+    @BindView(R.id.tv_punishment_start_date)
     lateinit var mBanStartDate: TextView
 
-    @BindView(R.id.tv_ban_end_date)
+    @BindView(R.id.tv_punishment_end_date)
     lateinit var mBanEndDate: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_ban_details)
+        setContentView(R.layout.activity_punishment_details)
 
         ButterKnife.bind(this)
 
         setSupportActionBar(mToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        supportActionBar?.setTitle(R.string.ban_info)
+        supportActionBar?.setTitle(R.string.punishment_info)
 
         if (intent.hasExtra(Constants.EXTRA_BAN)) {
             val ban = intent.getSerializableExtra(Constants.EXTRA_BAN) as Ban
@@ -105,7 +105,7 @@ class BanDetailsActivity : OldBaseActivity() {
         mBanStartDate.text = df.format(start)
 
         if (ban.expireDate == 0f)
-            mBanEndDate.text = getString(R.string.ban_expiration_never)
+            mBanEndDate.text = getString(R.string.punishment_expiration_never)
         else
             mBanEndDate.text = df.format(end)
     }

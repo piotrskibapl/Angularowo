@@ -13,7 +13,7 @@ import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.databinding.FragmentPunishmentListBinding
-import pl.piotrskiba.angularowo.main.ban.details.BanDetailsActivity
+import pl.piotrskiba.angularowo.main.ban.details.PunishmentDetailsActivity
 import pl.piotrskiba.angularowo.main.ban.list.nav.PunishmentListNavigator
 import pl.piotrskiba.angularowo.main.ban.list.viewmodel.PunishmentListViewModel
 import pl.piotrskiba.angularowo.main.ban.model.BanBannerData
@@ -33,7 +33,7 @@ class PunishmentListFragment : BaseFragment<PunishmentListViewModel>(PunishmentL
         ButterKnife.bind(this, view)
 
         val actionbar = (activity as AppCompatActivity?)?.supportActionBar
-        actionbar?.setTitle(R.string.actionbar_title_ban_list)
+        actionbar?.setTitle(R.string.actionbar_title_punishment_list)
         return view
     }
 
@@ -49,12 +49,12 @@ class PunishmentListFragment : BaseFragment<PunishmentListViewModel>(PunishmentL
     }
 
     override fun onPunishmentClick(view: View, punishment: BanBannerData) {
-        val intent = Intent(context, BanDetailsActivity::class.java)
+        val intent = Intent(context, PunishmentDetailsActivity::class.java)
         intent.putExtra(Constants.EXTRA_BAN, punishment)
         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
             requireActivity(),
             view,
-            getString(R.string.ban_banner_transition_name)
+            getString(R.string.punishment_banner_transition_name)
         )
         startActivity(intent, options.toBundle())
     }
