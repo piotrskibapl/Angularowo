@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 interface PunishmentApiService {
 
-    @GET("get_ban_list.php")
+    @GET("get_punishment_list.php")
     fun getBanList(
         @Query("api_key") apiKey: String,
         @Query("access_token") accessToken: String,
