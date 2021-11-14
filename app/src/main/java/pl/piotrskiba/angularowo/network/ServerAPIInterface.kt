@@ -6,21 +6,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ServerAPIInterface {
-    @GET("get_server_status.php")
-    fun getServerStatus(@Query("api_key") apiKey: String, @Query("access_token") access_token: String): Call<ServerStatus>
-
-    @GET("get_online_players.php")
-    fun getPlayers(@Query("api_key") apiKey: String, @Query("access_token") access_token: String): Call<PlayerList>
-
-    @GET("get_ban_list.php")
-    fun getAllBans(@Query("api_key") apiKey: String, @Query("type") type: String, @Query("username") username: String?, @Query("access_token") access_token: String): Call<BanList>
-
-    @GET("get_ban_list.php?filter=active")
-    fun getActiveBans(@Query("api_key") apiKey: String, @Query("type") type: String, @Query("username") username: String?, @Query("access_token") access_token: String): Call<BanList>
-
-    @GET("get_player_info.php")
-    fun getPlayerInfoFromUsername(@Query("api_key") apiKey: String, @Query("username") username: String, @Query("access_token") access_token: String): Call<DetailedPlayer>
-
     @GET("get_player_info.php")
     fun getPlayerInfoFromUuid(@Query("api_key") apiKey: String, @Query("uuid") uuid: String, @Query("access_token") access_token: String): Call<DetailedPlayer>
 
