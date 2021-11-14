@@ -8,7 +8,7 @@ import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentType
 import pl.piotrskiba.angularowo.utils.UrlUtils
 import java.io.Serializable
 
-data class BanBannerData(
+data class PunishmentBannerData(
     val uuid: String?,
     val username: String,
     val reason: String,
@@ -28,7 +28,7 @@ data class BanBannerData(
 }
 
 fun PunishmentModel.toUi() =
-    BanBannerData(
+    PunishmentBannerData(
         uuid,
         username,
         reason,

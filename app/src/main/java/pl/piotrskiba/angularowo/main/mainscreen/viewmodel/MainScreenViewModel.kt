@@ -21,7 +21,7 @@ import pl.piotrskiba.angularowo.domain.player.usecase.GetPlayerDetailsFromUuidUs
 import pl.piotrskiba.angularowo.domain.punishment.usecase.GetActivePlayerPunishmentsUseCase
 import pl.piotrskiba.angularowo.domain.server.usecase.GetServerStatusUseCase
 import pl.piotrskiba.angularowo.main.ban.list.nav.PunishmentListNavigator
-import pl.piotrskiba.angularowo.main.ban.model.BanBannerData
+import pl.piotrskiba.angularowo.main.ban.model.PunishmentBannerData
 import pl.piotrskiba.angularowo.main.ban.model.toUi
 import pl.piotrskiba.angularowo.main.mainscreen.model.MainScreenServerData
 import pl.piotrskiba.angularowo.main.mainscreen.model.toUi
@@ -70,14 +70,14 @@ class MainScreenViewModel @Inject constructor(
     )
     val playerData = MutableLiveData(lastPlayerData)
     val serverData = MutableLiveData<MainScreenServerData>()
-    val bans: ObservableList<BanBannerData> = ObservableArrayList()
-    val bansBinding = ItemBinding.of<BanBannerData>(BR.ban, R.layout.punishment_list_item)
-    val isBanListNotEmpty = MutableLiveData(false)
+    val punishments: ObservableList<PunishmentBannerData> = ObservableArrayList()
+    val punishmentsBinding = ItemBinding.of<PunishmentBannerData>(BR.punishment, R.layout.punishment_list_item)
+    val isPunishmentListNotEmpty = MutableLiveData(false)
     lateinit var navigator: PunishmentListNavigator
     private val disposables = CompositeDisposable()
 
     override fun onFirstCreate() {
-        bansBinding.bindExtra(BR.navigator, navigator)
+        punishmentsBinding.bindExtra(BR.navigator, navigator)
         onRefresh()
         // TODO: subscribe to Firebase app version topic
         // TODO: subscribe to Firebase player uuid topic
@@ -159,9 +159,9 @@ class MainScreenViewModel @Inject constructor(
             .subscribe(
                 { punishmentModels ->
                     punishmentsDataState.value = Loaded
-                    bans.clear()
-                    bans.addAll(punishmentModels.toUi())
-                    isBanListNotEmpty.value = bans.isNotEmpty()
+                    punishments.clear()
+                    punishments.addAll(punishmentModels.toUi())
+                    isPunishmentListNotEmpty.value = punishments.isNotEmpty()
                 },
                 { error ->
                     punishmentsDataState.value = Error(error)

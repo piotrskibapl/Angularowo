@@ -16,7 +16,7 @@ import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
 import pl.piotrskiba.angularowo.domain.punishment.usecase.GetActivePunishmentsUseCase
 import pl.piotrskiba.angularowo.main.ban.list.nav.PunishmentListNavigator
-import pl.piotrskiba.angularowo.main.ban.model.BanBannerData
+import pl.piotrskiba.angularowo.main.ban.model.PunishmentBannerData
 import pl.piotrskiba.angularowo.main.ban.model.toUi
 import javax.inject.Inject
 
@@ -27,8 +27,8 @@ class PunishmentListViewModel @Inject constructor(
 ) : LifecycleViewModel() {
 
     val state = MutableLiveData<ViewModelState>(Loading)
-    val punishments: ObservableList<BanBannerData> = ObservableArrayList()
-    val punishmentsBinding = ItemBinding.of<BanBannerData>(BR.ban, R.layout.punishment_list_item)
+    val punishments: ObservableList<PunishmentBannerData> = ObservableArrayList()
+    val punishmentsBinding = ItemBinding.of<PunishmentBannerData>(BR.punishment, R.layout.punishment_list_item)
     lateinit var navigator: PunishmentListNavigator
     private val disposables = CompositeDisposable()
 

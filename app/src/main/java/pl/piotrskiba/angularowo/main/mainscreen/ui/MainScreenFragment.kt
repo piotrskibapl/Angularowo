@@ -22,7 +22,7 @@ import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.databinding.FragmentMainScreenBinding
 import pl.piotrskiba.angularowo.main.ban.details.PunishmentDetailsActivity
 import pl.piotrskiba.angularowo.main.ban.list.nav.PunishmentListNavigator
-import pl.piotrskiba.angularowo.main.ban.model.BanBannerData
+import pl.piotrskiba.angularowo.main.ban.model.PunishmentBannerData
 import pl.piotrskiba.angularowo.main.base.viewmodel.MainViewModel
 import pl.piotrskiba.angularowo.main.mainscreen.viewmodel.MainScreenViewModel
 import pl.piotrskiba.angularowo.models.Motd
@@ -88,7 +88,7 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel
         }
     }
 
-    override fun onPunishmentClick(view: View, punishment: BanBannerData) {
+    override fun onPunishmentClick(view: View, punishment: PunishmentBannerData) {
         val intent = Intent(context, PunishmentDetailsActivity::class.java)
         intent.putExtra(Constants.EXTRA_BAN, punishment)
         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(

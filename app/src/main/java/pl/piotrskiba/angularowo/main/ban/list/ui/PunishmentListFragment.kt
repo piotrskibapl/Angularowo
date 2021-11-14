@@ -16,7 +16,7 @@ import pl.piotrskiba.angularowo.databinding.FragmentPunishmentListBinding
 import pl.piotrskiba.angularowo.main.ban.details.PunishmentDetailsActivity
 import pl.piotrskiba.angularowo.main.ban.list.nav.PunishmentListNavigator
 import pl.piotrskiba.angularowo.main.ban.list.viewmodel.PunishmentListViewModel
-import pl.piotrskiba.angularowo.main.ban.model.BanBannerData
+import pl.piotrskiba.angularowo.main.ban.model.PunishmentBannerData
 
 class PunishmentListFragment : BaseFragment<PunishmentListViewModel>(PunishmentListViewModel::class),
     PunishmentListNavigator {
@@ -48,7 +48,7 @@ class PunishmentListFragment : BaseFragment<PunishmentListViewModel>(PunishmentL
         return binding
     }
 
-    override fun onPunishmentClick(view: View, punishment: BanBannerData) {
+    override fun onPunishmentClick(view: View, punishment: PunishmentBannerData) {
         val intent = Intent(context, PunishmentDetailsActivity::class.java)
         intent.putExtra(Constants.EXTRA_BAN, punishment)
         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(

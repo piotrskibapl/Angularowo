@@ -172,7 +172,7 @@
                         android:layout_marginTop="@dimen/section_margin"
                         android:text="@string/last_player_bans"
                         android:textSize="@dimen/title_text_size"
-                        app:visible="@{viewModel.isBanListNotEmpty()}"
+                        app:visible="@{viewModel.isPunishmentListNotEmpty()}"
                         tools:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -183,9 +183,9 @@
                         android:layout_height="match_parent"
                         android:layout_marginTop="@dimen/margin_default"
                         tools:visibility="gone"
-                        app:visible="@{viewModel.isBanListNotEmpty()}"
-                        app:itemBinding="@{viewModel.bansBinding}"
-                        app:items="@{viewModel.bans}"
+                        app:visible="@{viewModel.isPunishmentListNotEmpty()}"
+                        app:itemBinding="@{viewModel.punishmentsBinding}"
+                        app:items="@{viewModel.punishments}"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintTop_toBottomOf="@+id/tv_last_bans_title" />
 

@@ -12,8 +12,8 @@
             type="pl.piotrskiba.angularowo.main.ban.list.nav.PunishmentListNavigator" />
 
         <variable
-            name="ban"
-            type="pl.piotrskiba.angularowo.main.ban.model.BanBannerData" />
+            name="punishment"
+            type="pl.piotrskiba.angularowo.main.ban.model.PunishmentBannerData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_small"
         android:background="@color/color_minecraft_7"
-        android:onClick="@{(view) -> navigator.onPunishmentClick(view, ban)}"
+        android:onClick="@{(view) -> navigator.onPunishmentClick(view, punishment)}"
         android:padding="@dimen/padding_default"
         android:transitionName="@string/punishment_banner_transition_name">
 
@@ -32,7 +32,7 @@
             android:layout_height="@dimen/avatar_size"
             android:contentDescription="@string/player_avatar_image_description"
             android:src="@drawable/default_avatar"
-            app:imageUrl="@{ban.userAvatarUrl(context)}"
+            app:imageUrl="@{punishment.userAvatarUrl(context)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -54,7 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="@{ban.username}"
+                android:text="@{punishment.username}"
                 android:textAlignment="center"
                 android:textSize="@dimen/username_text_size"
                 tools:text="Username" />
@@ -64,7 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="@{ban.reason}"
+                android:text="@{punishment.reason}"
                 android:textAlignment="center"
                 android:textSize="@dimen/rank_text_size"
                 tools:text="reason" />
@@ -75,7 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/ban_type_image_description"
-            android:src="@{ban.punishmentIcon}"
+            android:src="@{punishment.punishmentIcon}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
