@@ -15,8 +15,10 @@ import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
 import pl.piotrskiba.angularowo.domain.punishment.usecase.GetActivePunishmentsUseCase
+import pl.piotrskiba.angularowo.main.ban.list.nav.PunishmentListNavigator
 import pl.piotrskiba.angularowo.main.ban.model.BanBannerData
 import pl.piotrskiba.angularowo.main.ban.model.toUi
+import pl.piotrskiba.angularowo.main.player.list.nav.PlayerListNavigator
 import javax.inject.Inject
 
 class BanListViewModel @Inject constructor(
@@ -28,9 +30,11 @@ class BanListViewModel @Inject constructor(
     val state = MutableLiveData<ViewModelState>(Loading)
     val bans: ObservableList<BanBannerData> = ObservableArrayList()
     val bansBinding = ItemBinding.of<BanBannerData>(BR.ban, R.layout.ban_list_item)
+    lateinit var navigator: PunishmentListNavigator
     private val disposables = CompositeDisposable()
 
     override fun onFirstCreate() {
+        bansBinding.bindExtra(BR.navigator, navigator)
         loadBanList()
     }
 

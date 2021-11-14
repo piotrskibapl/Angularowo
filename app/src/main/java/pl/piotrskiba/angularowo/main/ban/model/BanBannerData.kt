@@ -6,13 +6,14 @@ import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentModel
 import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentType
 import pl.piotrskiba.angularowo.utils.UrlUtils
+import java.io.Serializable
 
 data class BanBannerData(
     val uuid: String?,
     val username: String,
     val reason: String,
     private val punishmentType: PunishmentType,
-) {
+) : Serializable {
 
     fun userAvatarUrl(context: Context) = UrlUtils.buildAvatarUrl(uuid, true, context)
 

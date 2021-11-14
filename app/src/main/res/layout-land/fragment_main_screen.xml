@@ -184,7 +184,6 @@
                         app:visible="@{viewModel.isBanListNotEmpty()}"
                         tools:visibility="gone" />
 
-                    <!-- TODO: handle clicks -->
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"

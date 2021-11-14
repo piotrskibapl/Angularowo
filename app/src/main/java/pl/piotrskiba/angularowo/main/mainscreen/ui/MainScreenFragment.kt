@@ -9,21 +9,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import butterknife.BindView
 import butterknife.ButterKnife
 import pl.piotrskiba.angularowo.AppViewModel
+import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.di.obtainViewModel
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.databinding.FragmentMainScreenBinding
+import pl.piotrskiba.angularowo.main.ban.details.BanDetailsActivity
+import pl.piotrskiba.angularowo.main.ban.list.nav.PunishmentListNavigator
+import pl.piotrskiba.angularowo.main.ban.model.BanBannerData
 import pl.piotrskiba.angularowo.main.base.viewmodel.MainViewModel
 import pl.piotrskiba.angularowo.main.mainscreen.viewmodel.MainScreenViewModel
 import pl.piotrskiba.angularowo.models.Motd
 import pl.piotrskiba.angularowo.utils.PreferenceUtils
 
-class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel::class) {
+class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel::class),
+    PunishmentListNavigator {
 
     private lateinit var mViewModel: AppViewModel
     private lateinit var mainViewModel: MainViewModel
@@ -35,6 +41,7 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel
     lateinit var mMotdTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        viewModel.navigator = this
         super.onCreate(savedInstanceState)
 
         mViewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
@@ -79,5 +86,16 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel
                 startActivity(intent)
             }
         }
+    }
+
+    override fun onPunishmentClick(view: View, punishment: BanBannerData) {
+        val intent = Intent(context, BanDetailsActivity::class.java)
+        intent.putExtra(Constants.EXTRA_BAN, punishment)
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+            requireActivity(),
+            view,
+            getString(R.string.ban_banner_transition_name)
+        )
+        startActivity(intent, options.toBundle())
     }
 }

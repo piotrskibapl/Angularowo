@@ -8,6 +8,10 @@
         <import type="pl.piotrskiba.angularowo.R" />
 
         <variable
+            name="navigator"
+            type="pl.piotrskiba.angularowo.main.ban.list.nav.PunishmentListNavigator" />
+
+        <variable
             name="ban"
             type="pl.piotrskiba.angularowo.main.ban.model.BanBannerData" />
     </data>
@@ -18,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_small"
         android:background="@color/color_minecraft_7"
+        android:onClick="@{(view) -> navigator.onPunishmentClick(view, ban)}"
         android:padding="@dimen/padding_default"
         android:transitionName="@string/ban_banner_transition_name">
 
