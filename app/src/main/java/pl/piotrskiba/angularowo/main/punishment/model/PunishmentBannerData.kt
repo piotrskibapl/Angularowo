@@ -9,6 +9,7 @@ import pl.piotrskiba.angularowo.utils.UrlUtils
 import java.io.Serializable
 
 data class PunishmentBannerData(
+    val id: String,
     val uuid: String?,
     val username: String,
     val reason: String,
@@ -29,6 +30,7 @@ data class PunishmentBannerData(
 
 fun PunishmentModel.toPunishmentBannerData() =
     PunishmentBannerData(
+        id,
         uuid,
         username,
         reason,

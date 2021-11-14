@@ -5,6 +5,7 @@ import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentType
 import java.io.Serializable
 
 data class DetailedPunishmentData(
+    val id: String,
     val uuid: String?,
     val username: String,
     val reason: String,
@@ -13,6 +14,7 @@ data class DetailedPunishmentData(
 
 fun PunishmentModel.toUi() =
     DetailedPunishmentData(
+        id,
         uuid,
         username,
         reason,

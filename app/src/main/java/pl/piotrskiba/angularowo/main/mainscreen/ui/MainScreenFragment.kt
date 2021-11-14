@@ -90,7 +90,7 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel
 
     override fun onPunishmentClick(view: View, punishment: PunishmentBannerData) {
         val intent = Intent(context, PunishmentDetailsActivity::class.java)
-        intent.putExtra(Constants.EXTRA_PUNISHMENT, viewModel.punishments.find { it.uuid == punishment.uuid }) // TODO: replace uuid-check with ID-check when provided by backend
+        intent.putExtra(Constants.EXTRA_PUNISHMENT, viewModel.punishments.find { it.id == punishment.id })
         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
             requireActivity(),
             view,
