@@ -21,7 +21,7 @@ class PunishmentRepositoryImpl @Inject constructor(
         filter: PunishmentFilter
     ): Single<List<PunishmentModel>> =
         punishmentApi
-            .getBanList(
+            .getPunishmentList(
                 BuildConfig.API_KEY,
                 accessToken,
                 null,
@@ -37,7 +37,7 @@ class PunishmentRepositoryImpl @Inject constructor(
         filter: PunishmentFilter
     ): Single<List<PunishmentModel>> =
         punishmentApi
-            .getBanList(
+            .getPunishmentList(
                 BuildConfig.API_KEY,
                 accessToken,
                 username,
