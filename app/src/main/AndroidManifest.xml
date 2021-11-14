@@ -29,7 +29,7 @@
             android:value="true" />
 
         <activity
-            android:name=".main.ban.details.PunishmentDetailsActivity"
+            android:name=".main.punishment.details.PunishmentDetailsActivity"
             android:parentActivityName=".main.base.ui.MainActivity" />
         <activity android:name=".settings.ui.SettingsActivity" />
         <activity

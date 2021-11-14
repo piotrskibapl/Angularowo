@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="pl.piotrskiba.angularowo.main.ban.list.viewmodel.PunishmentListViewModel" />
+            type="pl.piotrskiba.angularowo.main.punishment.list.viewmodel.PunishmentListViewModel" />
     </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

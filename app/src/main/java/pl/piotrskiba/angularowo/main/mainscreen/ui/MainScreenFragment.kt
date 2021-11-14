@@ -20,9 +20,9 @@ import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.di.obtainViewModel
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.databinding.FragmentMainScreenBinding
-import pl.piotrskiba.angularowo.main.ban.details.PunishmentDetailsActivity
-import pl.piotrskiba.angularowo.main.ban.list.nav.PunishmentListNavigator
-import pl.piotrskiba.angularowo.main.ban.model.PunishmentBannerData
+import pl.piotrskiba.angularowo.main.punishment.details.PunishmentDetailsActivity
+import pl.piotrskiba.angularowo.main.punishment.list.nav.PunishmentListNavigator
+import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBannerData
 import pl.piotrskiba.angularowo.main.base.viewmodel.MainViewModel
 import pl.piotrskiba.angularowo.main.mainscreen.viewmodel.MainScreenViewModel
 import pl.piotrskiba.angularowo.models.Motd

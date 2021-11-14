@@ -9,11 +9,11 @@
 
         <variable
             name="navigator"
-            type="pl.piotrskiba.angularowo.main.ban.list.nav.PunishmentListNavigator" />
+            type="pl.piotrskiba.angularowo.main.punishment.list.nav.PunishmentListNavigator" />
 
         <variable
             name="punishment"
-            type="pl.piotrskiba.angularowo.main.ban.model.PunishmentBannerData" />
+            type="pl.piotrskiba.angularowo.main.punishment.model.PunishmentBannerData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

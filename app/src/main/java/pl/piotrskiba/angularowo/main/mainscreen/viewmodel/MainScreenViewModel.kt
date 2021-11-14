@@ -20,9 +20,9 @@ import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
 import pl.piotrskiba.angularowo.domain.player.usecase.GetPlayerDetailsFromUuidUseCase
 import pl.piotrskiba.angularowo.domain.punishment.usecase.GetActivePlayerPunishmentsUseCase
 import pl.piotrskiba.angularowo.domain.server.usecase.GetServerStatusUseCase
-import pl.piotrskiba.angularowo.main.ban.list.nav.PunishmentListNavigator
-import pl.piotrskiba.angularowo.main.ban.model.PunishmentBannerData
-import pl.piotrskiba.angularowo.main.ban.model.toUi
+import pl.piotrskiba.angularowo.main.punishment.list.nav.PunishmentListNavigator
+import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBannerData
+import pl.piotrskiba.angularowo.main.punishment.model.toUi
 import pl.piotrskiba.angularowo.main.mainscreen.model.MainScreenServerData
 import pl.piotrskiba.angularowo.main.mainscreen.model.toUi
 import pl.piotrskiba.angularowo.main.player.details.model.DetailedPlayerData

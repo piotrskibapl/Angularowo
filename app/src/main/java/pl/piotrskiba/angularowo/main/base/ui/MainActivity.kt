@@ -27,7 +27,7 @@ import pl.piotrskiba.angularowo.base.di.obtainViewModel
 import pl.piotrskiba.angularowo.base.ui.BaseActivity
 import pl.piotrskiba.angularowo.interfaces.UnauthorizedResponseListener
 import pl.piotrskiba.angularowo.login.ui.LoginActivity
-import pl.piotrskiba.angularowo.main.ban.list.ui.PunishmentListFragment
+import pl.piotrskiba.angularowo.main.punishment.list.ui.PunishmentListFragment
 import pl.piotrskiba.angularowo.main.base.viewmodel.MainViewModel
 import pl.piotrskiba.angularowo.main.chat.ui.ChatFragment
 import pl.piotrskiba.angularowo.main.mainscreen.ui.MainScreenFragment

@@ -1,4 +1,4 @@
-package pl.piotrskiba.angularowo.main.ban.list.viewmodel
+package pl.piotrskiba.angularowo.main.punishment.list.viewmodel
 
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableList
@@ -15,9 +15,9 @@ import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
 import pl.piotrskiba.angularowo.domain.punishment.usecase.GetActivePunishmentsUseCase
-import pl.piotrskiba.angularowo.main.ban.list.nav.PunishmentListNavigator
-import pl.piotrskiba.angularowo.main.ban.model.PunishmentBannerData
-import pl.piotrskiba.angularowo.main.ban.model.toUi
+import pl.piotrskiba.angularowo.main.punishment.list.nav.PunishmentListNavigator
+import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBannerData
+import pl.piotrskiba.angularowo.main.punishment.model.toUi
 import javax.inject.Inject
 
 class PunishmentListViewModel @Inject constructor(

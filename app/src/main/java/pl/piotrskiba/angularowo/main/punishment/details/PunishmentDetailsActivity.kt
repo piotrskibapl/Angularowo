@@ -1,4 +1,4 @@
-package pl.piotrskiba.angularowo.main.ban.details
+package pl.piotrskiba.angularowo.main.punishment.details
 
 import android.graphics.Bitmap
 import android.os.Bundle

@@ -1,4 +1,4 @@
-package pl.piotrskiba.angularowo.main.ban.model
+package pl.piotrskiba.angularowo.main.punishment.model
 
 import android.content.Context
 import androidx.annotation.DrawableRes

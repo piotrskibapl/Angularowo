@@ -1,4 +1,4 @@
-package pl.piotrskiba.angularowo.main.ban.list.ui
+package pl.piotrskiba.angularowo.main.punishment.list.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,10 +13,10 @@ import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.databinding.FragmentPunishmentListBinding
-import pl.piotrskiba.angularowo.main.ban.details.PunishmentDetailsActivity
-import pl.piotrskiba.angularowo.main.ban.list.nav.PunishmentListNavigator
-import pl.piotrskiba.angularowo.main.ban.list.viewmodel.PunishmentListViewModel
-import pl.piotrskiba.angularowo.main.ban.model.PunishmentBannerData
+import pl.piotrskiba.angularowo.main.punishment.details.PunishmentDetailsActivity
+import pl.piotrskiba.angularowo.main.punishment.list.nav.PunishmentListNavigator
+import pl.piotrskiba.angularowo.main.punishment.list.viewmodel.PunishmentListViewModel
+import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBannerData
 
 class PunishmentListFragment : BaseFragment<PunishmentListViewModel>(PunishmentListViewModel::class),
     PunishmentListNavigator {
