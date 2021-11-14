@@ -56,10 +56,6 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // TODO: handle punishments
         when (item.itemId) {
-            android.R.id.home -> {
-                requireActivity().supportFinishAfterTransition()
-                return true
-            }
             R.id.nav_favorite -> {
                 viewModel.onFavoriteClick()
                 return true
