@@ -64,7 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="@{punishment.reason}"
+                android:text="@{punishment.reason(context)}"
                 android:textAlignment="center"
                 android:textSize="@dimen/rank_text_size"
                 tools:text="reason" />

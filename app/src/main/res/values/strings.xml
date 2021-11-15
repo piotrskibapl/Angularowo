@@ -128,13 +128,12 @@
     <string name="punishment_type_mute">Wyciszenie</string>
     <string name="punishment_type_kick">Wyrzucenie z gry</string>
     <string name="punishment_type_warn">Ostrzeżenie</string>
+    <string name="punishment_ban_description_format">Zbanowany za %1$s</string>
+    <string name="punishment_warn_description_format">Ostrzeżony za %1$s</string>
+    <string name="punishment_mute_description_format">Wyciszony za %1$s</string>
+    <string name="punishment_kick_description_format">Wyrzucony za %1$s</string>
     <string name="punishment_date_format" translatable="false">dd.MM.yyyy HH:mm</string>
     <string name="punishment_banner_transition_name" translatable="false">ban_banner</string>
-
-    <!-- BanListAdapter -->
-    <string name="ban_description_format">Zbanowany za %1$s</string>
-    <string name="warn_description_format">Ostrzeżony za %1$s</string>
-    <string name="mute_description_format">Wyciszony za %1$s</string>
 
     <!-- fragment_offers.xml -->
     <string name="actionbar_title_free_ranks">Darmowe nagrody</string>
