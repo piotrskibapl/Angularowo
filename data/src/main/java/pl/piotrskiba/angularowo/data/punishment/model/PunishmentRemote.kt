@@ -4,6 +4,7 @@ import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentModel
 import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentType
 import java.util.Date
 import java.util.Locale
+import java.util.concurrent.TimeUnit
 
 class PunishmentRemote(
     val id: String,
@@ -22,8 +23,8 @@ fun PunishmentRemote.toDomain() = PunishmentModel(
     uuid,
     reason,
     actor_name,
-    Date(start),
-    Date(end),
+    Date(TimeUnit.SECONDS.toMillis(start)),
+    Date(TimeUnit.SECONDS.toMillis(end)),
     type.toPunishmentType()
 )
 
