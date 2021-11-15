@@ -11,7 +11,6 @@ import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.databinding.FragmentPunishmentDetailsBinding
 import pl.piotrskiba.angularowo.main.punishment.details.DetailedPunishmentData
 import pl.piotrskiba.angularowo.main.punishment.details.viewmodel.PunishmentDetailsViewModel
-import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBannerData
 
 class PunishmentDetailsFragment : BaseFragment<PunishmentDetailsViewModel>(PunishmentDetailsViewModel::class) {
 
@@ -43,6 +42,6 @@ class PunishmentDetailsFragment : BaseFragment<PunishmentDetailsViewModel>(Punis
 
     private fun loadArguments() {
         val previewedPunishment = requireArguments().getSerializable(Constants.EXTRA_PUNISHMENT) as DetailedPunishmentData
-        viewModel.previewedPunishmentBanner.value = previewedPunishment
+        viewModel.previewedPunishmentData.value = previewedPunishment
     }
 }

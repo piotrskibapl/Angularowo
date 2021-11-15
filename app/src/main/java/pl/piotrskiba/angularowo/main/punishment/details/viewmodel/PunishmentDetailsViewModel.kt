@@ -9,6 +9,6 @@ import javax.inject.Inject
 class PunishmentDetailsViewModel @Inject constructor(
 ) : LifecycleViewModel() {
 
-    val previewedPunishmentBanner: MutableLiveData<DetailedPunishmentData> = MutableLiveData()
+    val previewedPunishmentData: MutableLiveData<DetailedPunishmentData> = MutableLiveData()
 
 }
