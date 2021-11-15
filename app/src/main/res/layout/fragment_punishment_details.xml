@@ -9,7 +9,6 @@
             type="pl.piotrskiba.angularowo.main.punishment.details.viewmodel.PunishmentDetailsViewModel" />
     </data>
 
-    <!-- TODO: map all data -->
     <LinearLayout
         android:id="@+id/swiperefresh"
         android:layout_width="match_parent"
@@ -100,6 +99,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
+                        android:text="@{viewModel.previewedPunishmentData.startDate(context)}"
                         android:textAlignment="center"
                         android:textSize="@dimen/content_text_size" />
                 </LinearLayout>
@@ -123,6 +123,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
+                        android:text="@{viewModel.previewedPunishmentData.endDate(context)}"
                         android:textAlignment="center"
                         android:textSize="@dimen/content_text_size" />
                 </LinearLayout>

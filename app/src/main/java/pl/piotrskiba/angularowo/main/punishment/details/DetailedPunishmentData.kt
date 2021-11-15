@@ -6,6 +6,9 @@ import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentModel
 import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentType
 import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBannerData
 import java.io.Serializable
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 data class DetailedPunishmentData(
     val id: String,
@@ -13,8 +16,23 @@ data class DetailedPunishmentData(
     val username: String,
     val actorName: String,
     val reason: String,
+    private val created: Date,
+    private val expires: Date,
     private val punishmentType: PunishmentType,
 ) : Serializable {
+
+    fun startDate(context: Context): String {
+        val dateFormat = SimpleDateFormat(context.getString(R.string.punishment_date_format), Locale.getDefault())
+        return dateFormat.format(created)
+    }
+
+    fun endDate(context: Context) = when (expires.time) {
+        0L -> context.getString(R.string.punishment_expiration_never)
+        else -> {
+            val dateFormat = SimpleDateFormat(context.getString(R.string.punishment_date_format), Locale.getDefault())
+            dateFormat.format(expires)
+        }
+    }
 
     fun type(context: Context) = when (punishmentType) {
         PunishmentType.BAN -> context.getString(R.string.punishment_type_ban)
@@ -40,6 +58,8 @@ fun PunishmentModel.toUi() =
         username,
         actorName,
         reason,
+        created,
+        expires,
         type,
     )
 

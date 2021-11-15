@@ -128,6 +128,7 @@
     <string name="punishment_type_mute">Wyciszenie</string>
     <string name="punishment_type_kick">Wyrzucenie z gry</string>
     <string name="punishment_type_warn">Ostrzeżenie</string>
+    <string name="punishment_date_format" translatable="false">dd.MM.yyyy HH:mm</string>
     <string name="punishment_banner_transition_name" translatable="false">ban_banner</string>
 
     <!-- BanListAdapter -->
