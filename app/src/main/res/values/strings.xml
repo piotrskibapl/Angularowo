@@ -124,6 +124,10 @@
     <string name="punishment_start_date">Data nałożenia:</string>
     <string name="punishment_end_date">Wygasa:</string>
     <string name="punishment_expiration_never">nigdy</string>
+    <string name="punishment_type_ban">Ban</string>
+    <string name="punishment_type_mute">Wyciszenie</string>
+    <string name="punishment_type_kick">Wyrzucenie z gry</string>
+    <string name="punishment_type_warn">Ostrzeżenie</string>
     <string name="punishment_banner_transition_name" translatable="false">ban_banner</string>
 
     <!-- BanListAdapter -->
