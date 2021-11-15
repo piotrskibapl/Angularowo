@@ -2,6 +2,7 @@ package pl.piotrskiba.angularowo.main.punishment.details
 
 import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentModel
 import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentType
+import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBannerData
 import java.io.Serializable
 
 data class DetailedPunishmentData(
@@ -10,7 +11,17 @@ data class DetailedPunishmentData(
     val username: String,
     val reason: String,
     private val punishmentType: PunishmentType,
-) : Serializable
+) : Serializable {
+
+    fun toPunishmentBannerData() =
+        PunishmentBannerData(
+            id,
+            uuid,
+            username,
+            reason,
+            punishmentType
+        )
+}
 
 fun PunishmentModel.toUi() =
     DetailedPunishmentData(
