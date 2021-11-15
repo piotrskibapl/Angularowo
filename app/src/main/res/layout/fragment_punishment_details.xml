@@ -10,7 +10,6 @@
     </data>
 
     <LinearLayout
-        android:id="@+id/swiperefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -26,7 +25,6 @@
                 app:punishment="@{viewModel.previewedPunishmentBanner}" />
 
             <TextView
-                android:id="@+id/tv_punishment_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/section_margin"
@@ -45,7 +43,6 @@
                 android:textSize="@dimen/label_text_size" />
 
             <TextView
-                android:id="@+id/tv_punishment_actor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -63,7 +60,6 @@
                 android:textSize="@dimen/label_text_size" />
 
             <TextView
-                android:id="@+id/tv_punishment_description_full"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -95,7 +91,6 @@
                         android:textSize="@dimen/label_text_size" />
 
                     <TextView
-                        android:id="@+id/tv_punishment_start_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
@@ -119,7 +114,6 @@
                         android:textSize="@dimen/label_text_size" />
 
                     <TextView
-                        android:id="@+id/tv_punishment_end_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
