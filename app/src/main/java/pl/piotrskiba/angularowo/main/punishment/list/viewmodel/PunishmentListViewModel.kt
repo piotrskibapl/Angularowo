@@ -1,7 +1,5 @@
 package pl.piotrskiba.angularowo.main.punishment.list.viewmodel
 
-import androidx.databinding.ObservableArrayList
-import androidx.databinding.ObservableList
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import me.tatarka.bindingcollectionadapter2.ItemBinding
@@ -30,7 +28,7 @@ class PunishmentListViewModel @Inject constructor(
 
     val state = MutableLiveData<ViewModelState>(Loading)
     val punishments: MutableList<DetailedPunishmentData> = mutableListOf()
-    val punishmentBanners: ObservableList<PunishmentBannerData> = ObservableArrayList()
+    val punishmentBanners: MutableLiveData<List<PunishmentBannerData>> = MutableLiveData()
     val punishmentsBinding = ItemBinding.of<PunishmentBannerData>(BR.punishment, R.layout.punishment_list_item)
     lateinit var navigator: PunishmentListNavigator
     private val disposables = CompositeDisposable()
@@ -59,8 +57,7 @@ class PunishmentListViewModel @Inject constructor(
                     state.value = Loaded
                     punishments.clear()
                     punishments.addAll(punishmentModels.toUi())
-                    punishmentBanners.clear()
-                    punishmentBanners.addAll(punishmentModels.toPunishmentBannerData())
+                    punishmentBanners.value = punishmentModels.toPunishmentBannerData()
                 },
                 { error ->
                     state.value = Error(error)

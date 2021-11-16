@@ -1,7 +1,5 @@
 package pl.piotrskiba.angularowo.main.mainscreen.viewmodel
 
-import androidx.databinding.ObservableArrayList
-import androidx.databinding.ObservableList
 import androidx.lifecycle.MutableLiveData
 import com.github.magneticflux.livedata.map
 import com.github.magneticflux.livedata.zipTo
@@ -20,15 +18,15 @@ import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
 import pl.piotrskiba.angularowo.domain.player.usecase.GetPlayerDetailsFromUuidUseCase
 import pl.piotrskiba.angularowo.domain.punishment.usecase.GetActivePlayerPunishmentsUseCase
 import pl.piotrskiba.angularowo.domain.server.usecase.GetServerStatusUseCase
-import pl.piotrskiba.angularowo.main.punishment.list.nav.PunishmentListNavigator
-import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBannerData
-import pl.piotrskiba.angularowo.main.punishment.model.toPunishmentBannerData
 import pl.piotrskiba.angularowo.main.mainscreen.model.MainScreenServerData
 import pl.piotrskiba.angularowo.main.mainscreen.model.toUi
 import pl.piotrskiba.angularowo.main.player.details.model.DetailedPlayerData
 import pl.piotrskiba.angularowo.main.player.details.model.toUi
 import pl.piotrskiba.angularowo.main.punishment.details.DetailedPunishmentData
 import pl.piotrskiba.angularowo.main.punishment.details.toUi
+import pl.piotrskiba.angularowo.main.punishment.list.nav.PunishmentListNavigator
+import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBannerData
+import pl.piotrskiba.angularowo.main.punishment.model.toPunishmentBannerData
 import javax.inject.Inject
 
 class MainScreenViewModel @Inject constructor(
@@ -73,9 +71,9 @@ class MainScreenViewModel @Inject constructor(
     val playerData = MutableLiveData(lastPlayerData)
     val serverData = MutableLiveData<MainScreenServerData>()
     val punishments: MutableList<DetailedPunishmentData> = mutableListOf()
-    val punishmentBanners: ObservableList<PunishmentBannerData> = ObservableArrayList()
+    val punishmentBanners: MutableLiveData<List<PunishmentBannerData>> = MutableLiveData()
     val punishmentsBinding = ItemBinding.of<PunishmentBannerData>(BR.punishment, R.layout.punishment_list_item)
-    val isPunishmentListNotEmpty = MutableLiveData(false)
+    val isPunishmentListNotEmpty = punishmentBanners.map { it.isNotEmpty() }
     lateinit var navigator: PunishmentListNavigator
     private val disposables = CompositeDisposable()
 
@@ -164,9 +162,7 @@ class MainScreenViewModel @Inject constructor(
                     punishmentsDataState.value = Loaded
                     punishments.clear()
                     punishments.addAll(punishmentModels.toUi())
-                    punishmentBanners.clear()
-                    punishmentBanners.addAll(punishmentModels.toPunishmentBannerData())
-                    isPunishmentListNotEmpty.value = punishmentBanners.isNotEmpty()
+                    punishmentBanners.value = punishmentModels.toPunishmentBannerData()
                 },
                 { error ->
                     punishmentsDataState.value = Error(error)

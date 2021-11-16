@@ -1,8 +1,7 @@
 package pl.piotrskiba.angularowo.main.player.list.viewmodel
 
-import androidx.databinding.ObservableArrayList
-import androidx.databinding.ObservableList
 import androidx.lifecycle.MutableLiveData
+import com.github.magneticflux.livedata.map
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import me.tatarka.bindingcollectionadapter2.ItemBinding
 import pl.piotrskiba.angularowo.BR
@@ -29,10 +28,10 @@ class PlayerListViewModel @Inject constructor(
 ) : LifecycleViewModel() {
 
     val state = MutableLiveData<ViewModelState>(Loading)
-    val players: ObservableList<PlayerBannerData> = ObservableArrayList()
-    val favoritePlayers: ObservableList<PlayerBannerData> = ObservableArrayList()
+    val players: MutableLiveData<List<PlayerBannerData>> = MutableLiveData()
+    val favoritePlayers: MutableLiveData<List<PlayerBannerData>> = MutableLiveData()
     val playersBinding = ItemBinding.of<PlayerBannerData>(BR.player, R.layout.player_list_item)
-    var isFavoritePlayerListNotEmpty = MutableLiveData(false)
+    val isFavoritePlayerListNotEmpty = favoritePlayers.map { it.isNotEmpty() }
     lateinit var navigator: PlayerListNavigator
     private val disposables = CompositeDisposable()
 
@@ -65,12 +64,8 @@ class PlayerListViewModel @Inject constructor(
                         .filter { it.second }
                         .map { it.first.toPlayerBannerData(true) }
                     state.value = Loaded
-                    // TODO: use DiffObservableList
-                    players.clear()
-                    favoritePlayers.clear()
-                    players.addAll(bannerList)
-                    favoritePlayers.addAll(favoriteBannerList)
-                    isFavoritePlayerListNotEmpty.value = favoritePlayers.isNotEmpty()
+                    players.value = bannerList
+                    favoritePlayers.value = favoriteBannerList
                 },
                 { error ->
                     state.value = Error(error)
