@@ -1,7 +1,7 @@
 package pl.piotrskiba.angularowo.main.player.list.viewmodel
 
 import androidx.lifecycle.MutableLiveData
-import com.github.magneticflux.livedata.map
+import com.snakydesign.livedataextensions.map
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import me.tatarka.bindingcollectionadapter2.ItemBinding
 import pl.piotrskiba.angularowo.BR

@@ -1,8 +1,8 @@
 package pl.piotrskiba.angularowo.main.mainscreen.viewmodel
 
 import androidx.lifecycle.MutableLiveData
-import com.github.magneticflux.livedata.map
-import com.github.magneticflux.livedata.zipTo
+import com.snakydesign.livedataextensions.combineLatest
+import com.snakydesign.livedataextensions.map
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import me.tatarka.bindingcollectionadapter2.ItemBinding
 import pl.piotrskiba.angularowo.BR
@@ -40,25 +40,12 @@ class MainScreenViewModel @Inject constructor(
     private val playerDataState = MutableLiveData<ViewModelState>(Loading)
     private val serverDataState = MutableLiveData<ViewModelState>(Loading)
     private val punishmentsDataState = MutableLiveData<ViewModelState>(Loading)
-    val state = playerDataState
-        .zipTo(serverDataState)
-        .zipTo(punishmentsDataState)
-        .map { state ->
-            val errorState = state.first.first as? Error
-                ?: state.first.second as? Error
-                ?: state.second as? Error
-            val loadingState = state.first.first as? Loading
-                ?: state.first.second as? Loading
-                ?: state.second as? Loading
-
-            when (errorState != null) {
-                true -> errorState
-                false -> when (loadingState != null) {
-                    true -> Loading
-                    false -> Loaded
-                }
-            }
-        }
+    val state = combineLatest(playerDataState, serverDataState, punishmentsDataState) { state1, state2, state3 ->
+        val stateList = listOf(state1, state2, state3)
+        val errorStateList = stateList.filterIsInstance<Error>()
+        val loadingStateList = stateList.filterIsInstance<Loading>()
+        errorStateList.firstOrNull() ?: loadingStateList.firstOrNull() ?: Loaded
+    }
     // exposed for MainViewModel synchronization
     val player = MutableLiveData<DetailedPlayerModel>()
     private val lastPlayerData = DetailedPlayerData(

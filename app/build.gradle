@@ -131,8 +131,8 @@ dependencies {
     implementation 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:4.0.0'
     implementation 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:4.0.0'
 
-    // LiveDataUtils
-    implementation 'com.github.magneticflux:kotlin-livedata-utils:0.3.4'
+    // Lives
+    implementation 'com.snakydesign.livedataextensions:lives:1.3.0'
 }
 
 configurations.all {
