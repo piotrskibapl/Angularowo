@@ -63,7 +63,7 @@
                 android:text="@string/error_no_players"
                 android:textAlignment="center"
                 android:textSize="@dimen/error_text_size"
-                android:visibility="gone" />
+                app:visible="@{viewModel.isNoPlayersOnline}" />
 
             <include
                 android:id="@+id/errorLayout"

@@ -1,6 +1,7 @@
 package pl.piotrskiba.angularowo.main.player.list.viewmodel
 
 import androidx.lifecycle.MutableLiveData
+import com.snakydesign.livedataextensions.combineLatest
 import com.snakydesign.livedataextensions.map
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import me.tatarka.bindingcollectionadapter2.ItemBinding
@@ -32,6 +33,9 @@ class PlayerListViewModel @Inject constructor(
     val favoritePlayers: MutableLiveData<List<PlayerBannerData>> = MutableLiveData()
     val playersBinding = ItemBinding.of<PlayerBannerData>(BR.player, R.layout.player_list_item)
     val isFavoritePlayerListNotEmpty = favoritePlayers.map { it.isNotEmpty() }
+    val isNoPlayersOnline = combineLatest(players, favoritePlayers) { players, favoritePlayers ->
+        players.isEmpty() && favoritePlayers.isEmpty()
+    }
     lateinit var navigator: PlayerListNavigator
     private val disposables = CompositeDisposable()
 
