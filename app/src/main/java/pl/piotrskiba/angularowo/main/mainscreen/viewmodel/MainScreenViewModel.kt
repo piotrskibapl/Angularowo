@@ -18,6 +18,7 @@ import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
 import pl.piotrskiba.angularowo.domain.player.usecase.GetPlayerDetailsFromUuidUseCase
 import pl.piotrskiba.angularowo.domain.punishment.usecase.GetActivePlayerPunishmentsUseCase
 import pl.piotrskiba.angularowo.domain.server.usecase.GetServerStatusUseCase
+import pl.piotrskiba.angularowo.main.base.handler.FCMTopicSubscriptionHandler
 import pl.piotrskiba.angularowo.main.mainscreen.model.MainScreenServerData
 import pl.piotrskiba.angularowo.main.mainscreen.model.toUi
 import pl.piotrskiba.angularowo.main.player.details.model.DetailedPlayerData
@@ -34,6 +35,7 @@ class MainScreenViewModel @Inject constructor(
     private val getPlayerDetailsFromUuidUseCase: GetPlayerDetailsFromUuidUseCase,
     private val getActivePlayerPunishmentsUseCase: GetActivePlayerPunishmentsUseCase,
     private val preferencesRepository: PreferencesRepository,
+    private val fcmTopicSubscriptionHandler: FCMTopicSubscriptionHandler,
     private val facade: SchedulersProvider
 ) : LifecycleViewModel() {
 
@@ -67,7 +69,7 @@ class MainScreenViewModel @Inject constructor(
     override fun onFirstCreate() {
         punishmentsBinding.bindExtra(BR.navigator, navigator)
         onRefresh()
-        // TODO: subscribe to Firebase app version topic
+        fcmTopicSubscriptionHandler.handleAppVersionTopicSubscription()
         // TODO: subscribe to Firebase player uuid topic
         // TODO: subscribe to Firebase new events topic
         // TODO: subscribe to Firebase private messages topic
