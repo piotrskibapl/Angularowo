@@ -13,6 +13,7 @@ private const val PREF_KEY_BALANCE = "balance"
 private const val PREF_KEY_TOKENS = "tokens"
 private const val PREF_KEY_PLAYTIME = "playtime"
 private const val PREF_KEY_FAVORITE_SHOWCASE_SHOWN = "showcase_favorite_shown"
+private const val PREF_KEY_FIREBASE_SUBSCRIBED_APP_VERSION = "subscribed_app_version"
 private const val PREF_KEY_FIREBASE_UUID_SUBSCRIBED = "uuid_topic_subscribed"
 private const val PREF_KEY_FIREBASE_EVENTS_SUBSCRIBED = "events_subscribed"
 private const val PREF_KEY_FIREBASE_PRIVATE_MESSAGES_SUBSCRIBED = "private_messages_subscribed"
@@ -58,6 +59,13 @@ class PreferencesRepositoryImpl @Inject constructor(
     override var hasSeenFavoriteShowcase: Boolean
         get() = sharedPreferences.getBoolean(PREF_KEY_FAVORITE_SHOWCASE_SHOWN, false)
         set(value) = applyValue(PREF_KEY_FAVORITE_SHOWCASE_SHOWN, value)
+
+    override var subscribedFirebaseAppVersion: Int?
+        get() = when (val value = sharedPreferences.getInt(PREF_KEY_FIREBASE_SUBSCRIBED_APP_VERSION, -1)) {
+            -1 -> null
+            else -> value
+        }
+        set(value) = applyValue(PREF_KEY_FIREBASE_SUBSCRIBED_APP_VERSION, value ?: -1)
 
     override var subscribedToFirebaseUuidTopic: Boolean
         get() = sharedPreferences.getBoolean(PREF_KEY_FIREBASE_UUID_SUBSCRIBED, false)
