@@ -7,4 +7,4 @@ enum class PunishmentFilter {
 }
 
 fun PunishmentFilter.toRemote() =
-    toString().toLowerCase(Locale.ROOT)
+    toString().lowercase(Locale.ROOT)

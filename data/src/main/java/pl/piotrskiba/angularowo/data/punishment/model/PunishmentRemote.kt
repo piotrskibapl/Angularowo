@@ -30,4 +30,4 @@ fun PunishmentRemote.toDomain() = PunishmentModel(
 
 fun List<PunishmentRemote>.toDomain() = map { it.toDomain() }
 
-private fun String.toPunishmentType() = PunishmentType.valueOf(this.toUpperCase(Locale.ROOT))
+private fun String.toPunishmentType() = PunishmentType.valueOf(this.uppercase(Locale.ROOT))

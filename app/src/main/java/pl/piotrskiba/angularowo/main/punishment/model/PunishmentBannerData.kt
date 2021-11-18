@@ -19,7 +19,7 @@ data class PunishmentBannerData(
 
     fun reason(context: Context): String {
         val reasonTrimDelimiters = arrayOf(":", " (")
-        val trimmedReason = reason.split(*reasonTrimDelimiters).first().toLowerCase(Locale.getDefault())
+        val trimmedReason = reason.split(*reasonTrimDelimiters).first().lowercase(Locale.getDefault())
         return when (punishmentType) {
             PunishmentType.BAN -> context.getString(R.string.punishment_ban_description_format, trimmedReason)
             PunishmentType.MUTE -> context.getString(R.string.punishment_mute_description_format, trimmedReason)
