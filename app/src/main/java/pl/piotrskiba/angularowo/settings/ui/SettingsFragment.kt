@@ -51,7 +51,7 @@ class SettingsFragment : BasePreferenceFragmentCompat() {
                                     username ?: ""
                             )
 
-                            FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_PLAYER_TOPIC_PREFIX + uuid)
+                            FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_PLAYER_UUID_TOPIC_PREFIX + uuid)
                             FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_RANK_TOPIC_PREFIX + normalize(preferenceUtils.rankName))
                             preferenceUtils.clearUserData()
 

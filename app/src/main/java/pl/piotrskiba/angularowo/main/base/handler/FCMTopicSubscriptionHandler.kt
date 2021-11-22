@@ -19,6 +19,19 @@ class FCMTopicSubscriptionHandler @Inject constructor(
                 firebaseMessaging.unsubscribeFromTopic(Constants.FIREBASE_APP_VERSION_TOPIC_PREFIX + it)
             }
             firebaseMessaging.subscribeToTopic(Constants.FIREBASE_APP_VERSION_TOPIC_PREFIX + currentVersion)
+            preferencesRepository.subscribedFirebaseAppVersion = currentVersion
+        }
+    }
+
+    fun handlePlayerUuidTopicSubscription() {
+        val subscribedPlayerUuid = preferencesRepository.subscribedFirebasePlayerUuid
+        val currentPlayerUuid = preferencesRepository.uuid!!
+        if (subscribedPlayerUuid != currentPlayerUuid) {
+            subscribedPlayerUuid?.let {
+                firebaseMessaging.unsubscribeFromTopic(Constants.FIREBASE_PLAYER_UUID_TOPIC_PREFIX + it)
+            }
+            firebaseMessaging.subscribeToTopic(Constants.FIREBASE_PLAYER_UUID_TOPIC_PREFIX + currentPlayerUuid)
+            preferencesRepository.subscribedFirebasePlayerUuid = currentPlayerUuid
         }
     }
 }

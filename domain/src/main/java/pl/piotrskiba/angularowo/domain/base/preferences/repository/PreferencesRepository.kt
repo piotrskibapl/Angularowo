@@ -12,7 +12,7 @@ interface PreferencesRepository {
     var playtime: Int
     var hasSeenFavoriteShowcase: Boolean
     var subscribedFirebaseAppVersion: Int?
-    var subscribedToFirebaseUuidTopic: Boolean
+    var subscribedFirebasePlayerUuid: String?
     var subscribedToFirebaseEventsTopic: Boolean
     var subscribedToFirebasePrivateMessagesTopic: Boolean
     var subscribedToFirebaseAccountIncidentsTopic: Boolean

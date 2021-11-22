@@ -70,7 +70,7 @@ class MainScreenViewModel @Inject constructor(
         punishmentsBinding.bindExtra(BR.navigator, navigator)
         onRefresh()
         fcmTopicSubscriptionHandler.handleAppVersionTopicSubscription()
-        // TODO: subscribe to Firebase player uuid topic
+        fcmTopicSubscriptionHandler.handlePlayerUuidTopicSubscription()
         // TODO: subscribe to Firebase new events topic
         // TODO: subscribe to Firebase private messages topic
         // TODO: subscribe to Firebase account incidents topic

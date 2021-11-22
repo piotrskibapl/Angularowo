@@ -11,7 +11,7 @@ object Constants {
     const val RESULT_CODE_SUCCESS = 1200
 
     const val FIREBASE_APP_VERSION_TOPIC_PREFIX = "version_"
-    const val FIREBASE_PLAYER_TOPIC_PREFIX = "player_"
+    const val FIREBASE_PLAYER_UUID_TOPIC_PREFIX = "player_"
     const val FIREBASE_RANK_TOPIC_PREFIX = "rank_"
     const val FIREBASE_NEW_REPORTS_TOPIC = "new_reports"
     const val FIREBASE_NEW_EVENT_TOPIC = "new_event"
