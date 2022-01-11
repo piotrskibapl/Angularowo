@@ -14,8 +14,8 @@ interface PreferencesRepository {
     var subscribedFirebaseAppVersion: Int?
     var subscribedFirebasePlayerUuid: String?
     var subscribedToFirebaseEventsTopic: Boolean? // TODO: use enum class
-    var subscribedToFirebasePrivateMessagesTopic: Boolean
-    var subscribedToFirebaseAccountIncidentsTopic: Boolean
+    var subscribedToFirebasePrivateMessagesTopic: Boolean? // TODO: use enum class
+    var subscribedToFirebaseAccountIncidentsTopic: Boolean? // TODO: use enum class
     var subscribedToFirebaseNewReportsTopic: Boolean
     fun clearUserData()
 }

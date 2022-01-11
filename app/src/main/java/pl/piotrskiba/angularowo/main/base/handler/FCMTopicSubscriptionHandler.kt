@@ -42,4 +42,20 @@ class FCMTopicSubscriptionHandler @Inject constructor(
             preferencesRepository.subscribedToFirebaseEventsTopic = true
         }
     }
+
+    fun handlePrivateMessagesTopicSubscription() {
+        val isSubscriptionUnknown = preferencesRepository.subscribedToFirebasePrivateMessagesTopic == null
+        if (isSubscriptionUnknown) {
+            firebaseMessaging.subscribeToTopic(Constants.FIREBASE_PRIVATE_MESSAGES_TOPIC)
+            preferencesRepository.subscribedToFirebasePrivateMessagesTopic = true
+        }
+    }
+
+    fun handleAccountIncidentsTopicSubscription() {
+        val isSubscriptionUnknown = preferencesRepository.subscribedToFirebaseAccountIncidentsTopic == null
+        if (isSubscriptionUnknown) {
+            firebaseMessaging.subscribeToTopic(Constants.FIREBASE_ACCOUNT_INCIDENTS_TOPIC)
+            preferencesRepository.subscribedToFirebaseAccountIncidentsTopic = true
+        }
+    }
 }

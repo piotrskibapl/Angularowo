@@ -83,13 +83,29 @@ class PreferencesRepositoryImpl @Inject constructor(
             deleteValue(PREF_KEY_FIREBASE_EVENTS_SUBSCRIBED)
         }
 
-    override var subscribedToFirebasePrivateMessagesTopic: Boolean
-        get() = sharedPreferences.getBoolean(PREF_KEY_FIREBASE_PRIVATE_MESSAGES_SUBSCRIBED, false)
-        set(value) = applyValue(PREF_KEY_FIREBASE_PRIVATE_MESSAGES_SUBSCRIBED, value)
+    override var subscribedToFirebasePrivateMessagesTopic: Boolean?
+        get() = if (sharedPreferences.contains(PREF_KEY_FIREBASE_PRIVATE_MESSAGES_SUBSCRIBED)) {
+            sharedPreferences.getBoolean(PREF_KEY_FIREBASE_PRIVATE_MESSAGES_SUBSCRIBED, false)
+        } else {
+            null
+        }
+        set(value) = if (value != null) {
+            applyValue(PREF_KEY_FIREBASE_PRIVATE_MESSAGES_SUBSCRIBED, value)
+        } else {
+            deleteValue(PREF_KEY_FIREBASE_PRIVATE_MESSAGES_SUBSCRIBED)
+        }
 
-    override var subscribedToFirebaseAccountIncidentsTopic: Boolean
-        get() = sharedPreferences.getBoolean(PREF_KEY_FIREBASE_ACCOUNT_INCIDENTS_SUBSCRIBED, false)
-        set(value) = applyValue(PREF_KEY_FIREBASE_ACCOUNT_INCIDENTS_SUBSCRIBED, value)
+    override var subscribedToFirebaseAccountIncidentsTopic: Boolean?
+        get() = if (sharedPreferences.contains(PREF_KEY_FIREBASE_ACCOUNT_INCIDENTS_SUBSCRIBED)) {
+            sharedPreferences.getBoolean(PREF_KEY_FIREBASE_ACCOUNT_INCIDENTS_SUBSCRIBED, false)
+        } else {
+            null
+        }
+        set(value) = if (value != null) {
+            applyValue(PREF_KEY_FIREBASE_ACCOUNT_INCIDENTS_SUBSCRIBED, value)
+        } else {
+            deleteValue(PREF_KEY_FIREBASE_ACCOUNT_INCIDENTS_SUBSCRIBED)
+        }
 
     override var subscribedToFirebaseNewReportsTopic: Boolean
         get() = sharedPreferences.getBoolean(PREF_KEY_FIREBASE_NEW_REPORTS_SUBSCRIBED, false)
