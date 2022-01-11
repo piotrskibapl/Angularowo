@@ -34,4 +34,12 @@ class FCMTopicSubscriptionHandler @Inject constructor(
             preferencesRepository.subscribedFirebasePlayerUuid = currentPlayerUuid
         }
     }
+
+    fun handleNewEventsTopicSubscription() {
+        val isSubscriptionUnknown = preferencesRepository.subscribedToFirebaseEventsTopic == null
+        if (isSubscriptionUnknown) {
+            firebaseMessaging.subscribeToTopic(Constants.FIREBASE_NEW_EVENTS_TOPIC)
+            preferencesRepository.subscribedToFirebaseEventsTopic = true
+        }
+    }
 }

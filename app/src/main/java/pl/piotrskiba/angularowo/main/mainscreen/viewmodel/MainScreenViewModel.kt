@@ -71,7 +71,7 @@ class MainScreenViewModel @Inject constructor(
         onRefresh()
         fcmTopicSubscriptionHandler.handleAppVersionTopicSubscription()
         fcmTopicSubscriptionHandler.handlePlayerUuidTopicSubscription()
-        // TODO: subscribe to Firebase new events topic
+        fcmTopicSubscriptionHandler.handleNewEventsTopicSubscription()
         // TODO: subscribe to Firebase private messages topic
         // TODO: subscribe to Firebase account incidents topic
     }

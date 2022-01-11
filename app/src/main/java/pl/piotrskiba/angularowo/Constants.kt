@@ -14,7 +14,7 @@ object Constants {
     const val FIREBASE_PLAYER_UUID_TOPIC_PREFIX = "player_"
     const val FIREBASE_RANK_TOPIC_PREFIX = "rank_"
     const val FIREBASE_NEW_REPORTS_TOPIC = "new_reports"
-    const val FIREBASE_NEW_EVENT_TOPIC = "new_event"
+    const val FIREBASE_NEW_EVENTS_TOPIC = "new_event"
     const val FIREBASE_PRIVATE_MESSAGES_TOPIC = "private_messages"
     const val FIREBASE_ACCOUNT_INCIDENTS_TOPIC = "account_incidents"
 

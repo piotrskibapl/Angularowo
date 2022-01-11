@@ -71,9 +71,17 @@ class PreferencesRepositoryImpl @Inject constructor(
         get() = sharedPreferences.getString(PREF_KEY_FIREBASE_SUBSCRIBED_PLAYER_UUID, null)
         set(value) = applyValue(PREF_KEY_FIREBASE_SUBSCRIBED_PLAYER_UUID, value)
 
-    override var subscribedToFirebaseEventsTopic: Boolean
-        get() = sharedPreferences.getBoolean(PREF_KEY_FIREBASE_EVENTS_SUBSCRIBED, false)
-        set(value) = applyValue(PREF_KEY_FIREBASE_EVENTS_SUBSCRIBED, value)
+    override var subscribedToFirebaseEventsTopic: Boolean?
+        get() = if (sharedPreferences.contains(PREF_KEY_FIREBASE_EVENTS_SUBSCRIBED)) {
+            sharedPreferences.getBoolean(PREF_KEY_FIREBASE_EVENTS_SUBSCRIBED, false)
+        } else {
+            null
+        }
+        set(value) = if (value != null) {
+            applyValue(PREF_KEY_FIREBASE_EVENTS_SUBSCRIBED, value)
+        } else {
+            deleteValue(PREF_KEY_FIREBASE_EVENTS_SUBSCRIBED)
+        }
 
     override var subscribedToFirebasePrivateMessagesTopic: Boolean
         get() = sharedPreferences.getBoolean(PREF_KEY_FIREBASE_PRIVATE_MESSAGES_SUBSCRIBED, false)
@@ -122,6 +130,13 @@ class PreferencesRepositoryImpl @Inject constructor(
     private fun applyValue(key: String, value: Boolean) {
         sharedPreferences.edit().apply {
             putBoolean(key, value)
+            apply()
+        }
+    }
+
+    private fun deleteValue(key: String) {
+        sharedPreferences.edit().apply {
+            deleteValue(key)
             apply()
         }
     }
