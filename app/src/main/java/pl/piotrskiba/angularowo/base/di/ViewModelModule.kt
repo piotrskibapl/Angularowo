@@ -12,6 +12,7 @@ import pl.piotrskiba.angularowo.main.player.details.viewmodel.PlayerDetailsViewM
 import pl.piotrskiba.angularowo.main.player.list.viewmodel.PlayerListViewModel
 import pl.piotrskiba.angularowo.main.punishment.details.viewmodel.PunishmentDetailsViewModel
 import pl.piotrskiba.angularowo.main.punishment.list.viewmodel.PunishmentListViewModel
+import pl.piotrskiba.angularowo.settings.viewmodel.SettingsViewModel
 
 @Module
 abstract class ViewModelModule {
@@ -53,4 +54,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(PunishmentDetailsViewModel::class)
     abstract fun bindPunishmentDetailsViewModel(viewModel: PunishmentDetailsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SettingsViewModel::class)
+    abstract fun bindSettingsViewModel(viewModel: SettingsViewModel): ViewModel
 }

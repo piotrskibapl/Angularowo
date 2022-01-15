@@ -1,45 +1,38 @@
 package pl.piotrskiba.angularowo.settings.ui
 
-import android.content.SharedPreferences
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
-import androidx.preference.PreferenceManager
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.google.firebase.messaging.FirebaseMessaging
-import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
-import pl.piotrskiba.angularowo.base.ui.OldBaseActivity
+import pl.piotrskiba.angularowo.base.di.obtainViewModel
+import pl.piotrskiba.angularowo.base.ui.BaseActivity
+import pl.piotrskiba.angularowo.databinding.ActivitySettingsBinding
+import pl.piotrskiba.angularowo.settings.viewmodel.SettingsViewModel
+import javax.inject.Inject
 
-class SettingsActivity : OldBaseActivity(), OnSharedPreferenceChangeListener {
+class SettingsActivity : BaseActivity() {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private lateinit var viewModel: SettingsViewModel
 
     @BindView(R.id.toolbar)
     lateinit var mToolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        setContentView(R.layout.activity_settings)
-
+        bindViewModel()
         ButterKnife.bind(this)
-
         setSupportActionBar(mToolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setTitle(R.string.settings)
-
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        sharedPreferences.registerOnSharedPreferenceChangeListener(this)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -50,31 +43,11 @@ class SettingsActivity : OldBaseActivity(), OnSharedPreferenceChangeListener {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
-        if (key == getString(R.string.pref_key_subscribed_to_new_reports)) {
-            if (sharedPreferences.getBoolean(getString(R.string.pref_key_subscribed_to_new_reports), false)) {
-                FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_NEW_REPORTS_TOPIC)
-            } else {
-                FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_NEW_REPORTS_TOPIC)
-            }
-        } else if (key == getString(R.string.pref_key_subscribed_to_private_messages)) {
-            if (sharedPreferences.getBoolean(getString(R.string.pref_key_subscribed_to_private_messages), false)) {
-                FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_PRIVATE_MESSAGES_TOPIC)
-            } else {
-                FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_PRIVATE_MESSAGES_TOPIC)
-            }
-        } else if (key == getString(R.string.pref_key_subscribed_to_account_incidents)) {
-            if (sharedPreferences.getBoolean(getString(R.string.pref_key_subscribed_to_account_incidents), false)) {
-                FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_ACCOUNT_INCIDENTS_TOPIC)
-            } else {
-                FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_ACCOUNT_INCIDENTS_TOPIC)
-            }
-        } else if (key == getString(R.string.pref_key_subscribed_to_events)) {
-            if (sharedPreferences.getBoolean(getString(R.string.pref_key_subscribed_to_events), false)) {
-                FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_NEW_EVENTS_TOPIC)
-            } else {
-                FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FIREBASE_NEW_EVENTS_TOPIC)
-            }
-        }
+    private fun bindViewModel() {
+        viewModel = viewModelFactory.obtainViewModel(this)
+        val binding: ActivitySettingsBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_settings)
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
     }
 }
