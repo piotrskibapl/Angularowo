@@ -22,7 +22,9 @@
             android:id="@+id/category_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="4dp"
             android:src="@{categoryIcon}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/category_name"
@@ -38,9 +40,9 @@
             android:text="@{context.getString(categoryName)}"
             android:textColor="@color/colorAccent"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/category_icon"
             app:layout_constraintStart_toEndOf="@+id/category_icon"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/category_icon"
             tools:text="Category name" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

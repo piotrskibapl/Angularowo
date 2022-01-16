@@ -37,6 +37,7 @@
     <string name="pref_title_subscribed_to_account_incidents">Zdarzenia na koncie</string>
     <string name="pref_summary_subscribed_to_account_incidents">Otrzymuj powiadomienia o zdarzeniach takich jak nowe ostrzeżenie lub blokada konta</string>
     <string name="pref_title_logout">Wyloguj</string>
+    <string name="pref_summary_logout">Wyloguj się z aplikacji</string>
 
     <string name="logout_question">Wylogowywanie</string>
     <string name="logout_question_description">Czy na pewno chcesz się wylogować?</string>
