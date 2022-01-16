@@ -112,9 +112,17 @@ class PreferencesRepositoryImpl @Inject constructor(
             deleteValue(PREF_KEY_FIREBASE_ACCOUNT_INCIDENTS_SUBSCRIBED)
         }
 
-    override var subscribedToFirebaseNewReportsTopic: Boolean
-        get() = sharedPreferences.getBoolean(PREF_KEY_FIREBASE_NEW_REPORTS_SUBSCRIBED, false)
-        set(value) = applyValue(PREF_KEY_FIREBASE_NEW_REPORTS_SUBSCRIBED, value)
+    override var subscribedToFirebaseNewReportsTopic: Boolean?
+        get() = if (sharedPreferences.contains(PREF_KEY_FIREBASE_NEW_REPORTS_SUBSCRIBED)) {
+            sharedPreferences.getBoolean(PREF_KEY_FIREBASE_NEW_REPORTS_SUBSCRIBED, false)
+        } else {
+            null
+        }
+        set(value) = if (value != null) {
+            applyValue(PREF_KEY_FIREBASE_NEW_REPORTS_SUBSCRIBED, value)
+        } else {
+            deleteValue(PREF_KEY_FIREBASE_NEW_REPORTS_SUBSCRIBED)
+        }
 
     override fun clearUserData() {
         sharedPreferences.edit().apply {

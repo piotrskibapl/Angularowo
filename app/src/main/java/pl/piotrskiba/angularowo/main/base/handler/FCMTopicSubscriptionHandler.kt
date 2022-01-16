@@ -4,6 +4,8 @@ import com.google.firebase.messaging.FirebaseMessaging
 import pl.piotrskiba.angularowo.BuildConfig
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
+import pl.piotrskiba.angularowo.main.base.handler.FCMTopicSubscriptionAction.RESET
+import pl.piotrskiba.angularowo.main.base.handler.FCMTopicSubscriptionAction.SUBSCRIBE
 import pl.piotrskiba.angularowo.main.base.handler.FCMTopicSubscriptionAction.UNSUBSCRIBE
 import pl.piotrskiba.angularowo.main.base.handler.FCMTopicSubscriptionAction.UPDATE_SUBSCRIPTION
 import javax.inject.Inject
@@ -16,42 +18,63 @@ class FCMTopicSubscriptionHandler @Inject constructor(
     fun handleAppVersionTopicSubscription(action: FCMTopicSubscriptionAction) {
         when (action) {
             UPDATE_SUBSCRIPTION -> updateAppVersionTopicSubscription()
+            SUBSCRIBE -> updateAppVersionTopicSubscription()
             UNSUBSCRIBE -> unsubscribeAppVersionTopic()
+            RESET -> unsubscribeAppVersionTopic()
         }
     }
 
     fun handlePlayerUuidTopicSubscription(action: FCMTopicSubscriptionAction) {
         when (action) {
             UPDATE_SUBSCRIPTION -> updatePlayerUuidTopicSubscription()
+            SUBSCRIBE -> updatePlayerUuidTopicSubscription()
             UNSUBSCRIBE -> unsubscribePlayerUuidTopic()
+            RESET -> unsubscribePlayerUuidTopic()
         }
     }
 
     fun handlePlayerRankTopicSubscription(action: FCMTopicSubscriptionAction) {
         when (action) {
             UPDATE_SUBSCRIPTION -> updatePlayerRankTopicSubscription()
+            SUBSCRIBE -> updatePlayerRankTopicSubscription()
             UNSUBSCRIBE -> unsubscribePlayerRankTopic()
+            RESET -> unsubscribePlayerRankTopic()
         }
     }
 
     fun handleNewEventsTopicSubscription(action: FCMTopicSubscriptionAction) {
         when (action) {
             UPDATE_SUBSCRIPTION -> updateNewEventsTopicSubscription()
-            UNSUBSCRIBE -> unsubscribeNewEventsTopic()
+            SUBSCRIBE -> subscribeNewEventsTopic()
+            UNSUBSCRIBE -> unsubscribeNewEventsTopic(forceReset = false)
+            RESET -> unsubscribeNewEventsTopic(forceReset = true)
         }
     }
 
     fun handlePrivateMessagesTopicSubscription(action: FCMTopicSubscriptionAction) {
         when (action) {
             UPDATE_SUBSCRIPTION -> updatePrivateMessagesTopicSubscription()
-            UNSUBSCRIBE -> unsubscribePrivateMessagesTopic()
+            SUBSCRIBE -> subscribePrivateMessagesTopic()
+            UNSUBSCRIBE -> unsubscribePrivateMessagesTopic(forceReset = false)
+            RESET -> unsubscribePrivateMessagesTopic(forceReset = true)
         }
     }
 
     fun handleAccountIncidentsTopicSubscription(action: FCMTopicSubscriptionAction) {
         when (action) {
             UPDATE_SUBSCRIPTION -> updateAccountIncidentsTopicSubscription()
-            UNSUBSCRIBE -> unsubscribeAccountIncidentsTopic()
+            SUBSCRIBE -> subscribeAccountIncidentsTopic()
+            UNSUBSCRIBE -> unsubscribeAccountIncidentsTopic(forceReset = false)
+            RESET -> unsubscribeAccountIncidentsTopic(forceReset = true)
+        }
+    }
+
+    fun handleNewReportsTopicSubscription(action: FCMTopicSubscriptionAction) {
+        when (action) {
+            UPDATE_SUBSCRIPTION -> updateNewReportsTopicSubscription()
+            SUBSCRIBE -> subscribeNewReportsTopic()
+            UNSUBSCRIBE -> unsubscribeNewReportsTopic(forceReset = false)
+            RESET -> unsubscribeNewReportsTopic(forceReset = true)
         }
     }
 
@@ -123,11 +146,19 @@ class FCMTopicSubscriptionHandler @Inject constructor(
         }
     }
 
-    private fun unsubscribeNewEventsTopic() {
-        val isSubscriptionUnknown = preferencesRepository.subscribedToFirebaseEventsTopic == null
-        if (!isSubscriptionUnknown) {
+    private fun subscribeNewEventsTopic() {
+        val subscribed = preferencesRepository.subscribedToFirebaseEventsTopic == true
+        if (!subscribed) {
+            firebaseMessaging.subscribeToTopic(Constants.FIREBASE_NEW_EVENTS_TOPIC)
+            preferencesRepository.subscribedToFirebaseEventsTopic = true
+        }
+    }
+
+    private fun unsubscribeNewEventsTopic(forceReset: Boolean) {
+        val subscribed = preferencesRepository.subscribedToFirebaseEventsTopic == true
+        if (subscribed) {
             firebaseMessaging.unsubscribeFromTopic(Constants.FIREBASE_NEW_EVENTS_TOPIC)
-            preferencesRepository.subscribedToFirebaseEventsTopic = null
+            preferencesRepository.subscribedToFirebaseEventsTopic = if (forceReset) null else false
         }
     }
 
@@ -139,11 +170,19 @@ class FCMTopicSubscriptionHandler @Inject constructor(
         }
     }
 
-    private fun unsubscribePrivateMessagesTopic() {
-        val isSubscriptionUnknown = preferencesRepository.subscribedToFirebasePrivateMessagesTopic == null
-        if (!isSubscriptionUnknown) {
+    private fun subscribePrivateMessagesTopic() {
+        val subscribed = preferencesRepository.subscribedToFirebasePrivateMessagesTopic == true
+        if (!subscribed) {
+            firebaseMessaging.subscribeToTopic(Constants.FIREBASE_PRIVATE_MESSAGES_TOPIC)
+            preferencesRepository.subscribedToFirebasePrivateMessagesTopic = true
+        }
+    }
+
+    private fun unsubscribePrivateMessagesTopic(forceReset: Boolean) {
+        val subscribed = preferencesRepository.subscribedToFirebasePrivateMessagesTopic == true
+        if (subscribed) {
             firebaseMessaging.unsubscribeFromTopic(Constants.FIREBASE_PRIVATE_MESSAGES_TOPIC)
-            preferencesRepository.subscribedToFirebasePrivateMessagesTopic = null
+            preferencesRepository.subscribedToFirebasePrivateMessagesTopic = if (forceReset) null else false
         }
     }
 
@@ -155,11 +194,43 @@ class FCMTopicSubscriptionHandler @Inject constructor(
         }
     }
 
-    private fun unsubscribeAccountIncidentsTopic() {
-        val isSubscriptionUnknown = preferencesRepository.subscribedToFirebaseAccountIncidentsTopic == null
-        if (!isSubscriptionUnknown) {
+    private fun subscribeAccountIncidentsTopic() {
+        val subscribed = preferencesRepository.subscribedToFirebaseAccountIncidentsTopic == true
+        if (!subscribed) {
+            firebaseMessaging.subscribeToTopic(Constants.FIREBASE_ACCOUNT_INCIDENTS_TOPIC)
+            preferencesRepository.subscribedToFirebaseAccountIncidentsTopic = true
+        }
+    }
+
+    private fun unsubscribeAccountIncidentsTopic(forceReset: Boolean) {
+        val subscribed = preferencesRepository.subscribedToFirebaseAccountIncidentsTopic == true
+        if (subscribed) {
             firebaseMessaging.unsubscribeFromTopic(Constants.FIREBASE_ACCOUNT_INCIDENTS_TOPIC)
-            preferencesRepository.subscribedToFirebaseAccountIncidentsTopic = null
+            preferencesRepository.subscribedToFirebaseAccountIncidentsTopic = if (forceReset) null else false
+        }
+    }
+
+    private fun updateNewReportsTopicSubscription() {
+        val isSubscriptionUnknown = preferencesRepository.subscribedToFirebaseNewReportsTopic == null
+        if (isSubscriptionUnknown) {
+            firebaseMessaging.subscribeToTopic(Constants.FIREBASE_NEW_REPORTS_TOPIC)
+            preferencesRepository.subscribedToFirebaseNewReportsTopic = true
+        }
+    }
+
+    private fun subscribeNewReportsTopic() {
+        val subscribed = preferencesRepository.subscribedToFirebaseNewReportsTopic == true
+        if (!subscribed) {
+            firebaseMessaging.subscribeToTopic(Constants.FIREBASE_NEW_REPORTS_TOPIC)
+            preferencesRepository.subscribedToFirebaseNewReportsTopic = true
+        }
+    }
+
+    private fun unsubscribeNewReportsTopic(forceReset: Boolean) {
+        val subscribed = preferencesRepository.subscribedToFirebaseNewReportsTopic == true
+        if (subscribed) {
+            firebaseMessaging.unsubscribeFromTopic(Constants.FIREBASE_ACCOUNT_INCIDENTS_TOPIC)
+            preferencesRepository.subscribedToFirebaseNewReportsTopic = if (forceReset) null else false
         }
     }
 }

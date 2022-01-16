@@ -30,6 +30,7 @@ class SettingsActivity : BaseActivity(), SettingsNavigator {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bindViewModel()
+        viewModel.onCreate() // TODO: handle onFirstCreate for Activity viewmodels
         ButterKnife.bind(this)
         setSupportActionBar(mToolbar)
 

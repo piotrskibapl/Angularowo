@@ -17,6 +17,6 @@ interface PreferencesRepository {
     var subscribedToFirebaseEventsTopic: Boolean? // TODO: use enum class
     var subscribedToFirebasePrivateMessagesTopic: Boolean? // TODO: use enum class
     var subscribedToFirebaseAccountIncidentsTopic: Boolean? // TODO: use enum class
-    var subscribedToFirebaseNewReportsTopic: Boolean
+    var subscribedToFirebaseNewReportsTopic: Boolean? // TODO: use enum class
     fun clearUserData()
 }
