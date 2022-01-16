@@ -12,6 +12,14 @@
             type="int" />
 
         <variable
+            name="checkable"
+            type="boolean" />
+
+        <variable
+            name="checked"
+            type="boolean" />
+
+        <variable
             name="onClick"
             type="android.view.View.OnClickListener" />
     </data>
@@ -32,8 +40,9 @@
             style="@style/TextViewPrimary"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
             android:text="@{context.getString(itemName)}"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/checkbox"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Item name" />
@@ -43,11 +52,22 @@
             style="@style/TextViewSecondary"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
             android:text="@{context.getString(itemDescription)}"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/checkbox"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/item_name"
             tools:text="Item description" />
+
+        <CheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="@{checked}"
+            app:visible="@{checkable}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -34,6 +34,8 @@
         <include
             android:id="@+id/item_events"
             layout="@layout/settings_item"
+            app:checkable="@{true}"
+            app:checked="@{false}"
             app:itemDescription="@{R.string.pref_summary_subscribed_to_events}"
             app:itemName="@{R.string.pref_title_subscribed_to_events}"
             app:onClick="@{() -> viewModel.onSettingsItemClicked()}" />
@@ -41,6 +43,8 @@
         <include
             android:id="@+id/item_private_messages"
             layout="@layout/settings_item"
+            app:checkable="@{true}"
+            app:checked="@{false}"
             app:itemDescription="@{R.string.pref_summary_subscribed_to_private_messages}"
             app:itemName="@{R.string.pref_title_subscribed_to_private_messages}"
             app:onClick="@{() -> viewModel.onSettingsItemClicked()}" />
@@ -48,6 +52,8 @@
         <include
             android:id="@+id/item_account_incidents"
             layout="@layout/settings_item"
+            app:checkable="@{true}"
+            app:checked="@{false}"
             app:itemDescription="@{R.string.pref_summary_subscribed_to_account_incidents}"
             app:itemName="@{R.string.pref_title_subscribed_to_account_incidents}"
             app:onClick="@{() -> viewModel.onSettingsItemClicked()}" />
@@ -55,6 +61,8 @@
         <include
             android:id="@+id/item_new_reports"
             layout="@layout/settings_item"
+            app:checkable="@{true}"
+            app:checked="@{false}"
             app:itemDescription="@{R.string.pref_summary_subscribed_to_new_reports}"
             app:itemName="@{R.string.pref_title_subscribed_to_new_reports}"
             app:onClick="@{() -> viewModel.onSettingsItemClicked()}" />
@@ -68,6 +76,7 @@
         <include
             android:id="@+id/item_logout"
             layout="@layout/settings_item"
+            app:checkable="@{false}"
             app:itemDescription="@{R.string.pref_summary_subscribed_to_new_reports}"
             app:itemName="@{R.string.pref_title_logout}"
             app:onClick="@{() -> viewModel.onSettingsItemClicked()}" />
