@@ -133,6 +133,7 @@ class MainScreenViewModel @Inject constructor(
     private fun savePlayer(player: DetailedPlayerModel) {
         preferencesRepository.skinUuid = player.skinUuid
         preferencesRepository.username = player.username
+        preferencesRepository.rankName = player.rank.name
         preferencesRepository.balance = player.balance
         preferencesRepository.tokens = player.tokens
         preferencesRepository.playtime = player.playtime
