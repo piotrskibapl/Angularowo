@@ -120,7 +120,7 @@ class MainScreenViewModel @Inject constructor(
                     playerData.value = detailedPlayer.toUi()
                     player.value = detailedPlayer
                     savePlayer(detailedPlayer)
-                    // TODO: subscribe to Firebase rank topic
+                    fcmTopicSubscriptionHandler.handlePlayerRankTopicSubscription()
                     // TODO: subscribe/unsubscribe to Firebase new reports topic
                 },
                 { error ->

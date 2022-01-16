@@ -15,6 +15,7 @@ private const val PREF_KEY_PLAYTIME = "playtime"
 private const val PREF_KEY_FAVORITE_SHOWCASE_SHOWN = "showcase_favorite_shown"
 private const val PREF_KEY_FIREBASE_SUBSCRIBED_APP_VERSION = "subscribed_app_version"
 private const val PREF_KEY_FIREBASE_SUBSCRIBED_PLAYER_UUID = "subscribed_player_uuid"
+private const val PREF_KEY_FIREBASE_SUBSCRIBED_PLAYER_RANK_NAME = "subscribed_player_rank_name"
 private const val PREF_KEY_FIREBASE_EVENTS_SUBSCRIBED = "events_subscribed"
 private const val PREF_KEY_FIREBASE_PRIVATE_MESSAGES_SUBSCRIBED = "private_messages_subscribed"
 private const val PREF_KEY_FIREBASE_ACCOUNT_INCIDENTS_SUBSCRIBED = "account_incidents_subscribed"
@@ -71,6 +72,10 @@ class PreferencesRepositoryImpl @Inject constructor(
         get() = sharedPreferences.getString(PREF_KEY_FIREBASE_SUBSCRIBED_PLAYER_UUID, null)
         set(value) = applyValue(PREF_KEY_FIREBASE_SUBSCRIBED_PLAYER_UUID, value)
 
+    override var subscribedFirebasePlayerRankName: String?
+        get() = sharedPreferences.getString(PREF_KEY_FIREBASE_SUBSCRIBED_PLAYER_RANK_NAME, null)
+        set(value) = applyValue(PREF_KEY_FIREBASE_SUBSCRIBED_PLAYER_RANK_NAME, value)
+
     override var subscribedToFirebaseEventsTopic: Boolean?
         get() = if (sharedPreferences.contains(PREF_KEY_FIREBASE_EVENTS_SUBSCRIBED)) {
             sharedPreferences.getBoolean(PREF_KEY_FIREBASE_EVENTS_SUBSCRIBED, false)
@@ -118,6 +123,7 @@ class PreferencesRepositoryImpl @Inject constructor(
             remove(PREF_KEY_USERNAME)
             remove(PREF_KEY_RANK_NAME)
             remove(PREF_KEY_FIREBASE_SUBSCRIBED_PLAYER_UUID)
+            remove(PREF_KEY_FIREBASE_SUBSCRIBED_PLAYER_RANK_NAME)
             apply()
         }
     }

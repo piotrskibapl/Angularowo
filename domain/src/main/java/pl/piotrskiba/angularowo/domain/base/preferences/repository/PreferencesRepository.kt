@@ -13,6 +13,7 @@ interface PreferencesRepository {
     var hasSeenFavoriteShowcase: Boolean
     var subscribedFirebaseAppVersion: Int?
     var subscribedFirebasePlayerUuid: String?
+    var subscribedFirebasePlayerRankName: String?
     var subscribedToFirebaseEventsTopic: Boolean? // TODO: use enum class
     var subscribedToFirebasePrivateMessagesTopic: Boolean? // TODO: use enum class
     var subscribedToFirebaseAccountIncidentsTopic: Boolean? // TODO: use enum class

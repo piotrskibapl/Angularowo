@@ -35,6 +35,18 @@ class FCMTopicSubscriptionHandler @Inject constructor(
         }
     }
 
+    fun handlePlayerRankTopicSubscription() {
+        val subscribedPlayerRankName = preferencesRepository.subscribedFirebasePlayerRankName
+        val currentPlayerRankName = preferencesRepository.rankName!!
+        if (subscribedPlayerRankName != currentPlayerRankName) {
+            subscribedPlayerRankName?.let {
+                firebaseMessaging.unsubscribeFromTopic(Constants.FIREBASE_RANK_TOPIC_PREFIX + it)
+            }
+            firebaseMessaging.subscribeToTopic(Constants.FIREBASE_RANK_TOPIC_PREFIX + currentPlayerRankName)
+            preferencesRepository.subscribedFirebasePlayerRankName = currentPlayerRankName
+        }
+    }
+
     fun handleNewEventsTopicSubscription() {
         val isSubscriptionUnknown = preferencesRepository.subscribedToFirebaseEventsTopic == null
         if (isSubscriptionUnknown) {
