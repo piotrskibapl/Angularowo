@@ -120,10 +120,12 @@ class PreferencesRepositoryImpl @Inject constructor(
         sharedPreferences.edit().apply {
             remove(PREF_KEY_ACCESS_TOKEN)
             remove(PREF_KEY_UUID)
+            remove(PREF_KEY_SKIN_UUID)
             remove(PREF_KEY_USERNAME)
             remove(PREF_KEY_RANK_NAME)
-            remove(PREF_KEY_FIREBASE_SUBSCRIBED_PLAYER_UUID)
-            remove(PREF_KEY_FIREBASE_SUBSCRIBED_PLAYER_RANK_NAME)
+            remove(PREF_KEY_BALANCE)
+            remove(PREF_KEY_TOKENS)
+            remove(PREF_KEY_PLAYTIME)
             apply()
         }
     }
@@ -158,7 +160,7 @@ class PreferencesRepositoryImpl @Inject constructor(
 
     private fun deleteValue(key: String) {
         sharedPreferences.edit().apply {
-            deleteValue(key)
+            remove(key)
             apply()
         }
     }

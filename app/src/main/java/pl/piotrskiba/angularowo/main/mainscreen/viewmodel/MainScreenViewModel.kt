@@ -18,6 +18,7 @@ import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
 import pl.piotrskiba.angularowo.domain.player.usecase.GetPlayerDetailsFromUuidUseCase
 import pl.piotrskiba.angularowo.domain.punishment.usecase.GetActivePlayerPunishmentsUseCase
 import pl.piotrskiba.angularowo.domain.server.usecase.GetServerStatusUseCase
+import pl.piotrskiba.angularowo.main.base.handler.FCMTopicSubscriptionAction.UPDATE_SUBSCRIPTION
 import pl.piotrskiba.angularowo.main.base.handler.FCMTopicSubscriptionHandler
 import pl.piotrskiba.angularowo.main.mainscreen.model.MainScreenServerData
 import pl.piotrskiba.angularowo.main.mainscreen.model.toUi
@@ -69,11 +70,11 @@ class MainScreenViewModel @Inject constructor(
     override fun onFirstCreate() {
         punishmentsBinding.bindExtra(BR.navigator, navigator)
         onRefresh()
-        fcmTopicSubscriptionHandler.handleAppVersionTopicSubscription()
-        fcmTopicSubscriptionHandler.handlePlayerUuidTopicSubscription()
-        fcmTopicSubscriptionHandler.handleNewEventsTopicSubscription()
-        fcmTopicSubscriptionHandler.handlePrivateMessagesTopicSubscription()
-        fcmTopicSubscriptionHandler.handleAccountIncidentsTopicSubscription()
+        fcmTopicSubscriptionHandler.handleAppVersionTopicSubscription(UPDATE_SUBSCRIPTION)
+        fcmTopicSubscriptionHandler.handlePlayerUuidTopicSubscription(UPDATE_SUBSCRIPTION)
+        fcmTopicSubscriptionHandler.handleNewEventsTopicSubscription(UPDATE_SUBSCRIPTION)
+        fcmTopicSubscriptionHandler.handlePrivateMessagesTopicSubscription(UPDATE_SUBSCRIPTION)
+        fcmTopicSubscriptionHandler.handleAccountIncidentsTopicSubscription(UPDATE_SUBSCRIPTION)
         // TODO: subscribe to Firebase new reports topic
     }
 
@@ -120,7 +121,7 @@ class MainScreenViewModel @Inject constructor(
                     playerData.value = detailedPlayer.toUi()
                     player.value = detailedPlayer
                     savePlayer(detailedPlayer)
-                    fcmTopicSubscriptionHandler.handlePlayerRankTopicSubscription()
+                    fcmTopicSubscriptionHandler.handlePlayerRankTopicSubscription(UPDATE_SUBSCRIPTION)
                     // TODO: subscribe/unsubscribe to Firebase new reports topic
                 },
                 { error ->

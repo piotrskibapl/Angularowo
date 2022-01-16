@@ -2,16 +2,15 @@ package pl.piotrskiba.angularowo.settings.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.firebase.messaging.FirebaseMessaging
-import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
+import pl.piotrskiba.angularowo.main.base.handler.FCMTopicSubscriptionAction.UNSUBSCRIBE
+import pl.piotrskiba.angularowo.main.base.handler.FCMTopicSubscriptionHandler
 import pl.piotrskiba.angularowo.settings.nav.SettingsNavigator
-import pl.piotrskiba.angularowo.utils.TextUtils
 import javax.inject.Inject
 
 class SettingsViewModel @Inject constructor(
-    private val firebaseMessaging: FirebaseMessaging,
     private val preferencesRepository: PreferencesRepository,
+    private val fcmTopicSubscriptionHandler: FCMTopicSubscriptionHandler,
 ) : ViewModel() {
 
     lateinit var navigator: SettingsNavigator
@@ -38,10 +37,11 @@ class SettingsViewModel @Inject constructor(
 
     fun onLogoutClicked() {
         navigator.onLogoutClicked {
-            firebaseMessaging.unsubscribeFromTopic(Constants.FIREBASE_PLAYER_UUID_TOPIC_PREFIX + preferencesRepository.uuid)
-            firebaseMessaging.unsubscribeFromTopic(
-                Constants.FIREBASE_RANK_TOPIC_PREFIX + TextUtils.normalize(preferencesRepository.rankName)
-            )
+            fcmTopicSubscriptionHandler.handlePlayerUuidTopicSubscription(UNSUBSCRIBE)
+            fcmTopicSubscriptionHandler.handlePlayerRankTopicSubscription(UNSUBSCRIBE)
+            fcmTopicSubscriptionHandler.handleNewEventsTopicSubscription(UNSUBSCRIBE)
+            fcmTopicSubscriptionHandler.handlePrivateMessagesTopicSubscription(UNSUBSCRIBE)
+            fcmTopicSubscriptionHandler.handleAccountIncidentsTopicSubscription(UNSUBSCRIBE)
             preferencesRepository.clearUserData()
         }
     }
