@@ -8,6 +8,7 @@ import pl.piotrskiba.angularowo.main.base.handler.FCMTopicSubscriptionAction.SUB
 import pl.piotrskiba.angularowo.main.base.handler.FCMTopicSubscriptionAction.UNSUBSCRIBE
 import pl.piotrskiba.angularowo.main.base.handler.FCMTopicSubscriptionHandler
 import pl.piotrskiba.angularowo.settings.nav.SettingsNavigator
+import pl.piotrskiba.angularowo.utils.RankUtils
 import javax.inject.Inject
 
 class SettingsViewModel @Inject constructor(
@@ -20,12 +21,14 @@ class SettingsViewModel @Inject constructor(
     val privateMessagesChecked = MutableLiveData(false)
     val accountIncidentsChecked = MutableLiveData(false)
     val newReportsChecked = MutableLiveData(false)
+    val isStaffMember = MutableLiveData(false)
 
     fun onCreate() {
         eventsChecked.value = preferencesRepository.subscribedToFirebaseEventsTopic ?: false
         privateMessagesChecked.value = preferencesRepository.subscribedToFirebasePrivateMessagesTopic ?: false
         accountIncidentsChecked.value = preferencesRepository.subscribedToFirebaseAccountIncidentsTopic ?: false
         newReportsChecked.value = preferencesRepository.subscribedToFirebaseNewReportsTopic ?: false
+        isStaffMember.value = if (preferencesRepository.rankName == null) false else RankUtils.getRankFromName(preferencesRepository.rankName!!).staff
     }
 
     fun onEventsNotificationsClicked() {

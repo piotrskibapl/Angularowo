@@ -65,7 +65,8 @@
             app:checked="@{viewModel.newReportsChecked}"
             app:itemDescription="@{R.string.pref_summary_subscribed_to_new_reports}"
             app:itemName="@{R.string.pref_title_subscribed_to_new_reports}"
-            app:onClick="@{() -> viewModel.onNewReportsNotificationsClicked()}" />
+            app:onClick="@{() -> viewModel.onNewReportsNotificationsClicked()}"
+            app:visible="@{viewModel.isStaffMember()}" />
 
         <include
             android:id="@+id/category_others"
