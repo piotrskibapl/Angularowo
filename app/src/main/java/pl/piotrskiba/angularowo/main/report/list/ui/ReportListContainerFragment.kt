@@ -15,6 +15,6 @@ class ReportListContainerFragment : BaseFragment<ReportListContainerViewModel>(R
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_report_list_container_fragment, container, false)
+        return inflater.inflate(R.layout.fragment_report_list_container, container, false)
     }
 }

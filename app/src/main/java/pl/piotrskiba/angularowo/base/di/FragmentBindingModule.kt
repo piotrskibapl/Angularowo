@@ -8,6 +8,7 @@ import pl.piotrskiba.angularowo.main.player.list.ui.PlayerListFragment
 import pl.piotrskiba.angularowo.main.punishment.details.ui.PunishmentDetailsFragment
 import pl.piotrskiba.angularowo.main.punishment.list.ui.PunishmentListFragment
 import pl.piotrskiba.angularowo.main.report.list.ui.ReportListContainerFragment
+import pl.piotrskiba.angularowo.main.report.list.ui.ReportListTabFragment
 
 @Module(includes = [ViewModelModule::class])
 abstract class FragmentBindingModule {
@@ -29,4 +30,7 @@ abstract class FragmentBindingModule {
 
     @ContributesAndroidInjector
     abstract fun bindReportListContainerFragment(): ReportListContainerFragment
+
+    @ContributesAndroidInjector
+    abstract fun bindReportListTabFragment(): ReportListTabFragment
 }
