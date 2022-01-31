@@ -9,7 +9,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.multidex.MultiDex
 import butterknife.BindView
@@ -27,14 +26,13 @@ import pl.piotrskiba.angularowo.base.di.obtainViewModel
 import pl.piotrskiba.angularowo.base.ui.BaseActivity
 import pl.piotrskiba.angularowo.interfaces.UnauthorizedResponseListener
 import pl.piotrskiba.angularowo.login.ui.LoginActivity
-import pl.piotrskiba.angularowo.main.punishment.list.ui.PunishmentListFragment
 import pl.piotrskiba.angularowo.main.base.viewmodel.MainViewModel
 import pl.piotrskiba.angularowo.main.chat.ui.ChatFragment
 import pl.piotrskiba.angularowo.main.mainscreen.ui.MainScreenFragment
 import pl.piotrskiba.angularowo.main.offers.ui.OffersFragment
 import pl.piotrskiba.angularowo.main.player.list.ui.PlayerListFragment
-import pl.piotrskiba.angularowo.main.report.history.ui.ReportsHistoryFragment
-import pl.piotrskiba.angularowo.main.report.history.ui.ReportsHistoryFragmentContainerFragment
+import pl.piotrskiba.angularowo.main.punishment.list.ui.PunishmentListFragment
+import pl.piotrskiba.angularowo.main.report.list.ui.ReportListContainerFragment
 import pl.piotrskiba.angularowo.network.ServerAPIClient
 import pl.piotrskiba.angularowo.network.ServerAPIClient.retrofitInstance
 import pl.piotrskiba.angularowo.network.ServerAPIInterface
@@ -42,7 +40,6 @@ import pl.piotrskiba.angularowo.network.UnauthorizedInterceptor.Companion.setUna
 import pl.piotrskiba.angularowo.settings.ui.SettingsActivity
 import pl.piotrskiba.angularowo.utils.NotificationUtils
 import pl.piotrskiba.angularowo.utils.PreferenceUtils
-import pl.piotrskiba.angularowo.utils.RankUtils.getRankFromPreferences
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -73,7 +70,7 @@ class MainActivity : BaseActivity(), UnauthorizedResponseListener, RewardedVideo
     private var chatFragment: ChatFragment = ChatFragment()
     private var punishmentListFragment: PunishmentListFragment = PunishmentListFragment()
     private var offersFragment: OffersFragment = OffersFragment()
-    private var reportsHistoryFragment: Fragment? = null
+    private var reportListContainerFragment: ReportListContainerFragment = ReportListContainerFragment()
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(newBase)
@@ -164,47 +161,35 @@ class MainActivity : BaseActivity(), UnauthorizedResponseListener, RewardedVideo
     private fun initializeFragments() {
         val frag1: MainScreenFragment? = supportFragmentManager.findFragmentByTag(TAG_MAIN_FRAGMENT) as MainScreenFragment?
         frag1?.run {
-            mainScreenFragment = frag1
+            mainScreenFragment = this
         }
 
-        val frag2: PlayerListFragment? = supportFragmentManager.findFragmentByTag(
-            TAG_PLAYER_LIST_FRAGMENT
-        ) as PlayerListFragment?
+        val frag2: PlayerListFragment? = supportFragmentManager.findFragmentByTag(TAG_PLAYER_LIST_FRAGMENT) as PlayerListFragment?
         frag2?.run {
-            playerListFragment = frag2
+            playerListFragment = this
         }
 
         val frag3: ChatFragment? = supportFragmentManager.findFragmentByTag(TAG_CHAT_FRAGMENT) as ChatFragment?
         frag3?.run {
-            chatFragment = frag3
+            chatFragment = this
         }
 
         val frag4: PunishmentListFragment? = supportFragmentManager.findFragmentByTag(TAG_BAN_LIST_FRAGMENT) as PunishmentListFragment?
         frag4?.run {
-            punishmentListFragment = frag4
+            punishmentListFragment = this
         }
 
-        val frag5: OffersFragment? = supportFragmentManager.findFragmentByTag(
-            TAG_FREE_RANKS_FRAGMENT
-        ) as OffersFragment?
+        val frag5: OffersFragment? = supportFragmentManager.findFragmentByTag(TAG_FREE_RANKS_FRAGMENT) as OffersFragment?
         frag5?.run {
-            offersFragment = frag5
+            offersFragment = this
         }
 
-        reportsHistoryFragment = supportFragmentManager.findFragmentByTag(
-            TAG_REPORTS_HISTORY_FRAGMENT
-        )
+        val frag6: ReportListContainerFragment? = supportFragmentManager.findFragmentByTag(TAG_REPORT_LIST_FRAGMENT) as ReportListContainerFragment?
+        frag6?.run {
+            reportListContainerFragment = this
+        }
 
         offersFragment.setRewardedVideoAd(mRewardedVideoAd)
-
-        if (reportsHistoryFragment == null) {
-            val rank = getRankFromPreferences(this)
-            reportsHistoryFragment = if (rank != null && rank.staff) {
-                ReportsHistoryFragmentContainerFragment()
-            } else {
-                ReportsHistoryFragment.newInstance(false)
-            }
-        }
     }
 
     private fun populateUi() {
@@ -249,7 +234,7 @@ class MainActivity : BaseActivity(), UnauthorizedResponseListener, RewardedVideo
                     }
                     R.id.nav_reports_history -> {
                         supportFragmentManager.beginTransaction()
-                                .replace(R.id.fragment_container, reportsHistoryFragment!!, TAG_REPORTS_HISTORY_FRAGMENT)
+                                .replace(R.id.fragment_container, reportListContainerFragment, TAG_REPORT_LIST_FRAGMENT)
                                 .commit()
                     }
                     R.id.nav_settings -> {
@@ -349,6 +334,6 @@ class MainActivity : BaseActivity(), UnauthorizedResponseListener, RewardedVideo
         private const val TAG_CHAT_FRAGMENT = "fragment_chat"
         private const val TAG_BAN_LIST_FRAGMENT = "fragment_ban_list"
         private const val TAG_FREE_RANKS_FRAGMENT = "fragment_offers"
-        private const val TAG_REPORTS_HISTORY_FRAGMENT = "fragment_reports_history"
+        private const val TAG_REPORT_LIST_FRAGMENT = "fragment_report_list"
     }
 }
