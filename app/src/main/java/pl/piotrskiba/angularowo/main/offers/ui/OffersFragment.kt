@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.google.ads.mediation.admob.AdMobAdapter
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
@@ -77,7 +78,12 @@ class OffersFragment : BaseFragment<OffersViewModel>(OffersViewModel::class), Of
     }
 
     override fun displayRewardedAd(adId: String, onAdWatched: () -> Unit, onAdLoadingFailure: () -> Unit) {
-        val adRequest = AdRequest.Builder().build()
+        val extras = Bundle().apply {
+            putString("npa", "1")
+        }
+        val adRequest = AdRequest.Builder()
+            .addNetworkExtrasBundle(AdMobAdapter::class.java, extras)
+            .build()
         RewardedAd.load(requireContext(), adId, adRequest, object : RewardedAdLoadCallback() {
 
             override fun onAdLoaded(rewardedAd: RewardedAd) {
