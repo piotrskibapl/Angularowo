@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import butterknife.BindView
 import butterknife.ButterKnife
+import com.google.ads.mediation.admob.AdMobAdapter
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.reward.RewardedVideoAd
 import pl.piotrskiba.angularowo.AppViewModel
@@ -248,7 +249,12 @@ class OffersFragment : BaseFragment(), AdOfferClickListener, OfferClickListener,
 
     private fun loadRewardedVideoAd(adId: String) {
         showLoadingIndicator()
-        mRewardedVideoAd.loadAd(adId, AdRequest.Builder().build())
+        val extras = Bundle()
+        extras.putString("npa", "1")
+        val adRequest = AdRequest.Builder()
+            .addNetworkExtrasBundle(AdMobAdapter::class.java, extras)
+            .build()
+        mRewardedVideoAd.loadAd(adId, adRequest)
     }
 
     private fun redeemOffer(offer: Offer) {
