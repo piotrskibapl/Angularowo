@@ -14,6 +14,7 @@ import pl.piotrskiba.angularowo.data.network.di.NetworkModule
 import pl.piotrskiba.angularowo.data.player.di.PlayerModule
 import pl.piotrskiba.angularowo.data.punishment.di.PunishmentModule
 import pl.piotrskiba.angularowo.data.rank.di.RankModule
+import pl.piotrskiba.angularowo.data.report.di.ReportModule
 import pl.piotrskiba.angularowo.data.server.di.ServerModule
 import javax.inject.Singleton
 
@@ -28,6 +29,7 @@ import javax.inject.Singleton
         FriendModule::class,
         RankModule::class,
         PunishmentModule::class,
+        ReportModule::class,
         AppModule::class,
         AndroidSupportInjectionModule::class,
         AndroidInjectionModule::class,
