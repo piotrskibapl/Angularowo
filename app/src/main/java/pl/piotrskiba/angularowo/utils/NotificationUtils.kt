@@ -43,9 +43,9 @@ class NotificationUtils(private val context: Context) {
 
             val soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
             val audioAttributes = AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .setUsage(AudioAttributes.USAGE_NOTIFICATION)
-                    .build()
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                .build()
             channel.setSound(soundUri, audioAttributes)
 
             val notificationManager = context.getSystemService(NotificationManager::class.java)
@@ -86,7 +86,12 @@ class NotificationUtils(private val context: Context) {
      */
     fun showNotification(rawTitle: String, rawBody: String, sound: Boolean) {
         val intent = Intent(context, MainActivity::class.java)
-        val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
+        val intentFlag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        } else {
+            PendingIntent.FLAG_UPDATE_CURRENT
+        }
+        val pendingIntent = PendingIntent.getActivity(context, 0, intent, intentFlag)
 
         val notificationManager = NotificationManagerCompat.from(context)
 
@@ -97,30 +102,34 @@ class NotificationUtils(private val context: Context) {
             val soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
             val builder = NotificationCompat.Builder(context, Constants.DEFAULT_CHANNEL_ID)
-                    .setSmallIcon(R.drawable.ic_notification)
-                    .setColor(ContextCompat.getColor(context, R.color.color_notification))
-                    .setContentTitle(title)
-                    .setContentText(body)
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .setContentIntent(pendingIntent)
-                    .setStyle(NotificationCompat.BigTextStyle()
-                            .bigText(body))
-                    .setAutoCancel(true)
-                    .setSound(soundUri)
-                    .setVibrate(Constants.DEFAULT_VIBRATE_PATTERN)
+                .setSmallIcon(R.drawable.ic_notification)
+                .setColor(ContextCompat.getColor(context, R.color.color_notification))
+                .setContentTitle(title)
+                .setContentText(body)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .setStyle(
+                    NotificationCompat.BigTextStyle()
+                        .bigText(body)
+                )
+                .setAutoCancel(true)
+                .setSound(soundUri)
+                .setVibrate(Constants.DEFAULT_VIBRATE_PATTERN)
 
             notificationManager.notify(notificationId, builder.build())
         } else {
             val builder = NotificationCompat.Builder(context, Constants.SILENT_CHANNEL_ID)
-                    .setSmallIcon(R.drawable.ic_notification)
-                    .setColor(ContextCompat.getColor(context, R.color.color_notification))
-                    .setContentTitle(title)
-                    .setContentText(body)
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .setContentIntent(pendingIntent)
-                    .setStyle(NotificationCompat.BigTextStyle()
-                            .bigText(body))
-                    .setAutoCancel(true)
+                .setSmallIcon(R.drawable.ic_notification)
+                .setColor(ContextCompat.getColor(context, R.color.color_notification))
+                .setContentTitle(title)
+                .setContentText(body)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .setStyle(
+                    NotificationCompat.BigTextStyle()
+                        .bigText(body)
+                )
+                .setAutoCancel(true)
 
             notificationManager.notify(notificationId, builder.build())
         }
