@@ -35,6 +35,7 @@ class ReportListContainerFragment : BaseFragment<ReportListContainerViewModel>(R
 
     private fun setupViewPager() {
         val adapter = ReportListViewPagerAdapter(childFragmentManager, lifecycle)
+        viewPager.isSaveEnabled = false
         viewPager.adapter = adapter
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = when (position) {
