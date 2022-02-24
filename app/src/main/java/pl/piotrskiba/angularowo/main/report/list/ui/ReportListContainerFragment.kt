@@ -14,7 +14,8 @@ import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.main.report.list.adapter.ReportListViewPagerAdapter
 import pl.piotrskiba.angularowo.main.report.list.viewmodel.ReportListContainerViewModel
 
-class ReportListContainerFragment : BaseFragment<ReportListContainerViewModel>(ReportListContainerViewModel::class) {
+class ReportListContainerFragment :
+    BaseFragment<ReportListContainerViewModel>(ReportListContainerViewModel::class) {
 
     @BindView(R.id.viewpager)
     lateinit var viewPager: ViewPager2
@@ -34,7 +35,14 @@ class ReportListContainerFragment : BaseFragment<ReportListContainerViewModel>(R
     }
 
     private fun setupViewPager() {
-        val adapter = ReportListViewPagerAdapter(childFragmentManager, lifecycle)
+        val adapter = ReportListViewPagerAdapter(
+            childFragmentManager,
+            lifecycle,
+            viewModel.othersReportsTabAvailable
+        )
+        // TODO: use data binding instead
+        viewPager.isUserInputEnabled = viewModel.othersReportsTabAvailable
+        tabLayout.visibility = if (viewModel.othersReportsTabAvailable) View.VISIBLE else View.GONE
         viewPager.isSaveEnabled = false
         viewPager.adapter = adapter
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
