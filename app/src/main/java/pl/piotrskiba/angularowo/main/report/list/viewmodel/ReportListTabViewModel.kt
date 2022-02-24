@@ -12,6 +12,7 @@ import pl.piotrskiba.angularowo.base.model.ViewModelState.Loading
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
+import pl.piotrskiba.angularowo.domain.report.usecase.GetNotArchivedReportsUseCase
 import pl.piotrskiba.angularowo.domain.report.usecase.GetOwnedReportsUseCase
 import pl.piotrskiba.angularowo.main.report.model.ReportBannerData
 import pl.piotrskiba.angularowo.main.report.model.toReportBannerDataList
@@ -19,6 +20,7 @@ import javax.inject.Inject
 
 class ReportListTabViewModel @Inject constructor(
     private val getOwnedReportsUseCase: GetOwnedReportsUseCase,
+    private val getNotArchivedReportsUseCase: GetNotArchivedReportsUseCase,
     private val preferencesRepository: PreferencesRepository,
     private val facade: SchedulersProvider,
 ) : LifecycleViewModel() {
@@ -26,11 +28,12 @@ class ReportListTabViewModel @Inject constructor(
     val state = MutableLiveData<ViewModelState>(Loading)
     val reportBanners: MutableLiveData<List<ReportBannerData>> = MutableLiveData()
     val reportsBinding = ItemBinding.of<ReportBannerData>(BR.report, R.layout.report_list_item)
+    var othersReportsVariant = false
     private val disposables = CompositeDisposable()
 
     override fun onFirstCreate() {
         super.onFirstCreate()
-        loadReportList()
+        onRefresh()
     }
 
     override fun onCleared() {
@@ -38,12 +41,34 @@ class ReportListTabViewModel @Inject constructor(
     }
 
     fun onRefresh() {
-        loadReportList()
+        if (othersReportsVariant) {
+            loadOtherPlayersReportList()
+        } else {
+            loadOwnedReportList()
+        }
     }
 
-    private fun loadReportList() {
+    private fun loadOwnedReportList() {
         state.value = Loading
         disposables.add(getOwnedReportsUseCase
+            .execute(preferencesRepository.accessToken!!)
+            .subscribeOn(facade.io())
+            .observeOn(facade.ui())
+            .subscribe(
+                { reportModels ->
+                    state.value = Loaded
+                    reportBanners.value = reportModels.toReportBannerDataList()
+                },
+                { error ->
+                    state.value = Error(error)
+                }
+            )
+        )
+    }
+
+    private fun loadOtherPlayersReportList() {
+        state.value = Loading
+        disposables.add(getNotArchivedReportsUseCase
             .execute(preferencesRepository.accessToken!!)
             .subscribeOn(facade.io())
             .observeOn(facade.ui())

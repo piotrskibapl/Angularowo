@@ -10,7 +10,14 @@ import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.databinding.FragmentReportListTabBinding
 import pl.piotrskiba.angularowo.main.report.list.viewmodel.ReportListTabViewModel
 
+const val OTHERS_REPORTS_VARIANT_KEY = "others-reports-variant"
+
 class ReportListTabFragment : BaseFragment<ReportListTabViewModel>(ReportListTabViewModel::class) {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        viewModel.othersReportsVariant = arguments?.getBoolean(OTHERS_REPORTS_VARIANT_KEY) == true
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,7 +33,12 @@ class ReportListTabFragment : BaseFragment<ReportListTabViewModel>(ReportListTab
         container: ViewGroup?
     ): FragmentReportListTabBinding {
         val binding: FragmentReportListTabBinding =
-            DataBindingUtil.inflate(layoutInflater, R.layout.fragment_report_list_tab, container, false)
+            DataBindingUtil.inflate(
+                layoutInflater,
+                R.layout.fragment_report_list_tab,
+                container,
+                false
+            )
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         return binding
