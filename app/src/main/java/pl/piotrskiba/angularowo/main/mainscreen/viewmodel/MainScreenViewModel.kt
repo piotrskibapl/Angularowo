@@ -75,7 +75,6 @@ class MainScreenViewModel @Inject constructor(
         fcmTopicSubscriptionHandler.handleNewEventsTopicSubscription(UPDATE_SUBSCRIPTION)
         fcmTopicSubscriptionHandler.handlePrivateMessagesTopicSubscription(UPDATE_SUBSCRIPTION)
         fcmTopicSubscriptionHandler.handleAccountIncidentsTopicSubscription(UPDATE_SUBSCRIPTION)
-        // TODO: subscribe to Firebase new reports topic
     }
 
     override fun onCleared() {
@@ -122,7 +121,7 @@ class MainScreenViewModel @Inject constructor(
                     player.value = detailedPlayer
                     savePlayer(detailedPlayer)
                     fcmTopicSubscriptionHandler.handlePlayerRankTopicSubscription(UPDATE_SUBSCRIPTION)
-                    // TODO: subscribe/unsubscribe to Firebase new reports topic
+                    fcmTopicSubscriptionHandler.handleNewReportsTopicSubscription(UPDATE_SUBSCRIPTION)
                 },
                 { error ->
                     playerDataState.value = Error(error)

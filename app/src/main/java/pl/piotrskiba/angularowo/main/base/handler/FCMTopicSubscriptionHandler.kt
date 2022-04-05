@@ -8,6 +8,7 @@ import pl.piotrskiba.angularowo.main.base.handler.FCMTopicSubscriptionAction.RES
 import pl.piotrskiba.angularowo.main.base.handler.FCMTopicSubscriptionAction.SUBSCRIBE
 import pl.piotrskiba.angularowo.main.base.handler.FCMTopicSubscriptionAction.UNSUBSCRIBE
 import pl.piotrskiba.angularowo.main.base.handler.FCMTopicSubscriptionAction.UPDATE_SUBSCRIPTION
+import pl.piotrskiba.angularowo.utils.RankUtils
 import javax.inject.Inject
 
 class FCMTopicSubscriptionHandler @Inject constructor(
@@ -140,10 +141,7 @@ class FCMTopicSubscriptionHandler @Inject constructor(
 
     private fun updateNewEventsTopicSubscription() {
         val isSubscriptionUnknown = preferencesRepository.subscribedToFirebaseEventsTopic == null
-        if (isSubscriptionUnknown) {
-            firebaseMessaging.subscribeToTopic(Constants.FIREBASE_NEW_EVENTS_TOPIC)
-            preferencesRepository.subscribedToFirebaseEventsTopic = true
-        }
+        if (isSubscriptionUnknown) subscribeNewEventsTopic()
     }
 
     private fun subscribeNewEventsTopic() {
@@ -164,10 +162,7 @@ class FCMTopicSubscriptionHandler @Inject constructor(
 
     private fun updatePrivateMessagesTopicSubscription() {
         val isSubscriptionUnknown = preferencesRepository.subscribedToFirebasePrivateMessagesTopic == null
-        if (isSubscriptionUnknown) {
-            firebaseMessaging.subscribeToTopic(Constants.FIREBASE_PRIVATE_MESSAGES_TOPIC)
-            preferencesRepository.subscribedToFirebasePrivateMessagesTopic = true
-        }
+        if (isSubscriptionUnknown) subscribePrivateMessagesTopic()
     }
 
     private fun subscribePrivateMessagesTopic() {
@@ -188,10 +183,7 @@ class FCMTopicSubscriptionHandler @Inject constructor(
 
     private fun updateAccountIncidentsTopicSubscription() {
         val isSubscriptionUnknown = preferencesRepository.subscribedToFirebaseAccountIncidentsTopic == null
-        if (isSubscriptionUnknown) {
-            firebaseMessaging.subscribeToTopic(Constants.FIREBASE_ACCOUNT_INCIDENTS_TOPIC)
-            preferencesRepository.subscribedToFirebaseAccountIncidentsTopic = true
-        }
+        if (isSubscriptionUnknown) subscribeAccountIncidentsTopic()
     }
 
     private fun subscribeAccountIncidentsTopic() {
@@ -211,10 +203,11 @@ class FCMTopicSubscriptionHandler @Inject constructor(
     }
 
     private fun updateNewReportsTopicSubscription() {
-        val isSubscriptionUnknown = preferencesRepository.subscribedToFirebaseNewReportsTopic == null
-        if (isSubscriptionUnknown) {
-            firebaseMessaging.subscribeToTopic(Constants.FIREBASE_NEW_REPORTS_TOPIC)
-            preferencesRepository.subscribedToFirebaseNewReportsTopic = true
+        val isStaffMember = RankUtils.getRankFromName(preferencesRepository.rankName!!).staff
+        val subscribed = preferencesRepository.subscribedToFirebaseNewReportsTopic
+        when {
+            subscribed == null && isStaffMember -> subscribeNewReportsTopic()
+            subscribed == true && !isStaffMember -> unsubscribeNewReportsTopic(true)
         }
     }
 
