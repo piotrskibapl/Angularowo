@@ -9,7 +9,6 @@ import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.ui.OldBaseActivity
 import pl.piotrskiba.angularowo.main.punishment.details.DetailedPunishmentData
-import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBannerData
 
 class PunishmentDetailsActivity : OldBaseActivity() {
 

@@ -79,6 +79,3 @@
 -keepnames class * implements android.os.Parcelable {
    public static final ** CREATOR;
 }
-
-# Other
--keep class pl.piotrskiba.angularowo.settings.ui.SettingsFragment
