@@ -1,7 +1,6 @@
 package pl.piotrskiba.angularowo.main.player.details.viewmodel
 
 import androidx.lifecycle.MutableLiveData
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 import pl.piotrskiba.angularowo.base.model.ViewModelState
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
@@ -31,7 +30,6 @@ class PlayerDetailsViewModel @Inject constructor(
     val previewedPlayerDetails: MutableLiveData<DetailedPlayerData> = MutableLiveData()
     val state = MutableLiveData<ViewModelState>(ViewModelState.Loading)
     private var isPreviewedPlayerFavorite: Boolean = false
-    private val disposables = CompositeDisposable()
 
     override fun onFirstCreate() {
         onRefresh()

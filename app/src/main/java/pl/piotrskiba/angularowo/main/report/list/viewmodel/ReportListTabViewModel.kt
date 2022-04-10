@@ -1,7 +1,6 @@
 package pl.piotrskiba.angularowo.main.report.list.viewmodel
 
 import androidx.lifecycle.MutableLiveData
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 import me.tatarka.bindingcollectionadapter2.ItemBinding
 import pl.piotrskiba.angularowo.BR
 import pl.piotrskiba.angularowo.R
@@ -29,15 +28,10 @@ class ReportListTabViewModel @Inject constructor(
     val reportBanners: MutableLiveData<List<ReportBannerData>> = MutableLiveData()
     val reportsBinding = ItemBinding.of<ReportBannerData>(BR.report, R.layout.report_list_item)
     var othersReportsVariant = false
-    private val disposables = CompositeDisposable()
 
     override fun onFirstCreate() {
         super.onFirstCreate()
         onRefresh()
-    }
-
-    override fun onCleared() {
-        disposables.clear()
     }
 
     fun onRefresh() {

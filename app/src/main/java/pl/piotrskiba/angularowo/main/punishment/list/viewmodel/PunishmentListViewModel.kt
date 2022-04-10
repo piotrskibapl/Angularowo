@@ -1,7 +1,6 @@
 package pl.piotrskiba.angularowo.main.punishment.list.viewmodel
 
 import androidx.lifecycle.MutableLiveData
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 import me.tatarka.bindingcollectionadapter2.ItemBinding
 import pl.piotrskiba.angularowo.BR
 import pl.piotrskiba.angularowo.R
@@ -31,15 +30,10 @@ class PunishmentListViewModel @Inject constructor(
     val punishmentBanners: MutableLiveData<List<PunishmentBannerData>> = MutableLiveData()
     val punishmentsBinding = ItemBinding.of<PunishmentBannerData>(BR.punishment, R.layout.punishment_list_item)
     lateinit var navigator: PunishmentListNavigator
-    private val disposables = CompositeDisposable()
 
     override fun onFirstCreate() {
         punishmentsBinding.bindExtra(BR.navigator, navigator)
         loadPunishmentList()
-    }
-
-    override fun onCleared() {
-        disposables.clear()
     }
 
     fun onRefresh() {

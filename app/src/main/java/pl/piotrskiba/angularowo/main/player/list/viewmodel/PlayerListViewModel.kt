@@ -3,7 +3,6 @@ package pl.piotrskiba.angularowo.main.player.list.viewmodel
 import androidx.lifecycle.MutableLiveData
 import com.snakydesign.livedataextensions.combineLatest
 import com.snakydesign.livedataextensions.map
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 import me.tatarka.bindingcollectionadapter2.ItemBinding
 import pl.piotrskiba.angularowo.BR
 import pl.piotrskiba.angularowo.R
@@ -37,11 +36,6 @@ class PlayerListViewModel @Inject constructor(
         players.isEmpty() && favoritePlayers.isEmpty()
     }
     lateinit var navigator: PlayerListNavigator
-    private val disposables = CompositeDisposable()
-
-    override fun onCleared() {
-        disposables.clear()
-    }
 
     override fun onFirstCreate() {
         playersBinding.bindExtra(BR.navigator, navigator)

@@ -3,7 +3,6 @@ package pl.piotrskiba.angularowo.main.mainscreen.viewmodel
 import androidx.lifecycle.MutableLiveData
 import com.snakydesign.livedataextensions.combineLatest
 import com.snakydesign.livedataextensions.map
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 import me.tatarka.bindingcollectionadapter2.ItemBinding
 import pl.piotrskiba.angularowo.BR
 import pl.piotrskiba.angularowo.R
@@ -65,7 +64,6 @@ class MainScreenViewModel @Inject constructor(
     val punishmentsBinding = ItemBinding.of<PunishmentBannerData>(BR.punishment, R.layout.punishment_list_item)
     val isPunishmentListNotEmpty = punishmentBanners.map { it.isNotEmpty() }
     lateinit var navigator: PunishmentListNavigator
-    private val disposables = CompositeDisposable()
 
     override fun onFirstCreate() {
         punishmentsBinding.bindExtra(BR.navigator, navigator)
@@ -75,10 +73,6 @@ class MainScreenViewModel @Inject constructor(
         fcmTopicSubscriptionHandler.handleNewEventsTopicSubscription(UPDATE_SUBSCRIPTION)
         fcmTopicSubscriptionHandler.handlePrivateMessagesTopicSubscription(UPDATE_SUBSCRIPTION)
         fcmTopicSubscriptionHandler.handleAccountIncidentsTopicSubscription(UPDATE_SUBSCRIPTION)
-    }
-
-    override fun onCleared() {
-        disposables.clear()
     }
 
     fun onRefresh() {
