@@ -3,6 +3,7 @@ package pl.piotrskiba.angularowo.base.di
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import pl.piotrskiba.angularowo.main.mainscreen.ui.MainScreenFragment
+import pl.piotrskiba.angularowo.main.offers.ui.OffersFragment
 import pl.piotrskiba.angularowo.main.player.details.ui.PlayerDetailsFragment
 import pl.piotrskiba.angularowo.main.player.list.ui.PlayerListFragment
 import pl.piotrskiba.angularowo.main.punishment.details.ui.PunishmentDetailsFragment
@@ -33,4 +34,7 @@ abstract class FragmentBindingModule {
 
     @ContributesAndroidInjector
     abstract fun bindReportListTabFragment(): ReportListTabFragment
+
+    @ContributesAndroidInjector
+    abstract fun bindOffersFragment(): OffersFragment
 }

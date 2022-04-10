@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -14,9 +13,6 @@ import androidx.multidex.MultiDex
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.reward.RewardItem
-import com.google.android.gms.ads.reward.RewardedVideoAd
-import com.google.android.gms.ads.reward.RewardedVideoAdListener
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import pl.piotrskiba.angularowo.Constants
@@ -33,19 +29,13 @@ import pl.piotrskiba.angularowo.main.offers.ui.OffersFragment
 import pl.piotrskiba.angularowo.main.player.list.ui.PlayerListFragment
 import pl.piotrskiba.angularowo.main.punishment.list.ui.PunishmentListFragment
 import pl.piotrskiba.angularowo.main.report.list.ui.ReportListContainerFragment
-import pl.piotrskiba.angularowo.network.ServerAPIClient
-import pl.piotrskiba.angularowo.network.ServerAPIClient.retrofitInstance
-import pl.piotrskiba.angularowo.network.ServerAPIInterface
 import pl.piotrskiba.angularowo.network.UnauthorizedInterceptor.Companion.setUnauthorizedListener
 import pl.piotrskiba.angularowo.settings.ui.SettingsActivity
 import pl.piotrskiba.angularowo.utils.NotificationUtils
 import pl.piotrskiba.angularowo.utils.PreferenceUtils
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
 
-class MainActivity : BaseActivity(), UnauthorizedResponseListener, RewardedVideoAdListener {
+class MainActivity : BaseActivity(), UnauthorizedResponseListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -61,7 +51,6 @@ class MainActivity : BaseActivity(), UnauthorizedResponseListener, RewardedVideo
 
     private lateinit var preferenceUtils: PreferenceUtils
     private lateinit var mFirebaseRemoteConfig: FirebaseRemoteConfig
-    private lateinit var mRewardedVideoAd: RewardedVideoAd
     private lateinit var viewModel: MainViewModel
     private var waitingForLogin = false
 
@@ -88,9 +77,6 @@ class MainActivity : BaseActivity(), UnauthorizedResponseListener, RewardedVideo
         NotificationUtils(this).createNotificationChannels()
         setupRemoteConfig()
         MobileAds.initialize(this)
-
-        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this)
-        mRewardedVideoAd.rewardedVideoAdListener = this
 
         setUnauthorizedListener(this)
 
@@ -188,8 +174,6 @@ class MainActivity : BaseActivity(), UnauthorizedResponseListener, RewardedVideo
         frag6?.run {
             reportListContainerFragment = this
         }
-
-        offersFragment.setRewardedVideoAd(mRewardedVideoAd)
     }
 
     private fun populateUi() {
@@ -276,57 +260,6 @@ class MainActivity : BaseActivity(), UnauthorizedResponseListener, RewardedVideo
             }
         }
     }
-
-    override fun onRewardedVideoAdLoaded() {
-        offersFragment.hideLoadingIndicator()
-        mRewardedVideoAd.show()
-    }
-
-    override fun onRewardedVideoAdOpened() {}
-    override fun onRewardedVideoStarted() {}
-    override fun onRewardedVideoAdClosed() {}
-
-    override fun onRewarded(rewardItem: RewardItem) {
-        val accessToken = preferenceUtils.accessToken
-        val context: Context = this
-
-        accessToken?.run {
-            val serverAPIInterface = retrofitInstance.create(ServerAPIInterface::class.java)
-            serverAPIInterface.redeemAdOffer(ServerAPIClient.API_KEY, rewardItem.type, accessToken).enqueue(object : Callback<Void?> {
-                override fun onResponse(call: Call<Void?>, response: Response<Void?>) {
-                    if (!isFinishing) {
-                        AlertDialog.Builder(context)
-                                .setTitle(R.string.ad_offer_redeemed)
-                                .setMessage(R.string.ad_offer_redeemed_description)
-                                .setPositiveButton(R.string.button_dismiss, null)
-                                .show()
-
-                        offersFragment.refreshData()
-                    }
-                }
-
-                override fun onFailure(call: Call<Void?>, t: Throwable) {
-                    t.printStackTrace()
-                }
-            })
-        }
-    }
-
-    override fun onRewardedVideoAdLeftApplication() {}
-    override fun onRewardedVideoAdFailedToLoad(i: Int) {
-        if (!isFinishing) {
-            offersFragment.hideLoadingIndicator()
-            if (i == 3) {
-                AlertDialog.Builder(this)
-                        .setTitle(R.string.no_ads)
-                        .setMessage(R.string.no_ads_description)
-                        .setPositiveButton(R.string.button_dismiss, null)
-                        .show()
-            }
-        }
-    }
-
-    override fun onRewardedVideoCompleted() {}
 
     companion object {
         private const val TAG_MAIN_FRAGMENT = "fragment_main"

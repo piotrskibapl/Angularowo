@@ -8,6 +8,7 @@ import dagger.multibindings.IntoMap
 import pl.piotrskiba.angularowo.login.viewmodel.LoginViewModel
 import pl.piotrskiba.angularowo.main.base.viewmodel.MainViewModel
 import pl.piotrskiba.angularowo.main.mainscreen.viewmodel.MainScreenViewModel
+import pl.piotrskiba.angularowo.main.offers.viewmodel.OffersViewModel
 import pl.piotrskiba.angularowo.main.player.details.viewmodel.PlayerDetailsViewModel
 import pl.piotrskiba.angularowo.main.player.list.viewmodel.PlayerListViewModel
 import pl.piotrskiba.angularowo.main.punishment.details.viewmodel.PunishmentDetailsViewModel
@@ -71,4 +72,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(ReportListTabViewModel::class)
     abstract fun bindReportListTabViewModel(viewModel: ReportListTabViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(OffersViewModel::class)
+    abstract fun bindOffersViewModel(viewModel: OffersViewModel): ViewModel
 }
