@@ -9,23 +9,23 @@ import java.text.Normalizer
 object TextUtils {
 
     @JvmStatic
-    fun formatPlaytime(context: Context, playtime: Int): String {
-        var playtime = playtime
+    fun formatPlaytime(context: Context, playtime: Long): String {
+        var remainingSeconds = playtime/1000
         var days = 0
         var hours = 0
         var minutes = 0
 
-        while (playtime >= 60 * 60 * 24) {
+        while (remainingSeconds >= 60 * 60 * 24) {
             days++
-            playtime -= 60 * 60 * 24
+            remainingSeconds -= 60 * 60 * 24
         }
-        while (playtime >= 60 * 60) {
+        while (remainingSeconds >= 60 * 60) {
             hours++
-            playtime -= 60 * 60
+            remainingSeconds -= 60 * 60
         }
-        while (playtime >= 60) {
+        while (remainingSeconds >= 60) {
             minutes++
-            playtime -= 60
+            remainingSeconds -= 60
         }
 
         var result = ""
@@ -53,37 +53,6 @@ object TextUtils {
         }
 
         return result
-    }
-
-    @JvmStatic
-    fun formatApproximateTimeLeft(seconds: Int): String {
-        val minutes = seconds / 60
-        val hours = minutes / 60
-        val days = hours / 24
-        val builder = StringBuilder()
-
-        if (days > 0)
-            builder.append(days).append(" d")
-
-        if (hours % 24 > 0) {
-            if (builder.isNotEmpty())
-                builder.append(" ")
-            builder.append(hours % 24).append(" h")
-        }
-
-        if (minutes % 60 > 0 && days == 0) {
-            if (builder.isNotEmpty())
-                builder.append(" ")
-            builder.append(minutes % 60).append(" m")
-        }
-
-        if (seconds % 60 > 0 && days == 0 && hours == 0) {
-            if (builder.isNotEmpty())
-                builder.append(" ")
-            builder.append(seconds % 60).append(" s")
-        }
-
-        return builder.toString()
     }
 
     @JvmStatic

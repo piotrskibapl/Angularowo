@@ -12,7 +12,7 @@ data class DetailedPlayerModel(
     var rank: Rank,
     val isVanished: Boolean,
     val balance: Float,
-    val playtime: Int,
+    val playtime: Long,
     val tokens: Int,
     val permissions: List<String>
 ) : Serializable

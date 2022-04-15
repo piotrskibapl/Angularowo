@@ -4,7 +4,6 @@ import pl.piotrskiba.angularowo.domain.report.model.ReportAppreciation
 import pl.piotrskiba.angularowo.domain.report.model.ReportModel
 import pl.piotrskiba.angularowo.domain.report.model.ReportStatus
 import java.util.Date
-import java.util.concurrent.TimeUnit
 
 data class ReportRemote(
     val id: Int,
@@ -23,7 +22,7 @@ private fun ReportRemote.toDomain() = ReportModel(
     id,
     status.toReportStatus(),
     appreciation.toReportAppreciation(),
-    Date(TimeUnit.SECONDS.toMillis(date)),
+    Date(date),
     reporter,
     reported,
     reason,

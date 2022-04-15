@@ -9,7 +9,7 @@ interface PreferencesRepository {
     var rankName: String?
     var balance: Float
     var tokens: Int
-    var playtime: Int
+    var playtime: Long
     var hasSeenFavoriteShowcase: Boolean
     var subscribedFirebaseAppVersion: Int?
     var subscribedFirebasePlayerUuid: String?

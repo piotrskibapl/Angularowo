@@ -53,8 +53,13 @@ class PreferencesRepositoryImpl @Inject constructor(
         get() = sharedPreferences.getInt(PREF_KEY_TOKENS, 0)
         set(value) = applyValue(PREF_KEY_TOKENS, value)
 
-    override var playtime: Int
-        get() = sharedPreferences.getInt(PREF_KEY_PLAYTIME, 0)
+    // playtime was stored as Int seconds instead of Long milliseconds before release 4.0
+    override var playtime: Long
+        get() = try {
+            sharedPreferences.getLong(PREF_KEY_PLAYTIME, 0)
+        } catch (e: ClassCastException) {
+            sharedPreferences.getInt(PREF_KEY_PLAYTIME, 0).toLong() * 1000
+        }
         set(value) = applyValue(PREF_KEY_PLAYTIME, value)
 
     override var hasSeenFavoriteShowcase: Boolean
@@ -62,7 +67,8 @@ class PreferencesRepositoryImpl @Inject constructor(
         set(value) = applyValue(PREF_KEY_FAVORITE_SHOWCASE_SHOWN, value)
 
     override var subscribedFirebaseAppVersion: Int?
-        get() = when (val value = sharedPreferences.getInt(PREF_KEY_FIREBASE_SUBSCRIBED_APP_VERSION, -1)) {
+        get() = when (val value =
+            sharedPreferences.getInt(PREF_KEY_FIREBASE_SUBSCRIBED_APP_VERSION, -1)) {
             -1 -> null
             else -> value
         }
@@ -155,6 +161,13 @@ class PreferencesRepositoryImpl @Inject constructor(
     private fun applyValue(key: String, value: Int) {
         sharedPreferences.edit().apply {
             putInt(key, value)
+            apply()
+        }
+    }
+
+    private fun applyValue(key: String, value: Long) {
+        sharedPreferences.edit().apply {
+            putLong(key, value)
             apply()
         }
     }

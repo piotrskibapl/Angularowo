@@ -12,7 +12,7 @@ data class DetailedPlayerData(
     private val tokens: Int,
     private val balance: Float,
     private val skinUuid: String,
-    private val playtime: Int,
+    private val playtime: Long,
 ) {
 
     fun greetingText(context: Context) = context.getString(R.string.greeting, username)

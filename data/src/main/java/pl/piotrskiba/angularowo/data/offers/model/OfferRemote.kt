@@ -2,7 +2,6 @@ package pl.piotrskiba.angularowo.data.offers.model
 
 import pl.piotrskiba.angularowo.domain.offers.model.OfferModel
 import java.util.Date
-import java.util.concurrent.TimeUnit
 
 data class OfferRemote(
     val id: String,
@@ -25,5 +24,5 @@ private fun OfferRemote.toDomain() =
         price,
         imageUrl,
         timeBreak,
-        if (availabilityDate == null) null else Date(TimeUnit.SECONDS.toMillis(availabilityDate))
+        if (availabilityDate == null) null else Date(availabilityDate)
     )

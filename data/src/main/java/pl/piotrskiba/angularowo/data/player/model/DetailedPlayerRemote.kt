@@ -13,7 +13,7 @@ data class DetailedPlayerRemote(
     @SerializedName(value = "rank") val rankName: String,
     @SerializedName(value = "vanished") val isVanished: Boolean,
     val balance: Float,
-    val playtime: Int,
+    val playtime: Long,
     val tokens: Int,
     val permissions: List<String>
 )
