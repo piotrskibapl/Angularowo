@@ -175,6 +175,7 @@
     <string name="report_details_reason">Powód zgłoszenia:</string>
     <string name="report_details_reporter">Zgłaszający:</string>
     <string name="report_details_date">Data zgłoszenia:</string>
+    <string name="report_date_format" translatable="false">dd.MM.yyyy HH:mm</string>
 
     <!-- content descriptions -->
     <string name="player_body_image_description">Obrazek postaci</string>

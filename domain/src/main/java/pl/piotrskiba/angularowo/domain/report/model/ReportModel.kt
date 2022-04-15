@@ -1,5 +1,6 @@
 package pl.piotrskiba.angularowo.domain.report.model
 
+import java.io.Serializable
 import java.util.Date
 
 data class ReportModel(
@@ -11,4 +12,4 @@ data class ReportModel(
     val reportedName: String,
     val reason: String,
     val archived: Boolean
-)
+) : Serializable

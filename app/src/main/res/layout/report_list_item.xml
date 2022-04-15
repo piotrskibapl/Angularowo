@@ -8,6 +8,10 @@
         <import type="pl.piotrskiba.angularowo.R" />
 
         <variable
+            name="navigator"
+            type="pl.piotrskiba.angularowo.main.report.list.nav.ReportListNavigator" />
+
+        <variable
             name="report"
             type="pl.piotrskiba.angularowo.main.report.model.ReportBannerData" />
     </data>
@@ -17,6 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_small"
         android:background="@color/color_minecraft_7"
+        android:onClick="@{(view) -> navigator.onReportClick(view, report)}"
         android:padding="@dimen/padding_default"
         android:transitionName="@string/report_banner_transition_name">
 

@@ -7,6 +7,7 @@ import pl.piotrskiba.angularowo.domain.report.model.ReportAppreciation
 import pl.piotrskiba.angularowo.domain.report.model.ReportModel
 
 data class ReportBannerData(
+    val id: Int,
     val reportedName: String,
     private val reason: String,
     private val appreciation: ReportAppreciation,
@@ -37,6 +38,7 @@ data class ReportBannerData(
 
 fun ReportModel.toReportBannerData() =
     ReportBannerData(
+        id,
         reportedName,
         reason,
         appreciation

@@ -11,8 +11,11 @@ import pl.piotrskiba.angularowo.base.model.ViewModelState.Loading
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
+import pl.piotrskiba.angularowo.domain.report.model.ReportModel
 import pl.piotrskiba.angularowo.domain.report.usecase.GetNotArchivedReportsUseCase
 import pl.piotrskiba.angularowo.domain.report.usecase.GetOwnedReportsUseCase
+import pl.piotrskiba.angularowo.main.player.list.nav.PlayerListNavigator
+import pl.piotrskiba.angularowo.main.report.list.nav.ReportListNavigator
 import pl.piotrskiba.angularowo.main.report.model.ReportBannerData
 import pl.piotrskiba.angularowo.main.report.model.toReportBannerDataList
 import javax.inject.Inject
@@ -25,12 +28,14 @@ class ReportListTabViewModel @Inject constructor(
 ) : LifecycleViewModel() {
 
     val state = MutableLiveData<ViewModelState>(Loading)
+    val reportModels: MutableLiveData<List<ReportModel>> = MutableLiveData()
     val reportBanners: MutableLiveData<List<ReportBannerData>> = MutableLiveData()
     val reportsBinding = ItemBinding.of<ReportBannerData>(BR.report, R.layout.report_list_item)
     var othersReportsVariant = false
+    lateinit var navigator: ReportListNavigator
 
     override fun onFirstCreate() {
-        super.onFirstCreate()
+        reportsBinding.bindExtra(BR.navigator, navigator)
         onRefresh()
     }
 
@@ -51,6 +56,7 @@ class ReportListTabViewModel @Inject constructor(
             .subscribe(
                 { reportModels ->
                     state.value = Loaded
+                    this.reportModels.value = reportModels
                     reportBanners.value = reportModels.toReportBannerDataList()
                 },
                 { error ->
@@ -69,6 +75,7 @@ class ReportListTabViewModel @Inject constructor(
             .subscribe(
                 { reportModels ->
                     state.value = Loaded
+                    this.reportModels.value = reportModels
                     reportBanners.value = reportModels.toReportBannerDataList()
                 },
                 { error ->
