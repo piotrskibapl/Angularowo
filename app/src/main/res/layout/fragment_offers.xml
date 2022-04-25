@@ -13,7 +13,9 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swiperefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:onRefreshListener="@{() -> viewModel.onRefresh()}"
+        app:refreshing="@{viewModel.state.loading}">
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/default_layout"
@@ -31,6 +33,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawablePadding="@dimen/padding_default"
+                    android:text="@{viewModel.offersInfo.pointsText}"
                     android:textColor="@color/color_coin"
                     android:textSize="@dimen/coins_text_size"
                     app:drawableStartCompat="@drawable/ic_coin_big"
@@ -68,7 +71,8 @@
                     android:textSize="@dimen/label_text_size"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/adOffersList" />
+                    app:layout_constraintTop_toBottomOf="@+id/adOffersList"
+                    app:visible="@{viewModel.offersInfo.pointsLimitReached}" />
 
                 <TextView
                     android:id="@+id/exchangeCoinsText"
