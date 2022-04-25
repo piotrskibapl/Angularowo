@@ -2,7 +2,7 @@
 <!-- TODO: to be deleted when fully replaced by error_layout.xml -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/server_error_layout"
+    android:id="@+id/main"
     android:visibility="gone"
     android:orientation="vertical"
     android:layout_width="match_parent"

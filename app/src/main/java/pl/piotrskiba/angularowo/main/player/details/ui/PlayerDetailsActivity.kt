@@ -2,27 +2,22 @@ package pl.piotrskiba.angularowo.main.player.details.ui
 
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.appcompat.widget.Toolbar
-import butterknife.BindView
-import butterknife.ButterKnife
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.ui.BaseActivity
+import pl.piotrskiba.angularowo.databinding.ActivityPlayerDetailsBinding
 import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
 import pl.piotrskiba.angularowo.main.player.model.PlayerBannerData
 
 class PlayerDetailsActivity : BaseActivity() {
 
-    @BindView(R.id.toolbar)
-    lateinit var mToolbar: Toolbar
-
     private lateinit var player: DetailedPlayerModel
     private lateinit var previewedPlayer: PlayerBannerData
+    private lateinit var binding: ActivityPlayerDetailsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        ButterKnife.bind(this)
+        setupBinding()
         loadArguments()
         setupToolbar()
         setupMainFragment()
@@ -36,13 +31,18 @@ class PlayerDetailsActivity : BaseActivity() {
         else -> super.onOptionsItemSelected(item)
     }
 
+    private fun setupBinding() {
+        binding = ActivityPlayerDetailsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+    }
+
     private fun loadArguments() {
         player = intent.getSerializableExtra(Constants.EXTRA_PLAYER) as DetailedPlayerModel
         previewedPlayer = intent.getSerializableExtra(Constants.EXTRA_PREVIEWED_PLAYER) as PlayerBannerData
     }
 
     private fun setupToolbar() {
-        setSupportActionBar(mToolbar)
+        setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setTitle(R.string.player_info)

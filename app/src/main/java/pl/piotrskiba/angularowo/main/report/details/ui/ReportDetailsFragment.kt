@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import pl.piotrskiba.angularowo.Constants
-import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.databinding.FragmentReportDetailsBinding
 import pl.piotrskiba.angularowo.domain.report.model.ReportModel
@@ -26,7 +24,7 @@ class ReportDetailsFragment : BaseFragment<ReportDetailsViewModel>(ReportDetails
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = bindViewModel(layoutInflater, container)
+        val binding = setupBinding(layoutInflater, container)
         return binding.root
     }
 
@@ -36,16 +34,11 @@ class ReportDetailsFragment : BaseFragment<ReportDetailsViewModel>(ReportDetails
         viewModel.reportDetails = report.toUi()
     }
 
-    private fun bindViewModel(
+    private fun setupBinding(
         layoutInflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentReportDetailsBinding {
-        val binding: FragmentReportDetailsBinding = DataBindingUtil.inflate(
-            layoutInflater,
-            R.layout.fragment_report_details,
-            container,
-            false
-        )
+        val binding = FragmentReportDetailsBinding.inflate(layoutInflater, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         return binding

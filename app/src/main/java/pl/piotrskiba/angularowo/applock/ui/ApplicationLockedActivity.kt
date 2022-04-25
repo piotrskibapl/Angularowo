@@ -1,40 +1,27 @@
 package pl.piotrskiba.angularowo.applock.ui
 
 import android.os.Bundle
-import android.widget.TextView
-import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import pl.piotrskiba.angularowo.AppViewModel
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.Permissions
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.ui.OldBaseActivity
+import pl.piotrskiba.angularowo.databinding.ActivityApplicationLockedBinding
 import pl.piotrskiba.angularowo.models.DetailedPlayer
 
 class ApplicationLockedActivity : OldBaseActivity() {
 
-    @BindView(R.id.toolbar)
-    lateinit var mToolbar: Toolbar
-
-    @BindView(R.id.tv_title)
-    lateinit var mTitleTextView: TextView
-
-    @BindView(R.id.tv_body)
-    lateinit var mBodyTextView: TextView
-
     private lateinit var mFirebaseRemoteConfig: FirebaseRemoteConfig
     private lateinit var mViewModel: AppViewModel
+    private lateinit var binding: ActivityApplicationLockedBinding
     private var mPlayer: DetailedPlayer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        setContentView(R.layout.activity_application_locked)
-        ButterKnife.bind(this)
-        setSupportActionBar(mToolbar)
+        setupBinding()
+        setSupportActionBar(binding.toolbar)
 
         mViewModel = ViewModelProvider(this).get(AppViewModel::class.java)
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
@@ -47,12 +34,17 @@ class ApplicationLockedActivity : OldBaseActivity() {
         title = title.replace("\\n", "\n")
         body = body.replace("\\n", "\n")
 
-        mTitleTextView.text = title
-        mBodyTextView.text = body
+        binding.tvTitle.text = title
+        binding.tvBody.text = body
+    }
+
+    private fun setupBinding() {
+        binding = ActivityApplicationLockedBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 
     private fun seekForPlayerUpdates() {
-        mViewModel.getPlayer().observe(this, { mPlayer = it })
+        mViewModel.getPlayer().observe(this) { mPlayer = it }
     }
 
     override fun onBackPressed() {

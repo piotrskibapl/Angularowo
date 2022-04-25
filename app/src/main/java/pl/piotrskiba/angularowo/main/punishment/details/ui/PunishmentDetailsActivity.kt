@@ -2,25 +2,20 @@ package pl.piotrskiba.angularowo.main.punishment.details.ui
 
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.appcompat.widget.Toolbar
-import butterknife.BindView
-import butterknife.ButterKnife
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.ui.OldBaseActivity
+import pl.piotrskiba.angularowo.databinding.ActivityPunishmentDetailsBinding
 import pl.piotrskiba.angularowo.main.punishment.details.DetailedPunishmentData
 
 class PunishmentDetailsActivity : OldBaseActivity() {
 
-    @BindView(R.id.toolbar)
-    lateinit var mToolbar: Toolbar
-
     private lateinit var previewedPunishment: DetailedPunishmentData
+    private lateinit var binding: ActivityPunishmentDetailsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_punishment_details)
-        ButterKnife.bind(this)
+        setupBinding()
         loadArguments()
         setupToolbar()
         setupMainFragment()
@@ -34,12 +29,17 @@ class PunishmentDetailsActivity : OldBaseActivity() {
         else -> super.onOptionsItemSelected(item)
     }
 
+    private fun setupBinding() {
+        binding = ActivityPunishmentDetailsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+    }
+
     private fun loadArguments() {
         previewedPunishment = intent.getSerializableExtra(Constants.EXTRA_PUNISHMENT) as DetailedPunishmentData
     }
 
     private fun setupToolbar() {
-        setSupportActionBar(mToolbar)
+        setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setTitle(R.string.punishment_info)

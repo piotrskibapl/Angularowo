@@ -7,8 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
-import androidx.databinding.DataBindingUtil
-import butterknife.ButterKnife
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.di.obtainViewModel
@@ -36,14 +34,10 @@ class PlayerListFragment : BaseFragment<PlayerListViewModel>(PlayerListViewModel
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = bindViewModel(layoutInflater, container)
-        val view = binding.root
-
-        ButterKnife.bind(this, view)
-
+        val binding = setupBinding(layoutInflater, container)
         val actionbar = (activity as AppCompatActivity?)?.supportActionBar
         actionbar?.setTitle(R.string.actionbar_title_player_list)
-        return view
+        return binding.root
     }
 
     override fun onPlayerClick(view: View, player: PlayerBannerData) {
@@ -58,12 +52,11 @@ class PlayerListFragment : BaseFragment<PlayerListViewModel>(PlayerListViewModel
         startActivity(intent, options.toBundle())
     }
 
-    private fun bindViewModel(
+    private fun setupBinding(
         layoutInflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentPlayerListBinding {
-        val binding: FragmentPlayerListBinding =
-            DataBindingUtil.inflate(layoutInflater, R.layout.fragment_player_list, container, false)
+        val binding = FragmentPlayerListBinding.inflate(layoutInflater, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         return binding

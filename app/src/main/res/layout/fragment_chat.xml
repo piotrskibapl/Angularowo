@@ -4,17 +4,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".main.base.ui.MainActivity">
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_chat"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"/>
+        android:visibility="gone" />
+
     <ProgressBar
         android:id="@+id/pb_loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
-    <include layout="@layout/no_internet_layout" />
-    <include layout="@layout/server_error_layout" />
-    <include layout="@layout/account_banned_layout" />
+
+    <include
+        android:id="@+id/no_internet_layout"
+        layout="@layout/no_internet_layout" />
+
+    <include
+        android:id="@+id/server_error_layout"
+        layout="@layout/server_error_layout" />
+
+    <include
+        android:id="@+id/account_banned_layout"
+        layout="@layout/account_banned_layout" />
 </FrameLayout>

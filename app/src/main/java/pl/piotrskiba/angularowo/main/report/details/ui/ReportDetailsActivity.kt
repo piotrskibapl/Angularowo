@@ -2,25 +2,20 @@ package pl.piotrskiba.angularowo.main.report.details.ui
 
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.appcompat.widget.Toolbar
-import butterknife.BindView
-import butterknife.ButterKnife
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.ui.BaseActivity
+import pl.piotrskiba.angularowo.databinding.ActivityReportDetailsBinding
 import pl.piotrskiba.angularowo.domain.report.model.ReportModel
 
 class ReportDetailsActivity : BaseActivity() {
 
-    @BindView(R.id.toolbar)
-    lateinit var mToolbar: Toolbar
-
     private lateinit var report: ReportModel
+    private lateinit var binding: ActivityReportDetailsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_report_details)
-        ButterKnife.bind(this)
+        setupBinding()
         loadArguments()
         setupToolbar()
         setupMainFragment()
@@ -34,12 +29,17 @@ class ReportDetailsActivity : BaseActivity() {
         else -> super.onOptionsItemSelected(item)
     }
 
+    private fun setupBinding() {
+        binding = ActivityReportDetailsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+    }
+
     private fun loadArguments() {
         report = intent.getSerializableExtra(Constants.EXTRA_REPORT) as ReportModel
     }
 
     private fun setupToolbar() {
-        setSupportActionBar(mToolbar)
+        setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setTitle(R.string.report_info)

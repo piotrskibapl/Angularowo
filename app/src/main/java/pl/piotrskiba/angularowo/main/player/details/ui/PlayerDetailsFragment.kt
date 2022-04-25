@@ -7,7 +7,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.di.obtainViewModel
@@ -37,7 +36,7 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = bindViewModel(layoutInflater, container)
+        val binding = setupBinding(layoutInflater, container)
         val view = binding.root
         return view
     }
@@ -77,17 +76,16 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
 
     private fun setupOptionsMenu() {
         setHasOptionsMenu(true)
-        viewModel.previewedPlayerBanner.observe(this, {
+        viewModel.previewedPlayerBanner.observe(this) {
             requireActivity().invalidateOptionsMenu()
-        })
+        }
     }
 
-    private fun bindViewModel(
+    private fun setupBinding(
         layoutInflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentPlayerDetailsBinding {
-        val binding: FragmentPlayerDetailsBinding =
-            DataBindingUtil.inflate(layoutInflater, R.layout.fragment_player_details, container, false)
+        val binding = FragmentPlayerDetailsBinding.inflate(layoutInflater, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         return binding

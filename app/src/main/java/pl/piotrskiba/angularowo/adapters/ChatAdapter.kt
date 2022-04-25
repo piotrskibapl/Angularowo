@@ -8,10 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import butterknife.BindView
-import butterknife.ButterKnife
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.adapters.ChatAdapter.ChatMessageViewHolder
+import pl.piotrskiba.angularowo.databinding.ChatMessageBinding
 import pl.piotrskiba.angularowo.interfaces.ChatMessageClickListener
 import pl.piotrskiba.angularowo.models.ChatMessage
 import pl.piotrskiba.angularowo.models.ChatMessageList
@@ -50,9 +49,9 @@ class ChatAdapter(private val context: Context, private val mClickListener: Chat
         coloredMessage = replaceColorCodes(context, coloredMessage)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            holder.mMessage.setText(Html.fromHtml(coloredMessage, Html.FROM_HTML_MODE_LEGACY), TextView.BufferType.SPANNABLE)
+            holder.binding.tvMessage.setText(Html.fromHtml(coloredMessage, Html.FROM_HTML_MODE_LEGACY), TextView.BufferType.SPANNABLE)
         } else {
-            holder.mMessage.setText(Html.fromHtml(coloredMessage), TextView.BufferType.SPANNABLE)
+            holder.binding.tvMessage.setText(Html.fromHtml(coloredMessage), TextView.BufferType.SPANNABLE)
         }
     }
 
@@ -62,15 +61,13 @@ class ChatAdapter(private val context: Context, private val mClickListener: Chat
 
     inner class ChatMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
-        @BindView(R.id.tv_message)
-        lateinit var mMessage: TextView
+        val binding = ChatMessageBinding.bind(itemView)
 
         override fun onClick(view: View) {
             mClickListener.onChatMessageClick(view, mMessageList[bindingAdapterPosition])
         }
 
         init {
-            ButterKnife.bind(this, itemView)
             itemView.setOnClickListener(this)
         }
     }

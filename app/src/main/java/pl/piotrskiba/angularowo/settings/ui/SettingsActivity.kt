@@ -4,11 +4,7 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.Toolbar
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import butterknife.BindView
-import butterknife.ButterKnife
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.di.obtainViewModel
 import pl.piotrskiba.angularowo.base.ui.BaseActivity
@@ -23,16 +19,14 @@ class SettingsActivity : BaseActivity(), SettingsNavigator {
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var viewModel: SettingsViewModel
-
-    @BindView(R.id.toolbar)
-    lateinit var mToolbar: Toolbar
+    private lateinit var binding: ActivitySettingsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        bindViewModel()
+        setupBinding()
+        viewModel.navigator = this
         viewModel.onCreate() // TODO: handle onFirstCreate for Activity viewmodels
-        ButterKnife.bind(this)
-        setSupportActionBar(mToolbar)
+        setSupportActionBar(binding.toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -47,13 +41,12 @@ class SettingsActivity : BaseActivity(), SettingsNavigator {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun bindViewModel() {
+    private fun setupBinding() {
         viewModel = viewModelFactory.obtainViewModel(this)
-        val binding: ActivitySettingsBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_settings)
+        binding = ActivitySettingsBinding.inflate(layoutInflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-        viewModel.navigator = this
+        setContentView(binding.root)
     }
 
     override fun onLogoutClicked(successCallback: () -> Unit) {

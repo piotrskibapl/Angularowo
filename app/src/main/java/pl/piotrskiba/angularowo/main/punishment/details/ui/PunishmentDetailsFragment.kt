@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import pl.piotrskiba.angularowo.Constants
-import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.databinding.FragmentPunishmentDetailsBinding
 import pl.piotrskiba.angularowo.main.punishment.details.DetailedPunishmentData
@@ -24,17 +22,15 @@ class PunishmentDetailsFragment : BaseFragment<PunishmentDetailsViewModel>(Punis
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = bindViewModel(layoutInflater, container)
-        val view = binding.root
-        return view
+        val binding = setupBinding(layoutInflater, container)
+        return binding.root
     }
 
-    private fun bindViewModel(
+    private fun setupBinding(
         layoutInflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentPunishmentDetailsBinding {
-        val binding: FragmentPunishmentDetailsBinding =
-            DataBindingUtil.inflate(layoutInflater, R.layout.fragment_punishment_details, container, false)
+        val binding = FragmentPunishmentDetailsBinding.inflate(layoutInflater, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         return binding

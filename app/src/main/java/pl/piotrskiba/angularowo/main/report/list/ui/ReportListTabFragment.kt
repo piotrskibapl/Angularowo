@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
-import androidx.databinding.DataBindingUtil
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
@@ -32,7 +31,7 @@ class ReportListTabFragment : BaseFragment<ReportListTabViewModel>(ReportListTab
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = bindViewModel(layoutInflater, container)
+        val binding = setupBinding(layoutInflater, container)
         return binding.root
     }
 
@@ -50,17 +49,11 @@ class ReportListTabFragment : BaseFragment<ReportListTabViewModel>(ReportListTab
         startActivity(intent, options.toBundle())
     }
 
-    private fun bindViewModel(
+    private fun setupBinding(
         layoutInflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentReportListTabBinding {
-        val binding: FragmentReportListTabBinding =
-            DataBindingUtil.inflate(
-                layoutInflater,
-                R.layout.fragment_report_list_tab,
-                container,
-                false
-            )
+        val binding = FragmentReportListTabBinding.inflate(layoutInflater, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         return binding

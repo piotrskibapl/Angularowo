@@ -6,13 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
-import androidx.appcompat.widget.Toolbar
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import butterknife.BindView
-import butterknife.ButterKnife
-import com.alimuzaffar.lib.pin.PinEntryEditText
 import com.google.android.material.snackbar.Snackbar
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
@@ -31,50 +25,41 @@ class LoginActivity : BaseActivity() {
 
     private lateinit var viewModel: LoginViewModel
 
-    @BindView(R.id.toolbar)
-    lateinit var mToolbar: Toolbar
-
-    @BindView(R.id.coordinatorLayout)
-    lateinit var mCoordinatorLayout: CoordinatorLayout
-
-    @BindView(R.id.peet_accesstoken)
-    lateinit var accessTokenPeet: PinEntryEditText
-
     private lateinit var context: Context
 
     private var snackbar: Snackbar? = null
+    private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        bindViewModel()
-        ButterKnife.bind(this)
-        setSupportActionBar(mToolbar)
+        setupBinding()
+        setSupportActionBar(binding.toolbar)
 
         context = this
 
-        accessTokenPeet.setOnPinEnteredListener {
+        binding.peetAccesstoken.setOnPinEnteredListener {
             viewModel.onPinEntered(it.toString())
-            accessTokenPeet.setText("")
+            binding.peetAccesstoken.setText("")
             closeKeyboard()
             showLoadingSnackBar()
         }
 
-        viewModel.loginState.observe(this, { loginState ->
+        viewModel.loginState.observe(this) { loginState ->
             when (loginState) {
                 is LoginState.Loading -> showLoadingSnackBar()
                 is LoginState.Success -> onLoginSuccess()
                 is LoginState.Error -> onLoginError(loginState.error)
                 else -> snackbar?.dismiss()
             }
-        })
+        }
     }
 
-    private fun bindViewModel() {
+    private fun setupBinding() {
         viewModel = viewModelFactory.obtainViewModel(this)
-        val binding: ActivityLoginBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_login)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+        setContentView(binding.root)
     }
 
     private fun onLoginSuccess() {
@@ -94,7 +79,7 @@ class LoginActivity : BaseActivity() {
     private fun showLoadingSnackBar() {
         snackbar?.dismiss()
         snackbar = Snackbar.make(
-            mCoordinatorLayout,
+            binding.coordinatorLayout,
             getString(R.string.logging_in),
             Snackbar.LENGTH_INDEFINITE
         )
@@ -108,7 +93,7 @@ class LoginActivity : BaseActivity() {
     private fun showErrorSnackBar(message: String) {
         snackbar?.dismiss()
         snackbar = Snackbar.make(
-            mCoordinatorLayout,
+            binding.coordinatorLayout,
             message,
             Snackbar.LENGTH_LONG
         )

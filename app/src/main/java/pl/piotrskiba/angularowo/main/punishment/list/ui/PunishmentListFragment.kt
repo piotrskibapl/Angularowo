@@ -7,8 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
-import androidx.databinding.DataBindingUtil
-import butterknife.ButterKnife
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
@@ -18,7 +16,8 @@ import pl.piotrskiba.angularowo.main.punishment.list.nav.PunishmentListNavigator
 import pl.piotrskiba.angularowo.main.punishment.list.viewmodel.PunishmentListViewModel
 import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBannerData
 
-class PunishmentListFragment : BaseFragment<PunishmentListViewModel>(PunishmentListViewModel::class),
+class PunishmentListFragment :
+    BaseFragment<PunishmentListViewModel>(PunishmentListViewModel::class),
     PunishmentListNavigator {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,23 +25,22 @@ class PunishmentListFragment : BaseFragment<PunishmentListViewModel>(PunishmentL
         super.onCreate(savedInstanceState)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = bindViewModel(layoutInflater, container)
-        val view = binding.root
-
-        ButterKnife.bind(this, view)
-
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        val binding = setupBinding(layoutInflater, container)
         val actionbar = (activity as AppCompatActivity?)?.supportActionBar
         actionbar?.setTitle(R.string.actionbar_title_punishment_list)
-        return view
+        return binding.root
     }
 
-    private fun bindViewModel(
+    private fun setupBinding(
         layoutInflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentPunishmentListBinding {
-        val binding: FragmentPunishmentListBinding =
-            DataBindingUtil.inflate(layoutInflater, R.layout.fragment_punishment_list, container, false)
+        val binding = FragmentPunishmentListBinding.inflate(layoutInflater, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         return binding
@@ -50,7 +48,10 @@ class PunishmentListFragment : BaseFragment<PunishmentListViewModel>(PunishmentL
 
     override fun onPunishmentClick(view: View, punishment: PunishmentBannerData) {
         val intent = Intent(context, PunishmentDetailsActivity::class.java)
-        intent.putExtra(Constants.EXTRA_PUNISHMENT, viewModel.punishments.find { it.id == punishment.id })
+        intent.putExtra(
+            Constants.EXTRA_PUNISHMENT,
+            viewModel.punishments.find { it.id == punishment.id }
+        )
         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
             requireActivity(),
             view,

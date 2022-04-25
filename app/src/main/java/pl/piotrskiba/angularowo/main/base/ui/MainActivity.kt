@@ -5,21 +5,17 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.TextView
-import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.multidex.MultiDex
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.google.android.gms.ads.MobileAds
-import com.google.android.material.navigation.NavigationView
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.applock.ui.ApplicationLockedActivity
 import pl.piotrskiba.angularowo.base.di.obtainViewModel
 import pl.piotrskiba.angularowo.base.ui.BaseActivity
+import pl.piotrskiba.angularowo.databinding.ActivityMainBinding
 import pl.piotrskiba.angularowo.interfaces.UnauthorizedResponseListener
 import pl.piotrskiba.angularowo.login.ui.LoginActivity
 import pl.piotrskiba.angularowo.main.base.viewmodel.MainViewModel
@@ -40,26 +36,18 @@ class MainActivity : BaseActivity(), UnauthorizedResponseListener {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    @BindView(R.id.toolbar)
-    lateinit var mToolbar: Toolbar
-
-    @BindView(R.id.drawer_layout)
-    lateinit var mDrawerLayout: DrawerLayout
-
-    @BindView(R.id.nav_view)
-    lateinit var mNavigationView: NavigationView
-
     private lateinit var preferenceUtils: PreferenceUtils
     private lateinit var mFirebaseRemoteConfig: FirebaseRemoteConfig
     private lateinit var viewModel: MainViewModel
     private var waitingForLogin = false
 
-    private var mainScreenFragment: MainScreenFragment = MainScreenFragment()
-    private var playerListFragment: PlayerListFragment = PlayerListFragment()
-    private var chatFragment: ChatFragment = ChatFragment()
-    private var punishmentListFragment: PunishmentListFragment = PunishmentListFragment()
-    private var offersFragment: OffersFragment = OffersFragment()
-    private var reportListContainerFragment: ReportListContainerFragment = ReportListContainerFragment()
+    private var mainScreenFragment = MainScreenFragment()
+    private var playerListFragment = PlayerListFragment()
+    private var chatFragment = ChatFragment()
+    private var punishmentListFragment = PunishmentListFragment()
+    private var offersFragment = OffersFragment()
+    private var reportListContainerFragment = ReportListContainerFragment()
+    private lateinit var binding: ActivityMainBinding
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(newBase)
@@ -68,10 +56,8 @@ class MainActivity : BaseActivity(), UnauthorizedResponseListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        bindViewModel()
+        setupBinding()
 
-        setContentView(R.layout.activity_main)
-        ButterKnife.bind(this)
         preferenceUtils = PreferenceUtils(this)
 
         NotificationUtils(this).createNotificationChannels()
@@ -91,7 +77,7 @@ class MainActivity : BaseActivity(), UnauthorizedResponseListener {
     override fun onPause() {
         super.onPause()
 
-        mNavigationView.setNavigationItemSelectedListener(null)
+        binding.navView.setNavigationItemSelectedListener(null)
     }
 
     override fun onResume() {
@@ -104,8 +90,10 @@ class MainActivity : BaseActivity(), UnauthorizedResponseListener {
 
                 waitingForLogin = true
             } else {
-                val navHeaderUsernameTextView = mNavigationView.getHeaderView(0).findViewById<TextView>(R.id.navheader_username)
-                val navHeaderRankTextView = mNavigationView.getHeaderView(0).findViewById<TextView>(R.id.navheader_rank)
+                val navHeaderUsernameTextView =
+                    binding.navView.getHeaderView(0).findViewById<TextView>(R.id.navheader_username)
+                val navHeaderRankTextView =
+                    binding.navView.getHeaderView(0).findViewById<TextView>(R.id.navheader_rank)
                 navHeaderUsernameTextView.text = preferenceUtils.username
                 navHeaderRankTextView.text = preferenceUtils.rankName
             }
@@ -113,15 +101,17 @@ class MainActivity : BaseActivity(), UnauthorizedResponseListener {
         setNavigationItemSelectedListener()
     }
 
-    private fun bindViewModel() {
+    private fun setupBinding() {
         viewModel = viewModelFactory.obtainViewModel(this)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 
     private fun setupRemoteConfig() {
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
         mFirebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_default_values)
         mFirebaseRemoteConfig.fetchAndActivate()
-                .addOnCompleteListener(this) { onRemoteConfigLoaded() }
+            .addOnCompleteListener(this) { onRemoteConfigLoaded() }
     }
 
     private fun onRemoteConfigLoaded() {
@@ -140,37 +130,43 @@ class MainActivity : BaseActivity(), UnauthorizedResponseListener {
     private fun setupMainFragment() {
         val mainScreenFragment = MainScreenFragment()
         supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, mainScreenFragment, TAG_MAIN_FRAGMENT)
-                .commit()
+            .replace(R.id.fragment_container, mainScreenFragment, TAG_MAIN_FRAGMENT)
+            .commit()
     }
 
     private fun initializeFragments() {
-        val frag1: MainScreenFragment? = supportFragmentManager.findFragmentByTag(TAG_MAIN_FRAGMENT) as MainScreenFragment?
+        val frag1: MainScreenFragment? =
+            supportFragmentManager.findFragmentByTag(TAG_MAIN_FRAGMENT) as MainScreenFragment?
         frag1?.run {
             mainScreenFragment = this
         }
 
-        val frag2: PlayerListFragment? = supportFragmentManager.findFragmentByTag(TAG_PLAYER_LIST_FRAGMENT) as PlayerListFragment?
+        val frag2: PlayerListFragment? =
+            supportFragmentManager.findFragmentByTag(TAG_PLAYER_LIST_FRAGMENT) as PlayerListFragment?
         frag2?.run {
             playerListFragment = this
         }
 
-        val frag3: ChatFragment? = supportFragmentManager.findFragmentByTag(TAG_CHAT_FRAGMENT) as ChatFragment?
+        val frag3: ChatFragment? =
+            supportFragmentManager.findFragmentByTag(TAG_CHAT_FRAGMENT) as ChatFragment?
         frag3?.run {
             chatFragment = this
         }
 
-        val frag4: PunishmentListFragment? = supportFragmentManager.findFragmentByTag(TAG_BAN_LIST_FRAGMENT) as PunishmentListFragment?
+        val frag4: PunishmentListFragment? =
+            supportFragmentManager.findFragmentByTag(TAG_BAN_LIST_FRAGMENT) as PunishmentListFragment?
         frag4?.run {
             punishmentListFragment = this
         }
 
-        val frag5: OffersFragment? = supportFragmentManager.findFragmentByTag(TAG_FREE_RANKS_FRAGMENT) as OffersFragment?
+        val frag5: OffersFragment? =
+            supportFragmentManager.findFragmentByTag(TAG_FREE_RANKS_FRAGMENT) as OffersFragment?
         frag5?.run {
             offersFragment = this
         }
 
-        val frag6: ReportListContainerFragment? = supportFragmentManager.findFragmentByTag(TAG_REPORT_LIST_FRAGMENT) as ReportListContainerFragment?
+        val frag6: ReportListContainerFragment? =
+            supportFragmentManager.findFragmentByTag(TAG_REPORT_LIST_FRAGMENT) as ReportListContainerFragment?
         frag6?.run {
             reportListContainerFragment = this
         }
@@ -179,47 +175,63 @@ class MainActivity : BaseActivity(), UnauthorizedResponseListener {
     private fun populateUi() {
         initializeFragments()
 
-        setSupportActionBar(mToolbar)
+        setSupportActionBar(binding.toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
 
-        mNavigationView.setCheckedItem(R.id.nav_main_screen)
+        binding.navView.setCheckedItem(R.id.nav_main_screen)
     }
 
     private fun setNavigationItemSelectedListener() {
-        mNavigationView.setNavigationItemSelectedListener { menuItem: MenuItem ->
+        binding.navView.setNavigationItemSelectedListener { menuItem: MenuItem ->
             if (!menuItem.isChecked) {
                 when (menuItem.itemId) {
                     R.id.nav_main_screen -> {
                         supportFragmentManager.beginTransaction()
-                                .replace(R.id.fragment_container, mainScreenFragment, TAG_MAIN_FRAGMENT)
-                                .commit()
+                            .replace(R.id.fragment_container, mainScreenFragment, TAG_MAIN_FRAGMENT)
+                            .commit()
                     }
                     R.id.nav_player_list -> {
                         supportFragmentManager.beginTransaction()
-                                .replace(R.id.fragment_container, playerListFragment, TAG_PLAYER_LIST_FRAGMENT)
-                                .commit()
+                            .replace(
+                                R.id.fragment_container,
+                                playerListFragment,
+                                TAG_PLAYER_LIST_FRAGMENT
+                            )
+                            .commit()
                     }
                     R.id.nav_chat -> {
                         supportFragmentManager.beginTransaction()
-                                .replace(R.id.fragment_container, chatFragment, TAG_CHAT_FRAGMENT)
-                                .commit()
+                            .replace(R.id.fragment_container, chatFragment, TAG_CHAT_FRAGMENT)
+                            .commit()
                     }
                     R.id.nav_last_punishments -> {
                         supportFragmentManager.beginTransaction()
-                                .replace(R.id.fragment_container, punishmentListFragment, TAG_BAN_LIST_FRAGMENT)
-                                .commit()
+                            .replace(
+                                R.id.fragment_container,
+                                punishmentListFragment,
+                                TAG_BAN_LIST_FRAGMENT
+                            )
+                            .commit()
                     }
                     R.id.nav_free_ranks -> {
                         supportFragmentManager.beginTransaction()
-                                .replace(R.id.fragment_container, offersFragment, TAG_FREE_RANKS_FRAGMENT)
-                                .commit()
+                            .replace(
+                                R.id.fragment_container,
+                                offersFragment,
+                                TAG_FREE_RANKS_FRAGMENT
+                            )
+                            .commit()
                     }
                     R.id.nav_reports_history -> {
                         supportFragmentManager.beginTransaction()
-                                .replace(R.id.fragment_container, reportListContainerFragment, TAG_REPORT_LIST_FRAGMENT)
-                                .commit()
+                            .replace(
+                                R.id.fragment_container,
+                                reportListContainerFragment,
+                                TAG_REPORT_LIST_FRAGMENT
+                            )
+                            .commit()
                     }
                     R.id.nav_settings -> {
                         val intent = Intent(this, SettingsActivity::class.java)
@@ -227,14 +239,14 @@ class MainActivity : BaseActivity(), UnauthorizedResponseListener {
                     }
                 }
             }
-            mDrawerLayout.closeDrawers()
+            binding.drawerLayout.closeDrawers()
             true
         }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
-            mDrawerLayout.openDrawer(GravityCompat.START)
+            binding.drawerLayout.openDrawer(GravityCompat.START)
             return true
         }
         return super.onOptionsItemSelected(item)

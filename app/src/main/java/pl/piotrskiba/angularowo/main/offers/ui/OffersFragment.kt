@@ -5,8 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import butterknife.ButterKnife
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.databinding.FragmentOffersBinding
@@ -19,19 +17,16 @@ class OffersFragment : BaseFragment<OffersViewModel>(OffersViewModel::class) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = bindViewModel(layoutInflater, container)
-        val view = binding.root
-        ButterKnife.bind(this, view)
+        val binding = setupBinding(layoutInflater, container)
         setupActionBar()
-        return view
+        return binding.root
     }
 
-    private fun bindViewModel(
+    private fun setupBinding(
         layoutInflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentOffersBinding {
-        val binding: FragmentOffersBinding =
-            DataBindingUtil.inflate(layoutInflater, R.layout.fragment_offers, container, false)
+        val binding = FragmentOffersBinding.inflate(layoutInflater, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         return binding

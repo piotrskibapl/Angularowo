@@ -5,14 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import butterknife.BindView
-import butterknife.ButterKnife
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.WebSocket
@@ -21,10 +17,11 @@ import okio.ByteString
 import pl.piotrskiba.angularowo.AppViewModel
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
-import pl.piotrskiba.angularowo.main.player.details.ui.PlayerDetailsFragment
 import pl.piotrskiba.angularowo.adapters.ChatAdapter
 import pl.piotrskiba.angularowo.base.ui.OldBaseFragment
+import pl.piotrskiba.angularowo.databinding.FragmentChatBinding
 import pl.piotrskiba.angularowo.interfaces.ChatMessageClickListener
+import pl.piotrskiba.angularowo.main.player.details.ui.PlayerDetailsFragment
 import pl.piotrskiba.angularowo.models.ChatMessage
 import pl.piotrskiba.angularowo.models.ChatMessageList
 import pl.piotrskiba.angularowo.models.Player
@@ -35,7 +32,6 @@ import pl.piotrskiba.angularowo.utils.PreferenceUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
 
 class ChatFragment : OldBaseFragment(), ChatMessageClickListener {
 
@@ -44,21 +40,8 @@ class ChatFragment : OldBaseFragment(), ChatMessageClickListener {
     private lateinit var mOkHttpClient: OkHttpClient
     private lateinit var mWebSocket: WebSocket
     private lateinit var mViewModel: AppViewModel
-
-    @BindView(R.id.rv_chat)
-    lateinit var mChat: RecyclerView
-
-    @BindView(R.id.pb_loading)
-    lateinit var mLoadingIndicator: ProgressBar
-
-    @BindView(R.id.no_internet_layout)
-    lateinit var mNoInternetLayout: LinearLayout
-
-    @BindView(R.id.server_error_layout)
-    lateinit var mServerErrorLayout: LinearLayout
-
-    @BindView(R.id.account_banned_layout)
-    lateinit var mAccountBannedLayout: LinearLayout
+    private var _binding: FragmentChatBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,20 +49,17 @@ class ChatFragment : OldBaseFragment(), ChatMessageClickListener {
         preferenceUtils = PreferenceUtils(requireContext())
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_chat, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentChatBinding.inflate(layoutInflater, container, false)
 
-        ButterKnife.bind(this, view)
-
-        mViewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
+        mViewModel = ViewModelProvider(requireActivity())[AppViewModel::class.java]
 
         mChatAdapter = ChatAdapter(requireContext(), this)
-        mChat.adapter = mChatAdapter
+        binding.rvChat.adapter = mChatAdapter
 
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(context)
-        mChat.layoutManager = layoutManager
-
-        mChat.setHasFixedSize(true)
+        binding.rvChat.layoutManager = layoutManager
+        binding.rvChat.setHasFixedSize(true)
 
         preloadChatMessages()
 
@@ -89,12 +69,13 @@ class ChatFragment : OldBaseFragment(), ChatMessageClickListener {
         val actionbar = (activity as AppCompatActivity?)!!.supportActionBar
         actionbar!!.setTitle(R.string.actionbar_title_chat)
 
-        return view
+        return binding.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         mWebSocket.close(1000, null)
+        _binding = null
     }
 
     private fun preloadChatMessages() {
@@ -109,7 +90,7 @@ class ChatFragment : OldBaseFragment(), ChatMessageClickListener {
                         messages.reverse()
 
                         mChatAdapter.setMessageList(ChatMessageList(messages))
-                        mChat.scrollToPosition(mChatAdapter.itemCount - 1)
+                        binding.rvChat.scrollToPosition(mChatAdapter.itemCount - 1)
 
                         showDefaultLayout()
                     } else if (!response.isSuccessful) {
@@ -128,35 +109,35 @@ class ChatFragment : OldBaseFragment(), ChatMessageClickListener {
     }
 
     private fun showDefaultLayout() {
-        mChat.visibility = View.VISIBLE
-        mLoadingIndicator.visibility = View.GONE
-        mNoInternetLayout.visibility = View.GONE
-        mServerErrorLayout.visibility = View.GONE
-        mAccountBannedLayout.visibility = View.GONE
+        binding.rvChat.visibility = View.VISIBLE
+        binding.pbLoading.visibility = View.GONE
+        binding.noInternetLayout.main.visibility = View.GONE
+        binding.serverErrorLayout.main.visibility = View.GONE
+        binding.accountBannedLayout.main.visibility = View.GONE
     }
 
     private fun showNoInternetLayout() {
-        mChat.visibility = View.GONE
-        mLoadingIndicator.visibility = View.GONE
-        mNoInternetLayout.visibility = View.VISIBLE
-        mServerErrorLayout.visibility = View.GONE
-        mAccountBannedLayout.visibility = View.GONE
+        binding.rvChat.visibility = View.GONE
+        binding.pbLoading.visibility = View.GONE
+        binding.noInternetLayout.main.visibility = View.VISIBLE
+        binding.serverErrorLayout.main.visibility = View.GONE
+        binding.accountBannedLayout.main.visibility = View.GONE
     }
 
     private fun showServerErrorLayout() {
-        mChat.visibility = View.GONE
-        mLoadingIndicator.visibility = View.GONE
-        mNoInternetLayout.visibility = View.GONE
-        mServerErrorLayout.visibility = View.VISIBLE
-        mAccountBannedLayout.visibility = View.GONE
+        binding.rvChat.visibility = View.GONE
+        binding.pbLoading.visibility = View.GONE
+        binding.noInternetLayout.main.visibility = View.GONE
+        binding.serverErrorLayout.main.visibility = View.VISIBLE
+        binding.accountBannedLayout.main.visibility = View.GONE
     }
 
     private fun showAccountBannedLayout() {
-        mChat.visibility = View.GONE
-        mLoadingIndicator.visibility = View.GONE
-        mNoInternetLayout.visibility = View.GONE
-        mServerErrorLayout.visibility = View.GONE
-        mAccountBannedLayout.visibility = View.VISIBLE
+        binding.rvChat.visibility = View.GONE
+        binding.pbLoading.visibility = View.GONE
+        binding.noInternetLayout.main.visibility = View.GONE
+        binding.serverErrorLayout.main.visibility = View.GONE
+        binding.accountBannedLayout.main.visibility = View.VISIBLE
     }
 
     private fun startChatWebSocket() {
@@ -202,9 +183,9 @@ class ChatFragment : OldBaseFragment(), ChatMessageClickListener {
 
             val chatMessage = ChatMessage(uuid, username, rank, body)
             activity!!.runOnUiThread {
-                if (!mChat.canScrollVertically(1)) {
+                if (!binding.rvChat.canScrollVertically(1)) {
                     mChatAdapter.addMessage(chatMessage)
-                    mChat.scrollToPosition(mChatAdapter.itemCount - 1)
+                    binding.rvChat.scrollToPosition(mChatAdapter.itemCount - 1)
                 } else {
                     mChatAdapter.addMessage(chatMessage)
                 }

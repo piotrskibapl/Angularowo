@@ -4,48 +4,44 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.viewpager2.widget.ViewPager2
-import butterknife.BindView
-import butterknife.ButterKnife
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
+import pl.piotrskiba.angularowo.databinding.FragmentReportListContainerBinding
 import pl.piotrskiba.angularowo.main.report.list.adapter.ReportListViewPagerAdapter
 import pl.piotrskiba.angularowo.main.report.list.viewmodel.ReportListContainerViewModel
 
 class ReportListContainerFragment :
     BaseFragment<ReportListContainerViewModel>(ReportListContainerViewModel::class) {
 
-    @BindView(R.id.viewpager)
-    lateinit var viewPager: ViewPager2
-
-    @BindView(R.id.tablayout)
-    lateinit var tabLayout: TabLayout
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_report_list_container, container, false)
-        ButterKnife.bind(this, view)
-        setupViewPager()
-        return view
+    ): View {
+        val binding = setupBinding(inflater, container)
+        setupViewPager(binding)
+        return binding.root
     }
 
-    private fun setupViewPager() {
+    private fun setupBinding(
+        layoutInflater: LayoutInflater,
+        container: ViewGroup?
+    ) = FragmentReportListContainerBinding.inflate(layoutInflater, container, false)
+
+    private fun setupViewPager(binding: FragmentReportListContainerBinding) {
         val adapter = ReportListViewPagerAdapter(
             childFragmentManager,
             lifecycle,
             viewModel.othersReportsTabAvailable
         )
         // TODO: use data binding instead
-        viewPager.isUserInputEnabled = viewModel.othersReportsTabAvailable
-        tabLayout.visibility = if (viewModel.othersReportsTabAvailable) View.VISIBLE else View.GONE
-        viewPager.isSaveEnabled = false
-        viewPager.adapter = adapter
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+        binding.viewpager.isUserInputEnabled = viewModel.othersReportsTabAvailable
+        binding.tablayout.visibility =
+            if (viewModel.othersReportsTabAvailable) View.VISIBLE else View.GONE
+        binding.viewpager.isSaveEnabled = false
+        binding.viewpager.adapter = adapter
+        TabLayoutMediator(binding.tablayout, binding.viewpager) { tab, position ->
             tab.text = when (position) {
                 0 -> requireContext().getString(R.string.reports_own)
                 else -> requireContext().getString(R.string.reports_others)
