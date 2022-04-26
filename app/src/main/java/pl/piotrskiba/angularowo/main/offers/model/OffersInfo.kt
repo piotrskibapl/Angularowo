@@ -9,6 +9,7 @@ data class OffersInfo(
     val offers: List<Offer>
 ) {
 
+
     val pointsText = points.toString()
 }
 
@@ -16,6 +17,6 @@ fun OffersInfoModel.toUi() =
     OffersInfo(
         points,
         pointsLimitReached,
-        adOffers.toUi(),
+        adOffers.toUi(pointsLimitReached),
         offers.toUi()
     )

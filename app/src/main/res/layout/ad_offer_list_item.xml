@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -8,9 +10,7 @@
             type="pl.piotrskiba.angularowo.main.offers.model.AdOffer" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingVertical="@dimen/padding_big">
@@ -21,7 +21,10 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_big"
             android:drawablePadding="@dimen/padding_default"
+            android:text="@{adOffer.pointsText}"
+            android:textColor="@{context.getColor(adOffer.pointsTextColor)}"
             android:textSize="@dimen/coins_text_size_small"
+            app:drawableLeft="@{adOffer.iconDrawable}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -34,11 +37,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="@dimen/padding_small"
+            android:text="@{adOffer.timeLeftText}"
             android:textColor="@color/color_minecraft_c"
             android:textSize="@dimen/label_text_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_coins"
+            app:visible="@{adOffer.timeLeftVisible}"
             tools:text="5m" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

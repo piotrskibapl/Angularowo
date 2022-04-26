@@ -5,6 +5,8 @@ import androidx.core.content.ContextCompat
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import java.text.Normalizer
+import java.util.Date
+import java.util.concurrent.TimeUnit
 
 object TextUtils {
 
@@ -53,6 +55,35 @@ object TextUtils {
         }
 
         return result
+    }
+
+    @JvmStatic
+    fun formatTimeDifference(from: Date, to: Date): String {
+        var remainingMilliseconds = from.time - to.time
+        val days = remainingMilliseconds / TimeUnit.DAYS.toMillis(1)
+        remainingMilliseconds %= TimeUnit.DAYS.toMillis(1)
+        val hours = remainingMilliseconds / TimeUnit.HOURS.toMillis(1)
+        remainingMilliseconds %= TimeUnit.HOURS.toMillis(1)
+        val minutes = remainingMilliseconds / TimeUnit.MINUTES.toMillis(1)
+        remainingMilliseconds %= TimeUnit.MINUTES.toMillis(1)
+        val seconds = remainingMilliseconds / TimeUnit.SECONDS.toMillis(1)
+        remainingMilliseconds %= TimeUnit.SECONDS.toMillis(1)
+
+        val builder = StringBuilder()
+        if (days > 0) builder.append(days).append(" d")
+        if (hours > 0) {
+            if (builder.isNotEmpty()) builder.append(" ")
+            builder.append(hours).append(" h")
+        }
+        if (minutes > 0 && days == 0L) {
+            if (builder.isNotEmpty()) builder.append(" ")
+            builder.append(minutes).append(" m")
+        }
+        if (seconds > 0 && days == 0L && hours == 0L) {
+            if (builder.isNotEmpty()) builder.append(" ")
+            builder.append(seconds).append(" s")
+        }
+        return builder.toString()
     }
 
     @JvmStatic
