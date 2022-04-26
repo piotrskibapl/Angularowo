@@ -1,6 +1,7 @@
 package pl.piotrskiba.angularowo.base.ui.databinding
 
 import android.widget.ImageView
+import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
@@ -28,4 +29,12 @@ fun setImageResource(
     @DrawableRes resource: Int,
 ) {
     imageView.setImageResource(resource)
+}
+
+@BindingAdapter("tint")
+fun setTint(
+    imageView: ImageView,
+    @ColorRes tintColorRes: Int,
+) {
+    imageView.setColorFilter(imageView.context.getColor(tintColorRes))
 }

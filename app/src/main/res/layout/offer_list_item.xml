@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -8,9 +10,7 @@
             type="pl.piotrskiba.angularowo.main.offers.model.Offer" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_default"
@@ -22,9 +22,11 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/reward_image_description"
             android:scaleType="fitCenter"
+            app:imageUrl="@{offer.imageUrl}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:tint="@{offer.imageTintColor}"
             tools:src="@drawable/default_avatar"
             tools:tint="@color/blackA85" />
 
@@ -36,7 +38,9 @@
             android:gravity="center_horizontal"
             android:shadowColor="@color/text_shadow"
             android:shadowRadius="3"
+            android:text="@{offer.title}"
             android:textAlignment="center"
+            android:textColor="@{context.getColor(offer.textColor)}"
             android:textSize="@dimen/offer_title_text_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +55,9 @@
             android:gravity="center_horizontal"
             android:shadowColor="@color/text_shadow"
             android:shadowRadius="3"
+            android:text="@{offer.description}"
             android:textAlignment="center"
+            android:textColor="@{context.getColor(offer.textColor)}"
             android:textSize="@dimen/offer_description_text_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -60,29 +66,34 @@
             tools:textColor="@color/offer_text_color_disabled" />
 
         <TextView
-            android:id="@+id/offer_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/color_minecraft_c"
-            android:textSize="@dimen/offer_description_text_size"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/offer_price"
-            tools:text="5m" />
-
-        <TextView
             android:id="@+id/offer_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_small"
             android:drawablePadding="@dimen/padding_default"
+            android:text="@{offer.priceText}"
+            android:textColor="@{context.getColor(offer.priceTextColor)}"
             android:textSize="@dimen/coins_text_size_small"
+            app:drawableLeft="@{offer.priceIconDrawable}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/offer_image"
             tools:drawableStart="@drawable/ic_coin_disabled"
             tools:text="15"
             tools:textColor="@color/color_coin_disabled" />
+
+        <TextView
+            android:id="@+id/offer_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{offer.timeLeftText}"
+            android:textColor="@color/color_minecraft_c"
+            android:textSize="@dimen/offer_description_text_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/offer_price"
+            app:visible="@{offer.timeLeftVisible}"
+            tools:text="5m" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
