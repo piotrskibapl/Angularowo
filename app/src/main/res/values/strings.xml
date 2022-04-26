@@ -138,7 +138,6 @@
 
     <!-- fragment_offers.xml -->
     <string name="actionbar_title_free_ranks">Darmowe nagrody</string>
-    <string name="no_rewards_found">Aktualnie nie masz żadnych nagród do odebrania.</string>
     <string name="no_ads">Brak reklam</string>
     <string name="no_ads_description">Nie znaleziono żadnych reklam. Spróbuj ponownie za kilka godzin.</string>
     <string name="ad_offer_redeemed">Punkty przyznane!</string>
