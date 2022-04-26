@@ -104,6 +104,13 @@
                     tools:itemCount="6"
                     tools:listitem="@layout/offer_list_item" />
 
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/defaultLayoutGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="coinsText,earnMoreCoinsText,adOffersList,limitReachedText,exchangeCoinsText,offersList"
+                    app:visible="@{viewModel.isDataLoaded}" />
+
                 <include
                     android:id="@+id/errorLayout"
                     layout="@layout/error_layout"

@@ -1,6 +1,7 @@
 package pl.piotrskiba.angularowo.main.offers.viewmodel
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.map
 import me.tatarka.bindingcollectionadapter2.ItemBinding
 import pl.piotrskiba.angularowo.BR
 import pl.piotrskiba.angularowo.R
@@ -28,6 +29,7 @@ class OffersViewModel @Inject constructor(
     val adOffersBinding = ItemBinding.of<AdOffer>(BR.adOffer, R.layout.ad_offer_list_item)
     val offersBinding = ItemBinding.of<Offer>(BR.offer, R.layout.offer_list_item)
     val state = MutableLiveData<ViewModelState>(Loading)
+    val isDataLoaded = offersInfo.map { it != null }
 
     override fun onFirstCreate() {
         super.onFirstCreate()
