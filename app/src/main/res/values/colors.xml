@@ -32,6 +32,8 @@
     <color name="color_minecraft_e">#808000</color>
     <color name="color_minecraft_f">#808080</color>
 
+    <color name="blackA85">#D9000000</color>
+    <color name="blackA50">#80000000</color>
     <color name="white">#ffffff</color>
     <color name="whiteA50">#80ffffff</color>
     <color name="lightGray">#bebebe</color>

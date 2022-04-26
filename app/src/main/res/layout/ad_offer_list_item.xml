@@ -1,27 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
-    android:paddingTop="@dimen/padding_big"
-    android:paddingBottom="@dimen/padding_big">
+<layout>
 
-    <TextView
-        android:id="@+id/tv_coins"
-        android:layout_width="wrap_content"
+    <data>
+
+        <variable
+            name="adOffer"
+            type="pl.piotrskiba.angularowo.main.offers.model.AdOffer" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_big"
-        android:layout_marginEnd="@dimen/margin_big"
-        android:textSize="@dimen/coins_text_size_small"
-        android:drawablePadding="@dimen/padding_default" />
+        android:paddingVertical="@dimen/padding_big">
 
-    <TextView
-        android:id="@+id/tv_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/label_text_size"
-        android:textColor="@color/color_minecraft_c"
-        android:drawablePadding="@dimen/padding_small" />
+        <TextView
+            android:id="@+id/tv_coins"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_big"
+            android:drawablePadding="@dimen/padding_default"
+            android:textSize="@dimen/coins_text_size_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:drawableStart="@drawable/ic_coin_disabled"
+            tools:text="5"
+            tools:textColor="@color/color_coin_disabled" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/padding_small"
+            android:textColor="@color/color_minecraft_c"
+            android:textSize="@dimen/label_text_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_coins"
+            tools:text="5m" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
