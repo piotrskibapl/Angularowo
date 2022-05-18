@@ -108,7 +108,7 @@
                     android:id="@+id/defaultLayoutGroup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:constraint_referenced_ids="coinsText,earnMoreCoinsText,adOffersList,limitReachedText,exchangeCoinsText,offersList"
+                    app:constraint_referenced_ids="coinsText,earnMoreCoinsText,adOffersList,exchangeCoinsText,offersList"
                     app:visible="@{viewModel.isDataLoaded}" />
 
                 <include
