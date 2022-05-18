@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="navigator"
+            type="pl.piotrskiba.angularowo.main.offers.nav.OffersNavigator" />
+
+        <variable
             name="adOffer"
             type="pl.piotrskiba.angularowo.main.offers.model.AdOffer" />
     </data>
@@ -13,6 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{(view) -> navigator.onAdOfferClick(adOffer)}"
         android:paddingVertical="@dimen/padding_big">
 
         <TextView

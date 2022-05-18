@@ -17,6 +17,7 @@ import pl.piotrskiba.angularowo.main.offers.model.AdOffer
 import pl.piotrskiba.angularowo.main.offers.model.Offer
 import pl.piotrskiba.angularowo.main.offers.model.OffersInfo
 import pl.piotrskiba.angularowo.main.offers.model.toUi
+import pl.piotrskiba.angularowo.main.offers.nav.OffersNavigator
 import javax.inject.Inject
 
 class OffersViewModel @Inject constructor(
@@ -30,8 +31,11 @@ class OffersViewModel @Inject constructor(
     val offersBinding = ItemBinding.of<Offer>(BR.offer, R.layout.offer_list_item)
     val state = MutableLiveData<ViewModelState>(Loading)
     val isDataLoaded = offersInfo.map { it != null }
+    lateinit var navigator: OffersNavigator
 
     override fun onFirstCreate() {
+        adOffersBinding.bindExtra(BR.navigator, navigator)
+        offersBinding.bindExtra(BR.navigator, navigator)
         super.onFirstCreate()
         loadOffersInfo()
     }
