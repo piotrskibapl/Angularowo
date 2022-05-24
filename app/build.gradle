@@ -6,6 +6,7 @@ apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'com.google.firebase.firebase-perf'
 
 android {
+    namespace 'pl.piotrskiba.angularowo'
     compileSdkVersion Integer.parseInt(ANDROID_COMPILE_SDK_VERSION)
     defaultConfig {
         applicationId "pl.piotrskiba.angularowo"
