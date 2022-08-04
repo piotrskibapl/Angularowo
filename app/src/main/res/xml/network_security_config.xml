@@ -3,4 +3,10 @@
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="false">asmc-serwer.piotrskiba.pl</domain>
     </domain-config>
+    <base-config>
+        <trust-anchors>
+            <certificates src="@raw/isrgrootx1"/>
+            <certificates src="system"/>
+        </trust-anchors>
+    </base-config>
 </network-security-config>
