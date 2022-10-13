@@ -1,9 +1,11 @@
 package pl.piotrskiba.angularowo.main.offers.ui
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
@@ -31,11 +33,46 @@ class OffersFragment : BaseFragment<OffersViewModel>(OffersViewModel::class), Of
     }
 
     override fun onAdOfferClick(adOffer: AdOffer) {
-        // TODO: handle ad offer click
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.ad_question)
+            .setMessage(
+                resources.getQuantityString(
+                    R.plurals.ad_question_description,
+                    adOffer.points,
+                    adOffer.points
+                )
+            )
+            .setPositiveButton(R.string.button_yes) { _: DialogInterface, _: Int ->
+                onAdOfferConfirm(adOffer)
+            }
+            .setNegativeButton(R.string.button_no) { _, _ -> }
+            .show()
     }
 
     override fun onOfferClick(offer: Offer) {
-        // TODO: handle offer click
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.offer_question)
+            .setMessage(
+                resources.getQuantityString(
+                    R.plurals.offer_question_description,
+                    offer.price,
+                    offer.title,
+                    offer.price
+                )
+            )
+            .setPositiveButton(R.string.button_yes) { _: DialogInterface, _: Int ->
+                onOfferConfirm(offer)
+            }
+            .setNegativeButton(R.string.button_no) { _, _ -> }
+            .show()
+    }
+
+    private fun onAdOfferConfirm(adOffer: AdOffer) {
+        // TODO: display ad
+    }
+
+    private fun onOfferConfirm(offer: Offer) {
+        // TODO: redeem offer
     }
 
     private fun setupBinding(

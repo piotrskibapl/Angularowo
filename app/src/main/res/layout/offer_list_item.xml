@@ -17,6 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clickable="@{offer.canRedeem}"
         android:onClick="@{(view) -> navigator.onOfferClick(offer)}"
         android:padding="@dimen/padding_default"
         android:paddingBottom="@dimen/padding_big">

@@ -10,7 +10,7 @@ import java.util.Date
 
 data class AdOffer(
     private val id: String,
-    private val points: Int,
+    val points: Int,
     private val adId: String,
     private val timeBreak: Int,
     private val availabilityDate: Date?,
@@ -19,7 +19,7 @@ data class AdOffer(
 
     private val currentDate = Calendar.getInstance().time
     private val availabilityDateReached = (availabilityDate ?: currentDate).time <= currentDate.time
-    private val canRedeem = !pointsLimitReached && availabilityDateReached
+    val canRedeem = !pointsLimitReached && availabilityDateReached
 
     @ColorRes
     val pointsTextColor =

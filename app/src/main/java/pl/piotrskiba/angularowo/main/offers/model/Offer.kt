@@ -12,7 +12,7 @@ data class Offer(
     private val id: String,
     val title: String,
     val description: String,
-    private val price: Int,
+    val price: Int,
     val imageUrl: String,
     private val timeBreak: Int,
     private val availabilityDate: Date?,
@@ -21,7 +21,7 @@ data class Offer(
 
     private val currentDate = Calendar.getInstance().time
     private val availabilityDateReached = (availabilityDate ?: currentDate).time <= currentDate.time
-    private val canRedeem = canAfford && availabilityDateReached
+    val canRedeem = canAfford && availabilityDateReached
 
     @ColorRes
     val imageTintColor =

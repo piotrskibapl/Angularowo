@@ -145,7 +145,6 @@
     <string name="offer_redeemed">Nagroda przyznana!</string>
     <string name="offer_redeemed_description">Gratulacje, odebrałeś swoją ofertę - zostanie ona aktywowana automatycznie.\nMiłej gry!</string>
     <string name="ad_question">Odbiór monet</string>
-    <string name="ad_question_description">Czy chcesz obejrzeć reklamę w zamian za wybraną ilość monet?</string>
     <string name="offer_question">Aktywacja oferty</string>
     <string name="earn_more_coins">Zdobądź więcej monet</string>
     <string name="exchange_coins_to_prizes">Wymień monety na nagrody</string>
