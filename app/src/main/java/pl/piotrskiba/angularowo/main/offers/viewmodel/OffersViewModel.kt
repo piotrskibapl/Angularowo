@@ -45,8 +45,13 @@ class OffersViewModel @Inject constructor(
     }
 
     fun onAdOfferClick(adOffer: AdOffer) {
+        // TODO: display loader
         navigator.displayAdOfferConfirmationDialog(adOffer) {
-            // TODO: display ad
+            navigator.displayRewardedAd(
+                adOffer.adId,
+                { onAdWatched(adOffer) },
+                ::onAdLoadingFailure
+            )
         }
     }
 
@@ -54,6 +59,14 @@ class OffersViewModel @Inject constructor(
         navigator.displayOfferConfirmationDialog(offer) {
             // TODO: redeem offer
         }
+    }
+
+    private fun onAdWatched(adOffer: AdOffer) {
+        // TODO: redeem prize
+    }
+
+    private fun onAdLoadingFailure() {
+        navigator.displayRewardedAdLoadingFailureDialog()
     }
 
     private fun loadOffersInfo() {

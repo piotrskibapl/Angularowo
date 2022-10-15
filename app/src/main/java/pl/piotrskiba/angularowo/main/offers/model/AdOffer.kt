@@ -11,7 +11,7 @@ import java.util.Date
 data class AdOffer(
     private val id: String,
     val points: Int,
-    private val adId: String,
+    val adId: String,
     private val timeBreak: Int,
     private val availabilityDate: Date?,
     private val pointsLimitReached: Boolean,

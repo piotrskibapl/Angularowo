@@ -7,6 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.rewarded.RewardedAd
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.databinding.FragmentOffersBinding
@@ -68,6 +74,26 @@ class OffersFragment : BaseFragment<OffersViewModel>(OffersViewModel::class), Of
             }
             .setNegativeButton(R.string.button_no) { _, _ -> }
             .show()
+    }
+
+    override fun displayRewardedAd(adId: String, onAdWatched: () -> Unit, onAdLoadingFailure: () -> Unit) {
+        val adRequest = AdRequest.Builder().build()
+        RewardedAd.load(requireContext(), adId, adRequest, object : RewardedAdLoadCallback() {
+
+            override fun onAdLoaded(rewardedAd: RewardedAd) {
+                rewardedAd.fullScreenContentCallback = object : FullScreenContentCallback() {
+
+                    override fun onAdFailedToShowFullScreenContent(p0: AdError) { onAdLoadingFailure() }
+                }
+                rewardedAd.show(requireActivity()) { onAdWatched() }
+            }
+
+            override fun onAdFailedToLoad(p0: LoadAdError) { onAdLoadingFailure() }
+        })
+    }
+
+    override fun displayRewardedAdLoadingFailureDialog() {
+        // TODO: show dialog
     }
 
     private fun setupBinding(
