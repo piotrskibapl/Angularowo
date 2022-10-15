@@ -32,7 +32,10 @@ class OffersFragment : BaseFragment<OffersViewModel>(OffersViewModel::class), Of
         return binding.root
     }
 
-    override fun onAdOfferClick(adOffer: AdOffer) {
+    override fun displayAdOfferConfirmationDialog(
+        adOffer: AdOffer,
+        onConfirm: (adOffer: AdOffer) -> Unit
+    ) {
         AlertDialog.Builder(requireContext())
             .setTitle(R.string.ad_question)
             .setMessage(
@@ -43,13 +46,13 @@ class OffersFragment : BaseFragment<OffersViewModel>(OffersViewModel::class), Of
                 )
             )
             .setPositiveButton(R.string.button_yes) { _: DialogInterface, _: Int ->
-                onAdOfferConfirm(adOffer)
+                onConfirm(adOffer)
             }
             .setNegativeButton(R.string.button_no) { _, _ -> }
             .show()
     }
 
-    override fun onOfferClick(offer: Offer) {
+    override fun displayOfferConfirmationDialog(offer: Offer, onConfirm: (offer: Offer) -> Unit) {
         AlertDialog.Builder(requireContext())
             .setTitle(R.string.offer_question)
             .setMessage(
@@ -61,18 +64,10 @@ class OffersFragment : BaseFragment<OffersViewModel>(OffersViewModel::class), Of
                 )
             )
             .setPositiveButton(R.string.button_yes) { _: DialogInterface, _: Int ->
-                onOfferConfirm(offer)
+                onConfirm(offer)
             }
             .setNegativeButton(R.string.button_no) { _, _ -> }
             .show()
-    }
-
-    private fun onAdOfferConfirm(adOffer: AdOffer) {
-        // TODO: display ad
-    }
-
-    private fun onOfferConfirm(offer: Offer) {
-        // TODO: redeem offer
     }
 
     private fun setupBinding(

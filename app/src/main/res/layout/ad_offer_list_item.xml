@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="navigator"
-            type="pl.piotrskiba.angularowo.main.offers.nav.OffersNavigator" />
+            name="viewModel"
+            type="pl.piotrskiba.angularowo.main.offers.viewmodel.OffersViewModel" />
 
         <variable
             name="adOffer"
@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="@{adOffer.canRedeem}"
-        android:onClick="@{(view) -> navigator.onAdOfferClick(adOffer)}"
+        android:onClick="@{(view) -> viewModel.onAdOfferClick(adOffer)}"
         android:paddingVertical="@dimen/padding_big">
 
         <TextView

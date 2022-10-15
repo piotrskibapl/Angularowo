@@ -34,14 +34,26 @@ class OffersViewModel @Inject constructor(
     lateinit var navigator: OffersNavigator
 
     override fun onFirstCreate() {
-        adOffersBinding.bindExtra(BR.navigator, navigator)
-        offersBinding.bindExtra(BR.navigator, navigator)
+        adOffersBinding.bindExtra(BR.viewModel, this)
+        offersBinding.bindExtra(BR.viewModel, this)
         super.onFirstCreate()
         loadOffersInfo()
     }
 
     fun onRefresh() {
         loadOffersInfo()
+    }
+
+    fun onAdOfferClick(adOffer: AdOffer) {
+        navigator.displayAdOfferConfirmationDialog(adOffer) {
+            // TODO: display ad
+        }
+    }
+
+    fun onOfferClick(offer: Offer) {
+        navigator.displayOfferConfirmationDialog(offer) {
+            // TODO: redeem offer
+        }
     }
 
     private fun loadOffersInfo() {
