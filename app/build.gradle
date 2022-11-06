@@ -12,8 +12,8 @@ android {
         applicationId "pl.piotrskiba.angularowo"
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 66
-        versionName "3.4.6"
+        versionCode 67
+        versionName "3.4.7"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
