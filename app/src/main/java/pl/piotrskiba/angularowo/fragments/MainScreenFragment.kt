@@ -15,7 +15,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -252,7 +251,7 @@ class MainScreenFragment : BaseFragment(), BanClickListener, NetworkErrorListene
     }
 
     override fun onResume() {
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
         val uuid = preferenceUtils.uuid
         if (uuid != null) {
             // subscribe to current app version Firebase topic
@@ -335,7 +334,7 @@ class MainScreenFragment : BaseFragment(), BanClickListener, NetworkErrorListene
     }
 
     private fun checkFirebaseNewReportsTopicSubscription(rank: Rank?) {
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
         if (rank != null && rank.staff) {
             if (!sharedPreferences.contains(getString(R.string.pref_key_subscribed_to_new_reports))) {
                 FirebaseMessaging.getInstance().subscribeToTopic(Constants.FIREBASE_NEW_REPORTS_TOPIC)
