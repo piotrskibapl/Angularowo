@@ -71,6 +71,7 @@ dependencies {
     // OkHttp (for websockets)
     implementation 'com.squareup.okhttp3:okhttp:4.10.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
+    implementation 'com.squareup.okhttp3:okhttp-tls:4.10.0'
 
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.14.2'
