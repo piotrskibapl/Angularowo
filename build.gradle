@@ -1,14 +1,14 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.7.20'
+    ext.kotlin_version = '1.8.0'
     ext.room_version = '2.4.3'
-    ext.dagger_version = '2.44'
-    ext.rxandroid_version = '3.0.0'
+    ext.dagger_version = '2.44.2'
+    ext.rxandroid_version = '3.0.2'
     ext.rxjava_version = '3.1.5'
-    ext.firebase_version = '31.0.0'
+    ext.firebase_version = '31.1.1'
     ext.junit_version = '4.13.2'
-    ext.mockk_version = '1.13.2'
+    ext.mockk_version = '1.13.3'
 
     repositories {
         google()
