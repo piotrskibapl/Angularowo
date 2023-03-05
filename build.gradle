@@ -2,13 +2,13 @@
 
 buildscript {
     ext.kotlin_version = '1.8.0'
-    ext.room_version = '2.4.3'
-    ext.dagger_version = '2.44.2'
+    ext.room_version = '2.5.0'
+    ext.dagger_version = '2.45'
     ext.rxandroid_version = '3.0.2'
-    ext.rxjava_version = '3.1.5'
-    ext.firebase_version = '31.1.1'
+    ext.rxjava_version = '3.1.6'
+    ext.firebase_version = '31.2.3'
     ext.junit_version = '4.13.2'
-    ext.mockk_version = '1.13.3'
+    ext.mockk_version = '1.13.4'
 
     repositories {
         google()
@@ -20,8 +20,8 @@ buildscript {
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
 
-        classpath 'com.google.gms:google-services:4.3.14'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.2'
+        classpath 'com.google.gms:google-services:4.3.15'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.4'
         classpath 'com.google.firebase:perf-plugin:1.4.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
