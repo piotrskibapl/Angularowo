@@ -9,7 +9,7 @@ import java.util.Calendar
 import java.util.Date
 
 data class Offer(
-    private val id: String,
+    val id: String,
     val title: String,
     val description: String,
     val price: Int,

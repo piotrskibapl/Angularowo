@@ -15,6 +15,7 @@ import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
 import pl.piotrskiba.angularowo.domain.offers.usecase.GetOffersInfoUseCase
 import pl.piotrskiba.angularowo.domain.offers.usecase.RedeemAdOfferUseCase
+import pl.piotrskiba.angularowo.domain.offers.usecase.RedeemOfferUseCase
 import pl.piotrskiba.angularowo.main.offers.model.AdOffer
 import pl.piotrskiba.angularowo.main.offers.model.Offer
 import pl.piotrskiba.angularowo.main.offers.model.OffersInfo
@@ -25,6 +26,7 @@ import javax.inject.Inject
 class OffersViewModel @Inject constructor(
     private val getOffersInfoUseCase: GetOffersInfoUseCase,
     private val redeemAdOfferUseCase: RedeemAdOfferUseCase,
+    private val redeemOfferUseCase: RedeemOfferUseCase,
     private val preferencesRepository: PreferencesRepository,
     private val facade: SchedulersProvider
 ) : LifecycleViewModel() {
@@ -60,7 +62,16 @@ class OffersViewModel @Inject constructor(
 
     fun onOfferClick(offer: Offer) {
         navigator.displayOfferConfirmationDialog(offer) {
-            // TODO: redeem offer
+            state.value = Loading
+            disposables.add(
+                redeemOfferUseCase.execute(preferencesRepository.accessToken!!, offer.id)
+                    .subscribeOn(facade.io())
+                    .observeOn(facade.ui())
+                    .subscribe {
+                        navigator.displayOfferRedeemedDialog()
+                        loadOffersInfo()
+                    }
+            )
         }
     }
 

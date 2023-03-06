@@ -11,4 +11,5 @@ interface OffersNavigator {
     fun displayRewardedAd(adId: String, onAdWatched: (RewardItem) -> Unit, onAdLoadingFailure: () -> Unit)
     fun displayRewardedAdLoadingFailureDialog()
     fun displayAdOfferRedeemedDialog()
+    fun displayOfferRedeemedDialog()
 }

@@ -115,6 +115,14 @@ class OffersFragment : BaseFragment<OffersViewModel>(OffersViewModel::class), Of
             .show()
     }
 
+    override fun displayOfferRedeemedDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.offer_redeemed)
+            .setMessage(R.string.offer_redeemed_description)
+            .setPositiveButton(R.string.button_dismiss) { _, _ -> }
+            .show()
+    }
+
     private fun setupBinding(
         layoutInflater: LayoutInflater,
         container: ViewGroup?
