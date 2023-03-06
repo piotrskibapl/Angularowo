@@ -99,7 +99,11 @@ class OffersFragment : BaseFragment<OffersViewModel>(OffersViewModel::class), Of
     }
 
     override fun displayRewardedAdLoadingFailureDialog() {
-        // TODO: show dialog
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.no_ads)
+            .setMessage(R.string.no_ads_description)
+            .setPositiveButton(R.string.button_dismiss) { _, _ -> }
+            .show()
     }
 
     private fun setupBinding(
