@@ -12,6 +12,7 @@ import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.rewarded.RewardItem
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import pl.piotrskiba.angularowo.R
@@ -77,7 +78,7 @@ class OffersFragment : BaseFragment<OffersViewModel>(OffersViewModel::class), Of
             .show()
     }
 
-    override fun displayRewardedAd(adId: String, onAdWatched: () -> Unit, onAdLoadingFailure: () -> Unit) {
+    override fun displayRewardedAd(adId: String, onAdWatched: (RewardItem) -> Unit, onAdLoadingFailure: () -> Unit) {
         val extras = Bundle().apply {
             putString("npa", "1")
         }
@@ -91,7 +92,7 @@ class OffersFragment : BaseFragment<OffersViewModel>(OffersViewModel::class), Of
 
                     override fun onAdFailedToShowFullScreenContent(p0: AdError) { onAdLoadingFailure() }
                 }
-                rewardedAd.show(requireActivity()) { onAdWatched() }
+                rewardedAd.show(requireActivity()) { onAdWatched(it) }
             }
 
             override fun onAdFailedToLoad(p0: LoadAdError) { onAdLoadingFailure() }
@@ -102,6 +103,14 @@ class OffersFragment : BaseFragment<OffersViewModel>(OffersViewModel::class), Of
         AlertDialog.Builder(requireContext())
             .setTitle(R.string.no_ads)
             .setMessage(R.string.no_ads_description)
+            .setPositiveButton(R.string.button_dismiss) { _, _ -> }
+            .show()
+    }
+
+    override fun displayAdOfferRedeemedDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.ad_offer_redeemed)
+            .setMessage(R.string.ad_offer_redeemed_description)
             .setPositiveButton(R.string.button_dismiss) { _, _ -> }
             .show()
     }

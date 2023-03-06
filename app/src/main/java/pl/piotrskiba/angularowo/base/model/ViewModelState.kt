@@ -7,6 +7,7 @@ import retrofit2.HttpException
 import java.io.IOException
 
 sealed class ViewModelState {
+    // TODO: separate fetch/send loading states
     object Loading : ViewModelState()
     object Loaded : ViewModelState()
     data class Error(val error: Throwable?) : ViewModelState()

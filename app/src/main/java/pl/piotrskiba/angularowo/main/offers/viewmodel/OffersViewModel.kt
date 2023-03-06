@@ -2,6 +2,7 @@ package pl.piotrskiba.angularowo.main.offers.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
+import com.google.android.gms.ads.rewarded.RewardItem
 import me.tatarka.bindingcollectionadapter2.ItemBinding
 import pl.piotrskiba.angularowo.BR
 import pl.piotrskiba.angularowo.R
@@ -13,6 +14,7 @@ import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
 import pl.piotrskiba.angularowo.domain.offers.usecase.GetOffersInfoUseCase
+import pl.piotrskiba.angularowo.domain.offers.usecase.RedeemAdOfferUseCase
 import pl.piotrskiba.angularowo.main.offers.model.AdOffer
 import pl.piotrskiba.angularowo.main.offers.model.Offer
 import pl.piotrskiba.angularowo.main.offers.model.OffersInfo
@@ -22,6 +24,7 @@ import javax.inject.Inject
 
 class OffersViewModel @Inject constructor(
     private val getOffersInfoUseCase: GetOffersInfoUseCase,
+    private val redeemAdOfferUseCase: RedeemAdOfferUseCase,
     private val preferencesRepository: PreferencesRepository,
     private val facade: SchedulersProvider
 ) : LifecycleViewModel() {
@@ -45,11 +48,11 @@ class OffersViewModel @Inject constructor(
     }
 
     fun onAdOfferClick(adOffer: AdOffer) {
-        // TODO: display loader
         navigator.displayAdOfferConfirmationDialog(adOffer) {
+            state.value = Loading
             navigator.displayRewardedAd(
                 adOffer.adId,
-                { onAdWatched(adOffer) },
+                ::onAdWatched,
                 ::onAdLoadingFailure
             )
         }
@@ -61,11 +64,20 @@ class OffersViewModel @Inject constructor(
         }
     }
 
-    private fun onAdWatched(adOffer: AdOffer) {
-        // TODO: redeem prize
+    private fun onAdWatched(rewardItem: RewardItem) {
+        disposables.add(
+            redeemAdOfferUseCase.execute(preferencesRepository.accessToken!!, rewardItem.type)
+                .subscribeOn(facade.io())
+                .observeOn(facade.ui())
+                .subscribe {
+                    navigator.displayAdOfferRedeemedDialog()
+                    loadOffersInfo()
+                }
+        )
     }
 
     private fun onAdLoadingFailure() {
+        state.value = Loaded
         navigator.displayRewardedAdLoadingFailureDialog()
     }
 
