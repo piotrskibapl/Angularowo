@@ -155,7 +155,7 @@
     <string name="chat_error">Nie można połączyć z czatem.</string>
     <string name="chat_user_message"><![CDATA[<font color=#555555>[</font><font color=%4$s>%1$s</font><font color=#555555>]</font> <font color=%4$s>%2$s</font><font color=#555555>:</font> <font color=%5$s>%3$s</font>]]></string>
 
-    <!-- fragment_reports_history.xml -->
+    <!-- fragment_report_list_tab.xml -->
     <string name="actionbar_title_report_list">Historia zgłoszeń</string>
     <string name="error_no_reports">Nie zgłosiłeś jeszcze żadnego gracza.</string>
     <string name="error_no_reports_admin">Aktualnie nie ma żadnych aktywnych zgłoszeń.</string>
