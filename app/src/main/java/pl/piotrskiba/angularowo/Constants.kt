@@ -9,14 +9,6 @@ object Constants {
     const val REQUEST_CODE_REGISTER = 1100
     const val RESULT_CODE_SUCCESS = 1200
 
-    const val FIREBASE_APP_VERSION_TOPIC_PREFIX = "version_"
-    const val FIREBASE_PLAYER_UUID_TOPIC_PREFIX = "player_"
-    const val FIREBASE_RANK_TOPIC_PREFIX = "rank_"
-    const val FIREBASE_NEW_REPORTS_TOPIC = "new_reports"
-    const val FIREBASE_NEW_EVENTS_TOPIC = "new_event"
-    const val FIREBASE_PRIVATE_MESSAGES_TOPIC = "private_messages"
-    const val FIREBASE_ACCOUNT_INCIDENTS_TOPIC = "account_incidents"
-
     const val FIREBASE_FCM_DATA_NOTIFICATION_TITLE = "notification_title"
     const val FIREBASE_FCM_DATA_NOTIFICATION_BODY = "notification_body"
     const val FIREBASE_FCM_DATA_NOTIFICATION_SOUND = "notification_sound"

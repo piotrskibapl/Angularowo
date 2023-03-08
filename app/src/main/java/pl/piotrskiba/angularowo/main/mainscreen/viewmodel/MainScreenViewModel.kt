@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.snakydesign.livedataextensions.map
 import me.tatarka.bindingcollectionadapter2.ItemBinding
 import pl.piotrskiba.angularowo.BR
+import pl.piotrskiba.angularowo.BuildConfig
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.model.ViewModelState
 import pl.piotrskiba.angularowo.base.model.ViewModelState.Error
@@ -11,10 +12,9 @@ import pl.piotrskiba.angularowo.base.model.ViewModelState.Loaded
 import pl.piotrskiba.angularowo.base.model.ViewModelState.Loading
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
+import pl.piotrskiba.angularowo.domain.cloudmessaging.usecase.UpdateCloudMessagingSubscriptionsUseCase
 import pl.piotrskiba.angularowo.domain.mainscreen.usecase.GetMainScreenDataAndSavePlayerUseCase
 import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
-import pl.piotrskiba.angularowo.main.base.handler.FCMTopicSubscriptionAction.UPDATE_SUBSCRIPTION
-import pl.piotrskiba.angularowo.main.base.handler.FCMTopicSubscriptionHandler
 import pl.piotrskiba.angularowo.main.mainscreen.model.MainScreenServerData
 import pl.piotrskiba.angularowo.main.mainscreen.model.toUi
 import pl.piotrskiba.angularowo.main.player.details.model.DetailedPlayerData
@@ -28,7 +28,7 @@ import javax.inject.Inject
 
 class MainScreenViewModel @Inject constructor(
     private val getMainScreenDataAndSavePlayerUseCase: GetMainScreenDataAndSavePlayerUseCase,
-    private val fcmTopicSubscriptionHandler: FCMTopicSubscriptionHandler,
+    private val updateCloudMessagingSubscriptionsUseCase: UpdateCloudMessagingSubscriptionsUseCase,
     private val facade: SchedulersProvider
 ) : LifecycleViewModel() {
 
@@ -46,11 +46,6 @@ class MainScreenViewModel @Inject constructor(
     override fun onFirstCreate() {
         punishmentsBinding.bindExtra(BR.navigator, navigator)
         loadData()
-        fcmTopicSubscriptionHandler.handleAppVersionTopicSubscription(UPDATE_SUBSCRIPTION)
-        fcmTopicSubscriptionHandler.handlePlayerUuidTopicSubscription(UPDATE_SUBSCRIPTION)
-        fcmTopicSubscriptionHandler.handleNewEventsTopicSubscription(UPDATE_SUBSCRIPTION)
-        fcmTopicSubscriptionHandler.handlePrivateMessagesTopicSubscription(UPDATE_SUBSCRIPTION)
-        fcmTopicSubscriptionHandler.handleAccountIncidentsTopicSubscription(UPDATE_SUBSCRIPTION)
     }
 
     fun onRefresh() {
@@ -73,13 +68,21 @@ class MainScreenViewModel @Inject constructor(
                         punishments.addAll(mainScreenDataModel.playerPunishments.toUi())
                         punishmentBanners.value = mainScreenDataModel.playerPunishments.toPunishmentBannerData()
                         player.value = mainScreenDataModel.detailedPlayerModel
-                        fcmTopicSubscriptionHandler.handlePlayerRankTopicSubscription(UPDATE_SUBSCRIPTION)
-                        fcmTopicSubscriptionHandler.handleNewReportsTopicSubscription(UPDATE_SUBSCRIPTION)
+                        updateCloudMessagingSubscriptions()
                     },
                     { error ->
                         state.value = Error(error)
                     }
                 )
+        )
+    }
+
+    private fun updateCloudMessagingSubscriptions() {
+        disposables.add(
+            updateCloudMessagingSubscriptionsUseCase.execute(BuildConfig.VERSION_CODE)
+                .subscribeOn(facade.io())
+                .observeOn(facade.ui())
+                .subscribe()
         )
     }
 }

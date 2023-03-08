@@ -49,15 +49,18 @@ class SettingsActivity : BaseActivity(), SettingsNavigator {
         setContentView(binding.root)
     }
 
-    override fun onLogoutClicked(successCallback: () -> Unit) {
+    override fun displayLogoutConfirmationDialog(onConfirm: () -> Unit) {
         AlertDialog.Builder(this)
             .setTitle(R.string.logout_question)
             .setMessage(R.string.logout_question_description)
             .setPositiveButton(R.string.button_yes) { _: DialogInterface?, _: Int ->
-                successCallback.invoke()
-                finish()
+                onConfirm.invoke()
             }
             .setNegativeButton(R.string.button_no) { _, _ -> }
             .show()
+    }
+
+    override fun closeActivity() {
+        finish()
     }
 }

@@ -7,6 +7,7 @@ import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import pl.piotrskiba.angularowo.base.AngularowoApplication
+import pl.piotrskiba.angularowo.data.cloudmessaging.di.CloudMessagingModule
 import pl.piotrskiba.angularowo.data.firebase.di.FirebaseModule
 import pl.piotrskiba.angularowo.data.friend.di.FriendModule
 import pl.piotrskiba.angularowo.data.login.di.LoginModule
@@ -24,6 +25,7 @@ import javax.inject.Singleton
     modules = [
         NetworkModule::class,
         FirebaseModule::class,
+        CloudMessagingModule::class,
         ServerModule::class,
         LoginModule::class,
         PlayerModule::class,

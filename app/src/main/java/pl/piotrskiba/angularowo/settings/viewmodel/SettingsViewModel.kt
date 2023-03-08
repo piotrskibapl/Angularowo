@@ -1,19 +1,27 @@
 package pl.piotrskiba.angularowo.settings.viewmodel
 
 import androidx.lifecycle.MutableLiveData
+import pl.piotrskiba.angularowo.BuildConfig
+import pl.piotrskiba.angularowo.base.rx.SchedulersFacade
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
-import pl.piotrskiba.angularowo.main.base.handler.FCMTopicSubscriptionAction.RESET
-import pl.piotrskiba.angularowo.main.base.handler.FCMTopicSubscriptionAction.SUBSCRIBE
-import pl.piotrskiba.angularowo.main.base.handler.FCMTopicSubscriptionAction.UNSUBSCRIBE
-import pl.piotrskiba.angularowo.main.base.handler.FCMTopicSubscriptionHandler
+import pl.piotrskiba.angularowo.domain.settings.usecase.LogoutUserUseCase
+import pl.piotrskiba.angularowo.domain.settings.usecase.UpdateAccountIncidentsSubscriptionUseCase
+import pl.piotrskiba.angularowo.domain.settings.usecase.UpdateNewEventsSubscriptionUseCase
+import pl.piotrskiba.angularowo.domain.settings.usecase.UpdateNewReportsSubscriptionUseCase
+import pl.piotrskiba.angularowo.domain.settings.usecase.UpdatePrivateMessagesSubscriptionUseCase
 import pl.piotrskiba.angularowo.settings.nav.SettingsNavigator
 import pl.piotrskiba.angularowo.utils.RankUtils
 import javax.inject.Inject
 
 class SettingsViewModel @Inject constructor(
     private val preferencesRepository: PreferencesRepository,
-    private val fcmTopicSubscriptionHandler: FCMTopicSubscriptionHandler,
+    private val updateNewEventsSubscriptionUseCase: UpdateNewEventsSubscriptionUseCase,
+    private val updatePrivateMessagesSubscriptionUseCase: UpdatePrivateMessagesSubscriptionUseCase,
+    private val updateAccountIncidentsSubscriptionUseCase: UpdateAccountIncidentsSubscriptionUseCase,
+    private val updateNewReportsSubscriptionUseCase: UpdateNewReportsSubscriptionUseCase,
+    private val logoutUserUseCase: LogoutUserUseCase,
+    private val facade: SchedulersFacade,
 ) : LifecycleViewModel() {
 
     lateinit var navigator: SettingsNavigator
@@ -33,42 +41,58 @@ class SettingsViewModel @Inject constructor(
 
     fun onEventsNotificationsClicked() {
         val newValue = !eventsChecked.value!!
-        fcmTopicSubscriptionHandler.handleNewEventsTopicSubscription(newValue.toFCMAction())
         eventsChecked.value = newValue
+        disposables.add(
+            updateNewEventsSubscriptionUseCase.execute(newValue)
+                .subscribeOn(facade.io())
+                .observeOn(facade.ui())
+                .subscribe()
+        )
     }
 
     fun onPrivateMessagesNotificationsClicked() {
         val newValue = !privateMessagesChecked.value!!
-        fcmTopicSubscriptionHandler.handlePrivateMessagesTopicSubscription(newValue.toFCMAction())
         privateMessagesChecked.value = newValue
+        disposables.add(
+            updatePrivateMessagesSubscriptionUseCase.execute(newValue)
+                .subscribeOn(facade.io())
+                .observeOn(facade.ui())
+                .subscribe()
+        )
     }
 
     fun onAccountIncidentsNotificationsClicked() {
         val newValue = !accountIncidentsChecked.value!!
-        fcmTopicSubscriptionHandler.handleAccountIncidentsTopicSubscription(newValue.toFCMAction())
         accountIncidentsChecked.value = newValue
+        disposables.add(
+            updateAccountIncidentsSubscriptionUseCase.execute(newValue)
+                .subscribeOn(facade.io())
+                .observeOn(facade.ui())
+                .subscribe()
+        )
     }
 
     fun onNewReportsNotificationsClicked() {
         val newValue = !newReportsChecked.value!!
-        fcmTopicSubscriptionHandler.handleNewReportsTopicSubscription(newValue.toFCMAction())
         newReportsChecked.value = newValue
+        disposables.add(
+            updateNewReportsSubscriptionUseCase.execute(newValue)
+                .subscribeOn(facade.io())
+                .observeOn(facade.ui())
+                .subscribe()
+        )
     }
 
     fun onLogoutClicked() {
-        navigator.onLogoutClicked {
-            fcmTopicSubscriptionHandler.handlePlayerUuidTopicSubscription(RESET)
-            fcmTopicSubscriptionHandler.handlePlayerRankTopicSubscription(RESET)
-            fcmTopicSubscriptionHandler.handleNewEventsTopicSubscription(RESET)
-            fcmTopicSubscriptionHandler.handlePrivateMessagesTopicSubscription(RESET)
-            fcmTopicSubscriptionHandler.handleAccountIncidentsTopicSubscription(RESET)
-            fcmTopicSubscriptionHandler.handleNewReportsTopicSubscription(RESET)
-            preferencesRepository.clearUserData()
+        navigator.displayLogoutConfirmationDialog {
+            disposables.add(
+                logoutUserUseCase.execute(BuildConfig.VERSION_CODE)
+                    .subscribeOn(facade.io())
+                    .observeOn(facade.ui())
+                    .subscribe {
+                        navigator.closeActivity()
+                    }
+            )
         }
-    }
-
-    private fun Boolean.toFCMAction() = when (this) {
-        true -> SUBSCRIBE
-        false -> UNSUBSCRIBE
     }
 }

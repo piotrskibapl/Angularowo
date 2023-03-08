@@ -1,5 +1,6 @@
 package pl.piotrskiba.angularowo.settings.nav
 
 interface SettingsNavigator {
-    fun onLogoutClicked(successCallback: () -> Unit)
+    fun displayLogoutConfirmationDialog(onConfirm: () -> Unit)
+    fun closeActivity()
 }
