@@ -37,14 +37,7 @@ class MainScreenViewModel @Inject constructor(
     val state = MutableLiveData<ViewModelState>(Loading.Fetch)
     // exposed for MainViewModel synchronization
     val player = MutableLiveData<DetailedPlayerModel>()
-    private val lastPlayerData = DetailedPlayerData(
-        preferencesRepository.username!!,
-        preferencesRepository.tokens,
-        preferencesRepository.balance,
-        preferencesRepository.skinUuid ?: preferencesRepository.uuid!!,
-        preferencesRepository.playtime
-    )
-    val playerData = MutableLiveData(lastPlayerData)
+    val playerData = MutableLiveData<DetailedPlayerData>()
     val serverData = MutableLiveData<MainScreenServerData>()
     val punishments: MutableList<DetailedPunishmentData> = mutableListOf()
     val punishmentBanners: MutableLiveData<List<PunishmentBannerData>> = MutableLiveData()
@@ -94,11 +87,7 @@ class MainScreenViewModel @Inject constructor(
     }
 
     private fun savePlayer(player: DetailedPlayerModel) {
-        preferencesRepository.skinUuid = player.skinUuid
         preferencesRepository.username = player.username
         preferencesRepository.rankName = player.rank.name
-        preferencesRepository.balance = player.balance
-        preferencesRepository.tokens = player.tokens
-        preferencesRepository.playtime = player.playtime
     }
 }

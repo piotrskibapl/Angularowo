@@ -6,12 +6,8 @@ import javax.inject.Inject
 
 private const val PREF_KEY_ACCESS_TOKEN = "access_token"
 private const val PREF_KEY_UUID = "uuid"
-private const val PREF_KEY_SKIN_UUID = "skin_uuid"
 private const val PREF_KEY_USERNAME = "nickname"
 private const val PREF_KEY_RANK_NAME = "rank"
-private const val PREF_KEY_BALANCE = "balance"
-private const val PREF_KEY_TOKENS = "tokens"
-private const val PREF_KEY_PLAYTIME = "playtime"
 private const val PREF_KEY_FAVORITE_SHOWCASE_SHOWN = "showcase_favorite_shown"
 private const val PREF_KEY_FIREBASE_SUBSCRIBED_APP_VERSION = "subscribed_app_version"
 private const val PREF_KEY_FIREBASE_SUBSCRIBED_PLAYER_UUID = "subscribed_player_uuid"
@@ -33,10 +29,6 @@ class PreferencesRepositoryImpl @Inject constructor(
         get() = sharedPreferences.getString(PREF_KEY_UUID, null)
         set(value) = applyValue(PREF_KEY_UUID, value)
 
-    override var skinUuid: String?
-        get() = sharedPreferences.getString(PREF_KEY_SKIN_UUID, null)
-        set(value) = applyValue(PREF_KEY_SKIN_UUID, value)
-
     override var username: String?
         get() = sharedPreferences.getString(PREF_KEY_USERNAME, null)
         set(value) = applyValue(PREF_KEY_USERNAME, value)
@@ -44,23 +36,6 @@ class PreferencesRepositoryImpl @Inject constructor(
     override var rankName: String?
         get() = sharedPreferences.getString(PREF_KEY_RANK_NAME, null)
         set(value) = applyValue(PREF_KEY_RANK_NAME, value)
-
-    override var balance: Float
-        get() = sharedPreferences.getFloat(PREF_KEY_BALANCE, 0f)
-        set(value) = applyValue(PREF_KEY_BALANCE, value)
-
-    override var tokens: Int
-        get() = sharedPreferences.getInt(PREF_KEY_TOKENS, 0)
-        set(value) = applyValue(PREF_KEY_TOKENS, value)
-
-    // playtime was stored as Int seconds instead of Long milliseconds before release 4.0
-    override var playtime: Long
-        get() = try {
-            sharedPreferences.getLong(PREF_KEY_PLAYTIME, 0)
-        } catch (e: ClassCastException) {
-            sharedPreferences.getInt(PREF_KEY_PLAYTIME, 0).toLong() * 1000
-        }
-        set(value) = applyValue(PREF_KEY_PLAYTIME, value)
 
     override var hasSeenFavoriteShowcase: Boolean
         get() = sharedPreferences.getBoolean(PREF_KEY_FAVORITE_SHOWCASE_SHOWN, false)
@@ -134,12 +109,8 @@ class PreferencesRepositoryImpl @Inject constructor(
         sharedPreferences.edit().apply {
             remove(PREF_KEY_ACCESS_TOKEN)
             remove(PREF_KEY_UUID)
-            remove(PREF_KEY_SKIN_UUID)
             remove(PREF_KEY_USERNAME)
             remove(PREF_KEY_RANK_NAME)
-            remove(PREF_KEY_BALANCE)
-            remove(PREF_KEY_TOKENS)
-            remove(PREF_KEY_PLAYTIME)
             apply()
         }
     }
@@ -151,23 +122,9 @@ class PreferencesRepositoryImpl @Inject constructor(
         }
     }
 
-    private fun applyValue(key: String, value: Float) {
-        sharedPreferences.edit().apply {
-            putFloat(key, value)
-            apply()
-        }
-    }
-
     private fun applyValue(key: String, value: Int) {
         sharedPreferences.edit().apply {
             putInt(key, value)
-            apply()
-        }
-    }
-
-    private fun applyValue(key: String, value: Long) {
-        sharedPreferences.edit().apply {
-            putLong(key, value)
             apply()
         }
     }

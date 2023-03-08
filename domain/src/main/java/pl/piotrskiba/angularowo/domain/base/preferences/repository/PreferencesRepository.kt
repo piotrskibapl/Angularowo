@@ -4,12 +4,8 @@ interface PreferencesRepository {
 
     var accessToken: String?
     var uuid: String?
-    var skinUuid: String?
     var username: String?
     var rankName: String?
-    var balance: Float
-    var tokens: Int
-    var playtime: Long
     var hasSeenFavoriteShowcase: Boolean
     var subscribedFirebaseAppVersion: Int?
     var subscribedFirebasePlayerUuid: String?
