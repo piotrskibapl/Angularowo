@@ -1,7 +1,6 @@
 package pl.piotrskiba.angularowo.main.mainscreen.viewmodel
 
 import androidx.lifecycle.MutableLiveData
-import com.snakydesign.livedataextensions.combineLatest
 import com.snakydesign.livedataextensions.map
 import me.tatarka.bindingcollectionadapter2.ItemBinding
 import pl.piotrskiba.angularowo.BR
@@ -13,10 +12,8 @@ import pl.piotrskiba.angularowo.base.model.ViewModelState.Loading
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
+import pl.piotrskiba.angularowo.domain.mainscreen.usecase.GetMainScreenDataUseCase
 import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
-import pl.piotrskiba.angularowo.domain.player.usecase.GetPlayerDetailsFromUuidUseCase
-import pl.piotrskiba.angularowo.domain.punishment.usecase.GetActivePlayerPunishmentsUseCase
-import pl.piotrskiba.angularowo.domain.server.usecase.GetServerStatusUseCase
 import pl.piotrskiba.angularowo.main.base.handler.FCMTopicSubscriptionAction.UPDATE_SUBSCRIPTION
 import pl.piotrskiba.angularowo.main.base.handler.FCMTopicSubscriptionHandler
 import pl.piotrskiba.angularowo.main.mainscreen.model.MainScreenServerData
@@ -31,23 +28,13 @@ import pl.piotrskiba.angularowo.main.punishment.model.toPunishmentBannerData
 import javax.inject.Inject
 
 class MainScreenViewModel @Inject constructor(
-    private val getServerStatusUseCase: GetServerStatusUseCase,
-    private val getPlayerDetailsFromUuidUseCase: GetPlayerDetailsFromUuidUseCase,
-    private val getActivePlayerPunishmentsUseCase: GetActivePlayerPunishmentsUseCase,
+    private val getMainScreenDataUseCase: GetMainScreenDataUseCase,
     private val preferencesRepository: PreferencesRepository,
     private val fcmTopicSubscriptionHandler: FCMTopicSubscriptionHandler,
     private val facade: SchedulersProvider
 ) : LifecycleViewModel() {
 
-    private val playerDataState = MutableLiveData<ViewModelState>(Loading.Fetch)
-    private val serverDataState = MutableLiveData<ViewModelState>(Loading.Fetch)
-    private val punishmentsDataState = MutableLiveData<ViewModelState>(Loading.Fetch)
-    val state = combineLatest(playerDataState, serverDataState, punishmentsDataState) { state1, state2, state3 ->
-        val stateList = listOf(state1, state2, state3)
-        val errorStateList = stateList.filterIsInstance<Error>()
-        val loadingStateList = stateList.filterIsInstance<Loading>()
-        errorStateList.firstOrNull() ?: loadingStateList.firstOrNull() ?: Loaded
-    }
+    val state = MutableLiveData<ViewModelState>(Loading.Fetch)
     // exposed for MainViewModel synchronization
     val player = MutableLiveData<DetailedPlayerModel>()
     private val lastPlayerData = DetailedPlayerData(
@@ -76,53 +63,33 @@ class MainScreenViewModel @Inject constructor(
     }
 
     fun onRefresh() {
-        playerDataState.value = Loading.Refresh
-        serverDataState.value = Loading.Refresh
-        punishmentsDataState.value = Loading.Refresh
+        state.value = Loading.Refresh
         loadData()
     }
 
     private fun loadData() {
-        loadServerStatus()
-        loadPlayer()
-        loadActivePunishments()
-    }
-
-    private fun loadServerStatus() {
-        disposables.add(getServerStatusUseCase
-            .execute()
-            .subscribeOn(facade.io())
-            .observeOn(facade.ui())
-            .subscribe(
-                { serverStatus ->
-                    serverDataState.value = Loaded
-                    serverData.value = serverStatus.toUi()
-                },
-                { error ->
-                    serverDataState.value = Error(error)
-                }
-            )
-        )
-    }
-
-    private fun loadPlayer() {
-        disposables.add(getPlayerDetailsFromUuidUseCase
-            .execute(preferencesRepository.uuid!!)
-            .subscribeOn(facade.io())
-            .observeOn(facade.ui())
-            .subscribe(
-                { detailedPlayer ->
-                    playerDataState.value = Loaded
-                    playerData.value = detailedPlayer.toUi()
-                    player.value = detailedPlayer
-                    savePlayer(detailedPlayer)
-                    fcmTopicSubscriptionHandler.handlePlayerRankTopicSubscription(UPDATE_SUBSCRIPTION)
-                    fcmTopicSubscriptionHandler.handleNewReportsTopicSubscription(UPDATE_SUBSCRIPTION)
-                },
-                { error ->
-                    playerDataState.value = Error(error)
-                }
-            )
+        disposables.add(
+            getMainScreenDataUseCase.execute()
+                .subscribeOn(facade.io())
+                .observeOn(facade.ui())
+                .subscribe(
+                    { mainScreenDataModel ->
+                        state.value = Loaded
+                        // TODO: use one model
+                        serverData.value = mainScreenDataModel.serverStatusModel.toUi()
+                        playerData.value = mainScreenDataModel.detailedPlayerModel.toUi()
+                        punishments.clear()
+                        punishments.addAll(mainScreenDataModel.playerPunishments.toUi())
+                        punishmentBanners.value = mainScreenDataModel.playerPunishments.toPunishmentBannerData()
+                        player.value = mainScreenDataModel.detailedPlayerModel
+                        savePlayer(mainScreenDataModel.detailedPlayerModel)
+                        fcmTopicSubscriptionHandler.handlePlayerRankTopicSubscription(UPDATE_SUBSCRIPTION)
+                        fcmTopicSubscriptionHandler.handleNewReportsTopicSubscription(UPDATE_SUBSCRIPTION)
+                    },
+                    { error ->
+                        state.value = Error(error)
+                    }
+                )
         )
     }
 
@@ -133,24 +100,5 @@ class MainScreenViewModel @Inject constructor(
         preferencesRepository.balance = player.balance
         preferencesRepository.tokens = player.tokens
         preferencesRepository.playtime = player.playtime
-    }
-
-    private fun loadActivePunishments() {
-        disposables.add(getActivePlayerPunishmentsUseCase
-            .execute(preferencesRepository.username!!)
-            .subscribeOn(facade.io())
-            .observeOn(facade.ui())
-            .subscribe(
-                { punishmentModels ->
-                    punishmentsDataState.value = Loaded
-                    punishments.clear()
-                    punishments.addAll(punishmentModels.toUi())
-                    punishmentBanners.value = punishmentModels.toPunishmentBannerData()
-                },
-                { error ->
-                    punishmentsDataState.value = Error(error)
-                }
-            )
-        )
     }
 }
