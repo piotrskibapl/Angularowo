@@ -37,8 +37,7 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
         savedInstanceState: Bundle?
     ): View {
         val binding = setupBinding(layoutInflater, container)
-        val view = binding.root
-        return view
+        return binding.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

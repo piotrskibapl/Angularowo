@@ -23,7 +23,7 @@ class ApplicationLockedActivity : OldBaseActivity() {
         setupBinding()
         setSupportActionBar(binding.toolbar)
 
-        mViewModel = ViewModelProvider(this).get(AppViewModel::class.java)
+        mViewModel = ViewModelProvider(this)[AppViewModel::class.java]
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
         mFirebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_default_values)
 

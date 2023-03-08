@@ -37,7 +37,7 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel
         viewModel.navigator = this
         super.onCreate(savedInstanceState)
 
-        mViewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
+        mViewModel = ViewModelProvider(requireActivity())[AppViewModel::class.java]
         mainViewModel = viewModelFactory.obtainViewModel(requireActivity())
         preferenceUtils = PreferenceUtils(requireContext())
 

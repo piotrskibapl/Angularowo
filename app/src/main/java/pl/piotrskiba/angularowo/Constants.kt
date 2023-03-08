@@ -4,7 +4,6 @@ object Constants {
     const val EXTRA_PLAYER = "extra_player"
     const val EXTRA_PREVIEWED_PLAYER = "extra_previewed_player"
     const val EXTRA_PUNISHMENT = "extra_punishment"
-    const val EXTRA_BITMAP = "extra_bitmap"
     const val EXTRA_REPORT = "extra_report"
 
     const val REQUEST_CODE_REGISTER = 1100
