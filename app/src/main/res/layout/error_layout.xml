@@ -11,12 +11,12 @@
     </data>
 
     <LinearLayout
-        android:id="@+id/no_internet_layout"
+        android:id="@+id/error_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/windowBackground"
         android:orientation="vertical"
-        app:visible="@{state.anyError}"
+        app:visible="@{state.error}"
         tools:visibility="gone">
 
         <ImageView

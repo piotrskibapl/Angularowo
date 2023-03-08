@@ -34,7 +34,7 @@ class OffersViewModel @Inject constructor(
     val offersInfo = MutableLiveData<OffersInfo>()
     val adOffersBinding = ItemBinding.of<AdOffer>(BR.adOffer, R.layout.ad_offer_list_item)
     val offersBinding = ItemBinding.of<Offer>(BR.offer, R.layout.offer_list_item)
-    val state = MutableLiveData<ViewModelState>(Loading)
+    val state = MutableLiveData<ViewModelState>(Loading.Fetch)
     val isDataLoaded = offersInfo.map { it != null }
     lateinit var navigator: OffersNavigator
 
@@ -46,12 +46,13 @@ class OffersViewModel @Inject constructor(
     }
 
     fun onRefresh() {
+        state.value = Loading.Refresh
         loadOffersInfo()
     }
 
     fun onAdOfferClick(adOffer: AdOffer) {
         navigator.displayAdOfferConfirmationDialog(adOffer) {
-            state.value = Loading
+            state.value = Loading.Send
             navigator.displayRewardedAd(
                 adOffer.adId,
                 ::onAdWatched,
@@ -62,7 +63,7 @@ class OffersViewModel @Inject constructor(
 
     fun onOfferClick(offer: Offer) {
         navigator.displayOfferConfirmationDialog(offer) {
-            state.value = Loading
+            state.value = Loading.Send
             disposables.add(
                 redeemOfferUseCase.execute(preferencesRepository.accessToken!!, offer.id)
                     .subscribeOn(facade.io())
@@ -76,6 +77,7 @@ class OffersViewModel @Inject constructor(
     }
 
     private fun onAdWatched(rewardItem: RewardItem) {
+        state.value = Loading.Fetch
         disposables.add(
             redeemAdOfferUseCase.execute(preferencesRepository.accessToken!!, rewardItem.type)
                 .subscribeOn(facade.io())
@@ -93,7 +95,6 @@ class OffersViewModel @Inject constructor(
     }
 
     private fun loadOffersInfo() {
-        state.value = Loading
         disposables.add(
             getOffersInfoUseCase
                 .execute(preferencesRepository.accessToken!!)

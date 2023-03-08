@@ -25,7 +25,7 @@ class PunishmentListViewModel @Inject constructor(
     private val facade: SchedulersProvider,
 ) : LifecycleViewModel() {
 
-    val state = MutableLiveData<ViewModelState>(Loading)
+    val state = MutableLiveData<ViewModelState>(Loading.Fetch)
     val punishments: MutableList<DetailedPunishmentData> = mutableListOf()
     val punishmentBanners: MutableLiveData<List<PunishmentBannerData>> = MutableLiveData()
     val punishmentsBinding = ItemBinding.of<PunishmentBannerData>(BR.punishment, R.layout.punishment_list_item)
@@ -37,11 +37,11 @@ class PunishmentListViewModel @Inject constructor(
     }
 
     fun onRefresh() {
+        state.value = Loading.Refresh
         loadPunishmentList()
     }
 
     private fun loadPunishmentList() {
-        state.value = Loading
         disposables.add(getActivePunishmentsUseCase
             .execute(preferencesRepository.accessToken!!)
             .subscribeOn(facade.io())
@@ -55,7 +55,6 @@ class PunishmentListViewModel @Inject constructor(
                 },
                 { error ->
                     state.value = Error(error)
-                    // TODO: provide error handling
                 }
             )
         )

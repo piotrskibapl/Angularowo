@@ -17,15 +17,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:onRefreshListener="@{() -> viewModel.onRefresh()}"
-        app:refreshing="@{viewModel.state.loading}">
+        app:state="@{viewModel.state}">
 
-        <ScrollView
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <FrameLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/default_layout"
@@ -172,30 +172,33 @@
                         android:layout_marginTop="@dimen/section_margin"
                         android:text="@string/last_player_bans"
                         android:textSize="@dimen/title_text_size"
-                        app:visible="@{viewModel.isPunishmentListNotEmpty()}"
-                        tools:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_playtime" />
+                        app:layout_constraintTop_toBottomOf="@+id/tv_playtime"
+                        app:visible="@{viewModel.isPunishmentListNotEmpty()}"
+                        tools:visibility="gone" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginTop="@dimen/margin_default"
-                        tools:visibility="gone"
-                        app:visible="@{viewModel.isPunishmentListNotEmpty()}"
                         app:itemBinding="@{viewModel.punishmentsBinding}"
                         app:items="@{viewModel.punishmentBanners}"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_last_bans_title" />
+                        app:layout_constraintTop_toBottomOf="@+id/tv_last_bans_title"
+                        app:visible="@{viewModel.isPunishmentListNotEmpty()}"
+                        tools:visibility="gone" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+            </ScrollView>
 
-                <include
-                    android:id="@+id/errorLayout"
-                    layout="@layout/error_layout"
-                    app:state="@{viewModel.state}" />
-            </FrameLayout>
-        </ScrollView>
+            <include
+                layout="@layout/loading_layout"
+                app:state="@{viewModel.state}" />
+
+            <include
+                layout="@layout/error_layout"
+                app:state="@{viewModel.state}" />
+        </FrameLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

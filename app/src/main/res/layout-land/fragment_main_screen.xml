@@ -17,15 +17,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:onRefreshListener="@{() -> viewModel.onRefresh()}"
-        app:refreshing="@{viewModel.state.loading}">
+        app:state="@{viewModel.state}">
 
-        <ScrollView
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <FrameLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
                 <LinearLayout
                     android:id="@+id/default_layout"
@@ -195,12 +195,15 @@
                         app:visible="@{viewModel.isPunishmentListNotEmpty()}"
                         tools:visibility="gone" />
                 </LinearLayout>
+            </ScrollView>
 
-                <include
-                    android:id="@+id/errorLayout"
-                    layout="@layout/error_layout"
-                    app:state="@{viewModel.state}" />
-            </FrameLayout>
-        </ScrollView>
+            <include
+                layout="@layout/loading_layout"
+                app:state="@{viewModel.state}" />
+
+            <include
+                layout="@layout/error_layout"
+                app:state="@{viewModel.state}" />
+        </FrameLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

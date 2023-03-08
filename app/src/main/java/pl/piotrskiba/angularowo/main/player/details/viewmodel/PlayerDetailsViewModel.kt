@@ -2,6 +2,9 @@ package pl.piotrskiba.angularowo.main.player.details.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import pl.piotrskiba.angularowo.base.model.ViewModelState
+import pl.piotrskiba.angularowo.base.model.ViewModelState.Error
+import pl.piotrskiba.angularowo.base.model.ViewModelState.Loaded
+import pl.piotrskiba.angularowo.base.model.ViewModelState.Loading
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
@@ -28,15 +31,16 @@ class PlayerDetailsViewModel @Inject constructor(
     lateinit var player: DetailedPlayerModel
     val previewedPlayerBanner: MutableLiveData<PlayerBannerData> = MutableLiveData()
     val previewedPlayerDetails: MutableLiveData<DetailedPlayerData> = MutableLiveData()
-    val state = MutableLiveData<ViewModelState>(ViewModelState.Loading)
+    val state = MutableLiveData<ViewModelState>(Loading.Fetch)
     private var isPreviewedPlayerFavorite: Boolean = false
 
     override fun onFirstCreate() {
-        onRefresh()
+        loadPlayerDetails()
         observeIfPlayerIsFavorite()
     }
 
     fun onRefresh() {
+        state.value = Loading.Refresh
         loadPlayerDetails()
     }
 
@@ -71,7 +75,6 @@ class PlayerDetailsViewModel @Inject constructor(
     }
 
     private fun loadPlayerDetails() {
-        state.value = ViewModelState.Loading
         disposables.add(getPlayerDetailsFromUuidUseCase
             .execute(
                 preferencesRepository.accessToken!!,
@@ -81,12 +84,13 @@ class PlayerDetailsViewModel @Inject constructor(
             .observeOn(facade.ui())
             .subscribe(
                 { detailedPlayer ->
-                    state.value = ViewModelState.Loaded
-                    previewedPlayerBanner.value = detailedPlayer.toPlayerBannerData(isPreviewedPlayerFavorite)
+                    state.value = Loaded
+                    previewedPlayerBanner.value =
+                        detailedPlayer.toPlayerBannerData(isPreviewedPlayerFavorite)
                     previewedPlayerDetails.value = detailedPlayer.toUi()
                 },
                 { error ->
-                    // TODO: provide error handling
+                    state.value = Error(error)
                 }
             )
         )

@@ -39,9 +39,9 @@ class MainScreenViewModel @Inject constructor(
     private val facade: SchedulersProvider
 ) : LifecycleViewModel() {
 
-    private val playerDataState = MutableLiveData<ViewModelState>(Loading)
-    private val serverDataState = MutableLiveData<ViewModelState>(Loading)
-    private val punishmentsDataState = MutableLiveData<ViewModelState>(Loading)
+    private val playerDataState = MutableLiveData<ViewModelState>(Loading.Fetch)
+    private val serverDataState = MutableLiveData<ViewModelState>(Loading.Fetch)
+    private val punishmentsDataState = MutableLiveData<ViewModelState>(Loading.Fetch)
     val state = combineLatest(playerDataState, serverDataState, punishmentsDataState) { state1, state2, state3 ->
         val stateList = listOf(state1, state2, state3)
         val errorStateList = stateList.filterIsInstance<Error>()
@@ -67,7 +67,7 @@ class MainScreenViewModel @Inject constructor(
 
     override fun onFirstCreate() {
         punishmentsBinding.bindExtra(BR.navigator, navigator)
-        onRefresh()
+        loadData()
         fcmTopicSubscriptionHandler.handleAppVersionTopicSubscription(UPDATE_SUBSCRIPTION)
         fcmTopicSubscriptionHandler.handlePlayerUuidTopicSubscription(UPDATE_SUBSCRIPTION)
         fcmTopicSubscriptionHandler.handleNewEventsTopicSubscription(UPDATE_SUBSCRIPTION)
@@ -76,13 +76,19 @@ class MainScreenViewModel @Inject constructor(
     }
 
     fun onRefresh() {
+        playerDataState.value = Loading.Refresh
+        serverDataState.value = Loading.Refresh
+        punishmentsDataState.value = Loading.Refresh
+        loadData()
+    }
+
+    private fun loadData() {
         loadServerStatus()
         loadPlayer()
         loadActivePunishments()
     }
 
     private fun loadServerStatus() {
-        serverDataState.value = Loading
         disposables.add(getServerStatusUseCase
             .execute(preferencesRepository.accessToken!!)
             .subscribeOn(facade.io())
@@ -100,7 +106,6 @@ class MainScreenViewModel @Inject constructor(
     }
 
     private fun loadPlayer() {
-        playerDataState.value = Loading
         disposables.add(getPlayerDetailsFromUuidUseCase
             .execute(
                 preferencesRepository.accessToken!!,
@@ -134,7 +139,6 @@ class MainScreenViewModel @Inject constructor(
     }
 
     private fun loadActivePunishments() {
-        punishmentsDataState.value = Loading
         disposables.add(getActivePlayerPunishmentsUseCase
             .execute(
                 preferencesRepository.accessToken!!,

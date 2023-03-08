@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:onRefreshListener="@{() -> viewModel.onRefresh()}"
-        app:refreshing="@{viewModel.state.loading}">
+        app:state="@{viewModel.state}">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -29,7 +29,10 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             <include
-                android:id="@+id/errorLayout"
+                layout="@layout/loading_layout"
+                app:state="@{viewModel.state}" />
+
+            <include
                 layout="@layout/error_layout"
                 app:state="@{viewModel.state}" />
         </FrameLayout>

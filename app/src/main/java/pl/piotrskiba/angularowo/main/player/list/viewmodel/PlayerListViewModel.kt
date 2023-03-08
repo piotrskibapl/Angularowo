@@ -27,7 +27,7 @@ class PlayerListViewModel @Inject constructor(
     private val facade: SchedulersProvider
 ) : LifecycleViewModel() {
 
-    val state = MutableLiveData<ViewModelState>(Loading)
+    val state = MutableLiveData<ViewModelState>(Loading.Fetch)
     val players: MutableLiveData<List<PlayerBannerData>> = MutableLiveData()
     val favoritePlayers: MutableLiveData<List<PlayerBannerData>> = MutableLiveData()
     val playersBinding = ItemBinding.of<PlayerBannerData>(BR.player, R.layout.player_list_item)
@@ -44,11 +44,11 @@ class PlayerListViewModel @Inject constructor(
     }
 
     fun onRefresh() {
+        state.value = Loading.Refresh
         refreshPlayerList()
     }
 
     private fun observePlayerList() {
-        state.value = Loading
         disposables.add(observeOnlinePlayerListWithFavoriteInformationUseCase
             .execute()
             .subscribeOn(facade.io())
@@ -78,12 +78,9 @@ class PlayerListViewModel @Inject constructor(
             .subscribeOn(facade.io())
             .observeOn(facade.ui())
             .subscribe(
-                {
-                    state.value = Loaded
-                },
+                { },
                 { error ->
                     state.value = Error(error)
-                    // TODO: provide error handling
                 }
             )
     }

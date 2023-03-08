@@ -7,6 +7,7 @@
     <color name="color_navheader">#fafafa</color>
     <color name="text_shadow">#BE000000</color>
     <color name="windowBackground">#303030</color>
+    <color name="windowBackgroundA50">#80303030</color>
 
     <color name="color_coin">#ffcb00</color>
     <color name="color_coin_disabled">#806500</color>

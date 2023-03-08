@@ -14,7 +14,6 @@ import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRe
 import pl.piotrskiba.angularowo.domain.report.model.ReportModel
 import pl.piotrskiba.angularowo.domain.report.usecase.GetNotArchivedReportsUseCase
 import pl.piotrskiba.angularowo.domain.report.usecase.GetOwnedReportsUseCase
-import pl.piotrskiba.angularowo.main.player.list.nav.PlayerListNavigator
 import pl.piotrskiba.angularowo.main.report.list.nav.ReportListNavigator
 import pl.piotrskiba.angularowo.main.report.model.ReportBannerData
 import pl.piotrskiba.angularowo.main.report.model.toReportBannerDataList
@@ -27,7 +26,7 @@ class ReportListTabViewModel @Inject constructor(
     private val facade: SchedulersProvider,
 ) : LifecycleViewModel() {
 
-    val state = MutableLiveData<ViewModelState>(Loading)
+    val state = MutableLiveData<ViewModelState>(Loading.Fetch)
     val reportModels: MutableLiveData<List<ReportModel>> = MutableLiveData()
     val reportBanners: MutableLiveData<List<ReportBannerData>> = MutableLiveData()
     val reportsBinding = ItemBinding.of<ReportBannerData>(BR.report, R.layout.report_list_item)
@@ -36,10 +35,15 @@ class ReportListTabViewModel @Inject constructor(
 
     override fun onFirstCreate() {
         reportsBinding.bindExtra(BR.navigator, navigator)
-        onRefresh()
+        loadData()
     }
 
     fun onRefresh() {
+        state.value = Loading.Refresh
+        loadData()
+    }
+
+    private fun loadData() {
         if (othersReportsVariant) {
             loadOtherPlayersReportList()
         } else {
@@ -48,7 +52,6 @@ class ReportListTabViewModel @Inject constructor(
     }
 
     private fun loadOwnedReportList() {
-        state.value = Loading
         disposables.add(getOwnedReportsUseCase
             .execute(preferencesRepository.accessToken!!)
             .subscribeOn(facade.io())
@@ -67,7 +70,6 @@ class ReportListTabViewModel @Inject constructor(
     }
 
     private fun loadOtherPlayersReportList() {
-        state.value = Loading
         disposables.add(getNotArchivedReportsUseCase
             .execute(preferencesRepository.accessToken!!)
             .subscribeOn(facade.io())
