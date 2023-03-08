@@ -11,7 +11,7 @@ import pl.piotrskiba.angularowo.domain.rank.repository.RankRepository
 import pl.piotrskiba.angularowo.domain.server.repository.ServerRepository
 import javax.inject.Inject
 
-class GetMainScreenDataUseCase @Inject constructor(
+class GetMainScreenDataAndSavePlayerUseCase @Inject constructor(
     private val serverRepository: ServerRepository,
     private val playerRepository: PlayerRepository,
     private val rankRepository: RankRepository,
@@ -22,7 +22,7 @@ class GetMainScreenDataUseCase @Inject constructor(
     fun execute(): Single<MainScreenDataModel> {
         val accessToken = preferencesRepository.accessToken!!
         return getServerStatus(accessToken)
-            .zipWith(getPlayerData(accessToken), ::Pair)
+            .zipWith(getAndSavePlayerData(accessToken), ::Pair)
             .zipWith(getPlayerPunishments(accessToken)) { (serverStatus, playerData), playerPunishments ->
                 MainScreenDataModel(serverStatus, playerData, playerPunishments)
             }
@@ -31,7 +31,7 @@ class GetMainScreenDataUseCase @Inject constructor(
     private fun getServerStatus(accessToken: String) =
         serverRepository.getServerStatus(accessToken)
 
-    private fun getPlayerData(accessToken: String) =
+    private fun getAndSavePlayerData(accessToken: String) =
         playerRepository.getPlayerDetailsFromUuid(accessToken, preferencesRepository.uuid!!)
             .concatMap { detailedPlayerModel ->
                 rankRepository.getAllRanks().map { rankList ->
@@ -41,6 +41,11 @@ class GetMainScreenDataUseCase @Inject constructor(
                         } ?: detailedPlayerModel.rank
                     detailedPlayerModel
                 }
+            }
+            .map { detailedPlayerModel ->
+                preferencesRepository.username = detailedPlayerModel.username
+                preferencesRepository.rankName = detailedPlayerModel.rank.name
+                detailedPlayerModel
             }
 
     private fun getPlayerPunishments(accessToken: String) =

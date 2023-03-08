@@ -11,8 +11,7 @@ import pl.piotrskiba.angularowo.base.model.ViewModelState.Loaded
 import pl.piotrskiba.angularowo.base.model.ViewModelState.Loading
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
-import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
-import pl.piotrskiba.angularowo.domain.mainscreen.usecase.GetMainScreenDataUseCase
+import pl.piotrskiba.angularowo.domain.mainscreen.usecase.GetMainScreenDataAndSavePlayerUseCase
 import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
 import pl.piotrskiba.angularowo.main.base.handler.FCMTopicSubscriptionAction.UPDATE_SUBSCRIPTION
 import pl.piotrskiba.angularowo.main.base.handler.FCMTopicSubscriptionHandler
@@ -28,8 +27,7 @@ import pl.piotrskiba.angularowo.main.punishment.model.toPunishmentBannerData
 import javax.inject.Inject
 
 class MainScreenViewModel @Inject constructor(
-    private val getMainScreenDataUseCase: GetMainScreenDataUseCase,
-    private val preferencesRepository: PreferencesRepository,
+    private val getMainScreenDataAndSavePlayerUseCase: GetMainScreenDataAndSavePlayerUseCase,
     private val fcmTopicSubscriptionHandler: FCMTopicSubscriptionHandler,
     private val facade: SchedulersProvider
 ) : LifecycleViewModel() {
@@ -62,7 +60,7 @@ class MainScreenViewModel @Inject constructor(
 
     private fun loadData() {
         disposables.add(
-            getMainScreenDataUseCase.execute()
+            getMainScreenDataAndSavePlayerUseCase.execute()
                 .subscribeOn(facade.io())
                 .observeOn(facade.ui())
                 .subscribe(
@@ -75,7 +73,6 @@ class MainScreenViewModel @Inject constructor(
                         punishments.addAll(mainScreenDataModel.playerPunishments.toUi())
                         punishmentBanners.value = mainScreenDataModel.playerPunishments.toPunishmentBannerData()
                         player.value = mainScreenDataModel.detailedPlayerModel
-                        savePlayer(mainScreenDataModel.detailedPlayerModel)
                         fcmTopicSubscriptionHandler.handlePlayerRankTopicSubscription(UPDATE_SUBSCRIPTION)
                         fcmTopicSubscriptionHandler.handleNewReportsTopicSubscription(UPDATE_SUBSCRIPTION)
                     },
@@ -84,10 +81,5 @@ class MainScreenViewModel @Inject constructor(
                     }
                 )
         )
-    }
-
-    private fun savePlayer(player: DetailedPlayerModel) {
-        preferencesRepository.username = player.username
-        preferencesRepository.rankName = player.rank.name
     }
 }
