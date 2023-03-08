@@ -10,7 +10,6 @@ import pl.piotrskiba.angularowo.base.model.ViewModelState.Loaded
 import pl.piotrskiba.angularowo.base.model.ViewModelState.Loading
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
-import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
 import pl.piotrskiba.angularowo.domain.report.model.ReportModel
 import pl.piotrskiba.angularowo.domain.report.usecase.GetNotArchivedReportsUseCase
 import pl.piotrskiba.angularowo.domain.report.usecase.GetOwnedReportsUseCase
@@ -22,7 +21,6 @@ import javax.inject.Inject
 class ReportListTabViewModel @Inject constructor(
     private val getOwnedReportsUseCase: GetOwnedReportsUseCase,
     private val getNotArchivedReportsUseCase: GetNotArchivedReportsUseCase,
-    private val preferencesRepository: PreferencesRepository,
     private val facade: SchedulersProvider,
 ) : LifecycleViewModel() {
 
@@ -53,7 +51,7 @@ class ReportListTabViewModel @Inject constructor(
 
     private fun loadOwnedReportList() {
         disposables.add(getOwnedReportsUseCase
-            .execute(preferencesRepository.accessToken!!)
+            .execute()
             .subscribeOn(facade.io())
             .observeOn(facade.ui())
             .subscribe(
@@ -71,7 +69,7 @@ class ReportListTabViewModel @Inject constructor(
 
     private fun loadOtherPlayersReportList() {
         disposables.add(getNotArchivedReportsUseCase
-            .execute(preferencesRepository.accessToken!!)
+            .execute()
             .subscribeOn(facade.io())
             .observeOn(facade.ui())
             .subscribe(

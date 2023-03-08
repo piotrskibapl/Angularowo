@@ -90,7 +90,7 @@ class MainScreenViewModel @Inject constructor(
 
     private fun loadServerStatus() {
         disposables.add(getServerStatusUseCase
-            .execute(preferencesRepository.accessToken!!)
+            .execute()
             .subscribeOn(facade.io())
             .observeOn(facade.ui())
             .subscribe(
@@ -107,10 +107,7 @@ class MainScreenViewModel @Inject constructor(
 
     private fun loadPlayer() {
         disposables.add(getPlayerDetailsFromUuidUseCase
-            .execute(
-                preferencesRepository.accessToken!!,
-                preferencesRepository.uuid!!
-            )
+            .execute(preferencesRepository.uuid!!)
             .subscribeOn(facade.io())
             .observeOn(facade.ui())
             .subscribe(
@@ -140,10 +137,7 @@ class MainScreenViewModel @Inject constructor(
 
     private fun loadActivePunishments() {
         disposables.add(getActivePlayerPunishmentsUseCase
-            .execute(
-                preferencesRepository.accessToken!!,
-                preferencesRepository.username!!
-            )
+            .execute(preferencesRepository.username!!)
             .subscribeOn(facade.io())
             .observeOn(facade.ui())
             .subscribe(

@@ -10,7 +10,6 @@ import pl.piotrskiba.angularowo.base.model.ViewModelState.Loaded
 import pl.piotrskiba.angularowo.base.model.ViewModelState.Loading
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
-import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
 import pl.piotrskiba.angularowo.domain.punishment.usecase.GetActivePunishmentsUseCase
 import pl.piotrskiba.angularowo.main.punishment.details.DetailedPunishmentData
 import pl.piotrskiba.angularowo.main.punishment.details.toUi
@@ -21,7 +20,6 @@ import javax.inject.Inject
 
 class PunishmentListViewModel @Inject constructor(
     private val getActivePunishmentsUseCase: GetActivePunishmentsUseCase,
-    private val preferencesRepository: PreferencesRepository,
     private val facade: SchedulersProvider,
 ) : LifecycleViewModel() {
 
@@ -43,7 +41,7 @@ class PunishmentListViewModel @Inject constructor(
 
     private fun loadPunishmentList() {
         disposables.add(getActivePunishmentsUseCase
-            .execute(preferencesRepository.accessToken!!)
+            .execute()
             .subscribeOn(facade.io())
             .observeOn(facade.ui())
             .subscribe(

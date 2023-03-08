@@ -12,7 +12,6 @@ import pl.piotrskiba.angularowo.base.model.ViewModelState.Loaded
 import pl.piotrskiba.angularowo.base.model.ViewModelState.Loading
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
-import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
 import pl.piotrskiba.angularowo.domain.player.usecase.ObserveOnlinePlayerListWithFavoriteInformationUseCase
 import pl.piotrskiba.angularowo.domain.player.usecase.RefreshOnlinePlayerListUseCase
 import pl.piotrskiba.angularowo.main.player.list.nav.PlayerListNavigator
@@ -23,7 +22,6 @@ import javax.inject.Inject
 class PlayerListViewModel @Inject constructor(
     private val observeOnlinePlayerListWithFavoriteInformationUseCase: ObserveOnlinePlayerListWithFavoriteInformationUseCase,
     private val refreshOnlinePlayerListUseCase: RefreshOnlinePlayerListUseCase,
-    private val preferencesRepository: PreferencesRepository,
     private val facade: SchedulersProvider
 ) : LifecycleViewModel() {
 
@@ -74,7 +72,7 @@ class PlayerListViewModel @Inject constructor(
 
     private fun refreshPlayerList() {
         refreshOnlinePlayerListUseCase
-            .execute(preferencesRepository.accessToken!!)
+            .execute()
             .subscribeOn(facade.io())
             .observeOn(facade.ui())
             .subscribe(

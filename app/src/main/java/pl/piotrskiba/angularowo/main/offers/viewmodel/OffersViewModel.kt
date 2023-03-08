@@ -12,7 +12,6 @@ import pl.piotrskiba.angularowo.base.model.ViewModelState.Loaded
 import pl.piotrskiba.angularowo.base.model.ViewModelState.Loading
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
-import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
 import pl.piotrskiba.angularowo.domain.offers.usecase.GetOffersInfoUseCase
 import pl.piotrskiba.angularowo.domain.offers.usecase.RedeemAdOfferUseCase
 import pl.piotrskiba.angularowo.domain.offers.usecase.RedeemOfferUseCase
@@ -27,7 +26,6 @@ class OffersViewModel @Inject constructor(
     private val getOffersInfoUseCase: GetOffersInfoUseCase,
     private val redeemAdOfferUseCase: RedeemAdOfferUseCase,
     private val redeemOfferUseCase: RedeemOfferUseCase,
-    private val preferencesRepository: PreferencesRepository,
     private val facade: SchedulersProvider
 ) : LifecycleViewModel() {
 
@@ -65,7 +63,7 @@ class OffersViewModel @Inject constructor(
         navigator.displayOfferConfirmationDialog(offer) {
             state.value = Loading.Send
             disposables.add(
-                redeemOfferUseCase.execute(preferencesRepository.accessToken!!, offer.id)
+                redeemOfferUseCase.execute(offer.id)
                     .subscribeOn(facade.io())
                     .observeOn(facade.ui())
                     .subscribe {
@@ -79,7 +77,7 @@ class OffersViewModel @Inject constructor(
     private fun onAdWatched(rewardItem: RewardItem) {
         state.value = Loading.Fetch
         disposables.add(
-            redeemAdOfferUseCase.execute(preferencesRepository.accessToken!!, rewardItem.type)
+            redeemAdOfferUseCase.execute(rewardItem.type)
                 .subscribeOn(facade.io())
                 .observeOn(facade.ui())
                 .subscribe {
@@ -97,7 +95,7 @@ class OffersViewModel @Inject constructor(
     private fun loadOffersInfo() {
         disposables.add(
             getOffersInfoUseCase
-                .execute(preferencesRepository.accessToken!!)
+                .execute()
                 .subscribeOn(facade.io())
                 .observeOn(facade.ui())
                 .subscribe(

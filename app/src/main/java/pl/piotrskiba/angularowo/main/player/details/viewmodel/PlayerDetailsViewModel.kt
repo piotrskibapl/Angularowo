@@ -7,7 +7,6 @@ import pl.piotrskiba.angularowo.base.model.ViewModelState.Loaded
 import pl.piotrskiba.angularowo.base.model.ViewModelState.Loading
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
-import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
 import pl.piotrskiba.angularowo.domain.friend.usecase.MarkPlayerAsFavoriteUseCase
 import pl.piotrskiba.angularowo.domain.friend.usecase.ObserveIfPlayerIsFavoriteUseCase
 import pl.piotrskiba.angularowo.domain.friend.usecase.UnmarkPlayerAsFavoriteUseCase
@@ -24,7 +23,6 @@ class PlayerDetailsViewModel @Inject constructor(
     private val observeIfPlayerIsFavoriteUseCase: ObserveIfPlayerIsFavoriteUseCase,
     private val markPlayerAsFavoriteUseCase: MarkPlayerAsFavoriteUseCase,
     private val unmarkPlayerAsFavoriteUseCase: UnmarkPlayerAsFavoriteUseCase,
-    private val preferencesRepository: PreferencesRepository,
     private val facade: SchedulersProvider,
 ) : LifecycleViewModel() {
 
@@ -76,10 +74,7 @@ class PlayerDetailsViewModel @Inject constructor(
 
     private fun loadPlayerDetails() {
         disposables.add(getPlayerDetailsFromUuidUseCase
-            .execute(
-                preferencesRepository.accessToken!!,
-                previewedPlayerBanner.value!!.uuid
-            )
+            .execute(previewedPlayerBanner.value!!.uuid)
             .subscribeOn(facade.io())
             .observeOn(facade.ui())
             .subscribe(
