@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.MenuItem
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
-import pl.piotrskiba.angularowo.base.ui.OldBaseActivity
+import pl.piotrskiba.angularowo.base.ui.BaseActivity
 import pl.piotrskiba.angularowo.databinding.ActivityPunishmentDetailsBinding
 import pl.piotrskiba.angularowo.main.punishment.details.DetailedPunishmentData
 
-class PunishmentDetailsActivity : OldBaseActivity() {
+class PunishmentDetailsActivity : BaseActivity() {
 
     private lateinit var previewedPunishment: DetailedPunishmentData
     private lateinit var binding: ActivityPunishmentDetailsBinding
@@ -35,7 +35,8 @@ class PunishmentDetailsActivity : OldBaseActivity() {
     }
 
     private fun loadArguments() {
-        previewedPunishment = intent.getSerializableExtra(Constants.EXTRA_PUNISHMENT) as DetailedPunishmentData
+        previewedPunishment =
+            intent.getSerializableExtra(Constants.EXTRA_PUNISHMENT) as DetailedPunishmentData
     }
 
     private fun setupToolbar() {
