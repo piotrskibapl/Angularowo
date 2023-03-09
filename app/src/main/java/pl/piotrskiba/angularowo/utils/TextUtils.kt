@@ -87,14 +87,6 @@ object TextUtils {
     }
 
     @JvmStatic
-    fun formatTps(tps: Double): String {
-        return if (tps == (tps.toInt()).toDouble())
-            String.format(java.util.Locale.getDefault(), "%d", tps.toInt())
-        else
-            String.format(java.util.Locale.getDefault(), "%s", tps)
-    }
-
-    @JvmStatic
     fun replaceColorCodes(context: Context, string: String): String {
         var s = string
 

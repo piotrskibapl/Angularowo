@@ -62,7 +62,7 @@ class MainScreenViewModel @Inject constructor(
                     { mainScreenDataModel ->
                         state.value = Loaded
                         // TODO: use one model
-                        serverData.value = mainScreenDataModel.serverStatusModel.toUi()
+                        serverData.value = mainScreenDataModel.serverStatusModel.toUi(mainScreenDataModel.detailedPlayerModel.rank.staff)
                         playerData.value = mainScreenDataModel.detailedPlayerModel.toUi()
                         punishments.clear()
                         punishments.addAll(mainScreenDataModel.playerPunishments.toUi())
