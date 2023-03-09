@@ -13,9 +13,10 @@ import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.report.model.ReportModel
 import pl.piotrskiba.angularowo.domain.report.usecase.GetNotArchivedReportsUseCase
 import pl.piotrskiba.angularowo.domain.report.usecase.GetOwnedReportsUseCase
+import pl.piotrskiba.angularowo.main.report.list.model.ReportListTabData
+import pl.piotrskiba.angularowo.main.report.list.model.toUi
 import pl.piotrskiba.angularowo.main.report.list.nav.ReportListNavigator
 import pl.piotrskiba.angularowo.main.report.model.ReportBannerData
-import pl.piotrskiba.angularowo.main.report.model.toReportBannerDataList
 import javax.inject.Inject
 
 class ReportListTabViewModel @Inject constructor(
@@ -26,7 +27,7 @@ class ReportListTabViewModel @Inject constructor(
 
     val state = MutableLiveData<ViewModelState>(Loading.Fetch)
     val reportModels: MutableLiveData<List<ReportModel>> = MutableLiveData()
-    val reportBanners: MutableLiveData<List<ReportBannerData>> = MutableLiveData()
+    val tabData: MutableLiveData<ReportListTabData> = MutableLiveData()
     val reportsBinding = ItemBinding.of<ReportBannerData>(BR.report, R.layout.report_list_item)
     var othersReportsVariant = false
     lateinit var navigator: ReportListNavigator
@@ -58,7 +59,7 @@ class ReportListTabViewModel @Inject constructor(
                 { reportModels ->
                     state.value = Loaded
                     this.reportModels.value = reportModels
-                    reportBanners.value = reportModels.toReportBannerDataList()
+                    tabData.value = reportModels.toUi(othersReportsVariant)
                 },
                 { error ->
                     state.value = Error(error)
@@ -76,7 +77,7 @@ class ReportListTabViewModel @Inject constructor(
                 { reportModels ->
                     state.value = Loaded
                     this.reportModels.value = reportModels
-                    reportBanners.value = reportModels.toReportBannerDataList()
+                    tabData.value = reportModels.toUi(othersReportsVariant)
                 },
                 { error ->
                     state.value = Error(error)
