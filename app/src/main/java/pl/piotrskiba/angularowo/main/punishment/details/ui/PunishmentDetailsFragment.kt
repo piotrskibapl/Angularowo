@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import pl.piotrskiba.angularowo.Constants
+import pl.piotrskiba.angularowo.base.extensions.serializable
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.databinding.FragmentPunishmentDetailsBinding
 import pl.piotrskiba.angularowo.main.punishment.details.DetailedPunishmentData
@@ -37,7 +38,7 @@ class PunishmentDetailsFragment : BaseFragment<PunishmentDetailsViewModel>(Punis
     }
 
     private fun loadArguments() {
-        val previewedPunishment = requireArguments().getSerializable(Constants.EXTRA_PUNISHMENT) as DetailedPunishmentData
+        val previewedPunishment: DetailedPunishmentData = requireArguments().serializable(Constants.EXTRA_PUNISHMENT)!!
         viewModel.previewedPunishmentData.value = previewedPunishment
     }
 }

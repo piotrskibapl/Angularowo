@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
+import pl.piotrskiba.angularowo.base.extensions.serializable
 import pl.piotrskiba.angularowo.base.ui.BaseActivity
 import pl.piotrskiba.angularowo.databinding.ActivityReportDetailsBinding
 import pl.piotrskiba.angularowo.domain.report.model.ReportModel
@@ -35,7 +36,7 @@ class ReportDetailsActivity : BaseActivity() {
     }
 
     private fun loadArguments() {
-        report = intent.getSerializableExtra(Constants.EXTRA_REPORT) as ReportModel
+        report = intent.serializable(Constants.EXTRA_REPORT)!!
     }
 
     private fun setupToolbar() {

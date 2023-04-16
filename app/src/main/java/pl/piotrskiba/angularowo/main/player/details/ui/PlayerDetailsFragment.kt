@@ -14,6 +14,7 @@ import com.google.android.material.snackbar.Snackbar
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.di.obtainViewModel
+import pl.piotrskiba.angularowo.base.extensions.serializable
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.databinding.FragmentPlayerDetailsBinding
 import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
@@ -83,8 +84,8 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
         }
 
     private fun loadArguments() {
-        val player = requireArguments().getSerializable(Constants.EXTRA_PLAYER) as DetailedPlayerModel
-        val previewedPlayer = requireArguments().getSerializable(Constants.EXTRA_PREVIEWED_PLAYER) as PlayerBannerData
+        val player: DetailedPlayerModel = requireArguments().serializable(Constants.EXTRA_PLAYER)!!
+        val previewedPlayer: PlayerBannerData = requireArguments().serializable(Constants.EXTRA_PREVIEWED_PLAYER)!!
         viewModel.player = player
         viewModel.previewedPlayerBanner.value = previewedPlayer
     }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
+import pl.piotrskiba.angularowo.base.extensions.serializable
 import pl.piotrskiba.angularowo.base.ui.BaseActivity
 import pl.piotrskiba.angularowo.databinding.ActivityPlayerDetailsBinding
 import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
@@ -37,8 +38,8 @@ class PlayerDetailsActivity : BaseActivity() {
     }
 
     private fun loadArguments() {
-        player = intent.getSerializableExtra(Constants.EXTRA_PLAYER) as DetailedPlayerModel
-        previewedPlayer = intent.getSerializableExtra(Constants.EXTRA_PREVIEWED_PLAYER) as PlayerBannerData
+        player = intent.serializable(Constants.EXTRA_PLAYER)!!
+        previewedPlayer = intent.serializable(Constants.EXTRA_PREVIEWED_PLAYER)!!
     }
 
     private fun setupToolbar() {

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import pl.piotrskiba.angularowo.Constants
+import pl.piotrskiba.angularowo.base.extensions.serializable
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.databinding.FragmentReportDetailsBinding
 import pl.piotrskiba.angularowo.domain.report.model.ReportModel
@@ -29,7 +30,7 @@ class ReportDetailsFragment : BaseFragment<ReportDetailsViewModel>(ReportDetails
     }
 
     private fun loadArguments() {
-        val report = requireArguments().getSerializable(Constants.EXTRA_REPORT) as ReportModel
+        val report: ReportModel = requireArguments().serializable(Constants.EXTRA_REPORT)!!
         viewModel.reportBanner = report.toReportBannerData()
         viewModel.reportDetails = report.toUi()
     }
