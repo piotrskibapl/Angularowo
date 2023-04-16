@@ -43,33 +43,37 @@ class PlayerDetailsViewModel @Inject constructor(
     }
 
     fun onFavoriteClick() {
-        markPlayerAsFavoriteUseCase
-            .execute(previewedPlayerBanner.value!!.uuid)
-            .subscribeOn(facade.io())
-            .observeOn(facade.ui())
-            .subscribe(
-                {
-                    // TODO: show snackbar
-                },
-                {
-                    // TODO: provide error handling
-                }
-            )
+        disposables.add(
+            markPlayerAsFavoriteUseCase
+                .execute(previewedPlayerBanner.value!!.uuid)
+                .subscribeOn(facade.io())
+                .observeOn(facade.ui())
+                .subscribe(
+                    {
+                        // TODO: show snackbar
+                    },
+                    {
+                        // TODO: provide error handling
+                    }
+                )
+        )
     }
 
     fun onUnfavoriteClick() {
-        unmarkPlayerAsFavoriteUseCase
-            .execute(previewedPlayerBanner.value!!.uuid)
-            .subscribeOn(facade.io())
-            .observeOn(facade.ui())
-            .subscribe(
-                {
-                    // TODO: show snackbar
-                },
-                {
-                    // TODO: provide error handling
-                }
-            )
+        disposables.add(
+            unmarkPlayerAsFavoriteUseCase
+                .execute(previewedPlayerBanner.value!!.uuid)
+                .subscribeOn(facade.io())
+                .observeOn(facade.ui())
+                .subscribe(
+                    {
+                        // TODO: show snackbar
+                    },
+                    {
+                        // TODO: provide error handling
+                    }
+                )
+        )
     }
 
     private fun loadPlayerDetails() {
@@ -92,13 +96,15 @@ class PlayerDetailsViewModel @Inject constructor(
     }
 
     private fun observeIfPlayerIsFavorite() {
-        observeIfPlayerIsFavoriteUseCase
-            .execute(previewedPlayerBanner.value!!.uuid)
-            .subscribeOn(facade.io())
-            .observeOn(facade.ui())
-            .subscribe {
-                isPreviewedPlayerFavorite = it
-                previewedPlayerBanner.value = previewedPlayerBanner.value?.copy(isFavorite = it)
-            }
+        disposables.add(
+            observeIfPlayerIsFavoriteUseCase
+                .execute(previewedPlayerBanner.value!!.uuid)
+                .subscribeOn(facade.io())
+                .observeOn(facade.ui())
+                .subscribe {
+                    isPreviewedPlayerFavorite = it
+                    previewedPlayerBanner.value = previewedPlayerBanner.value?.copy(isFavorite = it)
+                }
+        )
     }
 }
