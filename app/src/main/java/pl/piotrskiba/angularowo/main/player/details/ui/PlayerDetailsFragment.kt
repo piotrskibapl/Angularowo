@@ -7,6 +7,9 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
+import androidx.lifecycle.Lifecycle
 import com.google.android.material.snackbar.Snackbar
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
@@ -46,31 +49,38 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
         return binding.root
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.player_details, menu)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupMenu()
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        super.onPrepareOptionsMenu(menu)
-        menu.findItem(R.id.nav_favorite)?.isVisible = !isPreviewingSelfOrPartner() && !isPreviewedPlayerFavorite()
-        menu.findItem(R.id.nav_unfavorite)?.isVisible = !isPreviewingSelfOrPartner() && isPreviewedPlayerFavorite()
+    private fun setupMenu() {
+        (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
+            override fun onPrepareMenu(menu: Menu) {
+                menu.findItem(R.id.nav_favorite)?.isVisible = !isPreviewingSelfOrPartner() && !isPreviewedPlayerFavorite()
+                menu.findItem(R.id.nav_unfavorite)?.isVisible = !isPreviewingSelfOrPartner() && isPreviewedPlayerFavorite()
+            }
+
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.player_details, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem) = onMenuItemClicked(menuItem)
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // TODO: handle punishments
-        when (item.itemId) {
+    private fun onMenuItemClicked(menuItem: MenuItem) =
+        when (menuItem.itemId) {
             R.id.nav_favorite -> {
                 viewModel.onFavoriteClick()
-                return true
+                true
             }
             R.id.nav_unfavorite -> {
                 viewModel.onUnfavoriteClick()
-                return true
+                true
             }
+            else -> false
         }
-        return super.onOptionsItemSelected(item)
-    }
 
     private fun loadArguments() {
         val player = requireArguments().getSerializable(Constants.EXTRA_PLAYER) as DetailedPlayerModel
@@ -80,7 +90,6 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
     }
 
     private fun setupOptionsMenu() {
-        setHasOptionsMenu(true)
         viewModel.previewedPlayerBanner.observe(this) {
             requireActivity().invalidateOptionsMenu()
         }
