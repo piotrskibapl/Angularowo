@@ -14,6 +14,7 @@ import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
 import pl.piotrskiba.angularowo.domain.player.usecase.GetPlayerDetailsFromUuidUseCase
 import pl.piotrskiba.angularowo.main.player.details.model.DetailedPlayerData
 import pl.piotrskiba.angularowo.main.player.details.model.toUi
+import pl.piotrskiba.angularowo.main.player.details.nav.PlayerDetailsNavigator
 import pl.piotrskiba.angularowo.main.player.model.PlayerBannerData
 import pl.piotrskiba.angularowo.main.player.model.toPlayerBannerData
 import javax.inject.Inject
@@ -26,6 +27,7 @@ class PlayerDetailsViewModel @Inject constructor(
     private val facade: SchedulersProvider,
 ) : LifecycleViewModel() {
 
+    lateinit var navigator: PlayerDetailsNavigator
     lateinit var player: DetailedPlayerModel
     val previewedPlayerBanner: MutableLiveData<PlayerBannerData> = MutableLiveData()
     val previewedPlayerDetails: MutableLiveData<DetailedPlayerData> = MutableLiveData()
@@ -50,10 +52,10 @@ class PlayerDetailsViewModel @Inject constructor(
                 .observeOn(facade.ui())
                 .subscribe(
                     {
-                        // TODO: show snackbar
+                        navigator.displayMarkedAsFavoriteSnackbar()
                     },
                     {
-                        // TODO: provide error handling
+                        navigator.displayGenericErrorSnackbar()
                     }
                 )
         )
@@ -67,10 +69,10 @@ class PlayerDetailsViewModel @Inject constructor(
                 .observeOn(facade.ui())
                 .subscribe(
                     {
-                        // TODO: show snackbar
+                        navigator.displayUnmarkedAsFavoriteSnackbar()
                     },
                     {
-                        // TODO: provide error handling
+                        navigator.displayGenericErrorSnackbar()
                     }
                 )
         )
