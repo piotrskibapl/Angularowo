@@ -4,11 +4,11 @@
     <data>
 
         <variable
-            name="itemName"
+            name="itemNameResId"
             type="int" />
 
         <variable
-            name="itemDescription"
+            name="itemDescriptionResId"
             type="int" />
 
         <variable
@@ -41,7 +41,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:text="@{context.getString(itemName)}"
+            android:text="@{context.getString(itemNameResId)}"
             app:layout_constraintEnd_toStartOf="@+id/checkbox"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -53,7 +53,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:text="@{context.getString(itemDescription)}"
+            android:text="@{context.getString(itemDescriptionResId)}"
             app:layout_constraintEnd_toStartOf="@+id/checkbox"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/item_name"
@@ -64,10 +64,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="@{checked}"
-            app:visible="@{checkable}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+            app:layout_constraintTop_toTopOf="parent"
+            app:visible="@{checkable}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -28,16 +28,16 @@
         <include
             android:id="@+id/category_notifications"
             layout="@layout/settings_category"
-            app:categoryIcon="@{R.drawable.ic_notifications}"
-            app:categoryName="@{R.string.pref_category_notifications}" />
+            app:categoryIconResId="@{R.drawable.ic_notifications}"
+            app:categoryNameResId="@{R.string.pref_category_notifications}" />
 
         <include
             android:id="@+id/item_events"
             layout="@layout/settings_item"
             app:checkable="@{true}"
             app:checked="@{viewModel.eventsChecked}"
-            app:itemDescription="@{R.string.pref_summary_subscribed_to_events}"
-            app:itemName="@{R.string.pref_title_subscribed_to_events}"
+            app:itemDescriptionResId="@{R.string.pref_summary_subscribed_to_events}"
+            app:itemNameResId="@{R.string.pref_title_subscribed_to_events}"
             app:onClick="@{() -> viewModel.onEventsNotificationsClicked()}" />
 
         <include
@@ -45,8 +45,8 @@
             layout="@layout/settings_item"
             app:checkable="@{true}"
             app:checked="@{viewModel.privateMessagesChecked}"
-            app:itemDescription="@{R.string.pref_summary_subscribed_to_private_messages}"
-            app:itemName="@{R.string.pref_title_subscribed_to_private_messages}"
+            app:itemDescriptionResId="@{R.string.pref_summary_subscribed_to_private_messages}"
+            app:itemNameResId="@{R.string.pref_title_subscribed_to_private_messages}"
             app:onClick="@{() -> viewModel.onPrivateMessagesNotificationsClicked()}" />
 
         <include
@@ -54,8 +54,8 @@
             layout="@layout/settings_item"
             app:checkable="@{true}"
             app:checked="@{viewModel.accountIncidentsChecked}"
-            app:itemDescription="@{R.string.pref_summary_subscribed_to_account_incidents}"
-            app:itemName="@{R.string.pref_title_subscribed_to_account_incidents}"
+            app:itemDescriptionResId="@{R.string.pref_summary_subscribed_to_account_incidents}"
+            app:itemNameResId="@{R.string.pref_title_subscribed_to_account_incidents}"
             app:onClick="@{() -> viewModel.onAccountIncidentsNotificationsClicked()}" />
 
         <include
@@ -63,23 +63,23 @@
             layout="@layout/settings_item"
             app:checkable="@{true}"
             app:checked="@{viewModel.newReportsChecked}"
-            app:itemDescription="@{R.string.pref_summary_subscribed_to_new_reports}"
-            app:itemName="@{R.string.pref_title_subscribed_to_new_reports}"
+            app:itemDescriptionResId="@{R.string.pref_summary_subscribed_to_new_reports}"
+            app:itemNameResId="@{R.string.pref_title_subscribed_to_new_reports}"
             app:onClick="@{() -> viewModel.onNewReportsNotificationsClicked()}"
             app:visible="@{viewModel.isStaffMember()}" />
 
         <include
             android:id="@+id/category_others"
             layout="@layout/settings_category"
-            app:categoryIcon="@{R.drawable.ic_settings}"
-            app:categoryName="@{R.string.pref_category_others}" />
+            app:categoryIconResId="@{R.drawable.ic_settings}"
+            app:categoryNameResId="@{R.string.pref_category_others}" />
 
         <include
             android:id="@+id/item_logout"
             layout="@layout/settings_item"
             app:checkable="@{false}"
-            app:itemDescription="@{R.string.pref_summary_subscribed_to_new_reports}"
-            app:itemName="@{R.string.pref_title_logout}"
+            app:itemDescriptionResId="@{R.string.pref_summary_subscribed_to_new_reports}"
+            app:itemNameResId="@{R.string.pref_title_logout}"
             app:onClick="@{() -> viewModel.onLogoutClicked()}" />
     </LinearLayout>
 </layout>
