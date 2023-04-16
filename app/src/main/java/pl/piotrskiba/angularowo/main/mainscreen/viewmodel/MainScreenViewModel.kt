@@ -15,15 +15,12 @@ import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.cloudmessaging.usecase.UpdateCloudMessagingSubscriptionsUseCase
 import pl.piotrskiba.angularowo.domain.mainscreen.usecase.GetMainScreenDataAndSavePlayerUseCase
 import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
-import pl.piotrskiba.angularowo.main.mainscreen.model.MainScreenServerData
+import pl.piotrskiba.angularowo.main.mainscreen.model.MainScreenData
 import pl.piotrskiba.angularowo.main.mainscreen.model.toUi
-import pl.piotrskiba.angularowo.main.player.details.model.DetailedPlayerData
-import pl.piotrskiba.angularowo.main.player.details.model.toUi
 import pl.piotrskiba.angularowo.main.punishment.details.DetailedPunishmentData
 import pl.piotrskiba.angularowo.main.punishment.details.toUi
 import pl.piotrskiba.angularowo.main.punishment.list.nav.PunishmentListNavigator
 import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBannerData
-import pl.piotrskiba.angularowo.main.punishment.model.toPunishmentBannerData
 import javax.inject.Inject
 
 class MainScreenViewModel @Inject constructor(
@@ -35,12 +32,10 @@ class MainScreenViewModel @Inject constructor(
     val state = MutableLiveData<ViewModelState>(Loading.Fetch)
     // exposed for MainViewModel synchronization
     val player = MutableLiveData<DetailedPlayerModel>()
-    val playerData = MutableLiveData<DetailedPlayerData>()
-    val serverData = MutableLiveData<MainScreenServerData>()
+    val uiData = MutableLiveData<MainScreenData>()
     val punishments: MutableList<DetailedPunishmentData> = mutableListOf()
-    val punishmentBanners: MutableLiveData<List<PunishmentBannerData>> = MutableLiveData()
     val punishmentsBinding = ItemBinding.of<PunishmentBannerData>(BR.punishment, R.layout.punishment_list_item)
-    val isPunishmentListNotEmpty = punishmentBanners.map { it.isNotEmpty() }
+    val isPunishmentListNotEmpty = uiData.map { it.punishmentBanners.isNotEmpty() }
     lateinit var navigator: PunishmentListNavigator
 
     override fun onFirstCreate() {
@@ -61,12 +56,9 @@ class MainScreenViewModel @Inject constructor(
                 .subscribe(
                     { mainScreenDataModel ->
                         state.value = Loaded
-                        // TODO: use one model
-                        serverData.value = mainScreenDataModel.serverStatusModel.toUi(mainScreenDataModel.detailedPlayerModel.rank.staff)
-                        playerData.value = mainScreenDataModel.detailedPlayerModel.toUi()
+                        uiData.value = mainScreenDataModel.toUi()
                         punishments.clear()
                         punishments.addAll(mainScreenDataModel.playerPunishments.toUi())
-                        punishmentBanners.value = mainScreenDataModel.playerPunishments.toPunishmentBannerData()
                         player.value = mainScreenDataModel.detailedPlayerModel
                         updateCloudMessagingSubscriptions()
                     },
