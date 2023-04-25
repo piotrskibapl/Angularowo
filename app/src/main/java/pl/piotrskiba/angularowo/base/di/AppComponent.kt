@@ -7,6 +7,7 @@ import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import pl.piotrskiba.angularowo.base.AngularowoApplication
+import pl.piotrskiba.angularowo.data.chat.di.ChatModule
 import pl.piotrskiba.angularowo.data.cloudmessaging.di.CloudMessagingModule
 import pl.piotrskiba.angularowo.data.firebase.di.FirebaseModule
 import pl.piotrskiba.angularowo.data.friend.di.FriendModule
@@ -34,6 +35,7 @@ import javax.inject.Singleton
         PunishmentModule::class,
         ReportModule::class,
         OffersModule::class,
+        ChatModule::class,
         AppModule::class,
         AndroidSupportInjectionModule::class,
         AndroidInjectionModule::class,
