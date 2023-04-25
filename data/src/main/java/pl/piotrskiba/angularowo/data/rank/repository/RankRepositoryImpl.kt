@@ -6,11 +6,10 @@ import com.google.gson.reflect.TypeToken
 import io.reactivex.rxjava3.core.Single
 import pl.piotrskiba.angularowo.domain.rank.model.Rank.CustomRank
 import pl.piotrskiba.angularowo.domain.rank.repository.RankRepository
-import javax.inject.Inject
 
 private const val REMOTE_CONFIG_RANKS_KEY = "ranks"
 
-class RankRepositoryImpl @Inject constructor(
+class RankRepositoryImpl(
     private val firebaseRemoteConfig: FirebaseRemoteConfig,
     private val gson: Gson
 ) : RankRepository {

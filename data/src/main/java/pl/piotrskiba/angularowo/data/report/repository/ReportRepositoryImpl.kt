@@ -8,9 +8,8 @@ import pl.piotrskiba.angularowo.domain.report.model.ReportFilter
 import pl.piotrskiba.angularowo.domain.report.model.ReportModel
 import pl.piotrskiba.angularowo.domain.report.model.toRemote
 import pl.piotrskiba.angularowo.domain.report.repository.ReportRepository
-import javax.inject.Inject
 
-class ReportRepositoryImpl @Inject constructor(
+class ReportRepositoryImpl(
     private val reportApi: ReportApiService,
 ) : ReportRepository {
 

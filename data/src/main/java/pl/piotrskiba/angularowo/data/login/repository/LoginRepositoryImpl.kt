@@ -7,9 +7,8 @@ import pl.piotrskiba.angularowo.data.login.model.toDomain
 import pl.piotrskiba.angularowo.domain.login.model.AccessToken
 import pl.piotrskiba.angularowo.domain.login.model.toAccessTokenError
 import pl.piotrskiba.angularowo.domain.login.repository.LoginRepository
-import javax.inject.Inject
 
-class LoginRepositoryImpl @Inject constructor(
+class LoginRepositoryImpl(
     private val loginApi: LoginApiService
 ) : LoginRepository {
 

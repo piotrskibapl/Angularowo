@@ -7,9 +7,8 @@ import pl.piotrskiba.angularowo.data.friend.model.toData
 import pl.piotrskiba.angularowo.data.friend.model.toDomain
 import pl.piotrskiba.angularowo.domain.friend.model.FriendModel
 import pl.piotrskiba.angularowo.domain.friend.repository.FriendRepository
-import javax.inject.Inject
 
-class FriendRepositoryImpl @Inject constructor(
+class FriendRepositoryImpl(
     private val friendDao: FriendDao
 ) : FriendRepository {
 

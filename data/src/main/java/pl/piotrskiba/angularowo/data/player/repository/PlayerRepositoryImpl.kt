@@ -11,9 +11,8 @@ import pl.piotrskiba.angularowo.data.player.model.toDomain
 import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
 import pl.piotrskiba.angularowo.domain.player.model.PlayerModel
 import pl.piotrskiba.angularowo.domain.player.repository.PlayerRepository
-import javax.inject.Inject
 
-class PlayerRepositoryImpl @Inject constructor(
+class PlayerRepositoryImpl(
     private val playerApi: PlayerApiService
 ) : PlayerRepository {
 

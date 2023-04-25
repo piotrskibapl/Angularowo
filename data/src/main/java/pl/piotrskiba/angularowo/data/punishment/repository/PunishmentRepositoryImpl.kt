@@ -4,14 +4,13 @@ import io.reactivex.rxjava3.core.Single
 import pl.piotrskiba.angularowo.data.BuildConfig
 import pl.piotrskiba.angularowo.data.punishment.PunishmentApiService
 import pl.piotrskiba.angularowo.data.punishment.model.toDomain
-import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentModel
 import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentFilter
+import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentModel
 import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentType
 import pl.piotrskiba.angularowo.domain.punishment.model.toRemote
 import pl.piotrskiba.angularowo.domain.punishment.repository.PunishmentRepository
-import javax.inject.Inject
 
-class PunishmentRepositoryImpl @Inject constructor(
+class PunishmentRepositoryImpl(
     private val punishmentApi: PunishmentApiService
 ) : PunishmentRepository {
 

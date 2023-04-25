@@ -3,7 +3,6 @@ package pl.piotrskiba.angularowo.data.cloudmessaging.repository
 import com.google.firebase.messaging.FirebaseMessaging
 import io.reactivex.rxjava3.core.Completable
 import pl.piotrskiba.angularowo.domain.cloudmessaging.repository.CloudMessagingRepository
-import javax.inject.Inject
 
 private const val APP_VERSION_TOPIC_PREFIX = "version_"
 private const val PLAYER_UUID_TOPIC_PREFIX = "player_"
@@ -13,7 +12,7 @@ private const val PRIVATE_MESSAGES_TOPIC = "private_messages"
 private const val ACCOUNT_INCIDENTS_TOPIC = "account_incidents"
 private const val NEW_REPORTS_TOPIC = "new_reports"
 
-class CloudMessagingRepositoryImpl @Inject constructor(
+class CloudMessagingRepositoryImpl(
     private val firebaseMessaging: FirebaseMessaging,
 ) : CloudMessagingRepository {
 

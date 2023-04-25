@@ -6,9 +6,8 @@ import pl.piotrskiba.angularowo.data.server.ServerApiService
 import pl.piotrskiba.angularowo.data.server.model.toDomain
 import pl.piotrskiba.angularowo.domain.server.model.ServerStatusModel
 import pl.piotrskiba.angularowo.domain.server.repository.ServerRepository
-import javax.inject.Inject
 
-class ServerRepositoryImpl @Inject constructor(
+class ServerRepositoryImpl(
     private val serverApi: ServerApiService
 ) : ServerRepository {
 

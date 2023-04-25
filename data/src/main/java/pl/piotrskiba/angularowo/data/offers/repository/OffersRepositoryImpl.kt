@@ -7,9 +7,8 @@ import pl.piotrskiba.angularowo.data.offers.OffersApiService
 import pl.piotrskiba.angularowo.data.offers.model.toDomain
 import pl.piotrskiba.angularowo.domain.offers.model.OffersInfoModel
 import pl.piotrskiba.angularowo.domain.offers.repository.OffersRepository
-import javax.inject.Inject
 
-class OffersRepositoryImpl @Inject constructor(
+class OffersRepositoryImpl(
     private val offersApi: OffersApiService
 ) : OffersRepository {
 

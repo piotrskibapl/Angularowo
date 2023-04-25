@@ -2,7 +2,6 @@ package pl.piotrskiba.angularowo.data.base.preferences.repository
 
 import android.content.SharedPreferences
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
-import javax.inject.Inject
 
 private const val PREF_KEY_ACCESS_TOKEN = "access_token"
 private const val PREF_KEY_UUID = "uuid"
@@ -17,7 +16,7 @@ private const val PREF_KEY_FIREBASE_PRIVATE_MESSAGES_SUBSCRIBED = "private_messa
 private const val PREF_KEY_FIREBASE_ACCOUNT_INCIDENTS_SUBSCRIBED = "account_incidents_subscribed"
 private const val PREF_KEY_FIREBASE_NEW_REPORTS_SUBSCRIBED = "new_reports_subscribed"
 
-class PreferencesRepositoryImpl @Inject constructor(
+class PreferencesRepositoryImpl(
     private val sharedPreferences: SharedPreferences
 ) : PreferencesRepository {
 
