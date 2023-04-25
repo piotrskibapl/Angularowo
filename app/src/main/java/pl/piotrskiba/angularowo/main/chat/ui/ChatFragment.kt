@@ -18,9 +18,10 @@ import pl.piotrskiba.angularowo.AppViewModel
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.adapters.ChatAdapter
-import pl.piotrskiba.angularowo.base.ui.OldBaseFragment
+import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.databinding.FragmentChatBinding
 import pl.piotrskiba.angularowo.interfaces.ChatMessageClickListener
+import pl.piotrskiba.angularowo.main.chat.viewmodel.ChatViewModel
 import pl.piotrskiba.angularowo.main.player.details.ui.PlayerDetailsFragment
 import pl.piotrskiba.angularowo.models.ChatMessage
 import pl.piotrskiba.angularowo.models.ChatMessageList
@@ -33,7 +34,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ChatFragment : OldBaseFragment(), ChatMessageClickListener {
+class ChatFragment : BaseFragment<ChatViewModel>(ChatViewModel::class), ChatMessageClickListener {
 
     private lateinit var preferenceUtils: PreferenceUtils
     private lateinit var mChatAdapter: ChatAdapter
