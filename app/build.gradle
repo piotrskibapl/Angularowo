@@ -78,9 +78,9 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     // OkHttp (for websockets)
-    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
-    implementation 'com.squareup.okhttp3:okhttp-tls:4.10.0'
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+    implementation "com.squareup.okhttp3:okhttp-tls:$okhttp_version"
 
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.15.1'
@@ -109,7 +109,7 @@ dependencies {
     implementation "androidx.multidex:multidex:2.0.1"
 
     // Activity
-    implementation 'androidx.activity:activity-ktx:1.7.0'
+    implementation 'androidx.activity:activity-ktx:1.7.1'
 
     // ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
