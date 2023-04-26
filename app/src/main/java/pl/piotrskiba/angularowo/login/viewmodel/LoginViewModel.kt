@@ -1,8 +1,8 @@
 package pl.piotrskiba.angularowo.login.viewmodel
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
+import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
 import pl.piotrskiba.angularowo.domain.login.model.AccessToken
 import pl.piotrskiba.angularowo.domain.login.model.AccessTokenError
@@ -15,29 +15,32 @@ class LoginViewModel @Inject constructor(
     private val registerDeviceUseCase: RegisterDeviceUseCase,
     private val facade: SchedulersProvider,
     private val preferencesRepository: PreferencesRepository
-) : ViewModel() {
+) : LifecycleViewModel() {
 
     var loginState = MutableLiveData<LoginState>(LoginState.Unknown)
 
     fun onPinEntered(pin: String) {
         loginState.value = LoginState.Loading
-        registerDeviceUseCase
-            .execute(pin)
-            .subscribeOn(facade.io())
-            .observeOn(facade.ui())
-            .subscribe(
-                { accessToken ->
-                    saveUserData(accessToken)
-                    AnalyticsUtils().logLogin(accessToken.uuid, accessToken.username)
-                    loginState.value = LoginState.Success(accessToken)
-                },
-                { error ->
-                    AnalyticsUtils().logLoginError(error::class.simpleName)
-                    loginState.value = LoginState.Error(error as AccessTokenError)
-                }
-            )
+        disposables.add(
+            registerDeviceUseCase
+                .execute(pin)
+                .subscribeOn(facade.io())
+                .observeOn(facade.ui())
+                .subscribe(
+                    { accessToken ->
+                        saveUserData(accessToken)
+                        AnalyticsUtils().logLogin(accessToken.uuid, accessToken.username)
+                        loginState.value = LoginState.Success(accessToken)
+                    },
+                    { error ->
+                        AnalyticsUtils().logLoginError(error::class.simpleName)
+                        loginState.value = LoginState.Error(error as AccessTokenError)
+                    }
+                )
+        )
     }
 
+    // TODO: saving user data should be moved to usecase
     private fun saveUserData(accessToken: AccessToken) {
         preferencesRepository.uuid = accessToken.uuid
         preferencesRepository.username = accessToken.username

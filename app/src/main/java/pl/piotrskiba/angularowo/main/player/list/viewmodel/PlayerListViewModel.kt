@@ -47,39 +47,41 @@ class PlayerListViewModel @Inject constructor(
     }
 
     private fun observePlayerList() {
-        disposables.add(observeOnlinePlayerListWithFavoriteInformationUseCase
-            .execute()
-            .subscribeOn(facade.io())
-            .observeOn(facade.ui())
-            .subscribe(
-                { playerList ->
-                    val bannerList = playerList
-                        .filter { !it.second }
-                        .map { it.first.toPlayerBannerData(false) }
-                    val favoriteBannerList = playerList
-                        .filter { it.second }
-                        .map { it.first.toPlayerBannerData(true) }
-                    state.value = Loaded
-                    players.value = bannerList
-                    favoritePlayers.value = favoriteBannerList
-                },
-                { error ->
-                    state.value = Error(error)
-                }
-            )
+        disposables.add(
+            observeOnlinePlayerListWithFavoriteInformationUseCase.execute()
+                .subscribeOn(facade.io())
+                .observeOn(facade.ui())
+                .subscribe(
+                    { playerList ->
+                        val bannerList = playerList
+                            .filter { !it.second }
+                            .map { it.first.toPlayerBannerData(false) }
+                        val favoriteBannerList = playerList
+                            .filter { it.second }
+                            .map { it.first.toPlayerBannerData(true) }
+                        state.value = Loaded
+                        players.value = bannerList
+                        favoritePlayers.value = favoriteBannerList
+                    },
+                    { error ->
+                        state.value = Error(error)
+                    }
+                )
         )
     }
 
     private fun refreshPlayerList() {
-        refreshOnlinePlayerListUseCase
-            .execute()
-            .subscribeOn(facade.io())
-            .observeOn(facade.ui())
-            .subscribe(
-                { },
-                { error ->
-                    state.value = Error(error)
-                }
-            )
+        disposables.add(
+            refreshOnlinePlayerListUseCase
+                .execute()
+                .subscribeOn(facade.io())
+                .observeOn(facade.ui())
+                .subscribe(
+                    { },
+                    { error ->
+                        state.value = Error(error)
+                    }
+                )
+        )
     }
 }
