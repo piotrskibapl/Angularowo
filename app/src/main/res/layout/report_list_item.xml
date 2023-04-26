@@ -19,10 +19,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_small"
+        android:layout_marginBottom="4dp"
         android:background="@color/color_minecraft_7"
         android:onClick="@{(view) -> navigator.onReportClick(view, report)}"
-        android:padding="@dimen/padding_default"
+        android:padding="8dp"
         android:transitionName="@string/report_banner_transition_name">
 
         <TextView

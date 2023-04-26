@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/error_margin"
-        android:padding="@dimen/padding_default"
+        android:padding="8dp"
         android:textAlignment="center"
         android:textSize="@dimen/error_text_size"
         android:gravity="center_horizontal" />
@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/section_margin"
-        android:padding="@dimen/padding_default"
+        android:padding="8dp"
         android:textAlignment="center"
         android:gravity="center_horizontal" />
 

@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/login_description_margin_top"
                 android:gravity="center_horizontal"
-                android:padding="@dimen/padding_default"
+                android:padding="8dp"
                 android:text="@string/login_description"
                 android:textAlignment="center" />
 

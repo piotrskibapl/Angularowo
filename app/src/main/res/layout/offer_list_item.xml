@@ -19,8 +19,8 @@
         android:layout_height="wrap_content"
         android:clickable="@{offer.canRedeem}"
         android:onClick="@{(view) -> viewModel.onOfferClick(offer)}"
-        android:padding="@dimen/padding_default"
-        android:paddingBottom="@dimen/padding_big">
+        android:padding="8dp"
+        android:paddingBottom="16dp">
 
         <ImageView
             android:id="@+id/offer_image"
@@ -40,7 +40,7 @@
             android:id="@+id/offer_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_big"
+            android:layout_marginTop="16dp"
             android:gravity="center_horizontal"
             android:shadowColor="@color/text_shadow"
             android:shadowRadius="3"
@@ -75,8 +75,8 @@
             android:id="@+id/offer_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
-            android:drawablePadding="@dimen/padding_default"
+            android:layout_marginTop="4dp"
+            android:drawablePadding="8dp"
             android:text="@{offer.priceText}"
             android:textColor="@{context.getColor(offer.priceTextColor)}"
             android:textSize="@dimen/coins_text_size_small"
