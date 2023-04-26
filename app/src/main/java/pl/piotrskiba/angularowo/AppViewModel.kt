@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import pl.piotrskiba.angularowo.interfaces.NetworkErrorListener
 import pl.piotrskiba.angularowo.models.DetailedPlayer
 import pl.piotrskiba.angularowo.network.ServerAPIClient
 import pl.piotrskiba.angularowo.network.ServerAPIClient.retrofitInstance
@@ -18,8 +17,6 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
 
     private val preferenceUtils = PreferenceUtils(application)
     private var player: MutableLiveData<DetailedPlayer?>? = null
-
-    private var mNetworkErrorListener: NetworkErrorListener? = null
 
     fun getPlayer(): LiveData<DetailedPlayer?> {
         if (player == null) {
@@ -47,13 +44,11 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
                         player?.setValue(response.body())
                     } else {
                         player?.value = null
-                        mNetworkErrorListener?.onServerError()
                     }
                 }
 
                 override fun onFailure(call: Call<DetailedPlayer?>, t: Throwable) {
                     player?.value = null
-                    mNetworkErrorListener?.onNoInternet()
                     t.printStackTrace()
                 }
             })

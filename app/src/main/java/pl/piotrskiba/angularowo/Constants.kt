@@ -20,9 +20,6 @@ object Constants {
 
     const val USERNAME_QUALIFIER = "%player%"
 
-    const val CHAT_WEBSOCKET_URL = "ws://asmc-serwer.piotrskiba.pl:25772"
-    const val CHAT_WEBSOCKET_ACCESSTOKEN_HEADER = "access_token"
-
     const val REMOTE_CONFIG_RANKS_KEY = "ranks"
     const val REMOTE_CONFIG_APP_LOCK_TITLE_KEY = "app_lock_title"
     const val REMOTE_CONFIG_APP_LOCK_BODY_KEY = "app_lock_body"

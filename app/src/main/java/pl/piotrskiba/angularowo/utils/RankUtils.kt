@@ -1,6 +1,5 @@
 package pl.piotrskiba.angularowo.utils
 
-import android.content.Context
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
@@ -19,23 +18,6 @@ object RankUtils {
             val gson = GsonBuilder().create()
             return gson.fromJson(json, object : TypeToken<List<Rank?>?>() {}.type)
         }
-
-    /**
-     * A function for getting the rank of user from the preferences
-     *
-     * @param context
-     * @return the rank of user or null if not found
-     */
-    @JvmStatic
-    fun getRankFromPreferences(context: Context): Rank? {
-        val rankName = PreferenceUtils(context).rankName
-
-        rankName?.run {
-            return getRankFromName(rankName)
-        } ?: kotlin.run {
-            return null
-        }
-    }
 
     /**
      * Function for getting the rank corresponding to the specified rank name

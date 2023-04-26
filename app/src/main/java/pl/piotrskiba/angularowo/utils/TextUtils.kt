@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.core.content.ContextCompat
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
-import java.text.Normalizer
 import java.util.Date
 import java.util.concurrent.TimeUnit
 
@@ -108,11 +107,6 @@ object TextUtils {
         s = s.replace("§f", "</font><font color=#" + Integer.toHexString(ContextCompat.getColor(context, R.color.color_minecraft_f)).substring(2, 8) + ">")
 
         return s
-    }
-
-    @JvmStatic
-    fun normalize(s: String?): String {
-        return Normalizer.normalize(s, Normalizer.Form.NFD).replace("[^\\p{ASCII}]".toRegex(), "")
     }
 
     fun replaceQualifiers(context: Context, s: String): String {
