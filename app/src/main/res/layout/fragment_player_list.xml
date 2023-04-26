@@ -38,6 +38,7 @@
                         app:itemBinding="@{viewModel.playersBinding}"
                         app:items="@{viewModel.favoritePlayers}"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:spanCount="@integer/player_list_span_count"
                         app:visible="@{viewModel.favoritePlayerListNotEmpty}" />
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -46,7 +47,8 @@
                         android:layout_marginBottom="8dp"
                         app:itemBinding="@{viewModel.playersBinding}"
                         app:items="@{viewModel.players}"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:spanCount="@integer/player_list_span_count" />
 
                 </LinearLayout>
 

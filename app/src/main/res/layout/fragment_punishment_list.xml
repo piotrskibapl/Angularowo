@@ -27,7 +27,8 @@
                 android:layout_height="match_parent"
                 app:itemBinding="@{viewModel.punishmentsBinding}"
                 app:items="@{viewModel.punishmentBanners}"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:spanCount="@integer/ban_list_span_count" />
 
             <include
                 layout="@layout/loading_layout"
