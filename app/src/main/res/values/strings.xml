@@ -10,22 +10,9 @@
 
     <!-- preferences TODO: remove after migration -->
     <string name="pref_key_uuid" translatable="false">uuid</string>
-    <string name="pref_key_skin_uuid" translatable="false">skin_uuid</string>
     <string name="pref_key_nickname" translatable="false">nickname</string>
     <string name="pref_key_rank" translatable="false">rank</string>
-    <string name="pref_key_balance" translatable="false">balance</string>
-    <string name="pref_key_tokens" translatable="false">tokens</string>
-    <string name="pref_key_playtime" translatable="false">playtime</string>
     <string name="pref_key_access_token" translatable="false">access_token</string>
-    <string name="pref_key_subscribed_to_app_version_topic" translatable="false">app_version_%1$d_subscribed</string>
-    <string name="pref_key_subscribed_to_uuid_topic" translatable="false">uuid_topic_subscribed</string>
-    <string name="pref_key_subscribed_to_events" translatable="false">events_subscribed</string>
-    <string name="pref_key_subscribed_to_private_messages" translatable="false">private_messages_subscribed</string>
-    <string name="pref_key_subscribed_to_account_incidents" translatable="false">account_incidents_subscribed</string>
-    <string name="pref_key_subscribed_to_new_reports" translatable="false">new_reports_subscribed</string>
-    <string name="pref_key_logout" translatable="false">logout</string>
-    <string name="pref_key_showcase_favorite" translatable="false">showcase_favorite_shown</string>
-
     <string name="pref_category_notifications">Powiadomienia</string>
     <string name="pref_category_others">Inne</string>
     <string name="pref_title_subscribed_to_new_reports">Nowe zgłoszenia</string>
@@ -37,7 +24,6 @@
     <string name="pref_title_subscribed_to_account_incidents">Zdarzenia na koncie</string>
     <string name="pref_summary_subscribed_to_account_incidents">Otrzymuj powiadomienia o zdarzeniach takich jak nowe ostrzeżenie lub blokada konta</string>
     <string name="pref_title_logout">Wyloguj</string>
-    <string name="pref_summary_logout">Wyloguj się z aplikacji</string>
 
     <string name="logout_question">Wylogowywanie</string>
     <string name="logout_question_description">Czy na pewno chcesz się wylogować?</string>
@@ -45,9 +31,6 @@
     <!-- activity_login.xml -->
     <string name="login_header">Witaj!</string>
     <string name="login_description">Aby korzystać z aplikacji, musisz powiązać ją ze swoim kontem w grze.\nPoniżej wpisz swój kod dostępu.\nKod dostępu uzyskasz wpisując komendę /android w grze.</string>
-
-    <string name="login_api_response_code_not_found" translatable="false">code not found</string>
-    <string name="login_api_response_code_expired" translatable="false">code expired</string>
 
     <string name="login_error_code_not_found">Podany kod jest nieprawidłowy.</string>
     <string name="login_error_code_expired">Podany kod jest prawidłowy, jednak skończyła się jego ważność. Wpisz komendę /android ponownie.</string>
@@ -66,7 +49,6 @@
     <!-- fragment_main_screen.xml -->
     <string name="greeting">Witaj, %1$s!</string>
     <string name="balance_title">Stan konta:</string>
-    <string name="balance_format">$%1$d</string>
     <string name="tokens_title">Twoje tokeny:</string>
     <string name="playtime_title">Spędzony czas online:</string>
     <string name="last_player_bans">Twoje aktywne kary:</string>
@@ -152,11 +134,9 @@
 
     <!-- fragment_chat.xml -->
     <string name="actionbar_title_chat">Podgląd chatu</string>
-    <string name="chat_error">Nie można połączyć z czatem.</string>
     <string name="chat_user_message"><![CDATA[<font color=#555555>[</font><font color=%4$s>%1$s</font><font color=#555555>]</font> <font color=%4$s>%2$s</font><font color=#555555>:</font> <font color=%5$s>%3$s</font>]]></string>
 
     <!-- fragment_report_list_tab.xml -->
-    <string name="actionbar_title_report_list">Historia zgłoszeń</string>
     <string name="error_no_reports">Nie zgłosiłeś jeszcze żadnego gracza.</string>
     <string name="error_no_reports_admin">Aktualnie nie ma żadnych aktywnych zgłoszeń.</string>
     <string name="report_reason">Powód zgłoszenia: %1$s</string>
