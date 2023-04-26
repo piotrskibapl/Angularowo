@@ -24,8 +24,8 @@ class ObserveOnlinePlayerListWithFavoriteInformationUseCase @Inject constructor(
                             .observeOnlinePlayerList()
                             .map { playerList ->
                                 playerList.map { player ->
-                                    player.rank = rankList.firstOrNull { it.name == player.rank.name } ?: player.rank
-                                    player
+                                    val updatedRank = rankList.firstOrNull { it.name == player.rank.name } ?: player.rank
+                                    player.copy(rank = updatedRank)
                                 }
                             }
                             .map { playerList ->

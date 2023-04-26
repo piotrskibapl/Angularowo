@@ -7,6 +7,6 @@ data class PlayerModel(
     val skinUuid: String,
     val partnerUuid: String?,
     val username: String,
-    var rank: Rank,
+    val rank: Rank,
     val isVanished: Boolean
 )
