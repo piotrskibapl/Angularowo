@@ -3,6 +3,7 @@ package pl.piotrskiba.angularowo.base.ui.databinding
 import android.widget.ImageView
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import pl.piotrskiba.angularowo.IntegerVersionSignature
@@ -36,5 +37,6 @@ fun setTint(
     imageView: ImageView,
     @ColorRes tintColorRes: Int,
 ) {
-    imageView.setColorFilter(imageView.context.getColor(tintColorRes))
+    val color = ContextCompat.getColor(imageView.context, tintColorRes)
+    imageView.setColorFilter(color)
 }
