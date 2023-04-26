@@ -21,5 +21,13 @@
             app:items="@{viewModel.chatMessages}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/chat_message_list_item" />
+
+        <include
+            layout="@layout/loading_layout"
+            app:state="@{viewModel.state}" />
+
+        <include
+            layout="@layout/error_layout"
+            app:state="@{viewModel.state}" />
     </FrameLayout>
 </layout>
