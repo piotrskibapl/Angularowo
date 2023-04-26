@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="pl.piotrskiba.angularowo.R" />
+
+        <variable
+            name="navigator"
+            type="pl.piotrskiba.angularowo.main.chat.nav.ChatNavigator" />
+
+        <variable
+            name="chatMessage"
+            type="pl.piotrskiba.angularowo.main.chat.model.ChatMessage" />
+    </data>
+
+    <!-- TODO: display message in proper format -->
+    <TextView
+        android:id="@+id/tv_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_default"
+        android:layout_marginEnd="@dimen/margin_default"
+        android:layout_marginBottom="@dimen/margin_small"
+        android:onClick="@{() -> navigator.onChatMessageClick(chatMessage)}"
+        android:text="@{chatMessage.message}"
+        android:textSize="@dimen/chat_message_text_size"
+        tools:text="Sample message" />
+</layout>
