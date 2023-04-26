@@ -15,17 +15,17 @@ import java.io.IOException
 
 class LoginRepositoryImplTest {
 
-    val USER_CODE = "user_code"
+    val userCode = "user_code"
     val loginApi: LoginApiService = mockk()
     val tested = LoginRepositoryImpl(loginApi)
 
     @Test
     fun `SHOULD call registerDevice on loginApi WHEN registerDevice called`() {
-        every { loginApi.registerDevice(any(), USER_CODE) } returns Single.never()
+        every { loginApi.registerDevice(any(), userCode) } returns Single.never()
 
-        tested.registerDevice(USER_CODE)
+        tested.registerDevice(userCode)
 
-        verify { loginApi.registerDevice(any(), USER_CODE) }
+        verify { loginApi.registerDevice(any(), userCode) }
     }
 
     @Test
@@ -33,12 +33,12 @@ class LoginRepositoryImplTest {
         mockkStatic(AccessTokenRemote::toDomain) {
             val accessTokenRemote: AccessTokenRemote = mockk()
             val accessToken: AccessToken = mockk()
-            every { loginApi.registerDevice(any(), USER_CODE) } returns Single.just(
+            every { loginApi.registerDevice(any(), userCode) } returns Single.just(
                 accessTokenRemote
             )
             every { accessTokenRemote.toDomain() } returns accessToken
 
-            val result = tested.registerDevice(USER_CODE).test()
+            val result = tested.registerDevice(userCode).test()
 
             result.assertValue(accessToken)
         }
@@ -46,9 +46,9 @@ class LoginRepositoryImplTest {
 
     @Test
     fun `SHOULD throw error WHEN loginApi registerDevice failed`() {
-        every { loginApi.registerDevice(any(), USER_CODE) } returns Single.error(IOException())
+        every { loginApi.registerDevice(any(), userCode) } returns Single.error(IOException())
 
-        val result = tested.registerDevice(USER_CODE).test()
+        val result = tested.registerDevice(userCode).test()
 
         result.assertError(AccessTokenError::class.java)
     }
