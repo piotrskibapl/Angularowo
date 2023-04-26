@@ -15,7 +15,6 @@
             type="pl.piotrskiba.angularowo.main.chat.model.ChatMessage" />
     </data>
 
-    <!-- TODO: display message in proper format -->
     <TextView
         android:id="@+id/tv_message"
         android:layout_width="match_parent"
@@ -24,7 +23,7 @@
         android:layout_marginEnd="@dimen/margin_default"
         android:layout_marginBottom="@dimen/margin_small"
         android:onClick="@{() -> navigator.onChatMessageClick(chatMessage)}"
-        android:text="@{chatMessage.message}"
+        android:text="@{chatMessage.formattedMessage(context)}"
         android:textSize="@dimen/chat_message_text_size"
         tools:text="Sample message" />
 </layout>
