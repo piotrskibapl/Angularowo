@@ -12,7 +12,7 @@ import com.google.android.gms.ads.MobileAds
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
-import pl.piotrskiba.angularowo.applock.ui.ApplicationLockedActivity
+import pl.piotrskiba.angularowo.applock.ui.AppLockActivity
 import pl.piotrskiba.angularowo.base.di.obtainViewModel
 import pl.piotrskiba.angularowo.base.ui.BaseActivity
 import pl.piotrskiba.angularowo.databinding.ActivityMainBinding
@@ -121,7 +121,7 @@ class MainActivity : BaseActivity(), UnauthorizedResponseListener {
             val end = mFirebaseRemoteConfig.getLong(Constants.REMOTE_CONFIG_APP_LOCK_END_TIMESTAMP)
 
             if (end * 1000 > System.currentTimeMillis()) {
-                val intent = Intent(this, ApplicationLockedActivity::class.java)
+                val intent = Intent(this, AppLockActivity::class.java)
                 startActivity(intent)
             }
         }
