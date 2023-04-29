@@ -17,6 +17,7 @@ import pl.piotrskiba.angularowo.base.ui.BaseActivity
 import pl.piotrskiba.angularowo.databinding.ActivityMainBinding
 import pl.piotrskiba.angularowo.interfaces.UnauthorizedResponseListener
 import pl.piotrskiba.angularowo.login.ui.LoginActivity
+import pl.piotrskiba.angularowo.main.base.nav.MainNavigator
 import pl.piotrskiba.angularowo.main.base.viewmodel.MainViewModel
 import pl.piotrskiba.angularowo.main.chat.ui.ChatFragment
 import pl.piotrskiba.angularowo.main.mainscreen.ui.MainScreenFragment
@@ -29,10 +30,9 @@ import pl.piotrskiba.angularowo.settings.ui.SettingsActivity
 import pl.piotrskiba.angularowo.utils.NotificationUtils
 import pl.piotrskiba.angularowo.utils.PreferenceUtils
 
-class MainActivity : BaseActivity(), UnauthorizedResponseListener {
+class MainActivity : BaseActivity(), UnauthorizedResponseListener, MainNavigator {
 
     private lateinit var preferenceUtils: PreferenceUtils
-    private lateinit var mFirebaseRemoteConfig: FirebaseRemoteConfig
     private lateinit var viewModel: MainViewModel
     private var waitingForLogin = false
 
@@ -56,7 +56,7 @@ class MainActivity : BaseActivity(), UnauthorizedResponseListener {
         preferenceUtils = PreferenceUtils(this)
 
         NotificationUtils(this).createNotificationChannels()
-        setupRemoteConfig()
+        FirebaseRemoteConfig.getInstance().setDefaultsAsync(R.xml.remote_config_default_values)
         MobileAds.initialize(this)
 
         setUnauthorizedListener(this)
@@ -67,11 +67,11 @@ class MainActivity : BaseActivity(), UnauthorizedResponseListener {
 
             populateUi()
         }
+        viewModel.loadData() // TODO: onFirstCreate should be handled in viewmodel instead
     }
 
     override fun onPause() {
         super.onPause()
-
         binding.navView.setNavigationItemSelectedListener(null)
     }
 
@@ -98,28 +98,14 @@ class MainActivity : BaseActivity(), UnauthorizedResponseListener {
 
     private fun setupBinding() {
         viewModel = viewModelFactory.obtainViewModel(this)
+        viewModel.navigator = this
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
 
-    private fun setupRemoteConfig() {
-        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
-        mFirebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_default_values)
-        mFirebaseRemoteConfig.fetchAndActivate()
-            .addOnCompleteListener(this) { onRemoteConfigLoaded() }
-    }
-
-    private fun onRemoteConfigLoaded() {
-        val start = mFirebaseRemoteConfig.getLong(Constants.REMOTE_CONFIG_APP_LOCK_START_TIMESTAMP)
-
-        if (start * 1000 <= System.currentTimeMillis()) {
-            val end = mFirebaseRemoteConfig.getLong(Constants.REMOTE_CONFIG_APP_LOCK_END_TIMESTAMP)
-
-            if (end * 1000 > System.currentTimeMillis()) {
-                val intent = Intent(this, AppLockActivity::class.java)
-                startActivity(intent)
-            }
-        }
+    override fun displayAppLock() {
+        val intent = Intent(this, AppLockActivity::class.java)
+        startActivity(intent)
     }
 
     private fun setupMainFragment() {

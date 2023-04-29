@@ -15,12 +15,21 @@ class AppLockRepositoryImpl(
 ) : AppLockRepository {
 
     override fun getAppLockConfig() =
-        Single.just(
-            AppLockConfigModel(
-                title = firebaseRemoteConfig.getString(TITLE_KEY),
-                body = firebaseRemoteConfig.getString(BODY_KEY),
-                startTimestamp = firebaseRemoteConfig.getLong(START_KEY),
-                endTimestamp = firebaseRemoteConfig.getLong(END_KEY),
-            )
-        )
+        Single.create { emitter ->
+            firebaseRemoteConfig.fetchAndActivate()
+                .addOnCompleteListener { result ->
+                    if (result.isSuccessful) {
+                        emitter.onSuccess(
+                            AppLockConfigModel(
+                                title = firebaseRemoteConfig.getString(TITLE_KEY),
+                                body = firebaseRemoteConfig.getString(BODY_KEY),
+                                startTimestamp = firebaseRemoteConfig.getLong(START_KEY),
+                                endTimestamp = firebaseRemoteConfig.getLong(END_KEY),
+                            )
+                        )
+                    } else {
+                        emitter.onError(result.exception!!)
+                    }
+                }
+        }
 }
