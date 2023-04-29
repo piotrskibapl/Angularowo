@@ -7,6 +7,7 @@ import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import pl.piotrskiba.angularowo.base.AngularowoApplication
+import pl.piotrskiba.angularowo.data.applock.di.AppLockModule
 import pl.piotrskiba.angularowo.data.chat.di.ChatModule
 import pl.piotrskiba.angularowo.data.cloudmessaging.di.CloudMessagingModule
 import pl.piotrskiba.angularowo.data.firebase.di.FirebaseModule
@@ -40,7 +41,8 @@ import javax.inject.Singleton
         AndroidSupportInjectionModule::class,
         AndroidInjectionModule::class,
         ActivityBindingModule::class,
-        FragmentBindingModule::class
+        FragmentBindingModule::class,
+        AppLockModule::class,
     ]
 )
 interface AppComponent : AndroidInjector<AngularowoApplication> {
