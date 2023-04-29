@@ -17,6 +17,7 @@ import pl.piotrskiba.angularowo.domain.mainscreen.usecase.GetMainScreenDataAndSa
 import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
 import pl.piotrskiba.angularowo.main.mainscreen.model.MainScreenData
 import pl.piotrskiba.angularowo.main.mainscreen.model.toUi
+import pl.piotrskiba.angularowo.main.mainscreen.nav.MainScreenNavigator
 import pl.piotrskiba.angularowo.main.punishment.details.DetailedPunishmentData
 import pl.piotrskiba.angularowo.main.punishment.details.toUi
 import pl.piotrskiba.angularowo.main.punishment.list.nav.PunishmentListNavigator
@@ -36,16 +37,21 @@ class MainScreenViewModel @Inject constructor(
     val punishments: MutableList<DetailedPunishmentData> = mutableListOf()
     val punishmentsBinding = ItemBinding.of<PunishmentBannerData>(BR.punishment, R.layout.punishment_list_item)
     val isPunishmentListNotEmpty = uiData.map { it.punishmentBanners.isNotEmpty() }
-    lateinit var navigator: PunishmentListNavigator
+    lateinit var navigator: MainScreenNavigator
+    lateinit var punishmentNavigator: PunishmentListNavigator
 
     override fun onFirstCreate() {
-        punishmentsBinding.bindExtra(BR.navigator, navigator)
+        punishmentsBinding.bindExtra(BR.navigator, punishmentNavigator)
         loadData()
     }
 
     fun onRefresh() {
         state.value = Loading.Refresh
         loadData()
+    }
+
+    fun onMotdClick() {
+        // TODO: add logic
     }
 
     private fun loadData() {

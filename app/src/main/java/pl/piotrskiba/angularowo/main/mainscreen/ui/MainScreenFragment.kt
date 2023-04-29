@@ -17,6 +17,7 @@ import pl.piotrskiba.angularowo.base.di.obtainViewModel
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.databinding.FragmentMainScreenBinding
 import pl.piotrskiba.angularowo.main.base.viewmodel.MainViewModel
+import pl.piotrskiba.angularowo.main.mainscreen.nav.MainScreenNavigator
 import pl.piotrskiba.angularowo.main.mainscreen.viewmodel.MainScreenViewModel
 import pl.piotrskiba.angularowo.main.punishment.details.ui.PunishmentDetailsActivity
 import pl.piotrskiba.angularowo.main.punishment.list.nav.PunishmentListNavigator
@@ -24,8 +25,7 @@ import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBannerData
 import pl.piotrskiba.angularowo.models.Motd
 import pl.piotrskiba.angularowo.utils.PreferenceUtils
 
-class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel::class),
-    PunishmentListNavigator {
+class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel::class), MainScreenNavigator, PunishmentListNavigator {
 
     private lateinit var mViewModel: AppViewModel
     private lateinit var mainViewModel: MainViewModel
@@ -34,7 +34,7 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel
     private var motd: Motd? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        viewModel.navigator = this
+        viewModel.punishmentNavigator = this
         super.onCreate(savedInstanceState)
 
         mViewModel = ViewModelProvider(requireActivity())[AppViewModel::class.java]
@@ -49,9 +49,7 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = setupBinding(layoutInflater, container)
-        binding.tvMotd.setOnClickListener { onMotdClick() }
-        return binding.root
+        return setupBinding(layoutInflater, container).root
     }
 
     override fun onAttach(context: Context) {
@@ -67,10 +65,11 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel
         val binding = FragmentMainScreenBinding.inflate(layoutInflater, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+        viewModel.navigator = this
         return binding
     }
 
-    private fun onMotdClick() {
+    override fun onMotdClick() {
         if (motd?.url != null) {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(motd!!.url))
             if (context != null && intent.resolveActivity(requireContext().packageManager) != null) {
