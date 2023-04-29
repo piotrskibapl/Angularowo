@@ -4,19 +4,14 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.ViewModelProvider
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.di.obtainViewModel
 import pl.piotrskiba.angularowo.base.ui.BaseActivity
 import pl.piotrskiba.angularowo.databinding.ActivitySettingsBinding
 import pl.piotrskiba.angularowo.settings.nav.SettingsNavigator
 import pl.piotrskiba.angularowo.settings.viewmodel.SettingsViewModel
-import javax.inject.Inject
 
 class SettingsActivity : BaseActivity(), SettingsNavigator {
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var viewModel: SettingsViewModel
     private lateinit var binding: ActivitySettingsBinding

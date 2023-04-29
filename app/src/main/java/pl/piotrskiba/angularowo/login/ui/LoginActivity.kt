@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
@@ -16,12 +15,8 @@ import pl.piotrskiba.angularowo.databinding.ActivityLoginBinding
 import pl.piotrskiba.angularowo.domain.login.model.AccessTokenError
 import pl.piotrskiba.angularowo.login.model.LoginState
 import pl.piotrskiba.angularowo.login.viewmodel.LoginViewModel
-import javax.inject.Inject
 
 class LoginActivity : BaseActivity() {
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var viewModel: LoginViewModel
 

@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.TextView
 import androidx.core.view.GravityCompat
-import androidx.lifecycle.ViewModelProvider
 import androidx.multidex.MultiDex
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
@@ -29,12 +28,8 @@ import pl.piotrskiba.angularowo.network.UnauthorizedInterceptor.Companion.setUna
 import pl.piotrskiba.angularowo.settings.ui.SettingsActivity
 import pl.piotrskiba.angularowo.utils.NotificationUtils
 import pl.piotrskiba.angularowo.utils.PreferenceUtils
-import javax.inject.Inject
 
 class MainActivity : BaseActivity(), UnauthorizedResponseListener {
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var preferenceUtils: PreferenceUtils
     private lateinit var mFirebaseRemoteConfig: FirebaseRemoteConfig
