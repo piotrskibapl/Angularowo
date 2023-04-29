@@ -5,14 +5,14 @@ import android.text.Spanned
 import androidx.core.text.HtmlCompat
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.domain.chat.model.ChatMessageModel
-import pl.piotrskiba.angularowo.domain.rank.model.Rank
+import pl.piotrskiba.angularowo.domain.rank.model.RankModel
 import pl.piotrskiba.angularowo.utils.ColorUtils
 import pl.piotrskiba.angularowo.utils.TextUtils
 
 data class ChatMessage(
     val uuid: String,
     val username: String,
-    val rank: Rank,
+    val rank: RankModel,
     val message: String,
 ) {
 

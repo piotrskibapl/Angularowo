@@ -2,7 +2,7 @@ package pl.piotrskiba.angularowo.data.player.model
 
 import com.google.gson.annotations.SerializedName
 import pl.piotrskiba.angularowo.domain.player.model.PlayerModel
-import pl.piotrskiba.angularowo.domain.rank.model.Rank.UnknownRank
+import pl.piotrskiba.angularowo.domain.rank.model.RankModel.UnknownRank
 
 data class PlayerRemote(
     val uuid: String,

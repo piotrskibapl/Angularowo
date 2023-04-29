@@ -1,6 +1,6 @@
 package pl.piotrskiba.angularowo.domain.player.model
 
-import pl.piotrskiba.angularowo.domain.rank.model.Rank
+import pl.piotrskiba.angularowo.domain.rank.model.RankModel
 import java.io.Serializable
 
 data class DetailedPlayerModel(
@@ -9,7 +9,7 @@ data class DetailedPlayerModel(
     val partnerUuid: String?,
     val username: String,
     val status: String,
-    var rank: Rank,
+    var rank: RankModel,
     val isVanished: Boolean,
     val balance: Float,
     val playtime: Long,

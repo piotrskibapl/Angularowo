@@ -1,7 +1,7 @@
 package pl.piotrskiba.angularowo.domain.rank.repository
 
 import io.reactivex.rxjava3.core.Single
-import pl.piotrskiba.angularowo.domain.rank.model.Rank.CustomRank
+import pl.piotrskiba.angularowo.domain.rank.model.RankModel.CustomRank
 
 interface RankRepository {
 

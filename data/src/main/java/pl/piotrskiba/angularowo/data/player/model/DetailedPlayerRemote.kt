@@ -2,7 +2,7 @@ package pl.piotrskiba.angularowo.data.player.model
 
 import com.google.gson.annotations.SerializedName
 import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
-import pl.piotrskiba.angularowo.domain.rank.model.Rank
+import pl.piotrskiba.angularowo.domain.rank.model.RankModel
 
 data class DetailedPlayerRemote(
     val uuid: String,
@@ -24,7 +24,7 @@ fun DetailedPlayerRemote.toDomain() = DetailedPlayerModel(
     partnerUuid,
     username,
     status,
-    Rank.UnknownRank(rankName),
+    RankModel.UnknownRank(rankName),
     isVanished,
     balance,
     playtime,

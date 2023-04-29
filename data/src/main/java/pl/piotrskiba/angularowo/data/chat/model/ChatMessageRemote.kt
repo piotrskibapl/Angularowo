@@ -1,7 +1,7 @@
 package pl.piotrskiba.angularowo.data.chat.model
 
 import pl.piotrskiba.angularowo.domain.chat.model.ChatMessageModel
-import pl.piotrskiba.angularowo.domain.rank.model.Rank.UnknownRank
+import pl.piotrskiba.angularowo.domain.rank.model.RankModel.UnknownRank
 
 data class ChatMessageRemote(
     val uuid: String,
