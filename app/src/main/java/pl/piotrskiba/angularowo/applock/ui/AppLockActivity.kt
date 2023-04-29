@@ -2,53 +2,37 @@ package pl.piotrskiba.angularowo.applock.ui
 
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import pl.piotrskiba.angularowo.AppViewModel
-import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.Permissions
-import pl.piotrskiba.angularowo.R
+import pl.piotrskiba.angularowo.applock.viewmodel.AppLockViewModel
+import pl.piotrskiba.angularowo.base.di.obtainViewModel
 import pl.piotrskiba.angularowo.base.ui.BaseActivity
 import pl.piotrskiba.angularowo.databinding.ActivityAppLockBinding
-import pl.piotrskiba.angularowo.models.DetailedPlayer
 
 class AppLockActivity : BaseActivity() {
 
-    private lateinit var mFirebaseRemoteConfig: FirebaseRemoteConfig
-    private lateinit var mViewModel: AppViewModel
+    private lateinit var viewModel: AppLockViewModel
+    private lateinit var mainViewModel: AppViewModel
     private lateinit var binding: ActivityAppLockBinding
-    private var mPlayer: DetailedPlayer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupBinding()
         setSupportActionBar(binding.toolbar)
-
-        mViewModel = ViewModelProvider(this)[AppViewModel::class.java]
-        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
-        mFirebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_default_values)
-
-        seekForPlayerUpdates()
-
-        var title = mFirebaseRemoteConfig.getString(Constants.REMOTE_CONFIG_APP_LOCK_TITLE_KEY)
-        var body = mFirebaseRemoteConfig.getString(Constants.REMOTE_CONFIG_APP_LOCK_BODY_KEY)
-        title = title.replace("\\n", "\n")
-        body = body.replace("\\n", "\n")
-
-        binding.tvTitle.text = title
-        binding.tvBody.text = body
+        viewModel.loadData() // TODO: onFirstCreate should be handled in viewmodel instead
+        mainViewModel = ViewModelProvider(this)[AppViewModel::class.java]
     }
 
     private fun setupBinding() {
+        viewModel = viewModelFactory.obtainViewModel(this)
         binding = ActivityAppLockBinding.inflate(layoutInflater)
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
         setContentView(binding.root)
     }
 
-    private fun seekForPlayerUpdates() {
-        mViewModel.getPlayer().observe(this) { mPlayer = it }
-    }
-
     override fun onBackPressed() {
-        if (mPlayer != null && mPlayer!!.hasPermission(Permissions.IGNORE_APP_LOCK)) {
+        if (mainViewModel.getPlayer().value != null && mainViewModel.getPlayer().value!!.hasPermission(Permissions.IGNORE_APP_LOCK)) {
             super.onBackPressed()
         } else {
             finishAffinity()

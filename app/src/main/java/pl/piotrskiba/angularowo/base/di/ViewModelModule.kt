@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
+import pl.piotrskiba.angularowo.applock.viewmodel.AppLockViewModel
 import pl.piotrskiba.angularowo.login.viewmodel.LoginViewModel
 import pl.piotrskiba.angularowo.main.base.viewmodel.MainViewModel
 import pl.piotrskiba.angularowo.main.chat.viewmodel.ChatViewModel
@@ -89,4 +90,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(ChatViewModel::class)
     abstract fun bindChatViewModel(viewModel: ChatViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AppLockViewModel::class)
+    abstract fun bindAppLockViewModel(viewModel: AppLockViewModel): ViewModel
 }

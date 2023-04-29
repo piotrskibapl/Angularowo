@@ -21,8 +21,6 @@ object Constants {
     const val USERNAME_QUALIFIER = "%player%"
 
     const val REMOTE_CONFIG_RANKS_KEY = "ranks"
-    const val REMOTE_CONFIG_APP_LOCK_TITLE_KEY = "app_lock_title"
-    const val REMOTE_CONFIG_APP_LOCK_BODY_KEY = "app_lock_body"
     const val REMOTE_CONFIG_APP_LOCK_START_TIMESTAMP = "app_lock_start_timestamp"
     const val REMOTE_CONFIG_APP_LOCK_END_TIMESTAMP = "app_lock_end_timestamp"
 }
