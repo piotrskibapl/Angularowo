@@ -14,6 +14,8 @@ import pl.piotrskiba.angularowo.utils.AnalyticsUtils
 import javax.inject.Inject
 import kotlin.reflect.KClass
 
+private const val FIRST_CREATED_KEY = "firstCreated"
+
 open class BaseActivity<out VM : LifecycleViewModel>(viewModelClass: KClass<VM>) : AppCompatActivity(), HasAndroidInjector {
 
     @Inject
@@ -28,6 +30,7 @@ open class BaseActivity<out VM : LifecycleViewModel>(viewModelClass: KClass<VM>)
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
+        firstCreated = savedInstanceState?.getBoolean(FIRST_CREATED_KEY) ?: false
         if (!firstCreated) {
             viewModel.onFirstCreate()
             firstCreated = true
@@ -42,6 +45,11 @@ open class BaseActivity<out VM : LifecycleViewModel>(viewModelClass: KClass<VM>)
                 this::class.simpleName!!
             )
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean(FIRST_CREATED_KEY, firstCreated)
     }
 
     override fun androidInjector() = dispatchingAndroidInjector

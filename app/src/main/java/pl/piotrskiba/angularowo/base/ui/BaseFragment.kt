@@ -12,6 +12,8 @@ import pl.piotrskiba.angularowo.utils.AnalyticsUtils
 import javax.inject.Inject
 import kotlin.reflect.KClass
 
+private const val FIRST_CREATED_KEY = "firstCreated"
+
 open class BaseFragment<out VM : LifecycleViewModel>(viewModelClass: KClass<VM>) : Fragment() {
 
     @Inject
@@ -22,6 +24,7 @@ open class BaseFragment<out VM : LifecycleViewModel>(viewModelClass: KClass<VM>)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        firstCreated = savedInstanceState?.getBoolean(FIRST_CREATED_KEY) ?: false
         if (!firstCreated) {
             viewModel.onFirstCreate()
             firstCreated = true
@@ -42,6 +45,11 @@ open class BaseFragment<out VM : LifecycleViewModel>(viewModelClass: KClass<VM>)
                 this::class.simpleName!!
             )
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean(FIRST_CREATED_KEY, firstCreated)
     }
 
     private fun Fragment.viewModel(
