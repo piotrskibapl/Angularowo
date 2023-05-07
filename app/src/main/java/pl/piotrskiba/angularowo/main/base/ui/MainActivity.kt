@@ -65,7 +65,6 @@ class MainActivity : BaseActivity<MainViewModel>(MainViewModel::class), Unauthor
 
             populateUi()
         }
-        viewModel.loadData() // TODO: onFirstCreate should be handled in viewmodel instead
     }
 
     override fun onPause() {

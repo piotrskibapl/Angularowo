@@ -18,7 +18,6 @@ class SettingsActivity : BaseActivity<SettingsViewModel>(SettingsViewModel::clas
         super.onCreate(savedInstanceState)
         setupBinding()
         viewModel.navigator = this
-        viewModel.onCreate() // TODO: handle onFirstCreate for Activity viewmodels
         setSupportActionBar(binding.toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

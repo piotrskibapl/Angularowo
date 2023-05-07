@@ -31,7 +31,7 @@ class SettingsViewModel @Inject constructor(
     val newReportsChecked = MutableLiveData(false)
     val isStaffMember = MutableLiveData(false)
 
-    fun onCreate() {
+    override fun onFirstCreate() {
         eventsChecked.value = preferencesRepository.subscribedToFirebaseEventsTopic ?: false
         privateMessagesChecked.value = preferencesRepository.subscribedToFirebasePrivateMessagesTopic ?: false
         accountIncidentsChecked.value = preferencesRepository.subscribedToFirebaseAccountIncidentsTopic ?: false

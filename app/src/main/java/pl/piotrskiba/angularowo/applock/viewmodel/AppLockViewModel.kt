@@ -15,16 +15,14 @@ class AppLockViewModel @Inject constructor(
 
     val appLockData = MutableLiveData<AppLockData>()
 
-    fun loadData() {
-        if (appLockData.value == null) {
-            disposables.add(
-                getAppLockConfigUseCase.execute()
-                    .subscribeOn(facade.io())
-                    .observeOn(facade.ui())
-                    .subscribe { config ->
-                        appLockData.value = config.toUi()
-                    }
-            )
-        }
+    override fun onFirstCreate() {
+        disposables.add(
+            getAppLockConfigUseCase.execute()
+                .subscribeOn(facade.io())
+                .observeOn(facade.ui())
+                .subscribe { config ->
+                    appLockData.value = config.toUi()
+                }
+        )
     }
 }

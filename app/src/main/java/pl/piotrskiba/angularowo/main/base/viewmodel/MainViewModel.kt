@@ -16,22 +16,19 @@ class MainViewModel @Inject constructor(
     // TODO: player should be dropped from main view model
     val player = MutableLiveData<DetailedPlayerModel>()
     lateinit var navigator: MainNavigator
-    private var appLockLoaded = false
 
     // TODO: display loading state
-    fun loadData() {
-        if (!appLockLoaded) {
-            disposables.add(
-                checkIfAppLockIsEnabledUseCase.execute()
-                    .subscribeOn(facade.io())
-                    .observeOn(facade.ui())
-                    .subscribe { enabled ->
-                        appLockLoaded = true
-                        if (enabled) {
-                            navigator.displayAppLock()
-                        }
+
+    override fun onFirstCreate() {
+        disposables.add(
+            checkIfAppLockIsEnabledUseCase.execute()
+                .subscribeOn(facade.io())
+                .observeOn(facade.ui())
+                .subscribe { enabled ->
+                    if (enabled) {
+                        navigator.displayAppLock()
                     }
-            )
-        }
+                }
+        )
     }
 }

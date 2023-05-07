@@ -17,7 +17,6 @@ class AppLockActivity : BaseActivity<AppLockViewModel>(AppLockViewModel::class) 
         super.onCreate(savedInstanceState)
         setupBinding()
         setSupportActionBar(binding.toolbar)
-        viewModel.loadData() // TODO: onFirstCreate should be handled in viewmodel instead
         mainViewModel = ViewModelProvider(this)[AppViewModel::class.java]
     }
 
