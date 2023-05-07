@@ -14,7 +14,6 @@ import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.applock.ui.AppLockActivity
 import pl.piotrskiba.angularowo.base.ui.BaseActivity
 import pl.piotrskiba.angularowo.databinding.ActivityMainBinding
-import pl.piotrskiba.angularowo.interfaces.UnauthorizedResponseListener
 import pl.piotrskiba.angularowo.login.ui.LoginActivity
 import pl.piotrskiba.angularowo.main.base.nav.MainNavigator
 import pl.piotrskiba.angularowo.main.base.viewmodel.MainViewModel
@@ -24,12 +23,11 @@ import pl.piotrskiba.angularowo.main.offers.ui.OffersFragment
 import pl.piotrskiba.angularowo.main.player.list.ui.PlayerListFragment
 import pl.piotrskiba.angularowo.main.punishment.list.ui.PunishmentListFragment
 import pl.piotrskiba.angularowo.main.report.list.ui.ReportListContainerFragment
-import pl.piotrskiba.angularowo.network.UnauthorizedInterceptor.Companion.setUnauthorizedListener
 import pl.piotrskiba.angularowo.settings.ui.SettingsActivity
 import pl.piotrskiba.angularowo.utils.NotificationUtils
 import pl.piotrskiba.angularowo.utils.PreferenceUtils
 
-class MainActivity : BaseActivity<MainViewModel>(MainViewModel::class), UnauthorizedResponseListener, MainNavigator {
+class MainActivity : BaseActivity<MainViewModel>(MainViewModel::class), MainNavigator {
 
     private lateinit var preferenceUtils: PreferenceUtils
     private var waitingForLogin = false
@@ -56,8 +54,6 @@ class MainActivity : BaseActivity<MainViewModel>(MainViewModel::class), Unauthor
         NotificationUtils(this).createNotificationChannels()
         FirebaseRemoteConfig.getInstance().setDefaultsAsync(R.xml.remote_config_default_values)
         MobileAds.initialize(this)
-
-        setUnauthorizedListener(this)
 
         if (preferenceUtils.accessToken != null) {
             if (savedInstanceState == null)
@@ -228,15 +224,6 @@ class MainActivity : BaseActivity<MainViewModel>(MainViewModel::class), Unauthor
             return true
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun onUnauthorizedResponse() {
-        if (!waitingForLogin) {
-            waitingForLogin = true
-
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivityForResult(intent, Constants.REQUEST_CODE_REGISTER)
-        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

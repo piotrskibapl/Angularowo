@@ -9,8 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
-import androidx.lifecycle.ViewModelProvider
-import pl.piotrskiba.angularowo.AppViewModel
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.di.obtainViewModel
@@ -26,18 +24,13 @@ import pl.piotrskiba.angularowo.models.Motd
 
 class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel::class), MainScreenNavigator, PunishmentListNavigator {
 
-    private lateinit var mViewModel: AppViewModel
     private lateinit var mainViewModel: MainViewModel
-
     private var motd: Motd? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         viewModel.punishmentNavigator = this
         super.onCreate(savedInstanceState)
-
-        mViewModel = ViewModelProvider(requireActivity())[AppViewModel::class.java]
         mainViewModel = viewModelFactory.obtainViewModel(requireActivity())
-
         viewModel.player.observe(this) { mainViewModel.player.value = it }
     }
 

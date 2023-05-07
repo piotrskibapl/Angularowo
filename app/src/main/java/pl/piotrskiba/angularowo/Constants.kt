@@ -21,14 +21,4 @@ object Constants {
     const val USERNAME_QUALIFIER = "%player%"
 
     const val REMOTE_CONFIG_RANKS_KEY = "ranks"
-    const val REMOTE_CONFIG_APP_LOCK_START_TIMESTAMP = "app_lock_start_timestamp"
-    const val REMOTE_CONFIG_APP_LOCK_END_TIMESTAMP = "app_lock_end_timestamp"
-}
-
-object Permissions {
-    const val IGNORE_APP_LOCK = "ignore_app_lock"
-    const val MUTE_PLAYERS = "mute_players"
-    const val KICK_PLAYERS = "kick_players"
-    const val WARN_PLAYERS = "warn_players"
-    const val BAN_PLAYERS = "ban_players"
 }
