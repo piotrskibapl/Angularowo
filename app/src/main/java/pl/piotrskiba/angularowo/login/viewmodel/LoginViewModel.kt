@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
-import pl.piotrskiba.angularowo.domain.login.model.AccessToken
+import pl.piotrskiba.angularowo.domain.login.model.AccessTokenModel
 import pl.piotrskiba.angularowo.domain.login.model.AccessTokenError
 import pl.piotrskiba.angularowo.domain.login.usecase.RegisterDeviceUseCase
 import pl.piotrskiba.angularowo.login.model.LoginState
@@ -41,9 +41,9 @@ class LoginViewModel @Inject constructor(
     }
 
     // TODO: saving user data should be moved to usecase
-    private fun saveUserData(accessToken: AccessToken) {
-        preferencesRepository.uuid = accessToken.uuid
-        preferencesRepository.username = accessToken.username
-        preferencesRepository.accessToken = accessToken.accessToken
+    private fun saveUserData(accessTokenModel: AccessTokenModel) {
+        preferencesRepository.uuid = accessTokenModel.uuid
+        preferencesRepository.username = accessTokenModel.username
+        preferencesRepository.accessToken = accessTokenModel.accessToken
     }
 }

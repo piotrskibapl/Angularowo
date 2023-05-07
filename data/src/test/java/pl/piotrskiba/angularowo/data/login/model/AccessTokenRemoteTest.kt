@@ -1,7 +1,7 @@
 package pl.piotrskiba.angularowo.data.login.model
 
 import org.junit.Test
-import pl.piotrskiba.angularowo.domain.login.model.AccessToken
+import pl.piotrskiba.angularowo.domain.login.model.AccessTokenModel
 
 class AccessTokenRemoteTest {
 
@@ -16,7 +16,7 @@ class AccessTokenRemoteTest {
 
         val result = tested.toDomain()
 
-        assert(result == AccessToken(
+        assert(result == AccessTokenModel(
             "uuid",
             "username",
             "accessToken",

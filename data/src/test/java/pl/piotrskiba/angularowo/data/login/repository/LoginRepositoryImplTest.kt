@@ -9,7 +9,7 @@ import org.junit.Test
 import pl.piotrskiba.angularowo.data.login.LoginApiService
 import pl.piotrskiba.angularowo.data.login.model.AccessTokenRemote
 import pl.piotrskiba.angularowo.data.login.model.toDomain
-import pl.piotrskiba.angularowo.domain.login.model.AccessToken
+import pl.piotrskiba.angularowo.domain.login.model.AccessTokenModel
 import pl.piotrskiba.angularowo.domain.login.model.AccessTokenError
 import java.io.IOException
 
@@ -32,15 +32,15 @@ class LoginRepositoryImplTest {
     fun `SHOULD return value WHEN loginApi registerDevice succeeded`() {
         mockkStatic(AccessTokenRemote::toDomain) {
             val accessTokenRemote: AccessTokenRemote = mockk()
-            val accessToken: AccessToken = mockk()
+            val accessTokenModel: AccessTokenModel = mockk()
             every { loginApi.registerDevice(any(), userCode) } returns Single.just(
                 accessTokenRemote
             )
-            every { accessTokenRemote.toDomain() } returns accessToken
+            every { accessTokenRemote.toDomain() } returns accessTokenModel
 
             val result = tested.registerDevice(userCode).test()
 
-            result.assertValue(accessToken)
+            result.assertValue(accessTokenModel)
         }
     }
 
