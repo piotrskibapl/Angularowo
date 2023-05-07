@@ -3,7 +3,6 @@ package pl.piotrskiba.angularowo.applock.ui
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import pl.piotrskiba.angularowo.AppViewModel
-import pl.piotrskiba.angularowo.Permissions
 import pl.piotrskiba.angularowo.applock.viewmodel.AppLockViewModel
 import pl.piotrskiba.angularowo.base.ui.BaseActivity
 import pl.piotrskiba.angularowo.databinding.ActivityAppLockBinding
@@ -28,7 +27,7 @@ class AppLockActivity : BaseActivity<AppLockViewModel>(AppLockViewModel::class) 
     }
 
     override fun onBackPressed() {
-        if (mainViewModel.getPlayer().value != null && mainViewModel.getPlayer().value!!.hasPermission(Permissions.IGNORE_APP_LOCK)) {
+        if (viewModel.canSkip) {
             super.onBackPressed()
         } else {
             finishAffinity()

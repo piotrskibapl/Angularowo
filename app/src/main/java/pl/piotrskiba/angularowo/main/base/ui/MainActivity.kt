@@ -100,6 +100,7 @@ class MainActivity : BaseActivity<MainViewModel>(MainViewModel::class), Unauthor
     }
 
     override fun displayAppLock() {
+        // TODO: don't instantiate main screen fragment nor login activity
         val intent = Intent(this, AppLockActivity::class.java)
         startActivity(intent)
     }
