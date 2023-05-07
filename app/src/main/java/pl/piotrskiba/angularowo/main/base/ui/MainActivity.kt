@@ -12,7 +12,6 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.applock.ui.AppLockActivity
-import pl.piotrskiba.angularowo.base.di.obtainViewModel
 import pl.piotrskiba.angularowo.base.ui.BaseActivity
 import pl.piotrskiba.angularowo.databinding.ActivityMainBinding
 import pl.piotrskiba.angularowo.interfaces.UnauthorizedResponseListener
@@ -30,10 +29,9 @@ import pl.piotrskiba.angularowo.settings.ui.SettingsActivity
 import pl.piotrskiba.angularowo.utils.NotificationUtils
 import pl.piotrskiba.angularowo.utils.PreferenceUtils
 
-class MainActivity : BaseActivity(), UnauthorizedResponseListener, MainNavigator {
+class MainActivity : BaseActivity<MainViewModel>(MainViewModel::class), UnauthorizedResponseListener, MainNavigator {
 
     private lateinit var preferenceUtils: PreferenceUtils
-    private lateinit var viewModel: MainViewModel
     private var waitingForLogin = false
 
     private var mainScreenFragment = MainScreenFragment()
@@ -97,7 +95,6 @@ class MainActivity : BaseActivity(), UnauthorizedResponseListener, MainNavigator
     }
 
     private fun setupBinding() {
-        viewModel = viewModelFactory.obtainViewModel(this)
         viewModel.navigator = this
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

@@ -8,8 +8,9 @@ import pl.piotrskiba.angularowo.base.extensions.serializable
 import pl.piotrskiba.angularowo.base.ui.BaseActivity
 import pl.piotrskiba.angularowo.databinding.ActivityReportDetailsBinding
 import pl.piotrskiba.angularowo.domain.report.model.ReportModel
+import pl.piotrskiba.angularowo.main.report.details.viewmodel.ReportDetailsViewModel
 
-class ReportDetailsActivity : BaseActivity() {
+class ReportDetailsActivity : BaseActivity<ReportDetailsViewModel>(ReportDetailsViewModel::class) {
 
     private lateinit var report: ReportModel
     private lateinit var binding: ActivityReportDetailsBinding

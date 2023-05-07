@@ -2,14 +2,19 @@ package pl.piotrskiba.angularowo.base.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelLazy
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import dagger.android.AndroidInjection
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
+import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.utils.AnalyticsUtils
 import javax.inject.Inject
+import kotlin.reflect.KClass
 
-open class BaseActivity : AppCompatActivity(), HasAndroidInjector {
+open class BaseActivity<out VM : LifecycleViewModel>(viewModelClass: KClass<VM>) : AppCompatActivity(), HasAndroidInjector {
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
@@ -17,14 +22,20 @@ open class BaseActivity : AppCompatActivity(), HasAndroidInjector {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
+    val viewModel by viewModel(viewModelClass) { viewModelFactory }
+    private var firstCreated = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
+        if (!firstCreated) {
+            viewModel.onFirstCreate()
+            firstCreated = true
+        }
     }
 
     override fun onResume() {
         super.onResume()
-
         if (this::class.qualifiedName != null && this::class.simpleName != null) {
             AnalyticsUtils().logScreenView(
                 this::class.qualifiedName!!,
@@ -34,4 +45,15 @@ open class BaseActivity : AppCompatActivity(), HasAndroidInjector {
     }
 
     override fun androidInjector() = dispatchingAndroidInjector
+
+    private fun <VM : ViewModel> AppCompatActivity.viewModel(
+        clazz: KClass<VM>,
+        ownerProducer: () -> ViewModelStoreOwner = { this },
+        factoryProducer: (() -> ViewModelProvider.Factory)? = null,
+    ): Lazy<VM> {
+        val factoryPromise = factoryProducer ?: {
+            defaultViewModelProviderFactory
+        }
+        return ViewModelLazy(clazz, { ownerProducer().viewModelStore }, factoryPromise)
+    }
 }

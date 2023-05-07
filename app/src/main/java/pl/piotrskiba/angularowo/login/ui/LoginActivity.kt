@@ -9,16 +9,13 @@ import android.widget.ProgressBar
 import com.google.android.material.snackbar.Snackbar
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
-import pl.piotrskiba.angularowo.base.di.obtainViewModel
 import pl.piotrskiba.angularowo.base.ui.BaseActivity
 import pl.piotrskiba.angularowo.databinding.ActivityLoginBinding
 import pl.piotrskiba.angularowo.domain.login.model.AccessTokenError
 import pl.piotrskiba.angularowo.login.model.LoginState
 import pl.piotrskiba.angularowo.login.viewmodel.LoginViewModel
 
-class LoginActivity : BaseActivity() {
-
-    private lateinit var viewModel: LoginViewModel
+class LoginActivity : BaseActivity<LoginViewModel>(LoginViewModel::class) {
 
     private lateinit var context: Context
 
@@ -50,7 +47,6 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun setupBinding() {
-        viewModel = viewModelFactory.obtainViewModel(this)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel

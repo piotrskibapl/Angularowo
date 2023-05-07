@@ -5,15 +5,13 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import pl.piotrskiba.angularowo.R
-import pl.piotrskiba.angularowo.base.di.obtainViewModel
 import pl.piotrskiba.angularowo.base.ui.BaseActivity
 import pl.piotrskiba.angularowo.databinding.ActivitySettingsBinding
 import pl.piotrskiba.angularowo.settings.nav.SettingsNavigator
 import pl.piotrskiba.angularowo.settings.viewmodel.SettingsViewModel
 
-class SettingsActivity : BaseActivity(), SettingsNavigator {
+class SettingsActivity : BaseActivity<SettingsViewModel>(SettingsViewModel::class), SettingsNavigator {
 
-    private lateinit var viewModel: SettingsViewModel
     private lateinit var binding: ActivitySettingsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +35,6 @@ class SettingsActivity : BaseActivity(), SettingsNavigator {
     }
 
     private fun setupBinding() {
-        viewModel = viewModelFactory.obtainViewModel(this)
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel

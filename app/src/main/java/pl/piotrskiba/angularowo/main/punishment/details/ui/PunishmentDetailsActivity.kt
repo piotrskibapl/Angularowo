@@ -8,8 +8,9 @@ import pl.piotrskiba.angularowo.base.extensions.serializable
 import pl.piotrskiba.angularowo.base.ui.BaseActivity
 import pl.piotrskiba.angularowo.databinding.ActivityPunishmentDetailsBinding
 import pl.piotrskiba.angularowo.main.punishment.details.DetailedPunishmentData
+import pl.piotrskiba.angularowo.main.punishment.details.viewmodel.PunishmentDetailsViewModel
 
-class PunishmentDetailsActivity : BaseActivity() {
+class PunishmentDetailsActivity : BaseActivity<PunishmentDetailsViewModel>(PunishmentDetailsViewModel::class) {
 
     private lateinit var previewedPunishment: DetailedPunishmentData
     private lateinit var binding: ActivityPunishmentDetailsBinding

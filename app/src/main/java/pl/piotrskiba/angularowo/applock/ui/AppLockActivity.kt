@@ -5,13 +5,11 @@ import androidx.lifecycle.ViewModelProvider
 import pl.piotrskiba.angularowo.AppViewModel
 import pl.piotrskiba.angularowo.Permissions
 import pl.piotrskiba.angularowo.applock.viewmodel.AppLockViewModel
-import pl.piotrskiba.angularowo.base.di.obtainViewModel
 import pl.piotrskiba.angularowo.base.ui.BaseActivity
 import pl.piotrskiba.angularowo.databinding.ActivityAppLockBinding
 
-class AppLockActivity : BaseActivity() {
+class AppLockActivity : BaseActivity<AppLockViewModel>(AppLockViewModel::class) {
 
-    private lateinit var viewModel: AppLockViewModel
     private lateinit var mainViewModel: AppViewModel
     private lateinit var binding: ActivityAppLockBinding
 
@@ -24,7 +22,6 @@ class AppLockActivity : BaseActivity() {
     }
 
     private fun setupBinding() {
-        viewModel = viewModelFactory.obtainViewModel(this)
         binding = ActivityAppLockBinding.inflate(layoutInflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel

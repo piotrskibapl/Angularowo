@@ -8,9 +8,10 @@ import pl.piotrskiba.angularowo.base.extensions.serializable
 import pl.piotrskiba.angularowo.base.ui.BaseActivity
 import pl.piotrskiba.angularowo.databinding.ActivityPlayerDetailsBinding
 import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
+import pl.piotrskiba.angularowo.main.player.details.viewmodel.PlayerDetailsViewModel
 import pl.piotrskiba.angularowo.main.player.model.PlayerBannerData
 
-class PlayerDetailsActivity : BaseActivity() {
+class PlayerDetailsActivity : BaseActivity<PlayerDetailsViewModel>(PlayerDetailsViewModel::class) {
 
     private lateinit var player: DetailedPlayerModel
     private lateinit var previewedPlayer: PlayerBannerData
