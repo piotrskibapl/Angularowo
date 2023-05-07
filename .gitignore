@@ -8,3 +8,4 @@
 .externalNativeBuild
 /app/release/app-release.aab
 /app/google-services.json
+/app/keystore.jks
