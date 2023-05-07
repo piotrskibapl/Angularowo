@@ -2,6 +2,7 @@ package pl.piotrskiba.angularowo.data.player.model
 
 import com.google.gson.annotations.SerializedName
 import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
+import pl.piotrskiba.angularowo.domain.player.model.PermissionModel
 import pl.piotrskiba.angularowo.domain.rank.model.RankModel
 
 data class DetailedPlayerRemote(
@@ -29,5 +30,12 @@ fun DetailedPlayerRemote.toDomain() = DetailedPlayerModel(
     balance,
     playtime,
     tokens,
-    permissions
+    permissions.toPermissionModels(),
 )
+
+private fun List<String>.toPermissionModels() =
+    mapNotNull { remote ->
+        PermissionModel.values().firstOrNull { permission ->
+            permission.name.equals(remote, ignoreCase = true)
+        }
+    }
