@@ -23,13 +23,11 @@ import pl.piotrskiba.angularowo.main.punishment.details.ui.PunishmentDetailsActi
 import pl.piotrskiba.angularowo.main.punishment.list.nav.PunishmentListNavigator
 import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBannerData
 import pl.piotrskiba.angularowo.models.Motd
-import pl.piotrskiba.angularowo.utils.PreferenceUtils
 
 class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel::class), MainScreenNavigator, PunishmentListNavigator {
 
     private lateinit var mViewModel: AppViewModel
     private lateinit var mainViewModel: MainViewModel
-    private lateinit var preferenceUtils: PreferenceUtils
 
     private var motd: Motd? = null
 
@@ -39,7 +37,6 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel
 
         mViewModel = ViewModelProvider(requireActivity())[AppViewModel::class.java]
         mainViewModel = viewModelFactory.obtainViewModel(requireActivity())
-        preferenceUtils = PreferenceUtils(requireContext())
 
         viewModel.player.observe(this) { mainViewModel.player.value = it }
     }

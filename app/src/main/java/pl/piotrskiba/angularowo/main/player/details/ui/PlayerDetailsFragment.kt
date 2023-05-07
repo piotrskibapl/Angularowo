@@ -22,19 +22,16 @@ import pl.piotrskiba.angularowo.main.base.viewmodel.MainViewModel
 import pl.piotrskiba.angularowo.main.player.details.nav.PlayerDetailsNavigator
 import pl.piotrskiba.angularowo.main.player.details.viewmodel.PlayerDetailsViewModel
 import pl.piotrskiba.angularowo.main.player.model.PlayerBannerData
-import pl.piotrskiba.angularowo.utils.PreferenceUtils
 
 class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetailsViewModel::class),
     PlayerDetailsNavigator {
 
     private lateinit var mainViewModel: MainViewModel
-    private lateinit var preferenceUtils: PreferenceUtils
     private lateinit var binding: FragmentPlayerDetailsBinding
     private var snackbar: Snackbar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         mainViewModel = viewModelFactory.obtainViewModel(requireActivity())
-        preferenceUtils = PreferenceUtils(requireActivity())
         loadArguments()
         setupOptionsMenu()
         viewModel.navigator = this
