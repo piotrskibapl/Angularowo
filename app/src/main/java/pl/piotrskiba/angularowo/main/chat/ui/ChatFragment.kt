@@ -15,7 +15,7 @@ import pl.piotrskiba.angularowo.main.base.viewmodel.MainViewModel
 import pl.piotrskiba.angularowo.main.chat.model.ChatMessage
 import pl.piotrskiba.angularowo.main.chat.nav.ChatNavigator
 import pl.piotrskiba.angularowo.main.chat.viewmodel.ChatViewModel
-import pl.piotrskiba.angularowo.main.player.details.ui.PlayerDetailsFragment
+import pl.piotrskiba.angularowo.main.player.details.ui.PlayerDetailsActivity
 
 class ChatFragment : BaseFragment<ChatViewModel>(ChatViewModel::class), ChatNavigator {
 
@@ -35,7 +35,7 @@ class ChatFragment : BaseFragment<ChatViewModel>(ChatViewModel::class), ChatNavi
     }
 
     override fun onChatMessageClick(chatMessage: ChatMessage) {
-        val intent = Intent(context, PlayerDetailsFragment::class.java)
+        val intent = Intent(context, PlayerDetailsActivity::class.java)
         intent.putExtra(Constants.EXTRA_PLAYER, mainViewModel.player.value!!)
         // TODO: pass previewed player
         startActivity(intent)

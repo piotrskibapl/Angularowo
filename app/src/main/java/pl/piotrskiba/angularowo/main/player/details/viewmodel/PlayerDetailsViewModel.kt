@@ -1,6 +1,8 @@
 package pl.piotrskiba.angularowo.main.player.details.viewmodel
 
 import androidx.lifecycle.MutableLiveData
+import pl.piotrskiba.angularowo.Constants
+import pl.piotrskiba.angularowo.base.extensions.serializable
 import pl.piotrskiba.angularowo.base.model.ViewModelState
 import pl.piotrskiba.angularowo.base.model.ViewModelState.Error
 import pl.piotrskiba.angularowo.base.model.ViewModelState.Loaded
@@ -28,8 +30,8 @@ class PlayerDetailsViewModel @Inject constructor(
 ) : LifecycleViewModel() {
 
     lateinit var navigator: PlayerDetailsNavigator
-    lateinit var player: DetailedPlayerModel
-    val previewedPlayerBanner: MutableLiveData<PlayerBannerData> = MutableLiveData()
+    val player: DetailedPlayerModel by lazy { intent.serializable(Constants.EXTRA_PLAYER)!! }
+    val previewedPlayerBanner: MutableLiveData<PlayerBannerData> by lazy { MutableLiveData(intent.serializable(Constants.EXTRA_PREVIEWED_PLAYER)!!) }
     val previewedPlayerDetails: MutableLiveData<DetailedPlayerData> = MutableLiveData()
     val state = MutableLiveData<ViewModelState>(Loading.Fetch)
     private var isPreviewedPlayerFavorite: Boolean = false

@@ -1,24 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".main.player.details.ui.PlayerDetailsActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
 
-    <FrameLayout
-        android:id="@+id/fragment_container"
+        <import type="pl.piotrskiba.angularowo.R" />
+
+        <variable
+            name="viewModel"
+            type="pl.piotrskiba.angularowo.main.player.details.viewmodel.PlayerDetailsViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        tools:context=".main.player.details.ui.PlayerDetailsActivity">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swiperefresh"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:onRefreshListener="@{() -> viewModel.onRefresh()}"
+            app:state="@{viewModel.state}">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.coordinatorlayout.widget.CoordinatorLayout
+                    android:id="@+id/coordinatorLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <include
+                            android:id="@+id/player_banner"
+                            layout="@layout/player_list_item"
+                            app:player="@{viewModel.previewedPlayerBanner}" />
+
+                        <ImageView
+                            android:id="@+id/iv_player_body"
+                            android:layout_width="@dimen/body_width"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/section_margin"
+                            android:contentDescription="@string/player_body_image_description"
+                            app:imageUrl="@{viewModel.previewedPlayerDetails.bodyImageUrl()}"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/player_banner"
+                            app:placeholderImage="@{R.drawable.default_body}"
+                            tools:src="@drawable/default_body" />
+
+                        <TextView
+                            android:id="@+id/tv_balance_title"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/section_margin"
+                            android:gravity="center_horizontal"
+                            android:text="@string/balance_title"
+                            android:textAlignment="center"
+                            android:textSize="@dimen/label_text_size"
+                            app:layout_constraintEnd_toStartOf="@id/tv_tokens_title"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/iv_player_body"
+                            app:layout_constraintWidth_default="percent"
+                            app:layout_constraintWidth_percent="0.5" />
+
+                        <TextView
+                            android:id="@+id/tv_balance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="@{viewModel.previewedPlayerDetails.balanceText()}"
+                            android:textSize="@dimen/content_text_size"
+                            app:layout_constraintEnd_toEndOf="@id/tv_balance_title"
+                            app:layout_constraintStart_toStartOf="@id/tv_balance_title"
+                            app:layout_constraintTop_toBottomOf="@id/tv_balance_title"
+                            tools:text="$1 000" />
+
+                        <TextView
+                            android:id="@+id/tv_tokens_title"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/section_margin"
+                            android:gravity="center_horizontal"
+                            android:text="@string/tokens_title_others"
+                            android:textAlignment="center"
+                            android:textSize="@dimen/label_text_size"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/tv_balance_title"
+                            app:layout_constraintTop_toBottomOf="@id/iv_player_body"
+                            app:layout_constraintWidth_default="percent"
+                            app:layout_constraintWidth_percent="0.5" />
+
+                        <TextView
+                            android:id="@+id/tv_tokens"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="@{viewModel.previewedPlayerDetails.tokensText()}"
+                            android:textSize="@dimen/content_text_size"
+                            app:layout_constraintEnd_toEndOf="@id/tv_tokens_title"
+                            app:layout_constraintStart_toStartOf="@id/tv_tokens_title"
+                            app:layout_constraintTop_toBottomOf="@id/tv_tokens_title"
+                            tools:text="25" />
+
+                        <TextView
+                            android:id="@+id/tv_playtime_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center_horizontal"
+                            android:text="@string/playtime_title"
+                            android:textAlignment="center"
+                            android:textSize="@dimen/label_text_size"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tv_tokens" />
+
+                        <TextView
+                            android:id="@+id/tv_playtime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:gravity="center_horizontal"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:text="@{viewModel.previewedPlayerDetails.playtimeText(context)}"
+                            android:textAlignment="center"
+                            android:textSize="@dimen/content_text_size"
+                            app:layout_constraintEnd_toEndOf="@id/tv_playtime_title"
+                            app:layout_constraintStart_toStartOf="@id/tv_playtime_title"
+                            app:layout_constraintTop_toBottomOf="@id/tv_playtime_title"
+                            tools:text="3 dni, 5 godzin i 17 minut" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+                <include
+                    layout="@layout/loading_layout"
+                    app:state="@{viewModel.state}" />
+
+                <include
+                    layout="@layout/error_layout"
+                    app:state="@{viewModel.state}" />
+            </FrameLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
