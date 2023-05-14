@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -9,31 +10,48 @@
             type="pl.piotrskiba.angularowo.main.punishment.details.viewmodel.PunishmentDetailsViewModel" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:fitsSystemWindows="true"
+        tools:context=".main.punishment.details.ui.PunishmentDetailsActivity">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <include
-            android:id="@+id/punishment_banner"
+            android:id="@+id/banner"
             layout="@layout/punishment_list_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
             app:punishment="@{viewModel.previewedPunishmentBanner}" />
 
         <TextView
+            android:id="@+id/type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/section_margin"
             android:gravity="center_horizontal"
             android:text="@{viewModel.previewedPunishmentData.type(context)}"
             android:textAlignment="center"
-            android:textSize="@dimen/title_text_size" />
+            android:textSize="@dimen/title_text_size"
+            app:layout_constraintTop_toBottomOf="@+id/banner"
+            tools:text="Ban" />
 
+        <!-- TODO: drop LinearLayout -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/section_margin"
             android:baselineAligned="false"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/type">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -55,7 +73,8 @@
                     android:gravity="center_horizontal"
                     android:text="@{viewModel.previewedPunishmentData.actorName}"
                     android:textAlignment="center"
-                    android:textSize="@dimen/content_text_size" />
+                    android:textSize="@dimen/content_text_size"
+                    tools:text="Username" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -74,7 +93,8 @@
                     android:paddingEnd="8dp"
                     android:text="@{viewModel.previewedPunishmentData.reason}"
                     android:textAlignment="center"
-                    android:textSize="@dimen/content_text_size" />
+                    android:textSize="@dimen/content_text_size"
+                    tools:text="Reason" />
             </LinearLayout>
 
             <LinearLayout
@@ -97,7 +117,8 @@
                     android:gravity="center_horizontal"
                     android:text="@{viewModel.previewedPunishmentData.startDate(context)}"
                     android:textAlignment="center"
-                    android:textSize="@dimen/content_text_size" />
+                    android:textSize="@dimen/content_text_size"
+                    tools:text="01.01.2000 00:00" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -114,8 +135,9 @@
                     android:gravity="center_horizontal"
                     android:text="@{viewModel.previewedPunishmentData.endDate(context)}"
                     android:textAlignment="center"
-                    android:textSize="@dimen/content_text_size" />
+                    android:textSize="@dimen/content_text_size"
+                    tools:text="01.01.2000 00:00" />
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

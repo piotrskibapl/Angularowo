@@ -6,7 +6,6 @@ import pl.piotrskiba.angularowo.main.chat.ui.ChatFragment
 import pl.piotrskiba.angularowo.main.mainscreen.ui.MainScreenFragment
 import pl.piotrskiba.angularowo.main.offers.ui.OffersFragment
 import pl.piotrskiba.angularowo.main.player.list.ui.PlayerListFragment
-import pl.piotrskiba.angularowo.main.punishment.details.ui.PunishmentDetailsFragment
 import pl.piotrskiba.angularowo.main.punishment.list.ui.PunishmentListFragment
 import pl.piotrskiba.angularowo.main.report.details.ui.ReportDetailsFragment
 import pl.piotrskiba.angularowo.main.report.list.ui.ReportListContainerFragment
@@ -23,9 +22,6 @@ abstract class FragmentBindingModule {
 
     @ContributesAndroidInjector
     abstract fun bindPunishmentListFragment(): PunishmentListFragment
-
-    @ContributesAndroidInjector
-    abstract fun bindPunishmentDetailsFragment(): PunishmentDetailsFragment
 
     @ContributesAndroidInjector
     abstract fun bindReportListContainerFragment(): ReportListContainerFragment
