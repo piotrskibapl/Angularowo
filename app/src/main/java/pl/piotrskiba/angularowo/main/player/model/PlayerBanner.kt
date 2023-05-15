@@ -1,7 +1,7 @@
 package pl.piotrskiba.angularowo.main.player.model
 
 import android.content.Context
-import androidx.annotation.ColorRes
+import androidx.annotation.ColorInt
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
 import pl.piotrskiba.angularowo.domain.player.model.PlayerModel
@@ -20,17 +20,19 @@ data class PlayerBanner(
     private val rankColorCode: String
 ) : Serializable {
 
-    @ColorRes
-    fun rankColorResId(context: Context): Int {
+    @ColorInt
+    fun rankColor(context: Context): Int {
         val colorResId = context.resources.getIdentifier(
             COLOR_CODE_RES_PREFIX + rankColorCode,
             "color",
             context.packageName
         )
-        return when (colorResId) {
-            0 -> R.color.color_minecraft_7
-            else -> colorResId
-        }
+        return context.getColor(
+            when (colorResId) {
+                0 -> R.color.color_minecraft_7
+                else -> colorResId
+            }
+        )
     }
 
     fun avatarUrl(context: Context) = UrlUtils.buildAvatarUrl(skinUuid, true, context)

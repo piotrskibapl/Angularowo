@@ -31,9 +31,10 @@ class PlayerDetailsViewModel @Inject constructor(
 
     lateinit var navigator: PlayerDetailsNavigator
     val player: DetailedPlayerModel by lazy { intent.serializable(Constants.EXTRA_PLAYER)!! }
-    val previewedPlayerBanner: MutableLiveData<PlayerBanner> by lazy { MutableLiveData(intent.serializable(Constants.EXTRA_PREVIEWED_PLAYER)!!) }
+    val previewedPlayerBanner: MutableLiveData<PlayerBanner> by lazy { MutableLiveData(intent.serializable(Constants.EXTRA_PREVIEWED_PLAYER)) }
     val previewedPlayerDetails: MutableLiveData<DetailedPlayer> = MutableLiveData()
     val state = MutableLiveData<ViewModelState>(Loading.Fetch)
+    private val previewedPlayerUuid: String by lazy { intent.getStringExtra(Constants.EXTRA_UUID)!! }
     private var isPreviewedPlayerFavorite: Boolean = false
 
     override fun onFirstCreate() {
@@ -49,7 +50,7 @@ class PlayerDetailsViewModel @Inject constructor(
     fun onFavoriteClick() {
         disposables.add(
             markPlayerAsFavoriteUseCase
-                .execute(previewedPlayerBanner.value!!.uuid)
+                .execute(previewedPlayerUuid)
                 .subscribeOn(facade.io())
                 .observeOn(facade.ui())
                 .subscribe(
@@ -66,7 +67,7 @@ class PlayerDetailsViewModel @Inject constructor(
     fun onUnfavoriteClick() {
         disposables.add(
             unmarkPlayerAsFavoriteUseCase
-                .execute(previewedPlayerBanner.value!!.uuid)
+                .execute(previewedPlayerUuid)
                 .subscribeOn(facade.io())
                 .observeOn(facade.ui())
                 .subscribe(
@@ -82,14 +83,13 @@ class PlayerDetailsViewModel @Inject constructor(
 
     private fun loadPlayerDetails() {
         disposables.add(getPlayerDetailsFromUuidUseCase
-            .execute(previewedPlayerBanner.value!!.uuid)
+            .execute(previewedPlayerUuid)
             .subscribeOn(facade.io())
             .observeOn(facade.ui())
             .subscribe(
                 { detailedPlayer ->
                     state.value = Loaded
-                    previewedPlayerBanner.value =
-                        detailedPlayer.toPlayerBannerData(isPreviewedPlayerFavorite)
+                    previewedPlayerBanner.value = detailedPlayer.toPlayerBannerData(isPreviewedPlayerFavorite)
                     previewedPlayerDetails.value = detailedPlayer.toUi()
                 },
                 { error ->
@@ -102,7 +102,7 @@ class PlayerDetailsViewModel @Inject constructor(
     private fun observeIfPlayerIsFavorite() {
         disposables.add(
             observeIfPlayerIsFavoriteUseCase
-                .execute(previewedPlayerBanner.value!!.uuid)
+                .execute(previewedPlayerUuid)
                 .subscribeOn(facade.io())
                 .observeOn(facade.ui())
                 .subscribe {

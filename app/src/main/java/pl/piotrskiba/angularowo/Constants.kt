@@ -5,6 +5,7 @@ object Constants {
     const val EXTRA_PREVIEWED_PLAYER = "extra_previewed_player"
     const val EXTRA_PUNISHMENT = "extra_punishment"
     const val EXTRA_REPORT = "extra_report"
+    const val EXTRA_UUID = "extra_uuid"
 
     const val REQUEST_CODE_REGISTER = 1100
     const val RESULT_CODE_SUCCESS = 1200

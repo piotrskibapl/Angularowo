@@ -37,7 +37,7 @@ class ChatFragment : BaseFragment<ChatViewModel>(ChatViewModel::class), ChatNavi
     override fun onChatMessageClick(chatMessage: ChatMessage) {
         val intent = Intent(context, PlayerDetailsActivity::class.java)
         intent.putExtra(Constants.EXTRA_PLAYER, mainViewModel.player.value!!)
-        // TODO: pass previewed player
+        intent.putExtra(Constants.EXTRA_UUID, chatMessage.uuid)
         startActivity(intent)
     }
 
