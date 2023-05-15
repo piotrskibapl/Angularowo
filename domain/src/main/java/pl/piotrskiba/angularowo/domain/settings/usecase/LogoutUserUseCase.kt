@@ -11,15 +11,20 @@ class LogoutUserUseCase @Inject constructor(
 ) {
 
     fun execute(appVersionCode: Int) =
-        Completable.mergeArray(
-            cloudMessagingRepository.unsubscribeFromAppVersion(appVersionCode),
-            cloudMessagingRepository.unsubscribeFromPlayerUuid(preferencesRepository.uuid!!),
-            cloudMessagingRepository.unsubscribeFromPlayerRank(preferencesRepository.rankName!!),
-            cloudMessagingRepository.unsubscribeFromNewEvents(),
-            cloudMessagingRepository.unsubscribeFromPrivateMessages(),
-            cloudMessagingRepository.unsubscribeFromAccountIncidents(),
-            cloudMessagingRepository.unsubscribeFromNewReports(),
-        ).also {
-            preferencesRepository.clearUserData()
-        }
+        preferencesRepository.uuid()
+            .zipWith(preferencesRepository.rankName(), ::Pair)
+            .toSingle()
+            .flatMapCompletable { (uuid, rankName) ->
+                Completable.mergeArray(
+                    cloudMessagingRepository.unsubscribeFromAppVersion(appVersionCode),
+                    cloudMessagingRepository.unsubscribeFromPlayerUuid(uuid),
+                    cloudMessagingRepository.unsubscribeFromPlayerRank(rankName),
+                    cloudMessagingRepository.unsubscribeFromNewEvents(),
+                    cloudMessagingRepository.unsubscribeFromPrivateMessages(),
+                    cloudMessagingRepository.unsubscribeFromAccountIncidents(),
+                    cloudMessagingRepository.unsubscribeFromNewReports(),
+                ).also {
+                    preferencesRepository.clearUserData()
+                }
+            }
 }

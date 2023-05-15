@@ -1,5 +1,6 @@
 package pl.piotrskiba.angularowo.domain.applock.usecase
 
+import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 import pl.piotrskiba.angularowo.domain.applock.model.AppLockDataModel
 import pl.piotrskiba.angularowo.domain.applock.repository.AppLockRepository
@@ -25,10 +26,11 @@ class GetAppLockDataUseCase @Inject constructor(
             }
 
     private fun checkIgnoreAppLockPermission() =
-        if (preferencesRepository.accessToken != null && preferencesRepository.uuid != null) {
-            playerRepository.getPlayerDetailsFromUuid(preferencesRepository.accessToken!!, preferencesRepository.uuid!!)
-                .map { it.permissions.contains(PermissionModel.IGNORE_APP_LOCK) }
-        } else {
-            Single.just(false)
-        }
+        preferencesRepository.uuid()
+            .zipWith(preferencesRepository.accessToken(), ::Pair)
+            .flatMapSingle { (accessToken, uuid) ->
+                playerRepository.getPlayerDetailsFromUuid(accessToken, uuid)
+                    .map { it.permissions.contains(PermissionModel.IGNORE_APP_LOCK) }
+            }
+            .defaultIfEmpty(false)
 }

@@ -13,12 +13,14 @@ class GetActivePunishmentsUseCase @Inject constructor(
     private val preferencesRepository: PreferencesRepository,
 ) {
 
-    fun execute(): Single<List<PunishmentModel>> {
-        return punishmentRepository
-            .getPunishments(
-                preferencesRepository.accessToken!!,
-                listOf(PunishmentType.MUTE, PunishmentType.WARN, PunishmentType.BAN),
-                PunishmentFilter.ACTIVE
-            )
-    }
+    fun execute(): Single<List<PunishmentModel>> =
+        preferencesRepository.accessToken()
+            .toSingle()
+            .flatMap { accessToken ->
+                punishmentRepository.getPunishments(
+                    accessToken = accessToken,
+                    punishmentTypes = listOf(PunishmentType.MUTE, PunishmentType.WARN, PunishmentType.BAN),
+                    filter = PunishmentFilter.ACTIVE,
+                )
+            }
 }

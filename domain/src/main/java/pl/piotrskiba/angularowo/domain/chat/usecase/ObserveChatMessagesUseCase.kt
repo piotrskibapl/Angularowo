@@ -12,11 +12,13 @@ class ObserveChatMessagesUseCase @Inject constructor(
 ) {
 
     fun execute() =
-        rankRepository.getAllRanks()
-            .flatMapObservable { ranks ->
-                chatRepository.getLastChatMessages(preferencesRepository.accessToken!!)
+        preferencesRepository.accessToken()
+            .toSingle()
+            .zipWith(rankRepository.getAllRanks(), ::Pair)
+            .flatMapObservable { (accessToken, ranks) ->
+                chatRepository.getLastChatMessages(accessToken)
                     .flattenAsObservable { it.reversed() }
-                    .concatWith(chatRepository.observeChatMessages(preferencesRepository.accessToken!!))
+                    .concatWith(chatRepository.observeChatMessages(accessToken))
                     .map { chatMessageModel ->
                         val updatedRank = ranks.firstOrNull { it.name == chatMessageModel.rank.name } ?: chatMessageModel.rank
                         chatMessageModel.copy(rank = updatedRank)

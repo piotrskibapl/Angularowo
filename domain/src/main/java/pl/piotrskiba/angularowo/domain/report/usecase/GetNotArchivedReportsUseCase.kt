@@ -11,8 +11,9 @@ class GetNotArchivedReportsUseCase @Inject constructor(
 ) {
 
     fun execute() =
-        reportRepository.getReportList(
-            preferencesRepository.accessToken!!,
-            listOf(ReportFilter.NOT_ARCHIVED)
-        )
+        preferencesRepository.accessToken()
+            .toSingle()
+            .flatMap { accessToken ->
+                reportRepository.getReportList(accessToken, listOf(ReportFilter.NOT_ARCHIVED))
+            }
 }

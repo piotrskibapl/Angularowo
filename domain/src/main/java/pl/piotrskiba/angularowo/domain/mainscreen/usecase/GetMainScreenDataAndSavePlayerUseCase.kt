@@ -1,5 +1,6 @@
 package pl.piotrskiba.angularowo.domain.mainscreen.usecase
 
+import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
 import pl.piotrskiba.angularowo.domain.mainscreen.model.MainScreenDataModel
@@ -19,39 +20,43 @@ class GetMainScreenDataAndSavePlayerUseCase @Inject constructor(
     private val preferencesRepository: PreferencesRepository,
 ) {
 
-    fun execute(): Single<MainScreenDataModel> {
-        val accessToken = preferencesRepository.accessToken!!
-        return getServerStatus(accessToken)
-            .zipWith(getAndSavePlayerData(accessToken), ::Pair)
-            .zipWith(getPlayerPunishments(accessToken)) { (serverStatus, playerData), playerPunishments ->
-                MainScreenDataModel(serverStatus, playerData, playerPunishments)
+    fun execute(): Single<MainScreenDataModel> =
+        Maybe.zip(
+            preferencesRepository.accessToken(),
+            preferencesRepository.uuid(),
+            preferencesRepository.username(),
+            ::Triple
+        )
+            .toSingle()
+            .flatMap { (accessToken, uuid, username) ->
+                getServerStatus(accessToken)
+                    .zipWith(getAndSavePlayerData(accessToken, uuid), ::Pair)
+                    .zipWith(getPlayerPunishments(accessToken, username)) { (serverStatus, playerData), playerPunishments ->
+                        MainScreenDataModel(serverStatus, playerData, playerPunishments)
+                    }
             }
-    }
 
     private fun getServerStatus(accessToken: String) =
         serverRepository.getServerStatus(accessToken)
 
-    private fun getAndSavePlayerData(accessToken: String) =
-        playerRepository.getPlayerDetailsFromUuid(accessToken, preferencesRepository.uuid!!)
-            .concatMap { detailedPlayerModel ->
-                rankRepository.getAllRanks().map { rankList ->
-                    detailedPlayerModel.rank =
-                        rankList.firstOrNull {
-                            it.name == detailedPlayerModel.rank.name
-                        } ?: detailedPlayerModel.rank
-                    detailedPlayerModel
-                }
-            }
-            .map { detailedPlayerModel ->
-                preferencesRepository.username = detailedPlayerModel.username
-                preferencesRepository.rankName = detailedPlayerModel.rank.name
-                detailedPlayerModel
+    private fun getAndSavePlayerData(accessToken: String, uuid: String) =
+        playerRepository.getPlayerDetailsFromUuid(accessToken, uuid)
+            .flatMap { player ->
+                preferencesRepository.setUsername(player.username)
+                    .mergeWith(preferencesRepository.setRankName(player.rank.name))
+                    .andThen(rankRepository.getAllRanks())
+                    .map { ranks ->
+                        player.rank = ranks.firstOrNull {
+                            it.name == player.rank.name
+                        } ?: player.rank
+                        player
+                    }
             }
 
-    private fun getPlayerPunishments(accessToken: String) =
+    private fun getPlayerPunishments(accessToken: String, username: String) =
         punishmentRepository.getPlayerPunishments(
             accessToken = accessToken,
-            username = preferencesRepository.username!!,
+            username = username,
             punishmentTypes = listOf(PunishmentType.MUTE, PunishmentType.WARN, PunishmentType.BAN),
             filter = PunishmentFilter.ACTIVE,
         )

@@ -1,6 +1,8 @@
 package pl.piotrskiba.angularowo.data.base.preferences.repository
 
 import android.content.SharedPreferences
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Maybe
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
 
 private const val PREF_KEY_ACCESS_TOKEN = "access_token"
@@ -20,21 +22,61 @@ class PreferencesRepositoryImpl(
     private val sharedPreferences: SharedPreferences
 ) : PreferencesRepository {
 
-    override var accessToken: String?
-        get() = sharedPreferences.getString(PREF_KEY_ACCESS_TOKEN, null)
-        set(value) = applyValue(PREF_KEY_ACCESS_TOKEN, value)
+    override fun accessToken(): Maybe<String> =
+        sharedPreferences.getString(PREF_KEY_ACCESS_TOKEN, null).let { accessToken ->
+            if (accessToken == null) {
+                Maybe.empty()
+            } else {
+                Maybe.just(accessToken)
+            }
+        }
 
-    override var uuid: String?
-        get() = sharedPreferences.getString(PREF_KEY_UUID, null)
-        set(value) = applyValue(PREF_KEY_UUID, value)
+    override fun setAccessToken(accessToken: String): Completable =
+        Completable.fromAction {
+            applyValue(PREF_KEY_ACCESS_TOKEN, accessToken)
+        }
 
-    override var username: String?
-        get() = sharedPreferences.getString(PREF_KEY_USERNAME, null)
-        set(value) = applyValue(PREF_KEY_USERNAME, value)
+    override fun uuid(): Maybe<String> =
+        sharedPreferences.getString(PREF_KEY_UUID, null).let { uuid ->
+            if (uuid == null) {
+                Maybe.empty()
+            } else {
+                Maybe.just(uuid)
+            }
+        }
 
-    override var rankName: String?
-        get() = sharedPreferences.getString(PREF_KEY_RANK_NAME, null)
-        set(value) = applyValue(PREF_KEY_RANK_NAME, value)
+    override fun setUuid(uuid: String): Completable =
+        Completable.fromAction {
+            applyValue(PREF_KEY_UUID, uuid)
+        }
+
+    override fun username(): Maybe<String> =
+        sharedPreferences.getString(PREF_KEY_USERNAME, null).let { username ->
+            if (username == null) {
+                Maybe.empty()
+            } else {
+                Maybe.just(username)
+            }
+        }
+
+    override fun setUsername(username: String): Completable =
+        Completable.fromAction {
+            applyValue(PREF_KEY_USERNAME, username)
+        }
+
+    override fun rankName(): Maybe<String> =
+        sharedPreferences.getString(PREF_KEY_RANK_NAME, null).let { rankName ->
+            if (rankName == null) {
+                Maybe.empty()
+            } else {
+                Maybe.just(rankName)
+            }
+        }
+
+    override fun setRankName(rankName: String): Completable =
+        Completable.fromAction {
+            applyValue(PREF_KEY_RANK_NAME, rankName)
+        }
 
     override var hasSeenFavoriteShowcase: Boolean
         get() = sharedPreferences.getBoolean(PREF_KEY_FAVORITE_SHOWCASE_SHOWN, false)

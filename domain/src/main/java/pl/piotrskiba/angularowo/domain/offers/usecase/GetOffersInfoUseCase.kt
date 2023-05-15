@@ -10,5 +10,9 @@ class GetOffersInfoUseCase @Inject constructor(
 ) {
 
     fun execute() =
-        offersRepository.getOffersInfo(preferencesRepository.accessToken!!)
+        preferencesRepository.accessToken()
+            .toSingle()
+            .flatMap { accessToken ->
+                offersRepository.getOffersInfo(accessToken)
+            }
 }

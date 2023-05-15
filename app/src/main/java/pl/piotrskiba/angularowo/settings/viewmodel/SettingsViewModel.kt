@@ -5,13 +5,13 @@ import pl.piotrskiba.angularowo.BuildConfig
 import pl.piotrskiba.angularowo.base.rx.SchedulersFacade
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
+import pl.piotrskiba.angularowo.domain.base.preferences.usecase.CheckIfIsStaffUserUseCase
 import pl.piotrskiba.angularowo.domain.settings.usecase.LogoutUserUseCase
 import pl.piotrskiba.angularowo.domain.settings.usecase.UpdateAccountIncidentsSubscriptionUseCase
 import pl.piotrskiba.angularowo.domain.settings.usecase.UpdateNewEventsSubscriptionUseCase
 import pl.piotrskiba.angularowo.domain.settings.usecase.UpdateNewReportsSubscriptionUseCase
 import pl.piotrskiba.angularowo.domain.settings.usecase.UpdatePrivateMessagesSubscriptionUseCase
 import pl.piotrskiba.angularowo.settings.nav.SettingsNavigator
-import pl.piotrskiba.angularowo.utils.RankUtils
 import javax.inject.Inject
 
 class SettingsViewModel @Inject constructor(
@@ -21,6 +21,7 @@ class SettingsViewModel @Inject constructor(
     private val updateAccountIncidentsSubscriptionUseCase: UpdateAccountIncidentsSubscriptionUseCase,
     private val updateNewReportsSubscriptionUseCase: UpdateNewReportsSubscriptionUseCase,
     private val logoutUserUseCase: LogoutUserUseCase,
+    private val checkIfIsStaffUserUseCase: CheckIfIsStaffUserUseCase,
     private val facade: SchedulersFacade,
 ) : LifecycleViewModel() {
 
@@ -36,7 +37,14 @@ class SettingsViewModel @Inject constructor(
         privateMessagesChecked.value = preferencesRepository.subscribedToFirebasePrivateMessagesTopic ?: false
         accountIncidentsChecked.value = preferencesRepository.subscribedToFirebaseAccountIncidentsTopic ?: false
         newReportsChecked.value = preferencesRepository.subscribedToFirebaseNewReportsTopic ?: false
-        isStaffMember.value = if (preferencesRepository.rankName == null) false else RankUtils.getRankFromName(preferencesRepository.rankName!!).staff
+        disposables.add(
+            checkIfIsStaffUserUseCase.execute()
+                .subscribeOn(facade.io())
+                .observeOn(facade.ui())
+                .subscribe { isStaff ->
+                    isStaffMember.value = isStaff
+                }
+        )
     }
 
     fun onEventsNotificationsClicked() {

@@ -1,14 +1,27 @@
 package pl.piotrskiba.angularowo.main.report.list.viewmodel
 
+import androidx.lifecycle.MutableLiveData
+import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
-import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
-import pl.piotrskiba.angularowo.utils.RankUtils
+import pl.piotrskiba.angularowo.domain.base.preferences.usecase.CheckIfIsStaffUserUseCase
 import javax.inject.Inject
 
 class ReportListContainerViewModel @Inject constructor(
-    val preferencesRepository: PreferencesRepository,
+    private val checkIfIsStaffUserUseCase: CheckIfIsStaffUserUseCase,
+    private val facade: SchedulersProvider,
 ) : LifecycleViewModel() {
 
-    // TODO: to be moved to an use case
-    val othersReportsTabAvailable = RankUtils.getRankFromName(preferencesRepository.rankName!!).staff
+    var othersReportsTabAvailable: MutableLiveData<Boolean> = MutableLiveData(false)
+
+    override fun onFirstCreate() {
+        super.onFirstCreate()
+        disposables.add(
+            checkIfIsStaffUserUseCase.execute()
+                .subscribeOn(facade.io())
+                .observeOn(facade.ui())
+                .subscribe { isStaff ->
+                    othersReportsTabAvailable.value = isStaff
+                }
+        )
+    }
 }

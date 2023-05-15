@@ -38,22 +38,24 @@ class UpdateCloudMessagingSubscriptionsUseCase @Inject constructor(
         }
     }
 
-    private fun updatePlayerRankTopic(): Completable {
-        val subscribed = preferencesRepository.subscribedFirebasePlayerRankName
-        val current = preferencesRepository.rankName!!
-        return if (subscribed != current) {
-            Completable.create { emitter ->
-                if (subscribed != null) {
-                    cloudMessagingRepository.unsubscribeFromPlayerRank(subscribed)
-                        .doOnComplete { emitter.onComplete() }
+    private fun updatePlayerRankTopic() =
+        preferencesRepository.rankName()
+            .toSingle()
+            .flatMapCompletable { rankName ->
+                val subscribed = preferencesRepository.subscribedFirebasePlayerRankName
+                if (subscribed != rankName) {
+                    Completable.create { emitter ->
+                        if (subscribed != null) {
+                            cloudMessagingRepository.unsubscribeFromPlayerRank(subscribed)
+                                .doOnComplete { emitter.onComplete() }
+                        } else {
+                            emitter.onComplete()
+                        }
+                    }.concatWith(cloudMessagingRepository.subscribeToPlayerRank(rankName))
                 } else {
-                    emitter.onComplete()
+                    Completable.complete()
                 }
-            }.concatWith(cloudMessagingRepository.subscribeToPlayerRank(current))
-        } else {
-            Completable.complete()
-        }
-    }
+            }
 
     private fun updateNewEventsTopic() =
         if (preferencesRepository.subscribedToFirebaseEventsTopic == null) {
@@ -76,17 +78,19 @@ class UpdateCloudMessagingSubscriptionsUseCase @Inject constructor(
             Completable.complete()
         }
 
-    private fun updateNewReportsTopic(): Completable {
-        val rankName = preferencesRepository.rankName!!
-        return rankRepository.getAllRanks()
-            .flatMapCompletable { ranks ->
-                val isStaff = ranks.firstOrNull { it.name == rankName }?.staff ?: false
-                val subscribed = preferencesRepository.subscribedToFirebaseNewReportsTopic
-                when {
-                    subscribed == null && isStaff -> cloudMessagingRepository.subscribeToNewReports()
-                    subscribed == true && !isStaff -> cloudMessagingRepository.unsubscribeFromNewReports()
-                    else -> Completable.complete()
-                }
+    private fun updateNewReportsTopic() =
+        preferencesRepository.rankName()
+            .toSingle()
+            .flatMapCompletable { rankName ->
+                rankRepository.getAllRanks()
+                    .flatMapCompletable { ranks ->
+                        val isStaff = ranks.firstOrNull { it.name == rankName }?.staff ?: false
+                        val subscribed = preferencesRepository.subscribedToFirebaseNewReportsTopic
+                        when {
+                            subscribed == null && isStaff -> cloudMessagingRepository.subscribeToNewReports()
+                            subscribed == true && !isStaff -> cloudMessagingRepository.unsubscribeFromNewReports()
+                            else -> Completable.complete()
+                        }
+                    }
             }
-    }
 }

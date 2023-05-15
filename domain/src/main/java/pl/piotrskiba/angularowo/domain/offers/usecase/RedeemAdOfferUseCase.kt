@@ -10,5 +10,9 @@ class RedeemAdOfferUseCase @Inject constructor(
 ) {
 
     fun execute(adOfferId: String) =
-        offersRepository.redeemAdOffer(preferencesRepository.accessToken!!, adOfferId)
+        preferencesRepository.accessToken()
+            .toSingle()
+            .flatMapCompletable { accessToken ->
+                offersRepository.redeemAdOffer(accessToken, adOfferId)
+            }
 }

@@ -11,8 +11,9 @@ class GetOwnedReportsUseCase @Inject constructor(
 ) {
 
     fun execute() =
-        reportRepository.getReportList(
-            preferencesRepository.accessToken!!,
-            listOf(ReportFilter.OWN)
-        )
+        preferencesRepository.accessToken()
+            .toSingle()
+            .flatMap { accessToken ->
+                reportRepository.getReportList(accessToken, listOf(ReportFilter.OWN))
+            }
 }

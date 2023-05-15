@@ -11,5 +11,9 @@ class RefreshOnlinePlayerListUseCase @Inject constructor(
 ) {
 
     fun execute(): Completable =
-        playerRepository.refreshOnlinePlayerList(preferencesRepository.accessToken!!)
+        preferencesRepository.accessToken()
+            .toSingle()
+            .flatMapCompletable { accessToken ->
+                playerRepository.refreshOnlinePlayerList(accessToken)
+            }
 }

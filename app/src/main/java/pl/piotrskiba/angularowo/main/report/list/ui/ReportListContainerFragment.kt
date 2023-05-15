@@ -12,8 +12,7 @@ import pl.piotrskiba.angularowo.databinding.FragmentReportListContainerBinding
 import pl.piotrskiba.angularowo.main.report.list.adapter.ReportListViewPagerAdapter
 import pl.piotrskiba.angularowo.main.report.list.viewmodel.ReportListContainerViewModel
 
-class ReportListContainerFragment :
-    BaseFragment<ReportListContainerViewModel>(ReportListContainerViewModel::class) {
+class ReportListContainerFragment : BaseFragment<ReportListContainerViewModel>(ReportListContainerViewModel::class) {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,22 +31,23 @@ class ReportListContainerFragment :
     ) = FragmentReportListContainerBinding.inflate(layoutInflater, container, false)
 
     private fun setupViewPager(binding: FragmentReportListContainerBinding) {
-        val adapter = ReportListViewPagerAdapter(
-            childFragmentManager,
-            lifecycle,
-            viewModel.othersReportsTabAvailable
-        )
-        // TODO: use data binding instead
-        binding.viewpager.isUserInputEnabled = viewModel.othersReportsTabAvailable
-        binding.tablayout.visibility =
-            if (viewModel.othersReportsTabAvailable) View.VISIBLE else View.GONE
+        viewModel.othersReportsTabAvailable.observe(viewLifecycleOwner) { othersReportsTabAvailable ->
+            val adapter = ReportListViewPagerAdapter(
+                childFragmentManager,
+                lifecycle,
+                othersReportsTabAvailable
+            )
+            // TODO: use data binding instead
+            binding.viewpager.isUserInputEnabled = othersReportsTabAvailable
+            binding.tablayout.visibility = if (othersReportsTabAvailable) View.VISIBLE else View.GONE
+            binding.viewpager.adapter = adapter
+            TabLayoutMediator(binding.tablayout, binding.viewpager) { tab, position ->
+                tab.text = when (position) {
+                    0 -> requireContext().getString(R.string.reports_own)
+                    else -> requireContext().getString(R.string.reports_others)
+                }
+            }.attach()
+        }
         binding.viewpager.isSaveEnabled = false
-        binding.viewpager.adapter = adapter
-        TabLayoutMediator(binding.tablayout, binding.viewpager) { tab, position ->
-            tab.text = when (position) {
-                0 -> requireContext().getString(R.string.reports_own)
-                else -> requireContext().getString(R.string.reports_others)
-            }
-        }.attach()
     }
 }
