@@ -13,7 +13,7 @@
 
         <variable
             name="player"
-            type="pl.piotrskiba.angularowo.main.player.model.PlayerBannerData" />
+            type="pl.piotrskiba.angularowo.main.player.model.PlayerBanner" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

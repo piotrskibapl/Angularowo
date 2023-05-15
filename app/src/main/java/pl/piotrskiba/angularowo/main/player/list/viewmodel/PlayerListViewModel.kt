@@ -15,7 +15,7 @@ import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.player.usecase.ObserveOnlinePlayerListWithFavoriteInformationUseCase
 import pl.piotrskiba.angularowo.domain.player.usecase.RefreshOnlinePlayerListUseCase
 import pl.piotrskiba.angularowo.main.player.list.nav.PlayerListNavigator
-import pl.piotrskiba.angularowo.main.player.model.PlayerBannerData
+import pl.piotrskiba.angularowo.main.player.model.PlayerBanner
 import pl.piotrskiba.angularowo.main.player.model.toPlayerBannerData
 import javax.inject.Inject
 
@@ -26,9 +26,9 @@ class PlayerListViewModel @Inject constructor(
 ) : LifecycleViewModel() {
 
     val state = MutableLiveData<ViewModelState>(Loading.Fetch)
-    val players: MutableLiveData<List<PlayerBannerData>> = MutableLiveData()
-    val favoritePlayers: MutableLiveData<List<PlayerBannerData>> = MutableLiveData()
-    val playersBinding = ItemBinding.of<PlayerBannerData>(BR.player, R.layout.player_list_item)
+    val players: MutableLiveData<List<PlayerBanner>> = MutableLiveData()
+    val favoritePlayers: MutableLiveData<List<PlayerBanner>> = MutableLiveData()
+    val playersBinding = ItemBinding.of<PlayerBanner>(BR.player, R.layout.player_list_item)
     val isFavoritePlayerListNotEmpty = favoritePlayers.map { it.isNotEmpty() }
     val isNoPlayersOnline = combineLatest(players, favoritePlayers) { players, favoritePlayers ->
         players.isEmpty() && favoritePlayers.isEmpty()

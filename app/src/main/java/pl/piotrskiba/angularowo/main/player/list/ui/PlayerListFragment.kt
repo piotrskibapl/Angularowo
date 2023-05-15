@@ -16,7 +16,7 @@ import pl.piotrskiba.angularowo.main.base.viewmodel.MainViewModel
 import pl.piotrskiba.angularowo.main.player.details.ui.PlayerDetailsActivity
 import pl.piotrskiba.angularowo.main.player.list.nav.PlayerListNavigator
 import pl.piotrskiba.angularowo.main.player.list.viewmodel.PlayerListViewModel
-import pl.piotrskiba.angularowo.main.player.model.PlayerBannerData
+import pl.piotrskiba.angularowo.main.player.model.PlayerBanner
 
 class PlayerListFragment : BaseFragment<PlayerListViewModel>(PlayerListViewModel::class),
     PlayerListNavigator {
@@ -40,7 +40,7 @@ class PlayerListFragment : BaseFragment<PlayerListViewModel>(PlayerListViewModel
         return binding.root
     }
 
-    override fun onPlayerClick(view: View, player: PlayerBannerData) {
+    override fun onPlayerClick(view: View, player: PlayerBanner) {
         val intent = Intent(context, PlayerDetailsActivity::class.java)
         intent.putExtra(Constants.EXTRA_PLAYER, mainViewModel.player.value!!)
         intent.putExtra(Constants.EXTRA_PREVIEWED_PLAYER, player)
