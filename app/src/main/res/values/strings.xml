@@ -28,16 +28,15 @@
     <string name="logout_question">Wylogowywanie</string>
     <string name="logout_question_description">Czy na pewno chcesz się wylogować?</string>
 
-    <!-- activity_login.xml -->
+    <!-- login -->
     <string name="login_header">Witaj!</string>
     <string name="login_description">Aby korzystać z aplikacji, musisz powiązać ją ze swoim kontem w grze.\nPoniżej wpisz swój kod dostępu.\nKod dostępu uzyskasz wpisując komendę /android w grze.</string>
-
     <string name="login_error_code_not_found">Podany kod jest nieprawidłowy.</string>
     <string name="login_error_code_expired">Podany kod jest prawidłowy, jednak skończyła się jego ważność. Wpisz komendę /android ponownie.</string>
     <string name="login_error_unknown">Wystąpił nieznany błąd. Spróbuj ponownie później.</string>
     <string name="logging_in">Logowanie…</string>
 
-    <!-- drawer_view.xml -->
+    <!-- drawer view -->
     <string name="main_screen">Strona główna</string>
     <string name="player_list">Lista graczy online</string>
     <string name="chat">Podgląd chatu</string>
@@ -46,18 +45,18 @@
     <string name="reports_history">Historia zgłoszeń</string>
     <string name="settings">Ustawienia</string>
 
-    <!-- fragment_main_screen.xml -->
+    <!-- main screen -->
     <string name="greeting">Witaj, %1$s!</string>
     <string name="balance_title">Stan konta:</string>
     <string name="tokens_title">Twoje tokeny:</string>
     <string name="playtime_title">Spędzony czas online:</string>
     <string name="last_player_bans">Twoje aktywne kary:</string>
 
-    <!-- fragment_player_list.xml -->
+    <!-- players -->
     <string name="actionbar_title_player_list">Lista graczy online</string>
     <string name="error_no_players">Aktualnie nie ma nikogo na serwerze.</string>
 
-    <!-- activity_player_details.xml -->
+    <!-- player details -->
     <string name="mark_as_favorite">Dodaj do ulubionych</string>
     <string name="unmark_as_favorite">Usuń z ulubionych</string>
     <string name="player_info">Informacje o graczu</string>
@@ -97,10 +96,10 @@
     <string name="dialog_warn_success_description">Gracz został ostrzeżony.</string>
     <string name="dialog_ban_success_description">Gracz został zbanowany.</string>
 
-    <!-- fragment_punishment_list.xml -->
+    <!-- punishments -->
     <string name="actionbar_title_punishment_list">Ostatnie kary</string>
 
-    <!-- activity_punishment_details.xml -->
+    <!-- punishment details -->
     <string name="punishment_info">Informacje o banie</string>
     <string name="punishment_reason">Powód:</string>
     <string name="punishment_banner">Administrator:</string>
@@ -118,7 +117,7 @@
     <string name="punishment_date_format" translatable="false">dd.MM.yyyy HH:mm</string>
     <string name="punishment_banner_transition_name" translatable="false">ban_banner</string>
 
-    <!-- fragment_offers.xml -->
+    <!-- offers -->
     <string name="actionbar_title_free_ranks">Darmowe nagrody</string>
     <string name="no_ads">Brak reklam</string>
     <string name="no_ads_description">Nie znaleziono żadnych reklam. Spróbuj ponownie za kilka godzin.</string>
@@ -132,11 +131,12 @@
     <string name="exchange_coins_to_prizes">Wymień monety na nagrody</string>
     <string name="coin_limit_reached">Nie możesz zdobyć więcej monet!</string>
 
-    <!-- fragment_chat.xml -->
+    <!-- chat -->
     <string name="actionbar_title_chat">Podgląd chatu</string>
     <string name="chat_user_message"><![CDATA[<font color=#555555>[</font><font color=%4$s>%1$s</font><font color=#555555>]</font> <font color=%4$s>%2$s</font><font color=#555555>:</font> <font color=%5$s>%3$s</font>]]></string>
 
-    <!-- fragment_report_list_tab.xml -->
+    <!-- reports -->
+    <string name="actionbar_title_report_list">Historia zgłoszeń</string>
     <string name="error_no_reports">Nie zgłosiłeś jeszcze żadnego gracza.</string>
     <string name="error_no_reports_admin">Aktualnie nie ma żadnych aktywnych zgłoszeń.</string>
     <string name="report_reason">Powód zgłoszenia: %1$s</string>
@@ -147,7 +147,7 @@
     <string name="reports_own">Twoje zgłoszenia</string>
     <string name="reports_others">Zgłoszenia graczy</string>
 
-    <!-- activity_report_details -->
+    <!-- report details -->
     <string name="report_info">Szczegóły zgłoszenia</string>
     <string name="report_banner_transition_name" translatable="false">report_banner</string>
     <string name="report_details_reason">Powód zgłoszenia:</string>
