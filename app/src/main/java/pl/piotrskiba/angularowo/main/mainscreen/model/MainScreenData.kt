@@ -7,14 +7,14 @@ import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBannerData
 import pl.piotrskiba.angularowo.main.punishment.model.toPunishmentBannerData
 
 data class MainScreenData(
-    val serverData: MainScreenServerData,
+    val server: MainScreenServerData,
     val player: DetailedPlayer,
-    val punishmentBanners: List<PunishmentBannerData>,
+    val punishments: List<PunishmentBannerData>,
 )
 
 fun MainScreenDataModel.toUi() =
     MainScreenData(
-        serverData = serverStatusModel.toUi(detailedPlayerModel.rank.staff),
+        server = serverStatusModel.toUi(detailedPlayerModel.rank.staff),
         player = detailedPlayerModel.toUi(),
-        punishmentBanners = playerPunishments.toPunishmentBannerData()
+        punishments = playerPunishments.toPunishmentBannerData()
     )

@@ -36,7 +36,7 @@ class MainScreenViewModel @Inject constructor(
     val uiData = MutableLiveData<MainScreenData>()
     val punishments: MutableList<DetailedPunishmentData> = mutableListOf()
     val punishmentsBinding = ItemBinding.of<PunishmentBannerData>(BR.punishment, R.layout.punishment_list_item)
-    val isPunishmentListNotEmpty = uiData.map { it.punishmentBanners.isNotEmpty() }
+    val isPunishmentListNotEmpty = uiData.map { it.punishments.isNotEmpty() }
     lateinit var navigator: MainScreenNavigator
     lateinit var punishmentNavigator: PunishmentListNavigator
 
