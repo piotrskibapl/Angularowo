@@ -14,7 +14,7 @@ import pl.piotrskiba.angularowo.domain.friend.usecase.ObserveIfPlayerIsFavoriteU
 import pl.piotrskiba.angularowo.domain.friend.usecase.UnmarkPlayerAsFavoriteUseCase
 import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
 import pl.piotrskiba.angularowo.domain.player.usecase.GetPlayerDetailsFromUuidUseCase
-import pl.piotrskiba.angularowo.main.player.details.model.DetailedPlayerData
+import pl.piotrskiba.angularowo.main.player.details.model.DetailedPlayer
 import pl.piotrskiba.angularowo.main.player.details.model.toUi
 import pl.piotrskiba.angularowo.main.player.details.nav.PlayerDetailsNavigator
 import pl.piotrskiba.angularowo.main.player.model.PlayerBannerData
@@ -32,7 +32,7 @@ class PlayerDetailsViewModel @Inject constructor(
     lateinit var navigator: PlayerDetailsNavigator
     val player: DetailedPlayerModel by lazy { intent.serializable(Constants.EXTRA_PLAYER)!! }
     val previewedPlayerBanner: MutableLiveData<PlayerBannerData> by lazy { MutableLiveData(intent.serializable(Constants.EXTRA_PREVIEWED_PLAYER)!!) }
-    val previewedPlayerDetails: MutableLiveData<DetailedPlayerData> = MutableLiveData()
+    val previewedPlayerDetails: MutableLiveData<DetailedPlayer> = MutableLiveData()
     val state = MutableLiveData<ViewModelState>(Loading.Fetch)
     private var isPreviewedPlayerFavorite: Boolean = false
 

@@ -7,7 +7,7 @@ import pl.piotrskiba.angularowo.utils.TextUtils
 import pl.piotrskiba.angularowo.utils.UrlUtils
 import java.text.NumberFormat
 
-data class DetailedPlayerData(
+data class DetailedPlayer(
     val username: String,
     private val tokens: Int,
     private val balance: Float,
@@ -26,7 +26,7 @@ data class DetailedPlayerData(
     fun playtimeText(context: Context) = TextUtils.formatPlaytime(context, playtime)
 }
 
-fun DetailedPlayerModel.toUi() = DetailedPlayerData(
+fun DetailedPlayerModel.toUi() = DetailedPlayer(
     username,
     tokens,
     balance,
