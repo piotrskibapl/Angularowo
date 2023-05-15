@@ -12,15 +12,12 @@ import pl.piotrskiba.angularowo.main.report.details.viewmodel.ReportDetailsViewM
 
 class ReportDetailsActivity : BaseActivity<ReportDetailsViewModel>(ReportDetailsViewModel::class) {
 
-    private lateinit var report: ReportModel
     private lateinit var binding: ActivityReportDetailsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupBinding()
-        loadArguments()
         setupToolbar()
-        setupMainFragment()
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
@@ -33,11 +30,9 @@ class ReportDetailsActivity : BaseActivity<ReportDetailsViewModel>(ReportDetails
 
     private fun setupBinding() {
         binding = ActivityReportDetailsBinding.inflate(layoutInflater)
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
         setContentView(binding.root)
-    }
-
-    private fun loadArguments() {
-        report = intent.serializable(Constants.EXTRA_REPORT)!!
     }
 
     private fun setupToolbar() {
@@ -45,15 +40,5 @@ class ReportDetailsActivity : BaseActivity<ReportDetailsViewModel>(ReportDetails
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setTitle(R.string.report_info)
-    }
-
-    private fun setupMainFragment() {
-        val reportDetailsFragment = ReportDetailsFragment()
-        val bundle = Bundle()
-        bundle.putSerializable(Constants.EXTRA_REPORT, report)
-        reportDetailsFragment.arguments = bundle
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, reportDetailsFragment)
-            .commit()
     }
 }
