@@ -1,11 +1,11 @@
 package pl.piotrskiba.angularowo.main.player.list.viewmodel
 
 import androidx.lifecycle.MutableLiveData
-import com.snakydesign.livedataextensions.combineLatest
-import com.snakydesign.livedataextensions.map
+import androidx.lifecycle.map
 import me.tatarka.bindingcollectionadapter2.ItemBinding
 import pl.piotrskiba.angularowo.BR
 import pl.piotrskiba.angularowo.R
+import pl.piotrskiba.angularowo.base.extensions.combineLatest
 import pl.piotrskiba.angularowo.base.model.ViewModelState
 import pl.piotrskiba.angularowo.base.model.ViewModelState.Error
 import pl.piotrskiba.angularowo.base.model.ViewModelState.Loaded

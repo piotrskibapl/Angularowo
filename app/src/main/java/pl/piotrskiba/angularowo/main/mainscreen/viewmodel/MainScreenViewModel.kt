@@ -1,7 +1,7 @@
 package pl.piotrskiba.angularowo.main.mainscreen.viewmodel
 
 import androidx.lifecycle.MutableLiveData
-import com.snakydesign.livedataextensions.map
+import androidx.lifecycle.map
 import me.tatarka.bindingcollectionadapter2.ItemBinding
 import pl.piotrskiba.angularowo.BR
 import pl.piotrskiba.angularowo.BuildConfig
