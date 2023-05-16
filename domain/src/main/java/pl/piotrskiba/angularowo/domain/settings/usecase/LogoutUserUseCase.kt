@@ -23,8 +23,7 @@ class LogoutUserUseCase @Inject constructor(
                     cloudMessagingRepository.unsubscribeFromPrivateMessages(),
                     cloudMessagingRepository.unsubscribeFromAccountIncidents(),
                     cloudMessagingRepository.unsubscribeFromNewReports(),
-                ).also {
-                    preferencesRepository.clearUserData()
-                }
+                    preferencesRepository.clearUserData(),
+                )
             }
 }

@@ -12,6 +12,7 @@ class UpdateCloudMessagingSubscriptionsUseCase @Inject constructor(
     private val rankRepository: RankRepository,
 ) {
 
+    // TODO: preferences are not updated after subscription
     fun execute(appVersionCode: Int) =
         Completable.mergeArray(
             updateAppVersionTopic(appVersionCode),
@@ -22,39 +23,32 @@ class UpdateCloudMessagingSubscriptionsUseCase @Inject constructor(
             updateNewReportsTopic(),
         )
 
-    private fun updateAppVersionTopic(current: Int): Completable {
-        val subscribed = preferencesRepository.subscribedFirebaseAppVersion
-        return if (subscribed != current) {
-            Completable.create { emitter ->
-                if (subscribed != null) {
-                    cloudMessagingRepository.unsubscribeFromAppVersion(subscribed)
-                        .doOnComplete { emitter.onComplete() }
+    private fun updateAppVersionTopic(newVersion: Int): Completable =
+        preferencesRepository.subscribedFirebaseAppVersion()
+            .switchIfEmpty(cloudMessagingRepository.subscribeToAppVersion(newVersion).toSingleDefault(newVersion))
+            .flatMapCompletable { subscribedVersion ->
+                if (subscribedVersion != newVersion) {
+                    cloudMessagingRepository.unsubscribeFromAppVersion(subscribedVersion)
+                        .mergeWith(cloudMessagingRepository.subscribeToAppVersion(newVersion))
                 } else {
-                    emitter.onComplete()
+                    Completable.complete()
                 }
-            }.concatWith(cloudMessagingRepository.subscribeToAppVersion(current))
-        } else {
-            Completable.complete()
-        }
-    }
+            }
 
     private fun updatePlayerRankTopic() =
         preferencesRepository.rankName()
             .toSingle()
-            .flatMapCompletable { rankName ->
-                val subscribed = preferencesRepository.subscribedFirebasePlayerRankName
-                if (subscribed != rankName) {
-                    Completable.create { emitter ->
-                        if (subscribed != null) {
-                            cloudMessagingRepository.unsubscribeFromPlayerRank(subscribed)
-                                .doOnComplete { emitter.onComplete() }
+            .flatMapCompletable { newRankName ->
+                preferencesRepository.subscribedFirebasePlayerRankName()
+                    .switchIfEmpty(cloudMessagingRepository.subscribeToPlayerRank(newRankName).toSingleDefault(newRankName))
+                    .flatMapCompletable { subscribedRankName ->
+                        if (subscribedRankName != newRankName) {
+                            cloudMessagingRepository.unsubscribeFromPlayerRank(subscribedRankName)
+                                .mergeWith(cloudMessagingRepository.subscribeToPlayerRank(newRankName))
                         } else {
-                            emitter.onComplete()
+                            Completable.complete()
                         }
-                    }.concatWith(cloudMessagingRepository.subscribeToPlayerRank(rankName))
-                } else {
-                    Completable.complete()
-                }
+                    }
             }
 
     private fun updateNewEventsTopic() =

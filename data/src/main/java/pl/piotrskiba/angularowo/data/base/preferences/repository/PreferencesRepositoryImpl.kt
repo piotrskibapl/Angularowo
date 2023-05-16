@@ -3,6 +3,7 @@ package pl.piotrskiba.angularowo.data.base.preferences.repository
 import android.content.SharedPreferences
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
+import io.reactivex.rxjava3.core.Single
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
 
 private const val PREF_KEY_ACCESS_TOKEN = "access_token"
@@ -11,7 +12,6 @@ private const val PREF_KEY_USERNAME = "nickname"
 private const val PREF_KEY_RANK_NAME = "rank"
 private const val PREF_KEY_FAVORITE_SHOWCASE_SHOWN = "showcase_favorite_shown"
 private const val PREF_KEY_FIREBASE_SUBSCRIBED_APP_VERSION = "subscribed_app_version"
-private const val PREF_KEY_FIREBASE_SUBSCRIBED_PLAYER_UUID = "subscribed_player_uuid"
 private const val PREF_KEY_FIREBASE_SUBSCRIBED_PLAYER_RANK_NAME = "subscribed_player_rank_name"
 private const val PREF_KEY_FIREBASE_EVENTS_SUBSCRIBED = "events_subscribed"
 private const val PREF_KEY_FIREBASE_PRIVATE_MESSAGES_SUBSCRIBED = "private_messages_subscribed"
@@ -78,25 +78,43 @@ class PreferencesRepositoryImpl(
             applyValue(PREF_KEY_RANK_NAME, rankName)
         }
 
-    override var hasSeenFavoriteShowcase: Boolean
-        get() = sharedPreferences.getBoolean(PREF_KEY_FAVORITE_SHOWCASE_SHOWN, false)
-        set(value) = applyValue(PREF_KEY_FAVORITE_SHOWCASE_SHOWN, value)
-
-    override var subscribedFirebaseAppVersion: Int?
-        get() = when (val value =
-            sharedPreferences.getInt(PREF_KEY_FIREBASE_SUBSCRIBED_APP_VERSION, -1)) {
-            -1 -> null
-            else -> value
+    override fun hasSeenFavoriteShowcase(): Single<Boolean> =
+        Single.fromCallable {
+            sharedPreferences.getBoolean(PREF_KEY_FAVORITE_SHOWCASE_SHOWN, false)
         }
-        set(value) = applyValue(PREF_KEY_FIREBASE_SUBSCRIBED_APP_VERSION, value ?: -1)
 
-    override var subscribedFirebasePlayerUuid: String?
-        get() = sharedPreferences.getString(PREF_KEY_FIREBASE_SUBSCRIBED_PLAYER_UUID, null)
-        set(value) = applyValue(PREF_KEY_FIREBASE_SUBSCRIBED_PLAYER_UUID, value)
+    override fun setHasSeenFavoriteShowcase(hasSeenFavoriteShowcase: Boolean): Completable =
+        Completable.fromAction {
+            applyValue(PREF_KEY_FAVORITE_SHOWCASE_SHOWN, hasSeenFavoriteShowcase)
+        }
 
-    override var subscribedFirebasePlayerRankName: String?
-        get() = sharedPreferences.getString(PREF_KEY_FIREBASE_SUBSCRIBED_PLAYER_RANK_NAME, null)
-        set(value) = applyValue(PREF_KEY_FIREBASE_SUBSCRIBED_PLAYER_RANK_NAME, value)
+    override fun subscribedFirebaseAppVersion(): Maybe<Int> =
+        sharedPreferences.getInt(PREF_KEY_FIREBASE_SUBSCRIBED_APP_VERSION, -1).let { version ->
+            if (version == -1) {
+                Maybe.empty()
+            } else {
+                Maybe.just(version)
+            }
+        }
+
+    override fun setSubscribedFirebaseAppVersion(subscribedFirebaseAppVersion: Int): Completable =
+        Completable.fromAction {
+            applyValue(PREF_KEY_FIREBASE_SUBSCRIBED_APP_VERSION, subscribedFirebaseAppVersion)
+        }
+
+    override fun subscribedFirebasePlayerRankName(): Maybe<String> =
+        sharedPreferences.getString(PREF_KEY_FIREBASE_SUBSCRIBED_PLAYER_RANK_NAME, null).let { rankName ->
+            if (rankName == null) {
+                Maybe.empty()
+            } else {
+                Maybe.just(rankName)
+            }
+        }
+
+    override fun setSubscribedFirebasePlayerRankName(subscribedFirebasePlayerRankName: Int): Completable =
+        Completable.fromAction {
+            applyValue(PREF_KEY_FIREBASE_SUBSCRIBED_PLAYER_RANK_NAME, subscribedFirebasePlayerRankName)
+        }
 
     override var subscribedToFirebaseEventsTopic: Boolean?
         get() = if (sharedPreferences.contains(PREF_KEY_FIREBASE_EVENTS_SUBSCRIBED)) {
@@ -146,15 +164,16 @@ class PreferencesRepositoryImpl(
             deleteValue(PREF_KEY_FIREBASE_NEW_REPORTS_SUBSCRIBED)
         }
 
-    override fun clearUserData() {
-        sharedPreferences.edit().apply {
-            remove(PREF_KEY_ACCESS_TOKEN)
-            remove(PREF_KEY_UUID)
-            remove(PREF_KEY_USERNAME)
-            remove(PREF_KEY_RANK_NAME)
-            apply()
+    override fun clearUserData(): Completable =
+        Completable.fromAction {
+            sharedPreferences.edit().apply {
+                remove(PREF_KEY_ACCESS_TOKEN)
+                remove(PREF_KEY_UUID)
+                remove(PREF_KEY_USERNAME)
+                remove(PREF_KEY_RANK_NAME)
+                apply()
+            }
         }
-    }
 
     private fun applyValue(key: String, value: String?) {
         sharedPreferences.edit().apply {
