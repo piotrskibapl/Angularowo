@@ -9,7 +9,7 @@ data class DetailedPlayerModel(
     val partnerUuid: String?,
     val username: String,
     val status: String,
-    var rank: RankModel, // TODO: use val
+    val rank: RankModel,
     val isVanished: Boolean,
     val balance: Float,
     val playtime: Long,

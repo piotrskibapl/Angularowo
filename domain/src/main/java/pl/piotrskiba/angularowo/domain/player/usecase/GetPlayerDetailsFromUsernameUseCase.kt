@@ -18,8 +18,8 @@ class GetPlayerDetailsFromUsernameUseCase @Inject constructor(
                 playerRepository.getPlayerDetailsFromUsername(accessToken, username)
                     .flatMap { player ->
                         rankRepository.getAllRanks().map { ranks ->
-                            player.rank = ranks.firstOrNull { it.name == player.rank.name } ?: player.rank
-                            player
+                            val playerRank = ranks.firstOrNull { it.name == player.rank.name } ?: player.rank
+                            player.copy(rank = playerRank)
                         }
                     }
             }
