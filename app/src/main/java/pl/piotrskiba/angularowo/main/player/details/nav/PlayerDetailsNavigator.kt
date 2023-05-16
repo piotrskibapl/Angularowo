@@ -5,4 +5,5 @@ interface PlayerDetailsNavigator {
     fun displayMarkedAsFavoriteSnackbar()
     fun displayUnmarkedAsFavoriteSnackbar()
     fun displayGenericErrorSnackbar()
+    fun displayFavoriteShowcase()
 }

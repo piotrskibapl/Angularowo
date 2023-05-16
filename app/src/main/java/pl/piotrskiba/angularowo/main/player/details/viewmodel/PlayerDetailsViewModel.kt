@@ -13,6 +13,7 @@ import pl.piotrskiba.angularowo.domain.friend.usecase.MarkPlayerAsFavoriteUseCas
 import pl.piotrskiba.angularowo.domain.friend.usecase.ObserveIfPlayerIsFavoriteUseCase
 import pl.piotrskiba.angularowo.domain.friend.usecase.UnmarkPlayerAsFavoriteUseCase
 import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
+import pl.piotrskiba.angularowo.domain.player.usecase.CheckIfShouldDisplayFavoriteShowcaseUseCase
 import pl.piotrskiba.angularowo.domain.player.usecase.GetPlayerDetailsFromUuidUseCase
 import pl.piotrskiba.angularowo.main.player.details.model.DetailedPlayer
 import pl.piotrskiba.angularowo.main.player.details.model.toUi
@@ -26,6 +27,7 @@ class PlayerDetailsViewModel @Inject constructor(
     private val observeIfPlayerIsFavoriteUseCase: ObserveIfPlayerIsFavoriteUseCase,
     private val markPlayerAsFavoriteUseCase: MarkPlayerAsFavoriteUseCase,
     private val unmarkPlayerAsFavoriteUseCase: UnmarkPlayerAsFavoriteUseCase,
+    private val checkIfShouldDisplayFavoriteShowcaseUseCase: CheckIfShouldDisplayFavoriteShowcaseUseCase,
     private val facade: SchedulersProvider,
 ) : LifecycleViewModel() {
 
@@ -91,11 +93,25 @@ class PlayerDetailsViewModel @Inject constructor(
                     state.value = Loaded
                     previewedPlayerBanner.value = detailedPlayer.toPlayerBannerData(isPreviewedPlayerFavorite)
                     previewedPlayerDetails.value = detailedPlayer.toUi()
+                    checkIfShouldDisplayFavoriteShowcase()
                 },
                 { error ->
                     state.value = Error(error)
                 }
             )
+        )
+    }
+
+    private fun checkIfShouldDisplayFavoriteShowcase() {
+        disposables.add(
+            checkIfShouldDisplayFavoriteShowcaseUseCase.execute()
+                .subscribeOn(facade.io())
+                .observeOn(facade.ui())
+                .subscribe { shouldShow ->
+                    if (shouldShow) {
+                        navigator.displayFavoriteShowcase()
+                    }
+                }
         )
     }
 

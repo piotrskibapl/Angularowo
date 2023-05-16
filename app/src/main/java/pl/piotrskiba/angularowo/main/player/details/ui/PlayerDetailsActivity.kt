@@ -12,6 +12,9 @@ import pl.piotrskiba.angularowo.base.ui.BaseActivity
 import pl.piotrskiba.angularowo.databinding.ActivityPlayerDetailsBinding
 import pl.piotrskiba.angularowo.main.player.details.nav.PlayerDetailsNavigator
 import pl.piotrskiba.angularowo.main.player.details.viewmodel.PlayerDetailsViewModel
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView
+
+private const val SHOWCASE_DELAY_MS = 500
 
 class PlayerDetailsActivity : BaseActivity<PlayerDetailsViewModel>(PlayerDetailsViewModel::class), PlayerDetailsNavigator {
 
@@ -62,6 +65,17 @@ class PlayerDetailsActivity : BaseActivity<PlayerDetailsViewModel>(PlayerDetails
             Snackbar.LENGTH_LONG,
         )
         snackbar!!.show()
+    }
+
+    override fun displayFavoriteShowcase() {
+        MaterialShowcaseView.Builder(this)
+            .setTarget(findViewById(R.id.nav_favorite))
+            .setTitleText(R.string.showcase_favorite_title)
+            .setContentText(R.string.showcase_favorite_description)
+            .setDelay(SHOWCASE_DELAY_MS)
+            .setDismissOnTouch(true)
+            .setTargetTouchable(true)
+            .show()
     }
 
     private fun setupBinding() {
