@@ -1,5 +1,6 @@
 package pl.piotrskiba.angularowo.data.base.preferences.repository
 
+import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
@@ -18,6 +19,7 @@ private const val PREF_KEY_FIREBASE_PRIVATE_MESSAGES_SUBSCRIBED = "private_messa
 private const val PREF_KEY_FIREBASE_ACCOUNT_INCIDENTS_SUBSCRIBED = "account_incidents_subscribed"
 private const val PREF_KEY_FIREBASE_NEW_REPORTS_SUBSCRIBED = "new_reports_subscribed"
 
+@SuppressLint("ApplySharedPref")
 class PreferencesRepositoryImpl(
     private val sharedPreferences: SharedPreferences
 ) : PreferencesRepository {
@@ -111,7 +113,7 @@ class PreferencesRepositoryImpl(
             }
         }
 
-    override fun setSubscribedFirebasePlayerRankName(subscribedFirebasePlayerRankName: Int): Completable =
+    override fun setSubscribedFirebasePlayerRankName(subscribedFirebasePlayerRankName: String): Completable =
         Completable.fromAction {
             applyValue(PREF_KEY_FIREBASE_SUBSCRIBED_PLAYER_RANK_NAME, subscribedFirebasePlayerRankName)
         }
@@ -171,28 +173,28 @@ class PreferencesRepositoryImpl(
                 remove(PREF_KEY_UUID)
                 remove(PREF_KEY_USERNAME)
                 remove(PREF_KEY_RANK_NAME)
-                apply()
+                commit()
             }
         }
 
     private fun applyValue(key: String, value: String?) {
         sharedPreferences.edit().apply {
             putString(key, value)
-            apply()
+            commit()
         }
     }
 
     private fun applyValue(key: String, value: Int) {
         sharedPreferences.edit().apply {
             putInt(key, value)
-            apply()
+            commit()
         }
     }
 
     private fun applyValue(key: String, value: Boolean) {
         sharedPreferences.edit().apply {
             putBoolean(key, value)
-            apply()
+            commit()
         }
     }
 }

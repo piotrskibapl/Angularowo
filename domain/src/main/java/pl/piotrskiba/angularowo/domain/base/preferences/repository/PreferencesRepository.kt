@@ -19,7 +19,7 @@ interface PreferencesRepository {
     fun subscribedFirebaseAppVersion(): Maybe<Int>
     fun setSubscribedFirebaseAppVersion(subscribedFirebaseAppVersion: Int): Completable
     fun subscribedFirebasePlayerRankName(): Maybe<String>
-    fun setSubscribedFirebasePlayerRankName(subscribedFirebasePlayerRankName: Int): Completable
+    fun setSubscribedFirebasePlayerRankName(subscribedFirebasePlayerRankName: String): Completable
     fun subscribedToFirebaseEventsTopic(): Maybe<Boolean>
     fun setSubscribedToFirebaseEventsTopic(subscribedToFirebaseEventsTopic: Boolean): Completable
     fun subscribedToFirebasePrivateMessagesTopic(): Maybe<Boolean>
