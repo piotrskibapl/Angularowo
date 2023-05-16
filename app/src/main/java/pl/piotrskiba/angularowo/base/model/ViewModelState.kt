@@ -1,8 +1,8 @@
 package pl.piotrskiba.angularowo.base.model
 
-import androidx.annotation.ColorRes
+import android.content.Context
+import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import pl.piotrskiba.angularowo.R
 import retrofit2.HttpException
 import java.io.IOException
@@ -32,13 +32,15 @@ sealed class ViewModelState {
 
     private fun isSending() = this is Loading.Send
 
-    @ColorRes
-    fun loadingBackgroundColor() =
-        if (isFetching()) {
-            R.color.windowBackground
-        } else {
-            R.color.windowBackgroundA50
-        }
+    @ColorInt
+    fun loadingBackgroundColor(context: Context) =
+        context.getColor(
+            if (isFetching()) {
+                R.color.windowBackground
+            } else {
+                R.color.windowBackgroundA50
+            }
+        )
 
     @DrawableRes
     fun errorImage() =
@@ -48,12 +50,13 @@ sealed class ViewModelState {
             else -> R.drawable.ic_mood_bad
         }
 
-    @StringRes
-    fun errorText() =
-        when {
-            isNetworkError() -> R.string.no_internet
-            isApiError() -> R.string.server_error
-            else -> R.string.unknown_error
-        }
+    fun errorText(context: Context) =
+        context.getString(
+            when {
+                isNetworkError() -> R.string.no_internet
+                isApiError() -> R.string.server_error
+                else -> R.string.unknown_error
+            }
+        )
 }
 

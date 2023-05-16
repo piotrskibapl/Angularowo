@@ -32,9 +32,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:text="@{state.errorText()}"
+            android:paddingHorizontal="8dp"
+            android:text="@{state.errorText(context)}"
             android:textAlignment="center"
             tools:text="@string/server_error" />
     </LinearLayout>
