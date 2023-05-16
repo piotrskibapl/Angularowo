@@ -20,9 +20,13 @@ interface PreferencesRepository {
     fun setSubscribedFirebaseAppVersion(subscribedFirebaseAppVersion: Int): Completable
     fun subscribedFirebasePlayerRankName(): Maybe<String>
     fun setSubscribedFirebasePlayerRankName(subscribedFirebasePlayerRankName: Int): Completable
-    var subscribedToFirebaseEventsTopic: Boolean? // TODO: use enum class
-    var subscribedToFirebasePrivateMessagesTopic: Boolean? // TODO: use enum class
-    var subscribedToFirebaseAccountIncidentsTopic: Boolean? // TODO: use enum class
-    var subscribedToFirebaseNewReportsTopic: Boolean? // TODO: use enum class
+    fun subscribedToFirebaseEventsTopic(): Maybe<Boolean>
+    fun setSubscribedToFirebaseEventsTopic(subscribedToFirebaseEventsTopic: Boolean): Completable
+    fun subscribedToFirebasePrivateMessagesTopic(): Maybe<Boolean>
+    fun setSubscribedToFirebasePrivateMessagesTopic(subscribedToFirebasePrivateMessagesTopic: Boolean): Completable
+    fun subscribedToFirebaseAccountIncidentsTopic(): Maybe<Boolean>
+    fun setSubscribedToFirebaseAccountIncidentsTopic(subscribedToFirebaseAccountIncidentsTopic: Boolean): Completable
+    fun subscribedToFirebaseNewReportsTopic(): Maybe<Boolean>
+    fun setSubscribedToFirebaseNewReportsTopic(subscribedToFirebaseNewReportsTopic: Boolean): Completable
     fun clearUserData(): Completable
 }

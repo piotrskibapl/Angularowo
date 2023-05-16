@@ -116,52 +116,52 @@ class PreferencesRepositoryImpl(
             applyValue(PREF_KEY_FIREBASE_SUBSCRIBED_PLAYER_RANK_NAME, subscribedFirebasePlayerRankName)
         }
 
-    override var subscribedToFirebaseEventsTopic: Boolean?
-        get() = if (sharedPreferences.contains(PREF_KEY_FIREBASE_EVENTS_SUBSCRIBED)) {
-            sharedPreferences.getBoolean(PREF_KEY_FIREBASE_EVENTS_SUBSCRIBED, false)
+    override fun subscribedToFirebaseEventsTopic(): Maybe<Boolean> =
+        if (sharedPreferences.contains(PREF_KEY_FIREBASE_EVENTS_SUBSCRIBED)) {
+            Maybe.just(sharedPreferences.getBoolean(PREF_KEY_FIREBASE_EVENTS_SUBSCRIBED, false))
         } else {
-            null
-        }
-        set(value) = if (value != null) {
-            applyValue(PREF_KEY_FIREBASE_EVENTS_SUBSCRIBED, value)
-        } else {
-            deleteValue(PREF_KEY_FIREBASE_EVENTS_SUBSCRIBED)
+            Maybe.empty()
         }
 
-    override var subscribedToFirebasePrivateMessagesTopic: Boolean?
-        get() = if (sharedPreferences.contains(PREF_KEY_FIREBASE_PRIVATE_MESSAGES_SUBSCRIBED)) {
-            sharedPreferences.getBoolean(PREF_KEY_FIREBASE_PRIVATE_MESSAGES_SUBSCRIBED, false)
-        } else {
-            null
-        }
-        set(value) = if (value != null) {
-            applyValue(PREF_KEY_FIREBASE_PRIVATE_MESSAGES_SUBSCRIBED, value)
-        } else {
-            deleteValue(PREF_KEY_FIREBASE_PRIVATE_MESSAGES_SUBSCRIBED)
+    override fun setSubscribedToFirebaseEventsTopic(subscribedToFirebaseEventsTopic: Boolean): Completable =
+        Completable.fromAction {
+            applyValue(PREF_KEY_FIREBASE_EVENTS_SUBSCRIBED, subscribedToFirebaseEventsTopic)
         }
 
-    override var subscribedToFirebaseAccountIncidentsTopic: Boolean?
-        get() = if (sharedPreferences.contains(PREF_KEY_FIREBASE_ACCOUNT_INCIDENTS_SUBSCRIBED)) {
-            sharedPreferences.getBoolean(PREF_KEY_FIREBASE_ACCOUNT_INCIDENTS_SUBSCRIBED, false)
+    override fun subscribedToFirebasePrivateMessagesTopic(): Maybe<Boolean> =
+        if (sharedPreferences.contains(PREF_KEY_FIREBASE_PRIVATE_MESSAGES_SUBSCRIBED)) {
+            Maybe.just(sharedPreferences.getBoolean(PREF_KEY_FIREBASE_PRIVATE_MESSAGES_SUBSCRIBED, false))
         } else {
-            null
-        }
-        set(value) = if (value != null) {
-            applyValue(PREF_KEY_FIREBASE_ACCOUNT_INCIDENTS_SUBSCRIBED, value)
-        } else {
-            deleteValue(PREF_KEY_FIREBASE_ACCOUNT_INCIDENTS_SUBSCRIBED)
+            Maybe.empty()
         }
 
-    override var subscribedToFirebaseNewReportsTopic: Boolean?
-        get() = if (sharedPreferences.contains(PREF_KEY_FIREBASE_NEW_REPORTS_SUBSCRIBED)) {
-            sharedPreferences.getBoolean(PREF_KEY_FIREBASE_NEW_REPORTS_SUBSCRIBED, false)
-        } else {
-            null
+    override fun setSubscribedToFirebasePrivateMessagesTopic(subscribedToFirebasePrivateMessagesTopic: Boolean): Completable =
+        Completable.fromAction {
+            applyValue(PREF_KEY_FIREBASE_PRIVATE_MESSAGES_SUBSCRIBED, subscribedToFirebasePrivateMessagesTopic)
         }
-        set(value) = if (value != null) {
-            applyValue(PREF_KEY_FIREBASE_NEW_REPORTS_SUBSCRIBED, value)
+
+    override fun subscribedToFirebaseAccountIncidentsTopic(): Maybe<Boolean> =
+        if (sharedPreferences.contains(PREF_KEY_FIREBASE_ACCOUNT_INCIDENTS_SUBSCRIBED)) {
+            Maybe.just(sharedPreferences.getBoolean(PREF_KEY_FIREBASE_ACCOUNT_INCIDENTS_SUBSCRIBED, false))
         } else {
-            deleteValue(PREF_KEY_FIREBASE_NEW_REPORTS_SUBSCRIBED)
+            Maybe.empty()
+        }
+
+    override fun setSubscribedToFirebaseAccountIncidentsTopic(subscribedToFirebaseAccountIncidentsTopic: Boolean): Completable =
+        Completable.fromAction {
+            applyValue(PREF_KEY_FIREBASE_ACCOUNT_INCIDENTS_SUBSCRIBED, subscribedToFirebaseAccountIncidentsTopic)
+        }
+
+    override fun subscribedToFirebaseNewReportsTopic(): Maybe<Boolean> =
+        if (sharedPreferences.contains(PREF_KEY_FIREBASE_NEW_REPORTS_SUBSCRIBED)) {
+            Maybe.just(sharedPreferences.getBoolean(PREF_KEY_FIREBASE_NEW_REPORTS_SUBSCRIBED, false))
+        } else {
+            Maybe.empty()
+        }
+
+    override fun setSubscribedToFirebaseNewReportsTopic(subscribedToFirebaseNewReportsTopic: Boolean): Completable =
+        Completable.fromAction {
+            applyValue(PREF_KEY_FIREBASE_NEW_REPORTS_SUBSCRIBED, subscribedToFirebaseNewReportsTopic)
         }
 
     override fun clearUserData(): Completable =
@@ -192,13 +192,6 @@ class PreferencesRepositoryImpl(
     private fun applyValue(key: String, value: Boolean) {
         sharedPreferences.edit().apply {
             putBoolean(key, value)
-            apply()
-        }
-    }
-
-    private fun deleteValue(key: String) {
-        sharedPreferences.edit().apply {
-            remove(key)
             apply()
         }
     }

@@ -52,25 +52,19 @@ class UpdateCloudMessagingSubscriptionsUseCase @Inject constructor(
             }
 
     private fun updateNewEventsTopic() =
-        if (preferencesRepository.subscribedToFirebaseEventsTopic == null) {
-            cloudMessagingRepository.subscribeToNewEvents()
-        } else {
-            Completable.complete()
-        }
+        preferencesRepository.subscribedToFirebaseEventsTopic()
+            .switchIfEmpty(cloudMessagingRepository.subscribeToNewEvents().toSingleDefault(true))
+            .ignoreElement()
 
     private fun updatePrivateMessagesTopic() =
-        if (preferencesRepository.subscribedToFirebasePrivateMessagesTopic == null) {
-            cloudMessagingRepository.subscribeToPrivateMessages()
-        } else {
-            Completable.complete()
-        }
+        preferencesRepository.subscribedToFirebasePrivateMessagesTopic()
+            .switchIfEmpty(cloudMessagingRepository.subscribeToPrivateMessages().toSingleDefault(true))
+            .ignoreElement()
 
     private fun updateAccountIncidentsTopic() =
-        if (preferencesRepository.subscribedToFirebaseAccountIncidentsTopic == null) {
-            cloudMessagingRepository.subscribeToAccountIncidents()
-        } else {
-            Completable.complete()
-        }
+        preferencesRepository.subscribedToFirebaseAccountIncidentsTopic()
+            .switchIfEmpty(cloudMessagingRepository.subscribeToAccountIncidents().toSingleDefault(true))
+            .ignoreElement()
 
     private fun updateNewReportsTopic() =
         preferencesRepository.rankName()
@@ -79,12 +73,22 @@ class UpdateCloudMessagingSubscriptionsUseCase @Inject constructor(
                 rankRepository.getAllRanks()
                     .flatMapCompletable { ranks ->
                         val isStaff = ranks.firstOrNull { it.name == rankName }?.staff ?: false
-                        val subscribed = preferencesRepository.subscribedToFirebaseNewReportsTopic
-                        when {
-                            subscribed == null && isStaff -> cloudMessagingRepository.subscribeToNewReports()
-                            subscribed == true && !isStaff -> cloudMessagingRepository.unsubscribeFromNewReports()
-                            else -> Completable.complete()
-                        }
+                        preferencesRepository.subscribedToFirebaseNewReportsTopic()
+                            .switchIfEmpty(handleFirstTimeNewReportsSubscription(isStaff))
+                            .flatMapCompletable { subscribed ->
+                                if (subscribed && !isStaff) {
+                                    cloudMessagingRepository.unsubscribeFromNewReports()
+                                } else {
+                                    Completable.complete()
+                                }
+                            }
                     }
             }
+
+    private fun handleFirstTimeNewReportsSubscription(isStaff: Boolean) =
+        if (isStaff) {
+            cloudMessagingRepository.subscribeToNewReports()
+        } else {
+            Completable.complete()
+        }.toSingleDefault(isStaff)
 }

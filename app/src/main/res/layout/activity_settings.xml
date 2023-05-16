@@ -66,7 +66,7 @@
             app:itemDescriptionResId="@{R.string.pref_summary_subscribed_to_new_reports}"
             app:itemNameResId="@{R.string.pref_title_subscribed_to_new_reports}"
             app:onClick="@{() -> viewModel.onNewReportsNotificationsClicked()}"
-            app:visible="@{viewModel.isStaffMember()}" />
+            app:visible="@{viewModel.newReportsVisible}" />
 
         <include
             android:id="@+id/category_others"

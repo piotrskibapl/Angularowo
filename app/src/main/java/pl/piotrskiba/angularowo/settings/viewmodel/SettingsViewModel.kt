@@ -4,8 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import pl.piotrskiba.angularowo.BuildConfig
 import pl.piotrskiba.angularowo.base.rx.SchedulersFacade
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
-import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
-import pl.piotrskiba.angularowo.domain.base.preferences.usecase.CheckIfIsStaffUserUseCase
+import pl.piotrskiba.angularowo.domain.settings.usecase.GetSettingsInitialValuesUseCase
 import pl.piotrskiba.angularowo.domain.settings.usecase.LogoutUserUseCase
 import pl.piotrskiba.angularowo.domain.settings.usecase.UpdateAccountIncidentsSubscriptionUseCase
 import pl.piotrskiba.angularowo.domain.settings.usecase.UpdateNewEventsSubscriptionUseCase
@@ -15,13 +14,12 @@ import pl.piotrskiba.angularowo.settings.nav.SettingsNavigator
 import javax.inject.Inject
 
 class SettingsViewModel @Inject constructor(
-    private val preferencesRepository: PreferencesRepository,
+    private val getSettingsInitialValuesUseCase: GetSettingsInitialValuesUseCase,
     private val updateNewEventsSubscriptionUseCase: UpdateNewEventsSubscriptionUseCase,
     private val updatePrivateMessagesSubscriptionUseCase: UpdatePrivateMessagesSubscriptionUseCase,
     private val updateAccountIncidentsSubscriptionUseCase: UpdateAccountIncidentsSubscriptionUseCase,
     private val updateNewReportsSubscriptionUseCase: UpdateNewReportsSubscriptionUseCase,
     private val logoutUserUseCase: LogoutUserUseCase,
-    private val checkIfIsStaffUserUseCase: CheckIfIsStaffUserUseCase,
     private val facade: SchedulersFacade,
 ) : LifecycleViewModel() {
 
@@ -30,19 +28,19 @@ class SettingsViewModel @Inject constructor(
     val privateMessagesChecked = MutableLiveData(false)
     val accountIncidentsChecked = MutableLiveData(false)
     val newReportsChecked = MutableLiveData(false)
-    val isStaffMember = MutableLiveData(false)
+    val newReportsVisible = MutableLiveData(false)
 
     override fun onFirstCreate() {
-        eventsChecked.value = preferencesRepository.subscribedToFirebaseEventsTopic ?: false
-        privateMessagesChecked.value = preferencesRepository.subscribedToFirebasePrivateMessagesTopic ?: false
-        accountIncidentsChecked.value = preferencesRepository.subscribedToFirebaseAccountIncidentsTopic ?: false
-        newReportsChecked.value = preferencesRepository.subscribedToFirebaseNewReportsTopic ?: false
         disposables.add(
-            checkIfIsStaffUserUseCase.execute()
+            getSettingsInitialValuesUseCase.execute()
                 .subscribeOn(facade.io())
                 .observeOn(facade.ui())
-                .subscribe { isStaff ->
-                    isStaffMember.value = isStaff
+                .subscribe { settings ->
+                    eventsChecked.value = settings.subscribedToEvents
+                    privateMessagesChecked.value = settings.subscribedToPrivateMessages
+                    accountIncidentsChecked.value = settings.subscribedToAccountIncidents
+                    newReportsChecked.value = settings.subscribedToNewReports
+                    newReportsVisible.value = settings.newReportsVisible
                 }
         )
     }
