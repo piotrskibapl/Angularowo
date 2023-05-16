@@ -54,8 +54,7 @@
                 android:digits="1234567890"
                 android:inputType="number"
                 android:maxLength="6"
-                android:paddingStart="@dimen/login_pin_padding"
-                android:paddingEnd="@dimen/login_pin_padding"
+                android:paddingHorizontal="@dimen/login_pin_padding"
                 android:textIsSelectable="false"
                 android:textSize="@dimen/login_pin_text_size" />
         </LinearLayout>
