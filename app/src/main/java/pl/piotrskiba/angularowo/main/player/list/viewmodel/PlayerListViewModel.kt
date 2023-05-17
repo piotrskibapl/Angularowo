@@ -14,7 +14,6 @@ import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.player.usecase.ObserveOnlinePlayerListWithFavoriteInformationUseCase
 import pl.piotrskiba.angularowo.domain.player.usecase.RefreshOnlinePlayerListUseCase
-import pl.piotrskiba.angularowo.main.player.list.nav.PlayerListNavigator
 import pl.piotrskiba.angularowo.main.player.model.PlayerBanner
 import pl.piotrskiba.angularowo.main.player.model.toPlayerBannerData
 import javax.inject.Inject
@@ -33,10 +32,8 @@ class PlayerListViewModel @Inject constructor(
     val isNoPlayersOnline = combineLatest(players, favoritePlayers) { players, favoritePlayers ->
         players.isEmpty() && favoritePlayers.isEmpty()
     }
-    lateinit var navigator: PlayerListNavigator
 
     override fun onFirstCreate() {
-        playersBinding.bindExtra(BR.navigator, navigator)
         observePlayerList()
         refreshPlayerList()
     }

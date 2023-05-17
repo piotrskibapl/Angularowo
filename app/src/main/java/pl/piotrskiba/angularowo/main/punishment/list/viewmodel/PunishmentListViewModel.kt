@@ -27,10 +27,8 @@ class PunishmentListViewModel @Inject constructor(
     val punishments: MutableList<DetailedPunishmentData> = mutableListOf()
     val punishmentBanners: MutableLiveData<List<PunishmentBannerData>> = MutableLiveData()
     val punishmentsBinding = ItemBinding.of<PunishmentBannerData>(BR.punishment, R.layout.punishment_list_item)
-    lateinit var navigator: PunishmentListNavigator
 
     override fun onFirstCreate() {
-        punishmentsBinding.bindExtra(BR.navigator, navigator)
         loadPunishmentList()
     }
 

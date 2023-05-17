@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import pl.piotrskiba.angularowo.BR
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.di.obtainViewModel
@@ -22,7 +23,7 @@ class ChatFragment : BaseFragment<ChatViewModel>(ChatViewModel::class), ChatNavi
     private lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        viewModel.navigator = this
+        viewModel.chatMessagesBinding.bindExtra(BR.navigator, this)
         mainViewModel = viewModelFactory.obtainViewModel(requireActivity())
         super.onCreate(savedInstanceState)
     }

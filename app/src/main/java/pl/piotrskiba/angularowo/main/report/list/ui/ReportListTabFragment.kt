@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
+import pl.piotrskiba.angularowo.BR
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
@@ -21,7 +22,7 @@ class ReportListTabFragment : BaseFragment<ReportListTabViewModel>(ReportListTab
     ReportListNavigator {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        viewModel.navigator = this
+        viewModel.reportsBinding.bindExtra(BR.navigator, this)
         viewModel.othersReportsVariant = arguments?.getBoolean(OTHERS_REPORTS_VARIANT_KEY) == true
         super.onCreate(savedInstanceState)
     }

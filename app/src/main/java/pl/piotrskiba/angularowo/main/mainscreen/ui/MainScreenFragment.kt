@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
+import pl.piotrskiba.angularowo.BR
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.di.obtainViewModel
@@ -28,7 +29,7 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel
     private var motd: Motd? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        viewModel.punishmentNavigator = this
+        viewModel.punishmentsBinding.bindExtra(BR.navigator, this)
         super.onCreate(savedInstanceState)
         mainViewModel = viewModelFactory.obtainViewModel(requireActivity())
         viewModel.player.observe(this) { mainViewModel.player.value = it }

@@ -109,40 +109,23 @@ class MainActivity : BaseActivity<MainViewModel>(MainViewModel::class), MainNavi
     }
 
     private fun initializeFragments() {
-        val frag1: MainScreenFragment? =
-            supportFragmentManager.findFragmentByTag(TAG_MAIN_FRAGMENT) as MainScreenFragment?
-        frag1?.run {
-            mainScreenFragment = this
+        supportFragmentManager.findFragmentByTag(TAG_MAIN_FRAGMENT)?.let {
+            mainScreenFragment = it as MainScreenFragment
         }
-
-        val frag2: PlayerListFragment? =
-            supportFragmentManager.findFragmentByTag(TAG_PLAYER_LIST_FRAGMENT) as PlayerListFragment?
-        frag2?.run {
-            playerListFragment = this
+        supportFragmentManager.findFragmentByTag(TAG_PLAYER_LIST_FRAGMENT)?.let {
+            playerListFragment = it as PlayerListFragment
         }
-
-        val frag3: ChatFragment? =
-            supportFragmentManager.findFragmentByTag(TAG_CHAT_FRAGMENT) as ChatFragment?
-        frag3?.run {
-            chatFragment = this
+        supportFragmentManager.findFragmentByTag(TAG_CHAT_FRAGMENT)?.let {
+            chatFragment = it as ChatFragment
         }
-
-        val frag4: PunishmentListFragment? =
-            supportFragmentManager.findFragmentByTag(TAG_BAN_LIST_FRAGMENT) as PunishmentListFragment?
-        frag4?.run {
-            punishmentListFragment = this
+        supportFragmentManager.findFragmentByTag(TAG_BAN_LIST_FRAGMENT)?.let {
+            punishmentListFragment = it as PunishmentListFragment
         }
-
-        val frag5: OffersFragment? =
-            supportFragmentManager.findFragmentByTag(TAG_FREE_RANKS_FRAGMENT) as OffersFragment?
-        frag5?.run {
-            offersFragment = this
+        supportFragmentManager.findFragmentByTag(TAG_FREE_RANKS_FRAGMENT)?.let {
+            offersFragment = it as OffersFragment
         }
-
-        val frag6: ReportListContainerFragment? =
-            supportFragmentManager.findFragmentByTag(TAG_REPORT_LIST_FRAGMENT) as ReportListContainerFragment?
-        frag6?.run {
-            reportListContainerFragment = this
+        supportFragmentManager.findFragmentByTag(TAG_REPORT_LIST_FRAGMENT)?.let {
+            reportListContainerFragment = it as ReportListContainerFragment
         }
     }
 

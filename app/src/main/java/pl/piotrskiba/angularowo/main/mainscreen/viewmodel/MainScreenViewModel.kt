@@ -20,7 +20,6 @@ import pl.piotrskiba.angularowo.main.mainscreen.model.toUi
 import pl.piotrskiba.angularowo.main.mainscreen.nav.MainScreenNavigator
 import pl.piotrskiba.angularowo.main.punishment.details.DetailedPunishmentData
 import pl.piotrskiba.angularowo.main.punishment.details.toUi
-import pl.piotrskiba.angularowo.main.punishment.list.nav.PunishmentListNavigator
 import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBannerData
 import javax.inject.Inject
 
@@ -31,17 +30,14 @@ class MainScreenViewModel @Inject constructor(
 ) : LifecycleViewModel() {
 
     val state = MutableLiveData<ViewModelState>(Loading.Fetch)
-    // exposed for MainViewModel synchronization
-    val player = MutableLiveData<DetailedPlayerModel>()
+    val player = MutableLiveData<DetailedPlayerModel>() // exposed for MainViewModel synchronization
     val uiData = MutableLiveData<MainScreenData>()
     val punishments: MutableList<DetailedPunishmentData> = mutableListOf()
     val punishmentsBinding = ItemBinding.of<PunishmentBannerData>(BR.punishment, R.layout.punishment_list_item)
     val isPunishmentListNotEmpty = uiData.map { it.punishments.isNotEmpty() }
     lateinit var navigator: MainScreenNavigator
-    lateinit var punishmentNavigator: PunishmentListNavigator
 
     override fun onFirstCreate() {
-        punishmentsBinding.bindExtra(BR.navigator, punishmentNavigator)
         loadData()
     }
 
