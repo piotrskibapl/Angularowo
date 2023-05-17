@@ -37,6 +37,7 @@ class SettingsActivity : BaseActivity<SettingsViewModel>(SettingsViewModel::clas
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+        binding.executePendingBindings()
         setContentView(binding.root)
     }
 
