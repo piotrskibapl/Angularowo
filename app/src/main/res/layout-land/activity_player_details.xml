@@ -52,8 +52,8 @@
 
                     <ImageView
                         android:id="@+id/iv_player_body"
-                        android:layout_width="@dimen/body_width"
-                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
                         android:layout_margin="@dimen/section_margin"
                         android:contentDescription="@string/player_body_image_description"
                         app:imageUrl="@{viewModel.previewedPlayerDetails.bodyImageUrl()}"
