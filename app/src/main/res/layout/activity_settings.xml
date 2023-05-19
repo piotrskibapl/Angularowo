@@ -87,7 +87,7 @@
                     android:id="@+id/item_logout"
                     layout="@layout/settings_item"
                     app:checkable="@{false}"
-                    app:itemDescriptionResId="@{R.string.pref_summary_subscribed_to_new_reports}"
+                    app:itemDescriptionResId="@{R.string.pref_summary_logout}"
                     app:itemNameResId="@{R.string.pref_title_logout}"
                     app:onClick="@{() -> viewModel.onLogoutClicked()}" />
             </LinearLayout>
