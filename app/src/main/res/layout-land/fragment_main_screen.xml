@@ -34,17 +34,25 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <!-- map motd -->
                     <TextView
                         android:id="@+id/tv_motd"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@{viewModel.uiData.server.motdBackgroundColor()}"
+                        android:clickable="@{viewModel.uiData.server.motdClickable}"
                         android:gravity="center_horizontal"
-                        android:onClick="@{() -> viewModel.onMotdClick()}"
+                        android:onClick="@{() -> viewModel.onMotdClick(viewModel.uiData.server.motdUrl)}"
                         android:padding="4dp"
+                        android:text="@{viewModel.uiData.server.motdText}"
                         android:textAlignment="center"
+                        android:textColor="@{viewModel.uiData.server.motdTextColor()}"
                         android:textSize="@dimen/motd_text_size"
-                        android:visibility="gone" />
+                        app:chevronColor="@{viewModel.uiData.server.motdTextColor()}"
+                        app:displayChevron="@{viewModel.uiData.server.motdClickable}"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:visible="@{viewModel.uiData.server.motdVisible}"
+                        tools:background="@color/color_minecraft_2"
+                        tools:text="Message of the day" />
 
                     <LinearLayout
                         android:layout_width="match_parent"

@@ -2,5 +2,5 @@ package pl.piotrskiba.angularowo.main.mainscreen.nav
 
 interface MainScreenNavigator {
 
-    fun onMotdClick()
+    fun openBrowser(url: String)
 }

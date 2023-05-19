@@ -46,8 +46,8 @@ class MainScreenViewModel @Inject constructor(
         loadData()
     }
 
-    fun onMotdClick() {
-        // TODO: add logic
+    fun onMotdClick(url: String) {
+        navigator.openBrowser(url)
     }
 
     private fun loadData() {

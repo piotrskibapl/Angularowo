@@ -21,12 +21,10 @@ import pl.piotrskiba.angularowo.main.mainscreen.viewmodel.MainScreenViewModel
 import pl.piotrskiba.angularowo.main.punishment.details.ui.PunishmentDetailsActivity
 import pl.piotrskiba.angularowo.main.punishment.list.nav.PunishmentListNavigator
 import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBannerData
-import pl.piotrskiba.angularowo.models.Motd
 
 class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel::class), MainScreenNavigator, PunishmentListNavigator {
 
     private lateinit var mainViewModel: MainViewModel
-    private var motd: Motd? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         viewModel.punishmentsBinding.bindExtra(BR.navigator, this)
@@ -49,26 +47,6 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel
         actionbar?.setTitle(R.string.app_name)
     }
 
-    private fun setupBinding(
-        layoutInflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentMainScreenBinding {
-        val binding = FragmentMainScreenBinding.inflate(layoutInflater, container, false)
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
-        viewModel.navigator = this
-        return binding
-    }
-
-    override fun onMotdClick() {
-        if (motd?.url != null) {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(motd!!.url))
-            if (context != null && intent.resolveActivity(requireContext().packageManager) != null) {
-                startActivity(intent)
-            }
-        }
-    }
-
     override fun onPunishmentClick(view: View, punishment: PunishmentBannerData) {
         val intent = Intent(context, PunishmentDetailsActivity::class.java)
         intent.putExtra(
@@ -80,5 +58,23 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel
             getString(R.string.punishment_banner_transition_name)
         )
         startActivity(intent, options.toBundle())
+    }
+
+    override fun openBrowser(url: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        if (context != null && intent.resolveActivity(requireContext().packageManager) != null) {
+            startActivity(intent)
+        }
+    }
+
+    private fun setupBinding(
+        layoutInflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentMainScreenBinding {
+        val binding = FragmentMainScreenBinding.inflate(layoutInflater, container, false)
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+        viewModel.navigator = this
+        return binding
     }
 }
