@@ -3,7 +3,7 @@ package pl.piotrskiba.angularowo.main.punishment.details
 import android.content.Context
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentModel
-import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentType
+import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentTypeModel
 import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBannerData
 import java.io.Serializable
 import java.text.SimpleDateFormat
@@ -18,7 +18,7 @@ data class DetailedPunishmentData(
     val reason: String,
     private val created: Date,
     private val expires: Date,
-    private val punishmentType: PunishmentType,
+    private val punishmentType: PunishmentTypeModel,
 ) : Serializable {
 
     fun startDate(context: Context): String {
@@ -35,10 +35,10 @@ data class DetailedPunishmentData(
     }
 
     fun type(context: Context) = when (punishmentType) {
-        PunishmentType.BAN -> context.getString(R.string.punishment_type_ban)
-        PunishmentType.MUTE -> context.getString(R.string.punishment_type_mute)
-        PunishmentType.WARN -> context.getString(R.string.punishment_type_warn)
-        PunishmentType.KICK -> context.getString(R.string.punishment_type_kick)
+        PunishmentTypeModel.BAN -> context.getString(R.string.punishment_type_ban)
+        PunishmentTypeModel.MUTE -> context.getString(R.string.punishment_type_mute)
+        PunishmentTypeModel.WARN -> context.getString(R.string.punishment_type_warn)
+        PunishmentTypeModel.KICK -> context.getString(R.string.punishment_type_kick)
     }
 
     fun toPunishmentBannerData() =

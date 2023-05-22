@@ -4,7 +4,7 @@ import io.reactivex.rxjava3.core.Single
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
 import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentFilter
 import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentModel
-import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentType
+import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentTypeModel
 import pl.piotrskiba.angularowo.domain.punishment.repository.PunishmentRepository
 import javax.inject.Inject
 
@@ -19,7 +19,7 @@ class GetActivePunishmentsUseCase @Inject constructor(
             .flatMap { accessToken ->
                 punishmentRepository.getPunishments(
                     accessToken = accessToken,
-                    punishmentTypes = listOf(PunishmentType.MUTE, PunishmentType.WARN, PunishmentType.BAN),
+                    punishmentTypes = listOf(PunishmentTypeModel.MUTE, PunishmentTypeModel.WARN, PunishmentTypeModel.BAN),
                     filter = PunishmentFilter.ACTIVE,
                 )
             }

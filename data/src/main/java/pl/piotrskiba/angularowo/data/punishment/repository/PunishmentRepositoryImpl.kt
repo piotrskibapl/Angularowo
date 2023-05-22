@@ -7,7 +7,7 @@ import pl.piotrskiba.angularowo.data.punishment.PunishmentApiService
 import pl.piotrskiba.angularowo.data.punishment.model.toDomain
 import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentFilter
 import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentModel
-import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentType
+import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentTypeModel
 import pl.piotrskiba.angularowo.domain.punishment.model.toRemote
 import pl.piotrskiba.angularowo.domain.punishment.repository.PunishmentRepository
 
@@ -17,7 +17,7 @@ class PunishmentRepositoryImpl(
 
     override fun getPunishments(
         accessToken: String,
-        punishmentTypes: List<PunishmentType>,
+        punishmentTypes: List<PunishmentTypeModel>,
         filter: PunishmentFilter,
     ): Single<List<PunishmentModel>> =
         punishmentApi
@@ -26,14 +26,14 @@ class PunishmentRepositoryImpl(
                 accessToken = accessToken,
                 username = null,
                 type = punishmentTypes.toRemote(),
-                filter = filter.toRemote()
+                filter = filter.toRemote(),
             )
             .map { it.toDomain() }
 
     override fun getPlayerPunishments(
         accessToken: String,
         username: String,
-        punishmentTypes: List<PunishmentType>,
+        punishmentTypes: List<PunishmentTypeModel>,
         filter: PunishmentFilter,
     ): Single<List<PunishmentModel>> =
         punishmentApi
@@ -42,7 +42,7 @@ class PunishmentRepositoryImpl(
                 accessToken = accessToken,
                 username = username,
                 type = punishmentTypes.toRemote(),
-                filter = filter.toRemote()
+                filter = filter.toRemote(),
             )
             .map { it.toDomain() }
 

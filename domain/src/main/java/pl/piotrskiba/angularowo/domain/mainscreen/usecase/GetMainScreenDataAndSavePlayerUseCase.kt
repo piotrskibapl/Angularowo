@@ -6,7 +6,7 @@ import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRe
 import pl.piotrskiba.angularowo.domain.mainscreen.model.MainScreenDataModel
 import pl.piotrskiba.angularowo.domain.player.repository.PlayerRepository
 import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentFilter
-import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentType
+import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentTypeModel
 import pl.piotrskiba.angularowo.domain.punishment.repository.PunishmentRepository
 import pl.piotrskiba.angularowo.domain.rank.repository.RankRepository
 import pl.piotrskiba.angularowo.domain.server.repository.ServerRepository
@@ -55,7 +55,7 @@ class GetMainScreenDataAndSavePlayerUseCase @Inject constructor(
         punishmentRepository.getPlayerPunishments(
             accessToken = accessToken,
             username = username,
-            punishmentTypes = listOf(PunishmentType.MUTE, PunishmentType.WARN, PunishmentType.BAN),
+            punishmentTypes = listOf(PunishmentTypeModel.MUTE, PunishmentTypeModel.WARN, PunishmentTypeModel.BAN),
             filter = PunishmentFilter.ACTIVE,
         )
 }

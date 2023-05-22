@@ -10,5 +10,5 @@ data class PunishmentModel(
     val actorName: String,
     val created: Date,
     val expires: Date,
-    val type: PunishmentType
+    val type: PunishmentTypeModel,
 )
