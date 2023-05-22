@@ -1,5 +1,6 @@
 package pl.piotrskiba.angularowo.data.punishment.repository
 
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import pl.piotrskiba.angularowo.data.BuildConfig
 import pl.piotrskiba.angularowo.data.punishment.PunishmentApiService
@@ -17,15 +18,15 @@ class PunishmentRepositoryImpl(
     override fun getPunishments(
         accessToken: String,
         punishmentTypes: List<PunishmentType>,
-        filter: PunishmentFilter
+        filter: PunishmentFilter,
     ): Single<List<PunishmentModel>> =
         punishmentApi
             .getPunishmentList(
-                BuildConfig.API_KEY,
-                accessToken,
-                null,
-                punishmentTypes.toRemote(),
-                filter.toRemote()
+                apiKey = BuildConfig.API_KEY,
+                accessToken = accessToken,
+                username = null,
+                type = punishmentTypes.toRemote(),
+                filter = filter.toRemote()
             )
             .map { it.toDomain() }
 
@@ -33,15 +34,55 @@ class PunishmentRepositoryImpl(
         accessToken: String,
         username: String,
         punishmentTypes: List<PunishmentType>,
-        filter: PunishmentFilter
+        filter: PunishmentFilter,
     ): Single<List<PunishmentModel>> =
         punishmentApi
             .getPunishmentList(
-                BuildConfig.API_KEY,
-                accessToken,
-                username,
-                punishmentTypes.toRemote(),
-                filter.toRemote()
+                apiKey = BuildConfig.API_KEY,
+                accessToken = accessToken,
+                username = username,
+                type = punishmentTypes.toRemote(),
+                filter = filter.toRemote()
             )
             .map { it.toDomain() }
+
+    override fun mutePlayer(
+        accessToken: String,
+        uuid: String,
+        reason: String,
+        length: Long,
+    ): Completable =
+        punishmentApi.mutePlayer(
+            apiKey = BuildConfig.API_KEY,
+            accessToken = accessToken,
+            uuid = uuid,
+            reason = reason,
+            length = length,
+        )
+
+    override fun kickPlayer(accessToken: String, uuid: String, reason: String): Completable =
+        punishmentApi.kickPlayer(
+            apiKey = BuildConfig.API_KEY,
+            accessToken = accessToken,
+            uuid = uuid,
+            reason = reason,
+        )
+
+    override fun warnPlayer(accessToken: String, uuid: String, reason: String, length: Long): Completable =
+        punishmentApi.warnPlayer(
+            apiKey = BuildConfig.API_KEY,
+            accessToken = accessToken,
+            uuid = uuid,
+            reason = reason,
+            length = length,
+        )
+
+    override fun banPlayer(accessToken: String, uuid: String, reason: String, length: Long): Completable =
+        punishmentApi.banPlayer(
+            apiKey = BuildConfig.API_KEY,
+            accessToken = accessToken,
+            uuid = uuid,
+            reason = reason,
+            length = length,
+        )
 }
