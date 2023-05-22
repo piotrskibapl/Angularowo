@@ -18,6 +18,7 @@ import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
 import pl.piotrskiba.angularowo.domain.player.usecase.CheckIfShouldDisplayFavoriteShowcaseUseCase
 import pl.piotrskiba.angularowo.domain.player.usecase.GetPlayerDetailsFromUuidUseCase
 import pl.piotrskiba.angularowo.main.player.details.model.DetailedPlayer
+import pl.piotrskiba.angularowo.main.player.details.model.PlayerDetailsMenuItemsVisibility
 import pl.piotrskiba.angularowo.main.player.details.model.toUi
 import pl.piotrskiba.angularowo.main.player.details.nav.PlayerDetailsNavigator
 import pl.piotrskiba.angularowo.main.player.model.PlayerBanner
@@ -38,6 +39,9 @@ class PlayerDetailsViewModel @Inject constructor(
     val previewedPlayerBanner: MutableLiveData<PlayerBanner> by lazy { MutableLiveData(intent.serializable(Constants.EXTRA_PREVIEWED_PLAYER)) }
     val previewedPlayerDetails: MutableLiveData<DetailedPlayer> = MutableLiveData()
     val playerBannerVisible: LiveData<Boolean> by lazy { previewedPlayerBanner.map { it != null } }
+    val menuItemsVisibility: LiveData<PlayerDetailsMenuItemsVisibility> by lazy {
+        previewedPlayerBanner.map { PlayerDetailsMenuItemsVisibility.from(player, it) }
+    }
     val state = MutableLiveData<ViewModelState>(Loading.Fetch)
     private val previewedPlayerUuid: String by lazy { intent.getStringExtra(Constants.EXTRA_UUID)!! }
     private var isPreviewedPlayerFavorite: Boolean = false

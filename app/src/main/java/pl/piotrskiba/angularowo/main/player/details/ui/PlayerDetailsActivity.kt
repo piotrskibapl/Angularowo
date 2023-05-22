@@ -93,11 +93,17 @@ class PlayerDetailsActivity : BaseActivity<PlayerDetailsViewModel>(PlayerDetails
     }
 
     private fun setupMenu() {
-        viewModel.previewedPlayerBanner.observe(this) { invalidateOptionsMenu() }
+        viewModel.menuItemsVisibility.observe(this) { invalidateOptionsMenu() }
         addMenuProvider(object : MenuProvider {
             override fun onPrepareMenu(menu: Menu) {
-                menu.findItem(R.id.nav_favorite)?.isVisible = !isPreviewingSelfOrPartner() && !isPreviewedPlayerFavorite()
-                menu.findItem(R.id.nav_unfavorite)?.isVisible = !isPreviewingSelfOrPartner() && isPreviewedPlayerFavorite()
+                with(viewModel.menuItemsVisibility.value!!) {
+                    menu.findItem(R.id.nav_favorite)?.isVisible = favorite
+                    menu.findItem(R.id.nav_unfavorite)?.isVisible = unfavorite
+                    menu.findItem(R.id.nav_mute)?.isVisible = mute
+                    menu.findItem(R.id.nav_kick)?.isVisible = kick
+                    menu.findItem(R.id.nav_warn)?.isVisible = warn
+                    menu.findItem(R.id.nav_ban)?.isVisible = ban
+                }
             }
 
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -107,13 +113,6 @@ class PlayerDetailsActivity : BaseActivity<PlayerDetailsViewModel>(PlayerDetails
             override fun onMenuItemSelected(menuItem: MenuItem) = onMenuItemClicked(menuItem)
         }, this, Lifecycle.State.RESUMED)
     }
-
-    private fun isPreviewingSelfOrPartner() =
-        viewModel.player.uuid == viewModel.previewedPlayerBanner.value?.uuid ||
-            viewModel.player.partnerUuid == viewModel.previewedPlayerBanner.value?.uuid
-
-    private fun isPreviewedPlayerFavorite() =
-        viewModel.previewedPlayerBanner.value?.isFavorite == true
 
     private fun onMenuItemClicked(menuItem: MenuItem) =
         when (menuItem.itemId) {
