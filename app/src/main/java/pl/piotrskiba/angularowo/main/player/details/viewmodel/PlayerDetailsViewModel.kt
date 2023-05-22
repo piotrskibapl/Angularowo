@@ -17,8 +17,11 @@ import pl.piotrskiba.angularowo.domain.friend.usecase.UnmarkPlayerAsFavoriteUseC
 import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
 import pl.piotrskiba.angularowo.domain.player.usecase.CheckIfShouldDisplayFavoriteShowcaseUseCase
 import pl.piotrskiba.angularowo.domain.player.usecase.GetPlayerDetailsFromUuidUseCase
+import pl.piotrskiba.angularowo.domain.punishment.usecase.PunishPlayerUseCase
 import pl.piotrskiba.angularowo.main.player.details.model.DetailedPlayer
 import pl.piotrskiba.angularowo.main.player.details.model.PlayerDetailsMenuItemsVisibility
+import pl.piotrskiba.angularowo.main.player.details.model.PunishmentType
+import pl.piotrskiba.angularowo.main.player.details.model.toDomain
 import pl.piotrskiba.angularowo.main.player.details.model.toUi
 import pl.piotrskiba.angularowo.main.player.details.nav.PlayerDetailsNavigator
 import pl.piotrskiba.angularowo.main.player.model.PlayerBanner
@@ -31,6 +34,7 @@ class PlayerDetailsViewModel @Inject constructor(
     private val markPlayerAsFavoriteUseCase: MarkPlayerAsFavoriteUseCase,
     private val unmarkPlayerAsFavoriteUseCase: UnmarkPlayerAsFavoriteUseCase,
     private val checkIfShouldDisplayFavoriteShowcaseUseCase: CheckIfShouldDisplayFavoriteShowcaseUseCase,
+    private val punishPlayerUseCase: PunishPlayerUseCase,
     private val facade: SchedulersProvider,
 ) : LifecycleViewModel() {
 
@@ -85,6 +89,25 @@ class PlayerDetailsViewModel @Inject constructor(
                     },
                     {
                         navigator.displayGenericErrorSnackbar()
+                    }
+                )
+        )
+    }
+
+    fun onPunish(type: PunishmentType, reason: String, time: Long?) {
+        state.value = Loading.Send
+        disposables.add(
+            punishPlayerUseCase.execute(previewedPlayerUuid, reason, type.toDomain(), time)
+                .subscribeOn(facade.io())
+                .observeOn(facade.ui())
+                .subscribe(
+                    {
+                        state.value = Loaded
+                        navigator.displayPunishmentSuccessDialog(type)
+                    },
+                    {
+                        state.value = Loaded
+                        navigator.displayPunishmentErrorDialog()
                     }
                 )
         )

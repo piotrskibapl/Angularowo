@@ -1,18 +1,25 @@
 package pl.piotrskiba.angularowo.main.player.details.ui
 
+import android.app.AlertDialog
 import android.os.Bundle
+import android.text.InputType
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.EditText
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
 import com.google.android.material.snackbar.Snackbar
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.ui.BaseActivity
 import pl.piotrskiba.angularowo.databinding.ActivityPlayerDetailsBinding
+import pl.piotrskiba.angularowo.layouts.TimeAmountPickerView
+import pl.piotrskiba.angularowo.main.player.details.model.PunishmentType
 import pl.piotrskiba.angularowo.main.player.details.nav.PlayerDetailsNavigator
 import pl.piotrskiba.angularowo.main.player.details.viewmodel.PlayerDetailsViewModel
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView
+import java.util.concurrent.TimeUnit
 
 private const val SHOWCASE_DELAY_MS = 500
 
@@ -78,6 +85,27 @@ class PlayerDetailsActivity : BaseActivity<PlayerDetailsViewModel>(PlayerDetails
             .show()
     }
 
+    override fun displayPunishmentSuccessDialog(type: PunishmentType) {
+        showPunishmentSuccessDialog(
+            getString(
+                when (type) {
+                    PunishmentType.MUTE -> R.string.dialog_mute_success_description
+                    PunishmentType.KICK -> R.string.dialog_kick_success_description
+                    PunishmentType.WARN -> R.string.dialog_warn_success_description
+                    PunishmentType.BAN -> R.string.dialog_ban_success_description
+                }
+            )
+        )
+    }
+
+    override fun displayPunishmentErrorDialog() {
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.dialog_error_title))
+            .setMessage(getString(R.string.dialog_error_description))
+            .setPositiveButton(R.string.button_dismiss, null)
+            .show()
+    }
+
     private fun setupBinding() {
         binding = ActivityPlayerDetailsBinding.inflate(layoutInflater)
         binding.lifecycleOwner = this
@@ -124,6 +152,129 @@ class PlayerDetailsActivity : BaseActivity<PlayerDetailsViewModel>(PlayerDetails
                 viewModel.onUnfavoriteClick()
                 true
             }
+            R.id.nav_mute -> {
+                showPunishmentReasonDialog(
+                    title = getString(R.string.dialog_mute_reason_title),
+                    description = getString(R.string.dialog_mute_reason_description),
+                ) { reason ->
+                    showPunishmentTimeDialog(
+                        title = getString(R.string.dialog_mute_time_title),
+                        description = getString(R.string.dialog_mute_time_description),
+                    ) { time ->
+                        showPunishmentConfirmationDialog(
+                            title = getString(R.string.dialog_mute_confirm_title),
+                            description = getString(R.string.dialog_mute_confirm_description),
+                        ) {
+                            viewModel.onPunish(PunishmentType.MUTE, reason, time)
+                        }
+                    }
+                }
+                true
+            }
+            R.id.nav_kick -> {
+                showPunishmentReasonDialog(
+                    title = getString(R.string.dialog_kick_reason_title),
+                    description = getString(R.string.dialog_kick_reason_description),
+                ) { reason ->
+                    showPunishmentConfirmationDialog(
+                        title = getString(R.string.dialog_kick_confirm_title),
+                        description = getString(R.string.dialog_kick_confirm_description),
+                    ) {
+                        viewModel.onPunish(PunishmentType.KICK, reason, time = null)
+                    }
+                }
+                true
+            }
+            R.id.nav_warn -> {
+                showPunishmentReasonDialog(
+                    title = getString(R.string.dialog_warn_reason_title),
+                    description = getString(R.string.dialog_warn_reason_description),
+                ) { reason ->
+                    showPunishmentConfirmationDialog(
+                        title = getString(R.string.dialog_warn_confirm_title),
+                        description = getString(R.string.dialog_warn_confirm_description),
+                    ) {
+                        viewModel.onPunish(PunishmentType.WARN, reason, TimeUnit.DAYS.toSeconds(3))
+                    }
+                }
+                true
+            }
+            R.id.nav_ban -> {
+                showPunishmentReasonDialog(
+                    title = getString(R.string.dialog_ban_reason_title),
+                    description = getString(R.string.dialog_ban_reason_description),
+                ) { reason ->
+                    showPunishmentTimeDialog(
+                        title = getString(R.string.dialog_ban_time_title),
+                        description = getString(R.string.dialog_ban_time_description),
+                    ) { time ->
+                        showPunishmentConfirmationDialog(
+                            title = getString(R.string.dialog_ban_confirm_title),
+                            description = getString(R.string.dialog_ban_confirm_description),
+                        ) {
+                            viewModel.onPunish(PunishmentType.BAN, reason, time)
+                        }
+                    }
+                }
+                true
+            }
             else -> false
         }
+
+    private fun showPunishmentReasonDialog(title: String, description: String, listener: (String) -> Unit) {
+        val editText = EditText(this).apply {
+            inputType = InputType.TYPE_CLASS_TEXT
+        }
+        AlertDialog.Builder(this)
+            .setTitle(title)
+            .setMessage(description)
+            .setView(editText)
+            .setPositiveButton(R.string.button_next) { _, _ ->
+                val reason = editText.text.toString().trim()
+                if (reason.isNotEmpty()) {
+                    listener(reason)
+                } else {
+                    showPunishmentReasonDialog(title, description, listener)
+                }
+            }
+            .show()
+    }
+
+    private fun showPunishmentTimeDialog(title: String, description: String, listener: (Long) -> Unit) {
+        val timeAmountPicker = TimeAmountPickerView(this).apply {
+            gravity = Gravity.CENTER_HORIZONTAL
+        }
+        AlertDialog.Builder(this)
+            .setTitle(title)
+            .setMessage(description)
+            .setView(timeAmountPicker)
+            .setPositiveButton(R.string.button_next) { _, _ ->
+                val time = timeAmountPicker.getTimeAmount()
+                if (time > 0) {
+                    listener(time)
+                } else {
+                    showPunishmentTimeDialog(title, description, listener)
+                }
+            }
+            .show()
+    }
+
+    private fun showPunishmentConfirmationDialog(title: String, description: String, listener: () -> Unit) {
+        AlertDialog.Builder(this)
+            .setTitle(title)
+            .setMessage(description)
+            .setPositiveButton(R.string.button_yes) { _, _ ->
+                listener()
+            }
+            .setNegativeButton(R.string.button_cancel, null)
+            .show()
+    }
+
+    private fun showPunishmentSuccessDialog(description: String) {
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.dialog_punish_success_title))
+            .setMessage(description)
+            .setPositiveButton(R.string.button_dismiss, null)
+            .show()
+    }
 }
