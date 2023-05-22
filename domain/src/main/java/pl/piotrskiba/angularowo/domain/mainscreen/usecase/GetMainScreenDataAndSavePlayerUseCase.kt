@@ -5,7 +5,7 @@ import io.reactivex.rxjava3.core.Single
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
 import pl.piotrskiba.angularowo.domain.mainscreen.model.MainScreenDataModel
 import pl.piotrskiba.angularowo.domain.player.repository.PlayerRepository
-import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentFilter
+import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentFilterModel
 import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentTypeModel
 import pl.piotrskiba.angularowo.domain.punishment.repository.PunishmentRepository
 import pl.piotrskiba.angularowo.domain.rank.repository.RankRepository
@@ -56,6 +56,6 @@ class GetMainScreenDataAndSavePlayerUseCase @Inject constructor(
             accessToken = accessToken,
             username = username,
             punishmentTypes = listOf(PunishmentTypeModel.MUTE, PunishmentTypeModel.WARN, PunishmentTypeModel.BAN),
-            filter = PunishmentFilter.ACTIVE,
+            filter = PunishmentFilterModel.ACTIVE,
         )
 }

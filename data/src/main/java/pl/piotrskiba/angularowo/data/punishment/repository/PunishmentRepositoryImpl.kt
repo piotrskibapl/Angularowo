@@ -5,7 +5,7 @@ import io.reactivex.rxjava3.core.Single
 import pl.piotrskiba.angularowo.data.BuildConfig
 import pl.piotrskiba.angularowo.data.punishment.PunishmentApiService
 import pl.piotrskiba.angularowo.data.punishment.model.toDomain
-import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentFilter
+import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentFilterModel
 import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentModel
 import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentTypeModel
 import pl.piotrskiba.angularowo.domain.punishment.model.toRemote
@@ -18,7 +18,7 @@ class PunishmentRepositoryImpl(
     override fun getPunishments(
         accessToken: String,
         punishmentTypes: List<PunishmentTypeModel>,
-        filter: PunishmentFilter,
+        filter: PunishmentFilterModel,
     ): Single<List<PunishmentModel>> =
         punishmentApi
             .getPunishmentList(
@@ -34,7 +34,7 @@ class PunishmentRepositoryImpl(
         accessToken: String,
         username: String,
         punishmentTypes: List<PunishmentTypeModel>,
-        filter: PunishmentFilter,
+        filter: PunishmentFilterModel,
     ): Single<List<PunishmentModel>> =
         punishmentApi
             .getPunishmentList(

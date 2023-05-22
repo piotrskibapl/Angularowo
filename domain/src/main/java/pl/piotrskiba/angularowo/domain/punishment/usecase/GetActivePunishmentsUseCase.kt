@@ -2,7 +2,7 @@ package pl.piotrskiba.angularowo.domain.punishment.usecase
 
 import io.reactivex.rxjava3.core.Single
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
-import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentFilter
+import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentFilterModel
 import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentModel
 import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentTypeModel
 import pl.piotrskiba.angularowo.domain.punishment.repository.PunishmentRepository
@@ -20,7 +20,7 @@ class GetActivePunishmentsUseCase @Inject constructor(
                 punishmentRepository.getPunishments(
                     accessToken = accessToken,
                     punishmentTypes = listOf(PunishmentTypeModel.MUTE, PunishmentTypeModel.WARN, PunishmentTypeModel.BAN),
-                    filter = PunishmentFilter.ACTIVE,
+                    filter = PunishmentFilterModel.ACTIVE,
                 )
             }
 }
