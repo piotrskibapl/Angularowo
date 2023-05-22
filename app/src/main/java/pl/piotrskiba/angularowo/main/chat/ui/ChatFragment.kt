@@ -6,6 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter
 import pl.piotrskiba.angularowo.BR
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
@@ -35,6 +38,11 @@ class ChatFragment : BaseFragment<ChatViewModel>(ChatViewModel::class), ChatNavi
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupRecyclerView()
+    }
+
     override fun onChatMessageClick(chatMessage: ChatMessage) {
         val intent = Intent(context, PlayerDetailsActivity::class.java)
         intent.putExtra(Constants.EXTRA_PLAYER, mainViewModel.player.value!!)
@@ -50,5 +58,22 @@ class ChatFragment : BaseFragment<ChatViewModel>(ChatViewModel::class), ChatNavi
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         return binding
+    }
+
+    private fun setupRecyclerView() {
+        val recyclerView = requireActivity().findViewById<RecyclerView>(R.id.message_list)
+        val layoutManager = recyclerView.layoutManager!! as LinearLayoutManager
+        recyclerView.adapter = object : BindingRecyclerViewAdapter<ChatMessage>() {
+
+            override fun setItems(items: MutableList<ChatMessage>?) {
+                val lastIndex = itemCount - 1
+                val lastVisibleIndex = layoutManager.findLastVisibleItemPosition()
+                val shouldScroll = lastIndex == lastVisibleIndex
+                super.setItems(items)
+                if (shouldScroll) {
+                    recyclerView.scrollToPosition(itemCount - 1)
+                }
+            }
+        }
     }
 }
