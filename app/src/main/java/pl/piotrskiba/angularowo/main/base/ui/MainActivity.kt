@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.TextView
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.Fragment
 import androidx.multidex.MultiDex
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
@@ -32,12 +33,12 @@ class MainActivity : BaseActivity<MainViewModel>(MainViewModel::class), MainNavi
     private lateinit var preferenceUtils: PreferenceUtils
     private var waitingForLogin = false
 
-    private var mainScreenFragment = MainScreenFragment()
-    private var playerListFragment = PlayerListFragment()
-    private var chatFragment = ChatFragment()
-    private var punishmentListFragment = PunishmentListFragment()
-    private var offersFragment = OffersFragment()
-    private var reportListContainerFragment = ReportListContainerFragment()
+    private lateinit var mainScreenFragment: Fragment
+    private lateinit var playerListFragment: Fragment
+    private lateinit var chatFragment: Fragment
+    private lateinit var punishmentListFragment: Fragment
+    private lateinit var offersFragment: Fragment
+    private lateinit var reportListContainerFragment: Fragment
     private lateinit var binding: ActivityMainBinding
 
     override fun attachBaseContext(newBase: Context) {
@@ -56,9 +57,9 @@ class MainActivity : BaseActivity<MainViewModel>(MainViewModel::class), MainNavi
         MobileAds.initialize(this)
 
         if (preferenceUtils.accessToken != null) {
-            if (savedInstanceState == null)
+            if (savedInstanceState == null) {
                 setupMainFragment()
-
+            }
             populateUi()
         }
     }
@@ -89,118 +90,6 @@ class MainActivity : BaseActivity<MainViewModel>(MainViewModel::class), MainNavi
         setNavigationItemSelectedListener()
     }
 
-    private fun setupBinding() {
-        viewModel.navigator = this
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-    }
-
-    override fun displayAppLock() {
-        // TODO: don't instantiate main screen fragment nor login activity
-        val intent = Intent(this, AppLockActivity::class.java)
-        startActivity(intent)
-    }
-
-    private fun setupMainFragment() {
-        val mainScreenFragment = MainScreenFragment()
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, mainScreenFragment, TAG_MAIN_FRAGMENT)
-            .commit()
-    }
-
-    private fun initializeFragments() {
-        supportFragmentManager.findFragmentByTag(TAG_MAIN_FRAGMENT)?.let {
-            mainScreenFragment = it as MainScreenFragment
-        }
-        supportFragmentManager.findFragmentByTag(TAG_PLAYER_LIST_FRAGMENT)?.let {
-            playerListFragment = it as PlayerListFragment
-        }
-        supportFragmentManager.findFragmentByTag(TAG_CHAT_FRAGMENT)?.let {
-            chatFragment = it as ChatFragment
-        }
-        supportFragmentManager.findFragmentByTag(TAG_BAN_LIST_FRAGMENT)?.let {
-            punishmentListFragment = it as PunishmentListFragment
-        }
-        supportFragmentManager.findFragmentByTag(TAG_FREE_RANKS_FRAGMENT)?.let {
-            offersFragment = it as OffersFragment
-        }
-        supportFragmentManager.findFragmentByTag(TAG_REPORT_LIST_FRAGMENT)?.let {
-            reportListContainerFragment = it as ReportListContainerFragment
-        }
-    }
-
-    private fun populateUi() {
-        initializeFragments()
-
-        setSupportActionBar(binding.toolbar)
-
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
-
-        binding.navView.setCheckedItem(R.id.nav_main_screen)
-    }
-
-    private fun setNavigationItemSelectedListener() {
-        binding.navView.setNavigationItemSelectedListener { menuItem: MenuItem ->
-            if (!menuItem.isChecked) {
-                when (menuItem.itemId) {
-                    R.id.nav_main_screen -> {
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.fragment_container, mainScreenFragment, TAG_MAIN_FRAGMENT)
-                            .commit()
-                    }
-                    R.id.nav_player_list -> {
-                        supportFragmentManager.beginTransaction()
-                            .replace(
-                                R.id.fragment_container,
-                                playerListFragment,
-                                TAG_PLAYER_LIST_FRAGMENT
-                            )
-                            .commit()
-                    }
-                    R.id.nav_chat -> {
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.fragment_container, chatFragment, TAG_CHAT_FRAGMENT)
-                            .commit()
-                    }
-                    R.id.nav_last_punishments -> {
-                        supportFragmentManager.beginTransaction()
-                            .replace(
-                                R.id.fragment_container,
-                                punishmentListFragment,
-                                TAG_BAN_LIST_FRAGMENT
-                            )
-                            .commit()
-                    }
-                    R.id.nav_free_ranks -> {
-                        supportFragmentManager.beginTransaction()
-                            .replace(
-                                R.id.fragment_container,
-                                offersFragment,
-                                TAG_FREE_RANKS_FRAGMENT
-                            )
-                            .commit()
-                    }
-                    R.id.nav_reports_history -> {
-                        supportFragmentManager.beginTransaction()
-                            .replace(
-                                R.id.fragment_container,
-                                reportListContainerFragment,
-                                TAG_REPORT_LIST_FRAGMENT
-                            )
-                            .commit()
-                    }
-                    R.id.nav_settings -> {
-                        val intent = Intent(this, SettingsActivity::class.java)
-                        startActivity(intent)
-                    }
-                }
-            }
-            binding.drawerLayout.closeDrawers()
-            true
-        }
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             binding.drawerLayout.openDrawer(GravityCompat.START)
@@ -221,12 +110,77 @@ class MainActivity : BaseActivity<MainViewModel>(MainViewModel::class), MainNavi
         }
     }
 
+    override fun displayAppLock() {
+        // TODO: don't instantiate main screen fragment nor login activity
+        val intent = Intent(this, AppLockActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun setupBinding() {
+        viewModel.navigator = this
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+    }
+
+    private fun setupMainFragment() {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, MainScreenFragment(), TAG_MAIN_FRAGMENT)
+            .commit()
+    }
+
+    private fun initializeFragments() {
+        mainScreenFragment = supportFragmentManager.findFragmentByTag(TAG_MAIN_FRAGMENT) ?: MainScreenFragment()
+        playerListFragment = supportFragmentManager.findFragmentByTag(TAG_PLAYER_LIST_FRAGMENT) ?: PlayerListFragment()
+        chatFragment = supportFragmentManager.findFragmentByTag(TAG_CHAT_FRAGMENT) ?: ChatFragment()
+        punishmentListFragment = supportFragmentManager.findFragmentByTag(TAG_PUNISHMENT_LIST_FRAGMENT) ?: PunishmentListFragment()
+        offersFragment = supportFragmentManager.findFragmentByTag(TAG_OFFERS_FRAGMENT) ?: OffersFragment()
+        reportListContainerFragment = supportFragmentManager.findFragmentByTag(TAG_REPORT_LIST_FRAGMENT) ?: ReportListContainerFragment()
+    }
+
+    private fun populateUi() {
+        initializeFragments()
+
+        setSupportActionBar(binding.toolbar)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
+
+        binding.navView.setCheckedItem(R.id.nav_main_screen)
+    }
+
+    private fun setNavigationItemSelectedListener() {
+        binding.navView.setNavigationItemSelectedListener { menuItem: MenuItem ->
+            if (!menuItem.isChecked) {
+                when (menuItem.itemId) {
+                    R.id.nav_main_screen -> replaceFragment(mainScreenFragment, TAG_MAIN_FRAGMENT)
+                    R.id.nav_player_list -> replaceFragment(playerListFragment, TAG_PLAYER_LIST_FRAGMENT)
+                    R.id.nav_chat -> replaceFragment(chatFragment, TAG_CHAT_FRAGMENT)
+                    R.id.nav_last_punishments -> replaceFragment(punishmentListFragment, TAG_PUNISHMENT_LIST_FRAGMENT)
+                    R.id.nav_free_ranks -> replaceFragment(offersFragment, TAG_OFFERS_FRAGMENT)
+                    R.id.nav_reports_history -> replaceFragment(reportListContainerFragment, TAG_REPORT_LIST_FRAGMENT)
+                    R.id.nav_settings -> {
+                        val intent = Intent(this, SettingsActivity::class.java)
+                        startActivity(intent)
+                    }
+                }
+            }
+            binding.drawerLayout.closeDrawers()
+            true
+        }
+    }
+
+    private fun replaceFragment(fragment: Fragment, tag: String) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment, tag)
+            .commit()
+    }
+
     companion object {
         private const val TAG_MAIN_FRAGMENT = "fragment_main"
         private const val TAG_PLAYER_LIST_FRAGMENT = "fragment_player_list"
         private const val TAG_CHAT_FRAGMENT = "fragment_chat"
-        private const val TAG_BAN_LIST_FRAGMENT = "fragment_ban_list"
-        private const val TAG_FREE_RANKS_FRAGMENT = "fragment_offers"
+        private const val TAG_PUNISHMENT_LIST_FRAGMENT = "fragment_punishment_list"
+        private const val TAG_OFFERS_FRAGMENT = "fragment_offers"
         private const val TAG_REPORT_LIST_FRAGMENT = "fragment_report_list"
     }
 }
