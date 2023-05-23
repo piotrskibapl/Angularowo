@@ -62,7 +62,6 @@
     <string name="unmark_as_favorite">Usuń z ulubionych</string>
     <string name="player_info">Informacje o graczu</string>
     <string name="tokens_title_others">Tokeny gracza:</string>
-    <string name="player_banner_transition_name" translatable="false">player_banner</string>
     <string name="marked_as_favorite">Gracz został dodany do ulubionych.</string>
     <string name="unmarked_as_favorite">Gracz został usunięty z ulubionych.</string>
     <string name="showcase_favorite_title">Dodaj do ulubionych</string>

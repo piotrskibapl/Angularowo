@@ -9,7 +9,7 @@
         android:id="@+id/mainScreenFragment"
         android:name="pl.piotrskiba.angularowo.main.mainscreen.ui.MainScreenFragment"
         android:label="@string/main_screen"
-        tools:layout="@layout/fragment_main_screen" >
+        tools:layout="@layout/fragment_main_screen">
         <action
             android:id="@+id/to_punishmentDetailsFragment"
             app:destination="@id/punishmentDetailsFragment" />
@@ -19,19 +19,44 @@
         android:id="@+id/playerListFragment"
         android:name="pl.piotrskiba.angularowo.main.player.list.ui.PlayerListFragment"
         android:label="@string/player_list"
-        tools:layout="@layout/fragment_player_list" />
+        tools:layout="@layout/fragment_player_list">
+        <action
+            android:id="@+id/to_playerDetailsFragment"
+            app:destination="@id/playerDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/playerDetailsFragment"
+        android:name="pl.piotrskiba.angularowo.main.player.details.ui.PlayerDetailsFragment"
+        android:label="@string/player_info"
+        tools:layout="@layout/fragment_player_details">
+        <argument
+            android:name="player"
+            app:argType="pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel" />
+        <argument
+            android:name="previewedPlayerUuid"
+            app:argType="string" />
+        <argument
+            android:name="previewedPlayerBanner"
+            app:argType="pl.piotrskiba.angularowo.main.player.model.PlayerBanner"
+            app:nullable="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/chatFragment"
         android:name="pl.piotrskiba.angularowo.main.chat.ui.ChatFragment"
         android:label="@string/chat"
-        tools:layout="@layout/fragment_chat" />
+        tools:layout="@layout/fragment_chat">
+        <action
+            android:id="@+id/to_playerDetailsFragment"
+            app:destination="@id/playerDetailsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/lastPunishmentsFragment"
         android:name="pl.piotrskiba.angularowo.main.punishment.list.ui.PunishmentListFragment"
         android:label="@string/last_punishments"
-        tools:layout="@layout/fragment_punishment_list" >
+        tools:layout="@layout/fragment_punishment_list">
         <action
             android:id="@+id/to_punishmentDetailsFragment"
             app:destination="@id/punishmentDetailsFragment" />
@@ -41,7 +66,7 @@
         android:id="@+id/punishmentDetailsFragment"
         android:name="pl.piotrskiba.angularowo.main.punishment.details.ui.PunishmentDetailsFragment"
         android:label="@string/punishment_info"
-        tools:layout="@layout/fragment_punishment_details" >
+        tools:layout="@layout/fragment_punishment_details">
         <argument
             android:name="punishment"
             app:argType="pl.piotrskiba.angularowo.main.punishment.details.DetailedPunishmentData" />

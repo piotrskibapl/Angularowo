@@ -58,6 +58,7 @@ class MainActivity : BaseActivity<MainViewModel>(MainViewModel::class), MainNavi
         )
         findViewById<Toolbar>(R.id.toolbar).setupWithNavController(navController, appBarConfiguration)
         findViewById<NavigationView>(R.id.nav_view).setupWithNavController(navController)
+        setSupportActionBar(findViewById(R.id.toolbar))
 
         preferenceUtils = PreferenceUtils(this)
 

@@ -3,8 +3,6 @@ package pl.piotrskiba.angularowo.main.player.details.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
-import pl.piotrskiba.angularowo.Constants
-import pl.piotrskiba.angularowo.base.extensions.serializable
 import pl.piotrskiba.angularowo.base.model.ViewModelState
 import pl.piotrskiba.angularowo.base.model.ViewModelState.Error
 import pl.piotrskiba.angularowo.base.model.ViewModelState.Loaded
@@ -14,7 +12,6 @@ import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.friend.usecase.MarkPlayerAsFavoriteUseCase
 import pl.piotrskiba.angularowo.domain.friend.usecase.ObserveIfPlayerIsFavoriteUseCase
 import pl.piotrskiba.angularowo.domain.friend.usecase.UnmarkPlayerAsFavoriteUseCase
-import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
 import pl.piotrskiba.angularowo.domain.player.usecase.CheckIfShouldDisplayFavoriteShowcaseUseCase
 import pl.piotrskiba.angularowo.domain.player.usecase.GetPlayerDetailsFromUuidUseCase
 import pl.piotrskiba.angularowo.domain.punishment.usecase.PunishPlayerUseCase
@@ -24,6 +21,7 @@ import pl.piotrskiba.angularowo.main.player.details.model.PunishmentType
 import pl.piotrskiba.angularowo.main.player.details.model.toDomain
 import pl.piotrskiba.angularowo.main.player.details.model.toUi
 import pl.piotrskiba.angularowo.main.player.details.nav.PlayerDetailsNavigator
+import pl.piotrskiba.angularowo.main.player.details.ui.PlayerDetailsFragmentArgs
 import pl.piotrskiba.angularowo.main.player.model.PlayerBanner
 import pl.piotrskiba.angularowo.main.player.model.toPlayerBannerData
 import javax.inject.Inject
@@ -38,16 +36,15 @@ class PlayerDetailsViewModel @Inject constructor(
     private val facade: SchedulersProvider,
 ) : LifecycleViewModel() {
 
+    lateinit var args: PlayerDetailsFragmentArgs
     lateinit var navigator: PlayerDetailsNavigator
-    val player: DetailedPlayerModel by lazy { intent.serializable(Constants.EXTRA_PLAYER)!! }
-    val previewedPlayerBanner: MutableLiveData<PlayerBanner> by lazy { MutableLiveData(intent.serializable(Constants.EXTRA_PREVIEWED_PLAYER)) }
+    val previewedPlayerBanner: MutableLiveData<PlayerBanner> by lazy { MutableLiveData(args.previewedPlayerBanner) }
     val previewedPlayerDetails: MutableLiveData<DetailedPlayer> = MutableLiveData()
     val playerBannerVisible: LiveData<Boolean> by lazy { previewedPlayerBanner.map { it != null } }
     val menuItemsVisibility: LiveData<PlayerDetailsMenuItemsVisibility> by lazy {
-        previewedPlayerBanner.map { PlayerDetailsMenuItemsVisibility.from(player, it) }
+        previewedPlayerBanner.map { PlayerDetailsMenuItemsVisibility.from(args.player, it) }
     }
     val state = MutableLiveData<ViewModelState>(Loading.Fetch)
-    private val previewedPlayerUuid: String by lazy { intent.getStringExtra(Constants.EXTRA_UUID)!! }
     private var isPreviewedPlayerFavorite: Boolean = false
 
     override fun onFirstCreate() {
@@ -63,7 +60,7 @@ class PlayerDetailsViewModel @Inject constructor(
     fun onFavoriteClick() {
         disposables.add(
             markPlayerAsFavoriteUseCase
-                .execute(previewedPlayerUuid)
+                .execute(args.previewedPlayerUuid)
                 .subscribeOn(facade.io())
                 .observeOn(facade.ui())
                 .subscribe(
@@ -80,7 +77,7 @@ class PlayerDetailsViewModel @Inject constructor(
     fun onUnfavoriteClick() {
         disposables.add(
             unmarkPlayerAsFavoriteUseCase
-                .execute(previewedPlayerUuid)
+                .execute(args.previewedPlayerUuid)
                 .subscribeOn(facade.io())
                 .observeOn(facade.ui())
                 .subscribe(
@@ -97,7 +94,7 @@ class PlayerDetailsViewModel @Inject constructor(
     fun onPunish(type: PunishmentType, reason: String, time: Long?) {
         state.value = Loading.Send
         disposables.add(
-            punishPlayerUseCase.execute(previewedPlayerUuid, reason, type.toDomain(), time)
+            punishPlayerUseCase.execute(args.previewedPlayerUuid, reason, type.toDomain(), time)
                 .subscribeOn(facade.io())
                 .observeOn(facade.ui())
                 .subscribe(
@@ -115,7 +112,7 @@ class PlayerDetailsViewModel @Inject constructor(
 
     private fun loadPlayerDetails() {
         disposables.add(getPlayerDetailsFromUuidUseCase
-            .execute(previewedPlayerUuid)
+            .execute(args.previewedPlayerUuid)
             .subscribeOn(facade.io())
             .observeOn(facade.ui())
             .subscribe(
@@ -148,7 +145,7 @@ class PlayerDetailsViewModel @Inject constructor(
     private fun observeIfPlayerIsFavorite() {
         disposables.add(
             observeIfPlayerIsFavoriteUseCase
-                .execute(previewedPlayerUuid)
+                .execute(args.previewedPlayerUuid)
                 .subscribeOn(facade.io())
                 .observeOn(facade.ui())
                 .subscribe {

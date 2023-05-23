@@ -5,7 +5,6 @@ import dagger.android.ContributesAndroidInjector
 import pl.piotrskiba.angularowo.applock.ui.AppLockActivity
 import pl.piotrskiba.angularowo.login.ui.LoginActivity
 import pl.piotrskiba.angularowo.main.base.ui.MainActivity
-import pl.piotrskiba.angularowo.main.player.details.ui.PlayerDetailsActivity
 import pl.piotrskiba.angularowo.main.report.details.ui.ReportDetailsActivity
 
 @Module(includes = [ViewModelModule::class])
@@ -16,9 +15,6 @@ abstract class ActivityBindingModule {
 
     @ContributesAndroidInjector
     abstract fun bindMainActivity(): MainActivity
-
-    @ContributesAndroidInjector
-    abstract fun bindPlayerDetailsActivity(): PlayerDetailsActivity
 
     @ContributesAndroidInjector
     abstract fun bindReportDetailsActivity(): ReportDetailsActivity

@@ -24,7 +24,7 @@
         android:background="@{player.rankColor(context)}"
         android:onClick="@{(view) -> navigator.onPlayerClick(view, player)}"
         android:padding="8dp"
-        android:transitionName="@string/player_banner_transition_name"
+        android:transitionName="@{player.uuid}"
         tools:background="@color/color_minecraft_7">
 
         <ImageView

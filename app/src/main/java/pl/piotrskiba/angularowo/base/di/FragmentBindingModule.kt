@@ -5,6 +5,7 @@ import dagger.android.ContributesAndroidInjector
 import pl.piotrskiba.angularowo.main.chat.ui.ChatFragment
 import pl.piotrskiba.angularowo.main.mainscreen.ui.MainScreenFragment
 import pl.piotrskiba.angularowo.main.offers.ui.OffersFragment
+import pl.piotrskiba.angularowo.main.player.details.ui.PlayerDetailsFragment
 import pl.piotrskiba.angularowo.main.player.list.ui.PlayerListFragment
 import pl.piotrskiba.angularowo.main.punishment.details.ui.PunishmentDetailsFragment
 import pl.piotrskiba.angularowo.main.punishment.list.ui.PunishmentListFragment
@@ -20,6 +21,9 @@ abstract class FragmentBindingModule {
 
     @ContributesAndroidInjector
     abstract fun bindPlayerListFragment(): PlayerListFragment
+
+    @ContributesAndroidInjector
+    abstract fun bindPlayerDetailsFragment(): PlayerDetailsFragment
 
     @ContributesAndroidInjector
     abstract fun bindPunishmentListFragment(): PunishmentListFragment
