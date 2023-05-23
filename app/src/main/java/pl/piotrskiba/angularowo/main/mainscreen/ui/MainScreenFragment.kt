@@ -73,7 +73,7 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel
         container: ViewGroup?
     ): FragmentMainScreenBinding {
         val binding = FragmentMainScreenBinding.inflate(layoutInflater, container, false)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
         viewModel.navigator = this
         return binding

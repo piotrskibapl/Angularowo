@@ -53,7 +53,7 @@ class ChatFragment : BaseFragment<ChatViewModel>(ChatViewModel::class), ChatNavi
         container: ViewGroup?
     ): FragmentChatBinding {
         val binding = FragmentChatBinding.inflate(layoutInflater, container, false)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
         return binding
     }

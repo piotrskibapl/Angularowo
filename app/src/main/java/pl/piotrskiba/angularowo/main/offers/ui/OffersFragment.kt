@@ -128,7 +128,7 @@ class OffersFragment : BaseFragment<OffersViewModel>(OffersViewModel::class), Of
         container: ViewGroup?
     ): FragmentOffersBinding {
         val binding = FragmentOffersBinding.inflate(layoutInflater, container, false)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
         return binding
     }

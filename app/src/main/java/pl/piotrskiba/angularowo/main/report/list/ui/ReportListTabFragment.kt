@@ -55,7 +55,7 @@ class ReportListTabFragment : BaseFragment<ReportListTabViewModel>(ReportListTab
         container: ViewGroup?
     ): FragmentReportListTabBinding {
         val binding = FragmentReportListTabBinding.inflate(layoutInflater, container, false)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
         return binding
     }

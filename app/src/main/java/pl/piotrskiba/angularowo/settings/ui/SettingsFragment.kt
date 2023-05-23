@@ -28,7 +28,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(SettingsViewModel::clas
         container: ViewGroup?,
     ): FragmentSettingsBinding {
         val binding = FragmentSettingsBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
         viewModel.navigator = this
         return binding

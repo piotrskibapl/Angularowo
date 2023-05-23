@@ -35,7 +35,7 @@ class PunishmentDetailsFragment : BaseFragment<PunishmentDetailsViewModel>(Punis
         container: ViewGroup?,
     ): FragmentPunishmentDetailsBinding {
         val binding = FragmentPunishmentDetailsBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
         viewModel.args = args
         return binding

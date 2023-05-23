@@ -48,7 +48,7 @@ class PunishmentListFragment :
         container: ViewGroup?
     ): FragmentPunishmentListBinding {
         val binding = FragmentPunishmentListBinding.inflate(layoutInflater, container, false)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
         return binding
     }

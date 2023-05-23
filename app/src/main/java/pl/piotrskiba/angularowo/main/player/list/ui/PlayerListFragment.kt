@@ -58,7 +58,7 @@ class PlayerListFragment : BaseFragment<PlayerListViewModel>(PlayerListViewModel
         container: ViewGroup?
     ): FragmentPlayerListBinding {
         val binding = FragmentPlayerListBinding.inflate(layoutInflater, container, false)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
         return binding
     }

@@ -223,7 +223,7 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
         container: ViewGroup?,
     ): FragmentPlayerDetailsBinding {
         val binding = FragmentPlayerDetailsBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
         viewModel.navigator = this
         return binding
