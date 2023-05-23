@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/mainScreenFragment">
+
+    <fragment
+        android:id="@+id/mainScreenFragment"
+        android:name="pl.piotrskiba.angularowo.main.mainscreen.ui.MainScreenFragment"
+        android:label="@string/main_screen"
+        tools:layout="@layout/fragment_main_screen" />
+
+    <fragment
+        android:id="@+id/playerListFragment"
+        android:name="pl.piotrskiba.angularowo.main.player.list.ui.PlayerListFragment"
+        android:label="@string/player_list"
+        tools:layout="@layout/fragment_player_list" />
+
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="pl.piotrskiba.angularowo.main.chat.ui.ChatFragment"
+        android:label="@string/chat"
+        tools:layout="@layout/fragment_chat" />
+
+    <fragment
+        android:id="@+id/lastPunishmentsFragment"
+        android:name="pl.piotrskiba.angularowo.main.punishment.list.ui.PunishmentListFragment"
+        android:label="@string/last_punishments"
+        tools:layout="@layout/fragment_punishment_list" />
+
+    <fragment
+        android:id="@+id/offersFragment"
+        android:name="pl.piotrskiba.angularowo.main.offers.ui.OffersFragment"
+        android:label="@string/free_ranks"
+        tools:layout="@layout/fragment_offers" />
+
+    <fragment
+        android:id="@+id/reportListContainerFragment"
+        android:name="pl.piotrskiba.angularowo.main.report.list.ui.ReportListContainerFragment"
+        android:label="@string/reports_history"
+        tools:layout="@layout/fragment_report_list_container" />
+
+    <activity
+        android:id="@+id/settingsActivity"
+        android:name="pl.piotrskiba.angularowo.settings.ui.SettingsActivity"
+        android:label="@string/settings"
+        tools:layout="@layout/activity_settings" />
+</navigation>

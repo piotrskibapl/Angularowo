@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.createViewModelLazy
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.CreationExtras
 import dagger.android.support.AndroidSupportInjection
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.utils.AnalyticsUtils
@@ -55,6 +56,7 @@ open class BaseFragment<out VM : LifecycleViewModel>(viewModelClass: KClass<VM>)
     private fun Fragment.viewModel(
         clazz: KClass<VM>,
         ownerProducer: () -> ViewModelStoreOwner = { this },
+        extrasProducer: () -> CreationExtras = { CreationExtras.Empty },
         factoryProducer: (() -> ViewModelProvider.Factory)? = null,
-    ) = createViewModelLazy(clazz, { ownerProducer().viewModelStore }, factoryProducer)
+    ) = createViewModelLazy(clazz, { ownerProducer().viewModelStore }, extrasProducer, factoryProducer)
 }
