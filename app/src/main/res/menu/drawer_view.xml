@@ -26,7 +26,7 @@
             android:id="@+id/reportListContainerFragment"
             android:title="@string/reports_history" />
         <item
-            android:id="@+id/settingsActivity"
+            android:id="@+id/settingsFragment"
             android:title="@string/settings"
             android:checkable="false" />
     </group>

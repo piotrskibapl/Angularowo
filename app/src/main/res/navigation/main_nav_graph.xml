@@ -41,9 +41,9 @@
         android:label="@string/reports_history"
         tools:layout="@layout/fragment_report_list_container" />
 
-    <activity
-        android:id="@+id/settingsActivity"
-        android:name="pl.piotrskiba.angularowo.settings.ui.SettingsActivity"
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="pl.piotrskiba.angularowo.settings.ui.SettingsFragment"
         android:label="@string/settings"
-        tools:layout="@layout/activity_settings" />
+        tools:layout="@layout/fragment_settings" />
 </navigation>

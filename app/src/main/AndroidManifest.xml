@@ -30,7 +30,6 @@
         <activity
             android:name=".main.punishment.details.ui.PunishmentDetailsActivity"
             android:parentActivityName=".main.base.ui.MainActivity" />
-        <activity android:name=".settings.ui.SettingsActivity" />
         <activity
             android:name=".main.player.details.ui.PlayerDetailsActivity"
             android:parentActivityName=".main.base.ui.MainActivity" />

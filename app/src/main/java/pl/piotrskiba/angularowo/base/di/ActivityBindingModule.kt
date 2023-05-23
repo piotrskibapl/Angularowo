@@ -8,7 +8,6 @@ import pl.piotrskiba.angularowo.main.base.ui.MainActivity
 import pl.piotrskiba.angularowo.main.player.details.ui.PlayerDetailsActivity
 import pl.piotrskiba.angularowo.main.punishment.details.ui.PunishmentDetailsActivity
 import pl.piotrskiba.angularowo.main.report.details.ui.ReportDetailsActivity
-import pl.piotrskiba.angularowo.settings.ui.SettingsActivity
 
 @Module(includes = [ViewModelModule::class])
 abstract class ActivityBindingModule {
@@ -27,9 +26,6 @@ abstract class ActivityBindingModule {
 
     @ContributesAndroidInjector
     abstract fun bindReportDetailsActivity(): ReportDetailsActivity
-
-    @ContributesAndroidInjector
-    abstract fun bindSettingsActivity(): SettingsActivity
 
     @ContributesAndroidInjector
     abstract fun bindAppLockActivity(): AppLockActivity
