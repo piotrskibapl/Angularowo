@@ -24,7 +24,7 @@
         android:background="@color/color_minecraft_7"
         android:onClick="@{(view) -> navigator.onPunishmentClick(view, punishment)}"
         android:padding="8dp"
-        android:transitionName="@string/punishment_banner_transition_name">
+        android:transitionName="@{punishment.id}">
 
         <ImageView
             android:id="@+id/iv_player_avatar"

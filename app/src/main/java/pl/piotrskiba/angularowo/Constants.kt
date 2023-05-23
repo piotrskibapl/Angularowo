@@ -3,7 +3,6 @@ package pl.piotrskiba.angularowo
 object Constants {
     const val EXTRA_PLAYER = "extra_player"
     const val EXTRA_PREVIEWED_PLAYER = "extra_previewed_player"
-    const val EXTRA_PUNISHMENT = "extra_punishment"
     const val EXTRA_REPORT = "extra_report"
     const val EXTRA_UUID = "extra_uuid"
 
@@ -20,6 +19,4 @@ object Constants {
     const val SILENT_CHANNEL_ID = "silent_notification_channel"
 
     const val USERNAME_QUALIFIER = "%player%"
-
-    const val REMOTE_CONFIG_RANKS_KEY = "ranks"
 }

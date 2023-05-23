@@ -1,18 +1,18 @@
 package pl.piotrskiba.angularowo.main.punishment.list.ui
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityOptionsCompat
+import androidx.core.view.doOnPreDraw
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.findNavController
 import pl.piotrskiba.angularowo.BR
-import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.databinding.FragmentPunishmentListBinding
-import pl.piotrskiba.angularowo.main.punishment.details.ui.PunishmentDetailsActivity
+import pl.piotrskiba.angularowo.main.mainscreen.ui.MainScreenFragmentDirections
 import pl.piotrskiba.angularowo.main.punishment.list.nav.PunishmentListNavigator
 import pl.piotrskiba.angularowo.main.punishment.list.viewmodel.PunishmentListViewModel
 import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBannerData
@@ -37,6 +37,12 @@ class PunishmentListFragment :
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        postponeEnterTransition()
+        view.doOnPreDraw { startPostponedEnterTransition() }
+    }
+
     private fun setupBinding(
         layoutInflater: LayoutInflater,
         container: ViewGroup?
@@ -48,16 +54,10 @@ class PunishmentListFragment :
     }
 
     override fun onPunishmentClick(view: View, punishment: PunishmentBannerData) {
-        val intent = Intent(context, PunishmentDetailsActivity::class.java)
-        intent.putExtra(
-            Constants.EXTRA_PUNISHMENT,
-            viewModel.punishments.find { it.id == punishment.id }
+        val detailedPunishmentData = viewModel.punishments.first { it.id == punishment.id }
+        findNavController().navigate(
+            directions = MainScreenFragmentDirections.toPunishmentDetailsFragment(detailedPunishmentData),
+            navigatorExtras = FragmentNavigatorExtras(view to punishment.id),
         )
-        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-            requireActivity(),
-            view,
-            getString(R.string.punishment_banner_transition_name)
-        )
-        startActivity(intent, options.toBundle())
     }
 }

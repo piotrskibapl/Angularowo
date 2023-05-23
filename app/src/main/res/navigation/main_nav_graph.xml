@@ -9,7 +9,11 @@
         android:id="@+id/mainScreenFragment"
         android:name="pl.piotrskiba.angularowo.main.mainscreen.ui.MainScreenFragment"
         android:label="@string/main_screen"
-        tools:layout="@layout/fragment_main_screen" />
+        tools:layout="@layout/fragment_main_screen" >
+        <action
+            android:id="@+id/to_punishmentDetailsFragment"
+            app:destination="@id/punishmentDetailsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/playerListFragment"
@@ -27,7 +31,21 @@
         android:id="@+id/lastPunishmentsFragment"
         android:name="pl.piotrskiba.angularowo.main.punishment.list.ui.PunishmentListFragment"
         android:label="@string/last_punishments"
-        tools:layout="@layout/fragment_punishment_list" />
+        tools:layout="@layout/fragment_punishment_list" >
+        <action
+            android:id="@+id/to_punishmentDetailsFragment"
+            app:destination="@id/punishmentDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/punishmentDetailsFragment"
+        android:name="pl.piotrskiba.angularowo.main.punishment.details.ui.PunishmentDetailsFragment"
+        android:label="@string/punishment_info"
+        tools:layout="@layout/fragment_punishment_details" >
+        <argument
+            android:name="punishment"
+            app:argType="pl.piotrskiba.angularowo.main.punishment.details.DetailedPunishmentData" />
+    </fragment>
 
     <fragment
         android:id="@+id/offersFragment"

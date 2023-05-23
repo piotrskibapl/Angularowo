@@ -13,23 +13,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        tools:context=".main.punishment.details.ui.PunishmentDetailsActivity">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:fitsSystemWindows="true">
 
         <include
             android:id="@+id/banner"
             layout="@layout/punishment_list_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:layout_constraintTop_toTopOf="parent"
             app:punishment="@{viewModel.previewedPunishmentBanner}" />
 
         <TextView
@@ -44,6 +35,51 @@
             app:layout_constraintTop_toBottomOf="@+id/banner"
             tools:text="Ban" />
 
+        <TextView
+            android:id="@+id/admin_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/section_margin"
+            android:gravity="center_horizontal"
+            android:text="@string/punishment_banner"
+            android:textAlignment="center"
+            android:textSize="@dimen/label_text_size"
+            app:layout_constraintTop_toBottomOf="@+id/type" />
+
+        <TextView
+            android:id="@+id/admin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@{viewModel.previewedPunishmentData.actorName}"
+            android:textAlignment="center"
+            android:textSize="@dimen/content_text_size"
+            app:layout_constraintTop_toBottomOf="@+id/admin_label"
+            tools:text="Username" />
+
+        <TextView
+            android:id="@+id/reason_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/section_margin"
+            android:gravity="center_horizontal"
+            android:text="@string/punishment_reason"
+            android:textAlignment="center"
+            android:textSize="@dimen/label_text_size"
+            app:layout_constraintTop_toBottomOf="@+id/admin" />
+
+        <TextView
+            android:id="@+id/reason"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingHorizontal="8dp"
+            android:text="@{viewModel.previewedPunishmentData.reason}"
+            android:textAlignment="center"
+            android:textSize="@dimen/content_text_size"
+            app:layout_constraintTop_toBottomOf="@+id/reason_label"
+            tools:text="Reason" />
+
         <!-- TODO: drop LinearLayout -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -51,50 +87,7 @@
             android:layout_marginTop="@dimen/section_margin"
             android:baselineAligned="false"
             android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/type">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text="@string/punishment_banner"
-                    android:textAlignment="center"
-                    android:textSize="@dimen/label_text_size" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text="@{viewModel.previewedPunishmentData.actorName}"
-                    android:textAlignment="center"
-                    android:textSize="@dimen/content_text_size"
-                    tools:text="Username" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/section_margin"
-                    android:gravity="center_horizontal"
-                    android:text="@string/punishment_reason"
-                    android:textAlignment="center"
-                    android:textSize="@dimen/label_text_size" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:paddingHorizontal="8dp"
-                    android:text="@{viewModel.previewedPunishmentData.reason}"
-                    android:textAlignment="center"
-                    android:textSize="@dimen/content_text_size"
-                    tools:text="Reason" />
-            </LinearLayout>
+            app:layout_constraintTop_toBottomOf="@+id/reason">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -118,11 +111,17 @@
                     android:textAlignment="center"
                     android:textSize="@dimen/content_text_size"
                     tools:text="01.01.2000 00:00" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/section_margin"
                     android:gravity="center_horizontal"
                     android:text="@string/punishment_end_date"
                     android:textAlignment="center"
