@@ -16,7 +16,7 @@ data class DetailedPlayerRemote(
     val balance: Float,
     val playtime: Long,
     val tokens: Int,
-    val permissions: List<String>
+    val permissions: List<String>,
 )
 
 fun DetailedPlayerRemote.toDomain() = DetailedPlayerModel(
@@ -25,7 +25,7 @@ fun DetailedPlayerRemote.toDomain() = DetailedPlayerModel(
     partnerUuid,
     username,
     status,
-    RankModel.UnknownRank(rankName),
+    RankModel.unknownRank(rankName),
     isVanished,
     balance,
     playtime,
