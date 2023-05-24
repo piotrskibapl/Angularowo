@@ -13,14 +13,9 @@ private const val NUM_TABS = 2
 class ReportListViewPagerAdapter(
     fragmentManager: FragmentManager,
     lifecycle: Lifecycle,
-    private val othersReportsTabAvailable: Boolean
 ) : FragmentStateAdapter(fragmentManager, lifecycle) {
 
-    override fun getItemCount() =
-        if (othersReportsTabAvailable)
-            NUM_TABS
-        else
-            NUM_TABS - 1
+    override fun getItemCount() = NUM_TABS
 
     override fun createFragment(position: Int): Fragment {
         val bundle = Bundle().apply {

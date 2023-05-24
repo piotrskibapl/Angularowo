@@ -34,19 +34,15 @@ class ReportListContainerFragment : BaseFragment<ReportListContainerViewModel>(R
     }
 
     private fun setupViewPager(binding: FragmentReportListContainerBinding) {
-        viewModel.othersReportsTabAvailable.observe(viewLifecycleOwner) { othersReportsTabAvailable ->
-            binding.viewpager.adapter = ReportListViewPagerAdapter(
-                childFragmentManager,
-                lifecycle,
-                othersReportsTabAvailable
-            )
-            TabLayoutMediator(binding.tablayout, binding.viewpager) { tab, position ->
-                tab.text = when (position) {
-                    0 -> requireContext().getString(R.string.reports_own)
-                    else -> requireContext().getString(R.string.reports_others)
-                }
-            }.attach()
-        }
-        binding.viewpager.isSaveEnabled = false
+        binding.viewpager.adapter = ReportListViewPagerAdapter(
+            childFragmentManager,
+            lifecycle,
+        )
+        TabLayoutMediator(binding.tablayout, binding.viewpager) { tab, position ->
+            tab.text = when (position) {
+                0 -> requireContext().getString(R.string.reports_own)
+                else -> requireContext().getString(R.string.reports_others)
+            }
+        }.attach()
     }
 }
