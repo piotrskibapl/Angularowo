@@ -14,4 +14,9 @@ object NavigationComponent {
             R.id.offersFragment,
             R.id.reportListContainerFragment,
         )
+
+    val noToolbarNavigationIconDestinations =
+        setOf(
+            R.id.loginFragment,
+        )
 }

@@ -60,6 +60,9 @@ class MainActivity : BaseActivity<MainViewModel>(MainViewModel::class) {
             } else {
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
             }
+            if (destination.id in NavigationComponent.noToolbarNavigationIconDestinations) {
+                toolbar.navigationIcon = null
+            }
         }
 
         preferenceUtils = PreferenceUtils(this)
