@@ -59,6 +59,13 @@ class MainActivity : BaseActivity<MainViewModel>(MainViewModel::class), MainNavi
                 navController.navigateUp()
             }
         }
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id in NavigationComponent.topLevelDestinations) {
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+            } else {
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+            }
+        }
 
         preferenceUtils = PreferenceUtils(this)
 
