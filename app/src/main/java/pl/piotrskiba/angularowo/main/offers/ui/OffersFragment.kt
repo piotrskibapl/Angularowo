@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import com.google.ads.mediation.admob.AdMobAdapter
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
@@ -35,9 +34,7 @@ class OffersFragment : BaseFragment<OffersViewModel>(OffersViewModel::class), Of
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = setupBinding(layoutInflater, container)
-        setupActionBar()
-        return binding.root
+        return setupBinding(layoutInflater, container).root
     }
 
     override fun displayAdOfferConfirmationDialog(
@@ -131,10 +128,5 @@ class OffersFragment : BaseFragment<OffersViewModel>(OffersViewModel::class), Of
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
         return binding
-    }
-
-    private fun setupActionBar() {
-        val actionbar = (activity as AppCompatActivity?)?.supportActionBar
-        actionbar?.setTitle(R.string.actionbar_title_free_ranks)
     }
 }

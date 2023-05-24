@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/mainScreenFragment"
         android:name="pl.piotrskiba.angularowo.main.mainscreen.ui.MainScreenFragment"
-        android:label="@string/main_screen"
+        android:label="@string/app_name"
         tools:layout="@layout/fragment_main_screen">
         <action
             android:id="@+id/to_punishmentDetailsFragment"
@@ -18,7 +18,7 @@
     <fragment
         android:id="@+id/playerListFragment"
         android:name="pl.piotrskiba.angularowo.main.player.list.ui.PlayerListFragment"
-        android:label="@string/player_list"
+        android:label="@string/actionbar_title_player_list"
         tools:layout="@layout/fragment_player_list">
         <action
             android:id="@+id/to_playerDetailsFragment"
@@ -45,7 +45,7 @@
     <fragment
         android:id="@+id/chatFragment"
         android:name="pl.piotrskiba.angularowo.main.chat.ui.ChatFragment"
-        android:label="@string/chat"
+        android:label="@string/actionbar_title_chat"
         tools:layout="@layout/fragment_chat">
         <action
             android:id="@+id/to_playerDetailsFragment"
@@ -55,7 +55,7 @@
     <fragment
         android:id="@+id/lastPunishmentsFragment"
         android:name="pl.piotrskiba.angularowo.main.punishment.list.ui.PunishmentListFragment"
-        android:label="@string/last_punishments"
+        android:label="@string/actionbar_title_punishment_list"
         tools:layout="@layout/fragment_punishment_list">
         <action
             android:id="@+id/to_punishmentDetailsFragment"
@@ -75,13 +75,13 @@
     <fragment
         android:id="@+id/offersFragment"
         android:name="pl.piotrskiba.angularowo.main.offers.ui.OffersFragment"
-        android:label="@string/free_ranks"
+        android:label="@string/actionbar_title_free_ranks"
         tools:layout="@layout/fragment_offers" />
 
     <fragment
         android:id="@+id/reportListContainerFragment"
         android:name="pl.piotrskiba.angularowo.main.report.list.ui.ReportListContainerFragment"
-        android:label="@string/reports_history"
+        android:label="@string/actionbar_title_report_list"
         tools:layout="@layout/fragment_report_list_container" />
 
     <fragment

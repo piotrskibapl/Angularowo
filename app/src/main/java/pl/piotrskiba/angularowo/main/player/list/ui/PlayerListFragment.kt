@@ -4,12 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.doOnPreDraw
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import pl.piotrskiba.angularowo.BR
-import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.di.obtainViewModel
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.databinding.FragmentPlayerListBinding
@@ -34,10 +32,7 @@ class PlayerListFragment : BaseFragment<PlayerListViewModel>(PlayerListViewModel
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = setupBinding(layoutInflater, container)
-        val actionbar = (activity as AppCompatActivity?)?.supportActionBar
-        actionbar?.setTitle(R.string.actionbar_title_player_list)
-        return binding.root
+        return setupBinding(layoutInflater, container).root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

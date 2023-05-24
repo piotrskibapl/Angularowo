@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -31,10 +30,7 @@ class ChatFragment : BaseFragment<ChatViewModel>(ChatViewModel::class), ChatNavi
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val binding = setupBinding(layoutInflater, container)
-        val actionbar = (activity as AppCompatActivity?)?.supportActionBar
-        actionbar?.setTitle(R.string.actionbar_title_chat)
-        return binding.root
+        return setupBinding(layoutInflater, container).root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

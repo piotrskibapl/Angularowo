@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.tabs.TabLayoutMediator
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
@@ -21,7 +20,6 @@ class ReportListContainerFragment : BaseFragment<ReportListContainerViewModel>(R
     ): View {
         val binding = setupBinding(inflater, container)
         setupViewPager(binding)
-        (activity as AppCompatActivity?)?.supportActionBar?.setTitle(R.string.actionbar_title_report_list)
         return binding.root
     }
 
