@@ -23,7 +23,7 @@
         android:background="@color/color_minecraft_7"
         android:onClick="@{(view) -> navigator.onReportClick(view, report)}"
         android:padding="8dp"
-        android:transitionName="@string/report_banner_transition_name">
+        android:transitionName="@{String.valueOf(report.id)}">
 
         <TextView
             android:id="@+id/tv_player_name"

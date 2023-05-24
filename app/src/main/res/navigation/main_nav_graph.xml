@@ -82,7 +82,21 @@
         android:id="@+id/reportListContainerFragment"
         android:name="pl.piotrskiba.angularowo.main.report.list.ui.ReportListContainerFragment"
         android:label="@string/actionbar_title_report_list"
-        tools:layout="@layout/fragment_report_list_container" />
+        tools:layout="@layout/fragment_report_list_container">
+        <action
+            android:id="@+id/to_reportDetailsFragment"
+            app:destination="@id/reportDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/reportDetailsFragment"
+        android:name="pl.piotrskiba.angularowo.main.report.details.ui.ReportDetailsFragment"
+        android:label="@string/report_info"
+        tools:layout="@layout/fragment_report_details">
+        <argument
+            android:name="report"
+            app:argType="pl.piotrskiba.angularowo.domain.report.model.ReportModel" />
+    </fragment>
 
     <fragment
         android:id="@+id/settingsFragment"

@@ -149,7 +149,6 @@
 
     <!-- report details -->
     <string name="report_info">Szczegóły zgłoszenia</string>
-    <string name="report_banner_transition_name" translatable="false">report_banner</string>
     <string name="report_details_reason">Powód zgłoszenia:</string>
     <string name="report_details_reporter">Zgłaszający:</string>
     <string name="report_details_date">Data zgłoszenia:</string>
