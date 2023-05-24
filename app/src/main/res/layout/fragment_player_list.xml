@@ -32,6 +32,7 @@
                     android:orientation="vertical">
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/favorite_player_list"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
@@ -42,6 +43,7 @@
                         app:visible="@{viewModel.favoritePlayerListNotEmpty}" />
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/player_list"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
