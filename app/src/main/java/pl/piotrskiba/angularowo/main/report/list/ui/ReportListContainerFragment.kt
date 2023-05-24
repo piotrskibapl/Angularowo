@@ -24,21 +24,22 @@ class ReportListContainerFragment : BaseFragment<ReportListContainerViewModel>(R
     }
 
     private fun setupBinding(
-        layoutInflater: LayoutInflater,
+        inflater: LayoutInflater,
         container: ViewGroup?
-    ) = FragmentReportListContainerBinding.inflate(layoutInflater, container, false)
+    ): FragmentReportListContainerBinding {
+        val binding = FragmentReportListContainerBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
+        return binding
+    }
 
     private fun setupViewPager(binding: FragmentReportListContainerBinding) {
         viewModel.othersReportsTabAvailable.observe(viewLifecycleOwner) { othersReportsTabAvailable ->
-            val adapter = ReportListViewPagerAdapter(
+            binding.viewpager.adapter = ReportListViewPagerAdapter(
                 childFragmentManager,
                 lifecycle,
                 othersReportsTabAvailable
             )
-            // TODO: use data binding instead
-            binding.viewpager.isUserInputEnabled = othersReportsTabAvailable
-            binding.tablayout.visibility = if (othersReportsTabAvailable) View.VISIBLE else View.GONE
-            binding.viewpager.adapter = adapter
             TabLayoutMediator(binding.tablayout, binding.viewpager) { tab, position ->
                 tab.text = when (position) {
                     0 -> requireContext().getString(R.string.reports_own)
