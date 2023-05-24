@@ -9,6 +9,7 @@ import java.text.NumberFormat
 
 data class DetailedPlayer(
     val username: String,
+    val rankName: String,
     private val tokens: Int,
     private val balance: Float,
     private val skinUuid: String,
@@ -28,8 +29,9 @@ data class DetailedPlayer(
 
 fun DetailedPlayerModel.toUi() = DetailedPlayer(
     username,
+    rank.name,
     tokens,
     balance,
     skinUuid,
-    playtime
+    playtime,
 )

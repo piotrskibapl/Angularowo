@@ -6,10 +6,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.view.doOnPreDraw
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.navigation.NavigationView
 import pl.piotrskiba.angularowo.BR
+import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.di.obtainViewModel
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.databinding.FragmentMainScreenBinding
@@ -27,7 +30,6 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel
         viewModel.punishmentsBinding.bindExtra(BR.navigator, this)
         super.onCreate(savedInstanceState)
         mainViewModel = viewModelFactory.obtainViewModel(requireActivity())
-        viewModel.player.observe(this) { mainViewModel.player.value = it }
     }
 
     override fun onCreateView(
@@ -35,6 +37,12 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        viewModel.player.observe(viewLifecycleOwner) { mainViewModel.player.value = it }
+        viewModel.uiData.observe(viewLifecycleOwner) { uiData ->
+            val navHeader = requireActivity().findViewById<NavigationView>(R.id.nav_view).getHeaderView(0)
+            navHeader.findViewById<TextView>(R.id.navheader_username).text = uiData.player.username
+            navHeader.findViewById<TextView>(R.id.navheader_rank).text = uiData.player.rankName
+        }
         return setupBinding(layoutInflater, container).root
     }
 

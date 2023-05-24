@@ -3,7 +3,6 @@ package pl.piotrskiba.angularowo.main.base.ui
 import android.content.Context
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -79,13 +78,6 @@ class MainActivity : BaseActivity<MainViewModel>(MainViewModel::class) {
 
     override fun onResume() {
         super.onResume()
-        // TODO: load data in viewmodel
-        if (preferenceUtils.accessToken != null || preferenceUtils.uuid != null) {
-            val navHeaderUsernameTextView = binding.navView.getHeaderView(0).findViewById<TextView>(R.id.navheader_username)
-            val navHeaderRankTextView = binding.navView.getHeaderView(0).findViewById<TextView>(R.id.navheader_rank)
-            navHeaderUsernameTextView.text = preferenceUtils.username
-            navHeaderRankTextView.text = preferenceUtils.rankName
-        }
         setNavigationItemSelectedListener()
     }
 
