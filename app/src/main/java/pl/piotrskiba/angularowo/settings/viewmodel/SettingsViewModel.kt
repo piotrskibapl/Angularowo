@@ -96,8 +96,7 @@ class SettingsViewModel @Inject constructor(
                     .subscribeOn(facade.io())
                     .observeOn(facade.ui())
                     .subscribe {
-                        // TODO: navigate to login
-                        navigator.closeActivity()
+                        navigator.displayLogin()
                     }
             )
         }

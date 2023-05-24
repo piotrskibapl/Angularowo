@@ -27,7 +27,6 @@
             android:name="firebase_analytics_collection_enabled"
             android:value="true" />
 
-        <activity android:name=".login.ui.LoginActivity" />
         <activity
             android:name=".main.base.ui.MainActivity"
             android:exported="true"

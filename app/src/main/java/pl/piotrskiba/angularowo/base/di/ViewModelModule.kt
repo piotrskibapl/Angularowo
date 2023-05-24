@@ -6,6 +6,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 import pl.piotrskiba.angularowo.applock.viewmodel.AppLockViewModel
+import pl.piotrskiba.angularowo.init.viewmodel.InitViewModel
 import pl.piotrskiba.angularowo.login.viewmodel.LoginViewModel
 import pl.piotrskiba.angularowo.main.base.viewmodel.MainViewModel
 import pl.piotrskiba.angularowo.main.chat.viewmodel.ChatViewModel
@@ -25,6 +26,11 @@ abstract class ViewModelModule {
 
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(InitViewModel::class)
+    abstract fun bindInitViewModel(viewModel: InitViewModel): ViewModel
 
     @Binds
     @IntoMap

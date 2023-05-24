@@ -1,7 +1,6 @@
 package pl.piotrskiba.angularowo.main.base.ui
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.TextView
@@ -9,7 +8,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.multidex.MultiDex
-import androidx.navigation.findNavController
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.onNavDestinationSelected
@@ -17,23 +16,19 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
-import pl.piotrskiba.angularowo.applock.ui.AppLockActivity
 import pl.piotrskiba.angularowo.base.ui.BaseActivity
 import pl.piotrskiba.angularowo.databinding.ActivityMainBinding
-import pl.piotrskiba.angularowo.login.ui.LoginActivity
 import pl.piotrskiba.angularowo.main.base.model.NavigationComponent
-import pl.piotrskiba.angularowo.main.base.nav.MainNavigator
 import pl.piotrskiba.angularowo.main.base.viewmodel.MainViewModel
 import pl.piotrskiba.angularowo.utils.NotificationUtils
 import pl.piotrskiba.angularowo.utils.PreferenceUtils
 
-class MainActivity : BaseActivity<MainViewModel>(MainViewModel::class), MainNavigator {
+class MainActivity : BaseActivity<MainViewModel>(MainViewModel::class) {
 
     private lateinit var preferenceUtils: PreferenceUtils
-    private var waitingForLogin = false
     private lateinit var binding: ActivityMainBinding
+    private lateinit var navController: NavController
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(newBase)
@@ -45,7 +40,7 @@ class MainActivity : BaseActivity<MainViewModel>(MainViewModel::class), MainNavi
         setupBinding()
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
+        navController = navHostFragment.navController
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
         val appBarConfiguration = AppBarConfiguration(NavigationComponent.topLevelDestinations, drawerLayout)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
@@ -81,21 +76,12 @@ class MainActivity : BaseActivity<MainViewModel>(MainViewModel::class), MainNavi
 
     override fun onResume() {
         super.onResume()
-        if (!waitingForLogin) {
-            // checking uuid to force relogin after upgrading to v3.3
-            if (preferenceUtils.accessToken == null || preferenceUtils.uuid == null) {
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivityForResult(intent, Constants.REQUEST_CODE_REGISTER)
-
-                waitingForLogin = true
-            } else {
-                val navHeaderUsernameTextView =
-                    binding.navView.getHeaderView(0).findViewById<TextView>(R.id.navheader_username)
-                val navHeaderRankTextView =
-                    binding.navView.getHeaderView(0).findViewById<TextView>(R.id.navheader_rank)
-                navHeaderUsernameTextView.text = preferenceUtils.username
-                navHeaderRankTextView.text = preferenceUtils.rankName
-            }
+        // TODO: load data in viewmodel
+        if (preferenceUtils.accessToken != null || preferenceUtils.uuid != null) {
+            val navHeaderUsernameTextView = binding.navView.getHeaderView(0).findViewById<TextView>(R.id.navheader_username)
+            val navHeaderRankTextView = binding.navView.getHeaderView(0).findViewById<TextView>(R.id.navheader_rank)
+            navHeaderUsernameTextView.text = preferenceUtils.username
+            navHeaderRankTextView.text = preferenceUtils.rankName
         }
         setNavigationItemSelectedListener()
     }
@@ -108,28 +94,14 @@ class MainActivity : BaseActivity<MainViewModel>(MainViewModel::class), MainNavi
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == Constants.REQUEST_CODE_REGISTER) {
-            waitingForLogin = false
-        }
-    }
-
-    override fun displayAppLock() {
-        // TODO: don't instantiate main screen fragment nor login activity
-        val intent = Intent(this, AppLockActivity::class.java)
-        startActivity(intent)
-    }
-
     private fun setupBinding() {
-        viewModel.navigator = this
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
 
     private fun setNavigationItemSelectedListener() {
         binding.navView.setNavigationItemSelectedListener { menuItem: MenuItem ->
-            menuItem.onNavDestinationSelected(findNavController(R.id.nav_host_fragment))
+            menuItem.onNavDestinationSelected(navController)
             binding.drawerLayout.closeDrawers()
             true
         }

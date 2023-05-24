@@ -1,9 +1,6 @@
 package pl.piotrskiba.angularowo
 
 object Constants {
-    const val REQUEST_CODE_REGISTER = 1100
-    const val RESULT_CODE_SUCCESS = 1200
-
     const val FIREBASE_FCM_DATA_NOTIFICATION_TITLE = "notification_title"
     const val FIREBASE_FCM_DATA_NOTIFICATION_BODY = "notification_body"
     const val FIREBASE_FCM_DATA_NOTIFICATION_SOUND = "notification_sound"

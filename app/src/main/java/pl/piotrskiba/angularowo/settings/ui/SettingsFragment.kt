@@ -45,7 +45,9 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(SettingsViewModel::clas
             .show()
     }
 
-    override fun closeActivity() {
-        findNavController().popBackStack()
+    override fun displayLogin() {
+        findNavController().navigate(
+            SettingsFragmentDirections.toLoginFragment()
+        )
     }
 }

@@ -6,6 +6,7 @@ object NavigationComponent {
 
     val topLevelDestinations =
         setOf(
+            R.id.initFragment,
             R.id.mainScreenFragment,
             R.id.playerListFragment,
             R.id.chatFragment,

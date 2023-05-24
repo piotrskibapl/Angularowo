@@ -2,41 +2,40 @@ package pl.piotrskiba.angularowo.login.ui
 
 import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
-import pl.piotrskiba.angularowo.base.ui.BaseActivity
-import pl.piotrskiba.angularowo.databinding.ActivityLoginBinding
+import pl.piotrskiba.angularowo.base.ui.BaseFragment
+import pl.piotrskiba.angularowo.databinding.FragmentLoginBinding
 import pl.piotrskiba.angularowo.domain.login.model.AccessTokenError
 import pl.piotrskiba.angularowo.login.model.LoginState
 import pl.piotrskiba.angularowo.login.viewmodel.LoginViewModel
 
-class LoginActivity : BaseActivity<LoginViewModel>(LoginViewModel::class) {
+class LoginFragment : BaseFragment<LoginViewModel>(LoginViewModel::class) {
 
-    private lateinit var context: Context
-
+    private lateinit var binding: FragmentLoginBinding
     private var snackbar: Snackbar? = null
-    private lateinit var binding: ActivityLoginBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setupBinding()
-        setSupportActionBar(binding.toolbar)
-
-        context = this
-
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        val binding = setupBinding(inflater, container)
+        // TODO: use databinding
         binding.peetAccesstoken.setOnPinEnteredListener {
             viewModel.onPinEntered(it.toString())
             binding.peetAccesstoken.setText("")
             closeKeyboard()
             showLoadingSnackBar()
         }
-
-        viewModel.loginState.observe(this) { loginState ->
+        viewModel.loginState.observe(viewLifecycleOwner) { loginState ->
             when (loginState) {
                 is LoginState.Loading -> showLoadingSnackBar()
                 is LoginState.Success -> onLoginSuccess()
@@ -44,18 +43,33 @@ class LoginActivity : BaseActivity<LoginViewModel>(LoginViewModel::class) {
                 else -> snackbar?.dismiss()
             }
         }
+        return binding.root
     }
 
-    private fun setupBinding() {
-        binding = ActivityLoginBinding.inflate(layoutInflater)
-        binding.lifecycleOwner = this
+    private fun setupBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): FragmentLoginBinding {
+        binding = FragmentLoginBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
-        setContentView(binding.root)
+        return binding
+    }
+
+    private fun closeKeyboard() {
+        val inputManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        if (requireActivity().currentFocus != null) {
+            inputManager.hideSoftInputFromWindow(
+                requireActivity().currentFocus!!.windowToken,
+                InputMethodManager.HIDE_NOT_ALWAYS,
+            )
+        }
     }
 
     private fun onLoginSuccess() {
-        setResult(Constants.RESULT_CODE_SUCCESS)
-        finish()
+        findNavController().navigate(
+            LoginFragmentDirections.toMainScreenFragment()
+        )
     }
 
     private fun onLoginError(error: AccessTokenError) {
@@ -89,20 +103,5 @@ class LoginActivity : BaseActivity<LoginViewModel>(LoginViewModel::class) {
             Snackbar.LENGTH_LONG
         )
         snackbar!!.show()
-    }
-
-    private fun closeKeyboard() {
-        val inputManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-
-        if (currentFocus != null) {
-            inputManager.hideSoftInputFromWindow(
-                currentFocus?.windowToken,
-                InputMethodManager.HIDE_NOT_ALWAYS
-            )
-        }
-    }
-
-    override fun onBackPressed() {
-        // do nothing
     }
 }
