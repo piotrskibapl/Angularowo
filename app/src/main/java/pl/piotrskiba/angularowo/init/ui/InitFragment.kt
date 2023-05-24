@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import pl.piotrskiba.angularowo.R
+import pl.piotrskiba.angularowo.base.extensions.changeStartDestination
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.init.nav.InitNavigator
 import pl.piotrskiba.angularowo.init.viewmodel.InitViewModel
@@ -36,8 +37,6 @@ class InitFragment : BaseFragment<InitViewModel>(InitViewModel::class), InitNavi
     }
 
     override fun displayMainScreen() {
-        findNavController().apply {
-            navigate(InitFragmentDirections.toMainScreenFragment())
-        }
+        findNavController().changeStartDestination(R.id.mainScreenFragment)
     }
 }

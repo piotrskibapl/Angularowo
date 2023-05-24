@@ -9,8 +9,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
-import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
+import pl.piotrskiba.angularowo.base.extensions.changeStartDestination
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.databinding.FragmentLoginBinding
 import pl.piotrskiba.angularowo.domain.login.model.AccessTokenError
@@ -67,9 +67,7 @@ class LoginFragment : BaseFragment<LoginViewModel>(LoginViewModel::class) {
     }
 
     private fun onLoginSuccess() {
-        findNavController().navigate(
-            LoginFragmentDirections.toMainScreenFragment()
-        )
+        findNavController().changeStartDestination(R.id.mainScreenFragment)
     }
 
     private fun onLoginError(error: AccessTokenError) {
