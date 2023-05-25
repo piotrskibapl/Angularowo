@@ -17,7 +17,6 @@ class AppLockViewModel @Inject constructor(
 ) : LifecycleViewModel() {
 
     val appLockData = MutableLiveData<AppLockData>()
-    var canSkip = false
     val state = MutableLiveData<ViewModelState>(Loading.Fetch)
 
     override fun onFirstCreate() {
@@ -27,7 +26,6 @@ class AppLockViewModel @Inject constructor(
                 .observeOn(facade.ui())
                 .subscribe { data ->
                     appLockData.value = data.config.toUi()
-                    canSkip = data.canSkip
                     state.value = Loaded
                 }
         )
