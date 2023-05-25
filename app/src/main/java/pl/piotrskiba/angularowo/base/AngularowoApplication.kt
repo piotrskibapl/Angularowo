@@ -3,32 +3,39 @@ package pl.piotrskiba.angularowo.base
 import android.content.Context
 import android.util.Log
 import androidx.multidex.MultiDex
+import com.google.android.gms.ads.MobileAds
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import io.reactivex.rxjava3.exceptions.UndeliverableException
 import io.reactivex.rxjava3.plugins.RxJavaPlugins
-import pl.piotrskiba.angularowo.base.di.AppComponent
+import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.di.DaggerAppComponent
+import pl.piotrskiba.angularowo.utils.NotificationUtils
+import javax.inject.Inject
 
 class AngularowoApplication : DaggerApplication() {
 
-    private lateinit var appComponent: AppComponent
+    @Inject
+    lateinit var remoteConfig: FirebaseRemoteConfig
 
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
         MultiDex.install(this)
     }
 
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-        appComponent = DaggerAppComponent.builder()
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> =
+        DaggerAppComponent.builder()
             .application(this)
             .build()
-        return appComponent
-    }
 
     override fun onCreate() {
         super.onCreate()
         setupRxErrorHandler()
+        remoteConfig.setDefaultsAsync(R.xml.remote_config_default_values)
+        remoteConfig.fetchAndActivate()
+        MobileAds.initialize(applicationContext)
+        NotificationUtils(applicationContext).createNotificationChannels()
     }
 
     private fun setupRxErrorHandler() {
