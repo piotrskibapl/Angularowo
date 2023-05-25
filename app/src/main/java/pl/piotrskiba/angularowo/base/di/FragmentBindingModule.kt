@@ -2,6 +2,7 @@ package pl.piotrskiba.angularowo.base.di
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
+import pl.piotrskiba.angularowo.applock.ui.AppLockFragment
 import pl.piotrskiba.angularowo.init.ui.InitFragment
 import pl.piotrskiba.angularowo.login.ui.LoginFragment
 import pl.piotrskiba.angularowo.main.chat.ui.ChatFragment
@@ -24,6 +25,9 @@ abstract class FragmentBindingModule {
 
     @ContributesAndroidInjector
     abstract fun bindLoginFragment(): LoginFragment
+
+    @ContributesAndroidInjector
+    abstract fun bindAppLockFragment(): AppLockFragment
 
     @ContributesAndroidInjector
     abstract fun bindMainScreenFragment(): MainScreenFragment

@@ -27,7 +27,9 @@ class InitFragment : BaseFragment<InitViewModel>(InitViewModel::class), InitNavi
     }
 
     override fun displayAppLock() {
-        // TODO: navigate to app lock
+        findNavController().navigate(
+            InitFragmentDirections.toAppLockFragment()
+        )
     }
 
     override fun displayLogin() {

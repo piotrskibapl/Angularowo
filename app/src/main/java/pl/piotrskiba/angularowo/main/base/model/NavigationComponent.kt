@@ -18,5 +18,6 @@ object NavigationComponent {
     val noToolbarNavigationIconDestinations =
         setOf(
             R.id.loginFragment,
+            R.id.appLockFragment,
         )
 }

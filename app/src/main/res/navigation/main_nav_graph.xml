@@ -15,6 +15,11 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@id/initFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/to_appLockFragment"
+            app:destination="@id/appLockFragment"
+            app:popUpTo="@id/initFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -22,6 +27,12 @@
         android:name="pl.piotrskiba.angularowo.login.ui.LoginFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_login" />
+
+    <fragment
+        android:id="@+id/appLockFragment"
+        android:name="pl.piotrskiba.angularowo.applock.ui.AppLockFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_app_lock" />
 
     <fragment
         android:id="@+id/mainScreenFragment"
