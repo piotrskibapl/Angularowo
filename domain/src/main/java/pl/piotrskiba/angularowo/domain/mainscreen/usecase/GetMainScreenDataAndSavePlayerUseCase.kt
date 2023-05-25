@@ -29,11 +29,14 @@ class GetMainScreenDataAndSavePlayerUseCase @Inject constructor(
         )
             .toSingle()
             .flatMap { (accessToken, uuid, username) ->
-                getServerStatus(accessToken)
-                    .zipWith(getAndSavePlayerData(accessToken, uuid), ::Pair)
-                    .zipWith(getPlayerPunishments(accessToken, username)) { (serverStatus, playerData), playerPunishments ->
-                        MainScreenDataModel(serverStatus, playerData, playerPunishments)
-                    }
+                Single.zip(
+                    getServerStatus(accessToken),
+                    getAndSavePlayerData(accessToken, uuid),
+                    getPlayerPunishments(accessToken, username),
+                    ::Triple
+                ).map { (serverStatus, playerData, playerPunishments) ->
+                    MainScreenDataModel(serverStatus, playerData, playerPunishments)
+                }
             }
 
     private fun getServerStatus(accessToken: String) =
