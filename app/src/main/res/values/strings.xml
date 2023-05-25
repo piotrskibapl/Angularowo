@@ -113,7 +113,6 @@
     <string name="punishment_mute_description_format">Wyciszony za %1$s</string>
     <string name="punishment_kick_description_format">Wyrzucony za %1$s</string>
     <string name="punishment_date_format" translatable="false">dd.MM.yyyy HH:mm</string>
-    <string name="punishment_banner_transition_name" translatable="false">ban_banner</string>
 
     <!-- offers -->
     <string name="actionbar_title_free_ranks">Darmowe nagrody</string>

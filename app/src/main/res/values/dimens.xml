@@ -39,14 +39,6 @@
     <dimen name="navheader_title_text_size">18sp</dimen>
     <dimen name="navheader_subtitle_text_size">14sp</dimen>
 
-    <!-- showcases -->
-    <dimen name="showcase_title_text_size">32sp</dimen>
-    <dimen name="showcase_description_text_size">16sp</dimen>
-    <dimen name="showcase_title_margin_horizontal">32dp</dimen>
-    <dimen name="showcase_title_margin_top">120dp</dimen>
-    <dimen name="showcase_description_margin_horizontal">40dp</dimen>
-    <dimen name="showcase_description_margin_top">16dp</dimen>
-
     <!-- time_amount_picker_view.xml -->
     <dimen name="time_amount_picker_edittext_min_size">40dp</dimen>
 </resources>
