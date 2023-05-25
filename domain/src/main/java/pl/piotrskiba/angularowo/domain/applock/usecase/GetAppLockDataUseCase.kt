@@ -1,7 +1,5 @@
 package pl.piotrskiba.angularowo.domain.applock.usecase
 
-import io.reactivex.rxjava3.core.Maybe
-import io.reactivex.rxjava3.core.Single
 import pl.piotrskiba.angularowo.domain.applock.model.AppLockDataModel
 import pl.piotrskiba.angularowo.domain.applock.repository.AppLockRepository
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository

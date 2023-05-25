@@ -13,7 +13,6 @@ import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.punishment.usecase.GetActivePunishmentsUseCase
 import pl.piotrskiba.angularowo.main.punishment.details.DetailedPunishmentData
 import pl.piotrskiba.angularowo.main.punishment.details.toUi
-import pl.piotrskiba.angularowo.main.punishment.list.nav.PunishmentListNavigator
 import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBannerData
 import pl.piotrskiba.angularowo.main.punishment.model.toPunishmentBannerData
 import javax.inject.Inject
