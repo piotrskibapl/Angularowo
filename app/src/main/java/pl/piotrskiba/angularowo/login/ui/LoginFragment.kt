@@ -28,12 +28,10 @@ class LoginFragment : BaseFragment<LoginViewModel>(LoginViewModel::class) {
         savedInstanceState: Bundle?,
     ): View {
         val binding = setupBinding(inflater, container)
-        // TODO: use databinding
         binding.peetAccesstoken.setOnPinEnteredListener {
             viewModel.onPinEntered(it.toString())
             binding.peetAccesstoken.setText("")
             closeKeyboard()
-            showLoadingSnackBar()
         }
         viewModel.loginState.observe(viewLifecycleOwner) { loginState ->
             when (loginState) {
