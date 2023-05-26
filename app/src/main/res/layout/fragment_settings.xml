@@ -22,56 +22,60 @@
             android:orientation="vertical">
 
             <include
-                android:id="@+id/category_notifications"
                 layout="@layout/settings_category"
                 app:categoryIconResId="@{R.drawable.ic_notifications}"
                 app:categoryNameResId="@{R.string.pref_category_notifications}" />
 
             <include
-                android:id="@+id/item_events"
+                layout="@layout/settings_item"
+                app:checkable="@{false}"
+                app:itemDescriptionResId="@{R.string.pref_summary_enable_notifications}"
+                app:itemNameResId="@{R.string.pref_title_enable_notifications}"
+                app:onClick="@{() -> viewModel.onEnableNotificationsClicked()}"
+                app:visible="@{!viewModel.notificationsEnabled}" />
+
+            <include
                 layout="@layout/settings_item"
                 app:checkable="@{true}"
                 app:checked="@{viewModel.eventsChecked}"
                 app:itemDescriptionResId="@{R.string.pref_summary_subscribed_to_events}"
                 app:itemNameResId="@{R.string.pref_title_subscribed_to_events}"
-                app:onClick="@{() -> viewModel.onEventsNotificationsClicked()}" />
+                app:onClick="@{() -> viewModel.onEventsNotificationsClicked()}"
+                app:visible="@{viewModel.notificationsEnabled}" />
 
             <include
-                android:id="@+id/item_private_messages"
                 layout="@layout/settings_item"
                 app:checkable="@{true}"
                 app:checked="@{viewModel.privateMessagesChecked}"
                 app:itemDescriptionResId="@{R.string.pref_summary_subscribed_to_private_messages}"
                 app:itemNameResId="@{R.string.pref_title_subscribed_to_private_messages}"
-                app:onClick="@{() -> viewModel.onPrivateMessagesNotificationsClicked()}" />
+                app:onClick="@{() -> viewModel.onPrivateMessagesNotificationsClicked()}"
+                app:visible="@{viewModel.notificationsEnabled}" />
 
             <include
-                android:id="@+id/item_account_incidents"
                 layout="@layout/settings_item"
                 app:checkable="@{true}"
                 app:checked="@{viewModel.accountIncidentsChecked}"
                 app:itemDescriptionResId="@{R.string.pref_summary_subscribed_to_account_incidents}"
                 app:itemNameResId="@{R.string.pref_title_subscribed_to_account_incidents}"
-                app:onClick="@{() -> viewModel.onAccountIncidentsNotificationsClicked()}" />
+                app:onClick="@{() -> viewModel.onAccountIncidentsNotificationsClicked()}"
+                app:visible="@{viewModel.notificationsEnabled}" />
 
             <include
-                android:id="@+id/item_new_reports"
                 layout="@layout/settings_item"
                 app:checkable="@{true}"
                 app:checked="@{viewModel.newReportsChecked}"
                 app:itemDescriptionResId="@{R.string.pref_summary_subscribed_to_new_reports}"
                 app:itemNameResId="@{R.string.pref_title_subscribed_to_new_reports}"
                 app:onClick="@{() -> viewModel.onNewReportsNotificationsClicked()}"
-                app:visible="@{viewModel.newReportsVisible}" />
+                app:visible="@{viewModel.notificationsEnabled &amp;&amp; viewModel.newReportsVisible}" />
 
             <include
-                android:id="@+id/category_others"
                 layout="@layout/settings_category"
                 app:categoryIconResId="@{R.drawable.ic_settings}"
                 app:categoryNameResId="@{R.string.pref_category_others}" />
 
             <include
-                android:id="@+id/item_logout"
                 layout="@layout/settings_item"
                 app:checkable="@{false}"
                 app:itemDescriptionResId="@{R.string.pref_summary_logout}"

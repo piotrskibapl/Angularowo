@@ -29,6 +29,7 @@ class SettingsViewModel @Inject constructor(
     val accountIncidentsChecked = MutableLiveData(false)
     val newReportsChecked = MutableLiveData(false)
     val newReportsVisible = MutableLiveData(false)
+    val notificationsEnabled = MutableLiveData(true)
 
     override fun onFirstCreate() {
         disposables.add(
@@ -43,6 +44,10 @@ class SettingsViewModel @Inject constructor(
                     newReportsVisible.value = settings.newReportsVisible
                 }
         )
+    }
+
+    fun onEnableNotificationsClicked() {
+        navigator.askForNotificationsPermission()
     }
 
     fun onEventsNotificationsClicked() {

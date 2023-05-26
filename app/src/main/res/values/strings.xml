@@ -8,9 +8,9 @@
     <string name="notification_channel_name_silent">Ciche powiadomienia</string>
     <string name="notification_channel_description_silent">Powiadomienia w aplikacji dla których wyłączony jest dźwięk oraz wibracje</string>
 
-    <!-- preferences TODO: remove after migration -->
-    <string name="pref_key_uuid" translatable="false">uuid</string>
-    <string name="pref_key_nickname" translatable="false">nickname</string>
+    <!-- settings -->
+    <string name="pref_key_uuid" translatable="false">uuid</string> <!-- TODO: remove after migration -->
+    <string name="pref_key_nickname" translatable="false">nickname</string> <!-- TODO: remove after migration -->
     <string name="pref_category_notifications">Powiadomienia</string>
     <string name="pref_category_others">Inne</string>
     <string name="pref_title_subscribed_to_new_reports">Nowe zgłoszenia</string>
@@ -23,6 +23,11 @@
     <string name="pref_summary_subscribed_to_account_incidents">Otrzymuj powiadomienia o zdarzeniach takich jak nowe ostrzeżenie lub blokada konta</string>
     <string name="pref_title_logout">Wyloguj się</string>
     <string name="pref_summary_logout">Wyloguj się z aplikacji</string>
+    <string name="pref_title_enable_notifications">Włącz powiadomienia</string>
+    <string name="pref_summary_enable_notifications">Wcześniej nie wyraziłeś zgody na powiadomienia. Kliknij, aby zmienić to ustawienie.</string>
+    <string name="dialog_title_notifications_permission_denied_permanently">Odrzucono zgodę na powiadomienia</string>
+    <string name="dialog_message_notifications_permission_denied_permanently">Aby otrzymywać powiadomienia, włącz uprawnienia do powiadomień w ustawieniach urządzenia.</string>
+    <string name="dialog_proceed_button_notifications_permission_denied_permanently">Otwórz ustawienia</string>
 
     <string name="logout_question">Wylogowywanie</string>
     <string name="logout_question_description">Czy na pewno chcesz się wylogować?</string>
