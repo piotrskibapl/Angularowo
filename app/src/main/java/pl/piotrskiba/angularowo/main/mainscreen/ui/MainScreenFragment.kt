@@ -1,12 +1,16 @@
 package pl.piotrskiba.angularowo.main.mainscreen.ui
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.view.doOnPreDraw
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
@@ -25,17 +29,19 @@ import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBannerData
 class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel::class), MainScreenNavigator, PunishmentListNavigator {
 
     private lateinit var mainViewModel: MainViewModel
+    private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         viewModel.punishmentsBinding.bindExtra(BR.navigator, this)
         super.onCreate(savedInstanceState)
         mainViewModel = viewModelFactory.obtainViewModel(requireActivity())
+        requestNotificationsPermission()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         viewModel.player.observe(viewLifecycleOwner) { mainViewModel.player.value = it }
         viewModel.uiData.observe(viewLifecycleOwner) { uiData ->
@@ -69,12 +75,20 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel
 
     private fun setupBinding(
         layoutInflater: LayoutInflater,
-        container: ViewGroup?
+        container: ViewGroup?,
     ): FragmentMainScreenBinding {
         val binding = FragmentMainScreenBinding.inflate(layoutInflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
         viewModel.navigator = this
         return binding
+    }
+
+    private fun requestNotificationsPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_DENIED) {
+                requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
     }
 }
