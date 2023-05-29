@@ -2,7 +2,7 @@ package pl.piotrskiba.angularowo.domain.network.repository
 
 import io.reactivex.rxjava3.core.Observable
 
-interface UnauthorizedRepository {
+interface NetworkRepository {
 
-    fun observe(): Observable<Unit>
+    fun observeUnauthorizedResponses(): Observable<Unit>
 }

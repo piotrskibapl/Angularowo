@@ -2,13 +2,13 @@ package pl.piotrskiba.angularowo.data.network
 
 import io.reactivex.rxjava3.core.Observable
 import pl.piotrskiba.angularowo.data.network.interceptors.UnauthorizedInterceptor
-import pl.piotrskiba.angularowo.domain.network.repository.UnauthorizedRepository
+import pl.piotrskiba.angularowo.domain.network.repository.NetworkRepository
 import javax.inject.Inject
 
-class UnauthorizedRepositoryImpl @Inject constructor(
+class NetworkRepositoryImpl @Inject constructor(
     private val unauthorizedInterceptor: UnauthorizedInterceptor,
-) : UnauthorizedRepository {
+) : NetworkRepository {
 
-    override fun observe(): Observable<Unit> =
+    override fun observeUnauthorizedResponses(): Observable<Unit> =
         unauthorizedInterceptor.unauthorizedResponses.hide()
 }
