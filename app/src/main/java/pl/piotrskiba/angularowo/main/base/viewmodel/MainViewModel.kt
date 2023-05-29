@@ -1,6 +1,7 @@
 package pl.piotrskiba.angularowo.main.base.viewmodel
 
 import androidx.lifecycle.MutableLiveData
+import pl.piotrskiba.angularowo.BuildConfig
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.network.usecase.ObserveUnauthorizedResponsesUseCase
@@ -19,11 +20,10 @@ class MainViewModel @Inject constructor(
     override fun onFirstCreate() {
         super.onFirstCreate()
         disposables.add(
-            observeUnauthorizedResponsesUseCase.execute()
+            observeUnauthorizedResponsesUseCase.execute(BuildConfig.VERSION_CODE)
                 .subscribeOn(facade.io())
                 .observeOn(facade.ui())
                 .subscribe {
-                    // TODO: log user out
                     navigator.navigateToLogin()
                 }
         )
