@@ -8,6 +8,9 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level
 import pl.piotrskiba.angularowo.data.BuildConfig
+import pl.piotrskiba.angularowo.data.network.UnauthorizedRepositoryImpl
+import pl.piotrskiba.angularowo.data.network.interceptors.UnauthorizedInterceptor
+import pl.piotrskiba.angularowo.domain.network.repository.UnauthorizedRepository
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -23,10 +26,23 @@ class NetworkModule {
             setLevel(level)
         }
 
+    @Singleton
     @Provides
-    fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
-        return OkHttpClient.Builder() // TODO: unauthorized interceptor should be applied to some network requests
+    fun provideUnauthorizedInterceptor(): UnauthorizedInterceptor =
+        UnauthorizedInterceptor()
+
+    @Provides
+    fun provideUnauthorizedRepository(unauthorizedInterceptor: UnauthorizedInterceptor): UnauthorizedRepository =
+        UnauthorizedRepositoryImpl(unauthorizedInterceptor)
+
+    @Provides
+    fun provideOkHttpClient(
+        httpLoggingInterceptor: HttpLoggingInterceptor,
+        unauthorizedInterceptor: UnauthorizedInterceptor,
+    ): OkHttpClient {
+        return OkHttpClient.Builder()
             .addInterceptor(httpLoggingInterceptor)
+            .addInterceptor(unauthorizedInterceptor)
             .build()
     }
 
