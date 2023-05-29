@@ -12,14 +12,16 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
+import pl.piotrskiba.angularowo.MainNavGraphDirections
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.ui.BaseActivity
 import pl.piotrskiba.angularowo.databinding.ActivityMainBinding
 import pl.piotrskiba.angularowo.main.base.model.NavigationComponent
+import pl.piotrskiba.angularowo.main.base.nav.MainNavigator
 import pl.piotrskiba.angularowo.main.base.viewmodel.MainViewModel
 import pl.piotrskiba.angularowo.utils.PreferenceUtils
 
-class MainActivity : BaseActivity<MainViewModel>(MainViewModel::class) {
+class MainActivity : BaseActivity<MainViewModel>(MainViewModel::class), MainNavigator {
 
     private lateinit var preferenceUtils: PreferenceUtils
     private lateinit var binding: ActivityMainBinding
@@ -75,6 +77,7 @@ class MainActivity : BaseActivity<MainViewModel>(MainViewModel::class) {
 
     private fun setupBinding() {
         binding = ActivityMainBinding.inflate(layoutInflater)
+        viewModel.navigator = this
         setContentView(binding.root)
     }
 
@@ -84,5 +87,9 @@ class MainActivity : BaseActivity<MainViewModel>(MainViewModel::class) {
             binding.drawerLayout.closeDrawers()
             true
         }
+    }
+
+    override fun navigateToLogin() {
+        navController.navigate(MainNavGraphDirections.globalToLoginFragment())
     }
 }

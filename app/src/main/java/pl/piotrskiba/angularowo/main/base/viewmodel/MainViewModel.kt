@@ -5,6 +5,7 @@ import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.network.usecase.ObserveUnauthorizedResponsesUseCase
 import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
+import pl.piotrskiba.angularowo.main.base.nav.MainNavigator
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
@@ -13,6 +14,7 @@ class MainViewModel @Inject constructor(
 ) : LifecycleViewModel() {
 
     val player = MutableLiveData<DetailedPlayerModel>() // TODO: player should be dropped from main view model
+    lateinit var navigator: MainNavigator
 
     override fun onFirstCreate() {
         super.onFirstCreate()
@@ -22,6 +24,7 @@ class MainViewModel @Inject constructor(
                 .observeOn(facade.ui())
                 .subscribe {
                     // TODO: log user out
+                    navigator.navigateToLogin()
                 }
         )
     }

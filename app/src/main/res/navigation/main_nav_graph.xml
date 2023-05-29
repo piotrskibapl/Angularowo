@@ -13,13 +13,11 @@
         <action
             android:id="@+id/to_loginFragment"
             app:destination="@id/loginFragment"
-            app:popUpTo="@id/initFragment"
-            app:popUpToInclusive="true" />
+            app:popUpTo="@id/main_nav_graph" />
         <action
             android:id="@+id/to_appLockFragment"
             app:destination="@id/appLockFragment"
-            app:popUpTo="@id/initFragment"
-            app:popUpToInclusive="true" />
+            app:popUpTo="@id/main_nav_graph" />
     </fragment>
 
     <fragment
@@ -135,7 +133,11 @@
         <action
             android:id="@+id/to_loginFragment"
             app:destination="@id/loginFragment"
-            app:popUpTo="@id/mainScreenFragment"
-            app:popUpToInclusive="true" />
+            app:popUpTo="@id/main_nav_graph" />
     </fragment>
+
+    <action
+        android:id="@+id/global_to_loginFragment"
+        app:destination="@id/loginFragment"
+        app:popUpTo="@id/main_nav_graph" />
 </navigation>
