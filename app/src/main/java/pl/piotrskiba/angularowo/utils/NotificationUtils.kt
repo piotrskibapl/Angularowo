@@ -1,13 +1,16 @@
 package pl.piotrskiba.angularowo.utils
 
+import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.media.AudioAttributes
 import android.media.RingtoneManager
 import android.os.Build
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
@@ -85,48 +88,31 @@ class NotificationUtils(private val context: Context) {
      * @param sound a boolean whether the notification should be sent with a notification sound or not
      */
     fun showNotification(rawTitle: String, rawBody: String, sound: Boolean) {
-        val intent = Intent(context, MainActivity::class.java)
-        val intentFlag = PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-        val pendingIntent = PendingIntent.getActivity(context, 0, intent, intentFlag)
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+            val intent = Intent(context, MainActivity::class.java)
+            val intentFlag = PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+            val pendingIntent = PendingIntent.getActivity(context, 0, intent, intentFlag)
 
-        val notificationManager = NotificationManagerCompat.from(context)
+            val notificationManager = NotificationManagerCompat.from(context)
 
-        val title = TextUtils.replaceQualifiers(context, rawTitle)
-        val body = TextUtils.replaceQualifiers(context, rawBody)
+            val title = TextUtils.replaceQualifiers(context, rawTitle)
+            val body = TextUtils.replaceQualifiers(context, rawBody)
 
-        if (sound) {
-            val soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-
-            val builder = NotificationCompat.Builder(context, Constants.DEFAULT_CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_notification)
-                .setColor(ContextCompat.getColor(context, R.color.color_notification))
-                .setContentTitle(title)
-                .setContentText(body)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(pendingIntent)
-                .setStyle(
-                    NotificationCompat.BigTextStyle()
-                        .bigText(body)
-                )
-                .setAutoCancel(true)
-                .setSound(soundUri)
-                .setVibrate(Constants.DEFAULT_VIBRATE_PATTERN)
-
-            notificationManager.notify(notificationId, builder.build())
-        } else {
-            val builder = NotificationCompat.Builder(context, Constants.SILENT_CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_notification)
-                .setColor(ContextCompat.getColor(context, R.color.color_notification))
-                .setContentTitle(title)
-                .setContentText(body)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(pendingIntent)
-                .setStyle(
-                    NotificationCompat.BigTextStyle()
-                        .bigText(body)
-                )
-                .setAutoCancel(true)
-
+            val channelId = if (sound) Constants.DEFAULT_CHANNEL_ID else Constants.SILENT_CHANNEL_ID
+            val builder = NotificationCompat.Builder(context, channelId).apply {
+                setSmallIcon(R.drawable.ic_notification)
+                color = ContextCompat.getColor(context, R.color.color_notification)
+                setContentTitle(title)
+                setContentText(body)
+                priority = NotificationCompat.PRIORITY_DEFAULT
+                setContentIntent(pendingIntent)
+                setStyle(NotificationCompat.BigTextStyle().bigText(body))
+                setAutoCancel(true)
+                if (sound) {
+                    setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                    setVibrate(Constants.DEFAULT_VIBRATE_PATTERN)
+                }
+            }
             notificationManager.notify(notificationId, builder.build())
         }
     }
