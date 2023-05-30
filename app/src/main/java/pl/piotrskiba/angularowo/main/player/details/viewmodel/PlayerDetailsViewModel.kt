@@ -59,8 +59,7 @@ class PlayerDetailsViewModel @Inject constructor(
 
     fun onFavoriteClick() {
         disposables.add(
-            markPlayerAsFavoriteUseCase
-                .execute(args.previewedPlayerUuid)
+            markPlayerAsFavoriteUseCase.execute(args.previewedPlayerUuid)
                 .subscribeOn(facade.io())
                 .observeOn(facade.ui())
                 .subscribe(
@@ -76,8 +75,7 @@ class PlayerDetailsViewModel @Inject constructor(
 
     fun onUnfavoriteClick() {
         disposables.add(
-            unmarkPlayerAsFavoriteUseCase
-                .execute(args.previewedPlayerUuid)
+            unmarkPlayerAsFavoriteUseCase.execute(args.previewedPlayerUuid)
                 .subscribeOn(facade.io())
                 .observeOn(facade.ui())
                 .subscribe(
@@ -111,21 +109,21 @@ class PlayerDetailsViewModel @Inject constructor(
     }
 
     private fun loadPlayerDetails() {
-        disposables.add(getPlayerDetailsFromUuidUseCase
-            .execute(args.previewedPlayerUuid)
-            .subscribeOn(facade.io())
-            .observeOn(facade.ui())
-            .subscribe(
-                { detailedPlayer ->
-                    state.value = Loaded
-                    previewedPlayerBanner.value = detailedPlayer.toPlayerBannerData(isPreviewedPlayerFavorite)
-                    previewedPlayerDetails.value = detailedPlayer.toUi()
-                    checkIfShouldDisplayFavoriteShowcase()
-                },
-                { error ->
-                    state.value = Error(error)
-                }
-            )
+        disposables.add(
+            getPlayerDetailsFromUuidUseCase.execute(args.previewedPlayerUuid)
+                .subscribeOn(facade.io())
+                .observeOn(facade.ui())
+                .subscribe(
+                    { detailedPlayer ->
+                        state.value = Loaded
+                        previewedPlayerBanner.value = detailedPlayer.toPlayerBannerData(isPreviewedPlayerFavorite)
+                        previewedPlayerDetails.value = detailedPlayer.toUi()
+                        checkIfShouldDisplayFavoriteShowcase()
+                    },
+                    { error ->
+                        state.value = Error(error)
+                    }
+                )
         )
     }
 
@@ -144,8 +142,7 @@ class PlayerDetailsViewModel @Inject constructor(
 
     private fun observeIfPlayerIsFavorite() {
         disposables.add(
-            observeIfPlayerIsFavoriteUseCase
-                .execute(args.previewedPlayerUuid)
+            observeIfPlayerIsFavoriteUseCase.execute(args.previewedPlayerUuid)
                 .subscribeOn(facade.io())
                 .observeOn(facade.ui())
                 .subscribe {

@@ -94,8 +94,7 @@ class OffersViewModel @Inject constructor(
 
     private fun loadOffersInfo() {
         disposables.add(
-            getOffersInfoUseCase
-                .execute()
+            getOffersInfoUseCase.execute()
                 .subscribeOn(facade.io())
                 .observeOn(facade.ui())
                 .subscribe(

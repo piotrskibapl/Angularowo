@@ -48,38 +48,38 @@ class ReportListTabViewModel @Inject constructor(
     }
 
     private fun loadOwnedReportList() {
-        disposables.add(getOwnedReportsUseCase
-            .execute()
-            .subscribeOn(facade.io())
-            .observeOn(facade.ui())
-            .subscribe(
-                { reportModels ->
-                    state.value = Loaded
-                    this.reportModels.value = reportModels
-                    tabData.value = reportModels.toUi(othersReportsVariant)
-                },
-                { error ->
-                    state.value = Error(error)
-                }
-            )
+        disposables.add(
+            getOwnedReportsUseCase.execute()
+                .subscribeOn(facade.io())
+                .observeOn(facade.ui())
+                .subscribe(
+                    { reportModels ->
+                        state.value = Loaded
+                        this.reportModels.value = reportModels
+                        tabData.value = reportModels.toUi(othersReportsVariant)
+                    },
+                    { error ->
+                        state.value = Error(error)
+                    }
+                )
         )
     }
 
     private fun loadOtherPlayersReportList() {
-        disposables.add(getNotArchivedReportsUseCase
-            .execute()
-            .subscribeOn(facade.io())
-            .observeOn(facade.ui())
-            .subscribe(
-                { reportModels ->
-                    state.value = Loaded
-                    this.reportModels.value = reportModels
-                    tabData.value = reportModels.toUi(othersReportsVariant)
-                },
-                { error ->
-                    state.value = Error(error)
-                }
-            )
+        disposables.add(
+            getNotArchivedReportsUseCase.execute()
+                .subscribeOn(facade.io())
+                .observeOn(facade.ui())
+                .subscribe(
+                    { reportModels ->
+                        state.value = Loaded
+                        this.reportModels.value = reportModels
+                        tabData.value = reportModels.toUi(othersReportsVariant)
+                    },
+                    { error ->
+                        state.value = Error(error)
+                    }
+                )
         )
     }
 }

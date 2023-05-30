@@ -69,8 +69,7 @@ class PlayerListViewModel @Inject constructor(
 
     private fun refreshPlayerList() {
         disposables.add(
-            refreshOnlinePlayerListUseCase
-                .execute()
+            refreshOnlinePlayerListUseCase.execute()
                 .subscribeOn(facade.io())
                 .observeOn(facade.ui())
                 .subscribe(

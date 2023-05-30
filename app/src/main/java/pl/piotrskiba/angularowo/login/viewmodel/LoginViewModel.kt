@@ -19,8 +19,7 @@ class LoginViewModel @Inject constructor(
     fun onPinEntered(pin: String) {
         loginState.value = LoginState.Loading
         disposables.add(
-            registerDeviceUseCase
-                .execute(pin)
+            registerDeviceUseCase.execute(pin)
                 .subscribeOn(facade.io())
                 .observeOn(facade.ui())
                 .subscribe(

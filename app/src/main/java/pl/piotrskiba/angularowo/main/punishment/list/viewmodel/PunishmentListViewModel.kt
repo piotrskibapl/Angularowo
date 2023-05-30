@@ -37,21 +37,21 @@ class PunishmentListViewModel @Inject constructor(
     }
 
     private fun loadPunishmentList() {
-        disposables.add(getActivePunishmentsUseCase
-            .execute()
-            .subscribeOn(facade.io())
-            .observeOn(facade.ui())
-            .subscribe(
-                { punishmentModels ->
-                    state.value = Loaded
-                    punishments.clear()
-                    punishments.addAll(punishmentModels.toUi())
-                    punishmentBanners.value = punishmentModels.toPunishmentBannerData()
-                },
-                { error ->
-                    state.value = Error(error)
-                }
-            )
+        disposables.add(
+            getActivePunishmentsUseCase.execute()
+                .subscribeOn(facade.io())
+                .observeOn(facade.ui())
+                .subscribe(
+                    { punishmentModels ->
+                        state.value = Loaded
+                        punishments.clear()
+                        punishments.addAll(punishmentModels.toUi())
+                        punishmentBanners.value = punishmentModels.toPunishmentBannerData()
+                    },
+                    { error ->
+                        state.value = Error(error)
+                    }
+                )
         )
     }
 }
