@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/error_margin"
-            android:contentDescription="@string/error_icon_content_description"
+            android:contentDescription="@string/error_layout_icon_content_description"
             app:imageResource="@{state.errorImage()}"
             tools:src="@drawable/ic_error" />
 
