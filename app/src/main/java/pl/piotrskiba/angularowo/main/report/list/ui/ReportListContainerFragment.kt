@@ -17,7 +17,7 @@ class ReportListContainerFragment : BaseFragment<ReportListContainerViewModel>(R
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         val binding = setupBinding(inflater, container)
         setupViewPager(binding)
@@ -32,7 +32,7 @@ class ReportListContainerFragment : BaseFragment<ReportListContainerViewModel>(R
 
     private fun setupBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
+        container: ViewGroup?,
     ): FragmentReportListContainerBinding {
         val binding = FragmentReportListContainerBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner

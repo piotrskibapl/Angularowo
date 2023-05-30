@@ -10,7 +10,7 @@ data class OfferRemote(
     val price: Int,
     val imageUrl: String,
     val timeBreak: Int,
-    val availabilityDate: Long?
+    val availabilityDate: Long?,
 )
 
 fun List<OfferRemote>.toDomain() =

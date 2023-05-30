@@ -8,11 +8,11 @@ import pl.piotrskiba.angularowo.domain.server.model.ServerStatusModel
 import pl.piotrskiba.angularowo.domain.server.repository.ServerRepository
 
 class ServerRepositoryImpl(
-    private val serverApi: ServerApiService
+    private val serverApi: ServerApiService,
 ) : ServerRepository {
 
     override fun getServerStatus(
-        accessToken: String
+        accessToken: String,
     ): Single<ServerStatusModel> =
         serverApi
             .getServerStatus(BuildConfig.API_KEY, accessToken)

@@ -8,7 +8,7 @@ data class AdOfferRemote(
     val points: Int,
     val adId: String,
     val timeBreak: Int,
-    val availabilityDate: Long?
+    val availabilityDate: Long?,
 )
 
 fun List<AdOfferRemote>.toDomain() =

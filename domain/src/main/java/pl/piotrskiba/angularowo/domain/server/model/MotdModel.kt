@@ -4,5 +4,5 @@ data class MotdModel(
     val text: String,
     val url: String?,
     val textColor: String,
-    val backgroundColor: String
+    val backgroundColor: String,
 )

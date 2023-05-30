@@ -17,7 +17,7 @@ data class PlayerBanner(
     val rankName: String,
     val isVanished: Boolean,
     val isFavorite: Boolean,
-    private val rankColorCode: String
+    private val rankColorCode: String,
 ) : Serializable {
 
     @ColorInt

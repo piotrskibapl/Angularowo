@@ -6,7 +6,7 @@ data class OffersInfoRemote(
     val points: Int,
     val pointsLimitReached: Boolean,
     val adOffers: List<AdOfferRemote>,
-    val offers: List<OfferRemote>
+    val offers: List<OfferRemote>,
 )
 
 fun OffersInfoRemote.toDomain() =
@@ -14,5 +14,5 @@ fun OffersInfoRemote.toDomain() =
         points,
         pointsLimitReached,
         adOffers.toDomain(),
-        offers.toDomain()
+        offers.toDomain(),
     )

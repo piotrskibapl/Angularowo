@@ -9,7 +9,7 @@ import pl.piotrskiba.angularowo.domain.offers.model.OffersInfoModel
 import pl.piotrskiba.angularowo.domain.offers.repository.OffersRepository
 
 class OffersRepositoryImpl(
-    private val offersApi: OffersApiService
+    private val offersApi: OffersApiService,
 ) : OffersRepository {
 
     override fun getOffersInfo(accessToken: String): Single<OffersInfoModel> =

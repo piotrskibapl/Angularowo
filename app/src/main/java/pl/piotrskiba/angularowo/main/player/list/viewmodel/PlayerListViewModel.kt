@@ -21,7 +21,7 @@ import javax.inject.Inject
 class PlayerListViewModel @Inject constructor(
     private val observeOnlinePlayerListWithFavoriteInformationUseCase: ObserveOnlinePlayerListWithFavoriteInformationUseCase,
     private val refreshOnlinePlayerListUseCase: RefreshOnlinePlayerListUseCase,
-    private val facade: SchedulersProvider
+    private val facade: SchedulersProvider,
 ) : LifecycleViewModel() {
 
     val state = MutableLiveData<ViewModelState>(Loading.Fetch)

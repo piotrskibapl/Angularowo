@@ -20,7 +20,7 @@ class RankModule {
     @Provides
     fun provideRankRepository(
         firebaseRemoteConfig: FirebaseRemoteConfig,
-        gson: Gson
+        gson: Gson,
     ): RankRepository =
         RankRepositoryImpl(firebaseRemoteConfig, gson)
 }

@@ -10,6 +10,6 @@ interface ServerApiService {
     @GET("get_server_status.php")
     fun getServerStatus(
         @Query("api_key") apiKey: String,
-        @Query("access_token") access_token: String
+        @Query("access_token") access_token: String,
     ): Single<ServerStatusRemote>
 }

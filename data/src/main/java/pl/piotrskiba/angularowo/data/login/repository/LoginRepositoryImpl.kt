@@ -9,7 +9,7 @@ import pl.piotrskiba.angularowo.domain.login.model.toAccessTokenError
 import pl.piotrskiba.angularowo.domain.login.repository.LoginRepository
 
 class LoginRepositoryImpl(
-    private val loginApi: LoginApiService
+    private val loginApi: LoginApiService,
 ) : LoginRepository {
 
     override fun registerDevice(userCode: String): Single<AccessTokenModel> =

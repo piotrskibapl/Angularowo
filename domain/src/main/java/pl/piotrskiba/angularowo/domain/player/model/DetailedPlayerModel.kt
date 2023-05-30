@@ -14,5 +14,5 @@ data class DetailedPlayerModel(
     val balance: Float,
     val playtime: Long,
     val tokens: Int,
-    val permissions: List<PermissionModel>
+    val permissions: List<PermissionModel>,
 ) : Serializable

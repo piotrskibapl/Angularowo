@@ -21,7 +21,7 @@ private const val PREF_KEY_FIREBASE_NEW_REPORTS_SUBSCRIBED = "new_reports_subscr
 
 @SuppressLint("ApplySharedPref")
 class PreferencesRepositoryImpl(
-    private val sharedPreferences: SharedPreferences
+    private val sharedPreferences: SharedPreferences,
 ) : PreferencesRepository {
 
     override fun accessToken(): Maybe<String> =

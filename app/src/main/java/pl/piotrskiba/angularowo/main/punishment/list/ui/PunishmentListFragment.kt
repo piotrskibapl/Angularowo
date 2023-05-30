@@ -27,7 +27,7 @@ class PunishmentListFragment :
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         return setupBinding(layoutInflater, container).root
     }
@@ -40,7 +40,7 @@ class PunishmentListFragment :
 
     private fun setupBinding(
         layoutInflater: LayoutInflater,
-        container: ViewGroup?
+        container: ViewGroup?,
     ): FragmentPunishmentListBinding {
         val binding = FragmentPunishmentListBinding.inflate(layoutInflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner

@@ -26,7 +26,7 @@ class OffersViewModel @Inject constructor(
     private val getOffersInfoUseCase: GetOffersInfoUseCase,
     private val redeemAdOfferUseCase: RedeemAdOfferUseCase,
     private val redeemOfferUseCase: RedeemOfferUseCase,
-    private val facade: SchedulersProvider
+    private val facade: SchedulersProvider,
 ) : LifecycleViewModel() {
 
     val offersInfo = MutableLiveData<OffersInfo>()

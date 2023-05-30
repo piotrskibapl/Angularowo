@@ -46,7 +46,7 @@ class ChatFragment : BaseFragment<ChatViewModel>(ChatViewModel::class), ChatNavi
 
     private fun setupBinding(
         layoutInflater: LayoutInflater,
-        container: ViewGroup?
+        container: ViewGroup?,
     ): FragmentChatBinding {
         val binding = FragmentChatBinding.inflate(layoutInflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner

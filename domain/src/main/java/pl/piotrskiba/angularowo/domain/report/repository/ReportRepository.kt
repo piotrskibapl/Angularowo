@@ -8,6 +8,6 @@ interface ReportRepository {
 
     fun getReportList(
         accessToken: String,
-        filterList: List<ReportFilter>
+        filterList: List<ReportFilter>,
     ): Single<List<ReportModel>>
 }

@@ -15,7 +15,7 @@ class ReportRepositoryImpl(
 
     override fun getReportList(
         accessToken: String,
-        filterList: List<ReportFilter>
+        filterList: List<ReportFilter>,
     ): Single<List<ReportModel>> =
         reportApi.getReportList(
             BuildConfig.API_KEY,

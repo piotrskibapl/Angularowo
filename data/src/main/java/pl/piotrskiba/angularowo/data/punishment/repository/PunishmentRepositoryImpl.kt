@@ -12,7 +12,7 @@ import pl.piotrskiba.angularowo.domain.punishment.model.toRemote
 import pl.piotrskiba.angularowo.domain.punishment.repository.PunishmentRepository
 
 class PunishmentRepositoryImpl(
-    private val punishmentApi: PunishmentApiService
+    private val punishmentApi: PunishmentApiService,
 ) : PunishmentRepository {
 
     override fun getPunishments(

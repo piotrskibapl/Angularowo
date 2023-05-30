@@ -32,14 +32,14 @@ class OffersFragment : BaseFragment<OffersViewModel>(OffersViewModel::class), Of
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         return setupBinding(layoutInflater, container).root
     }
 
     override fun displayAdOfferConfirmationDialog(
         adOffer: AdOffer,
-        onConfirm: (adOffer: AdOffer) -> Unit
+        onConfirm: (adOffer: AdOffer) -> Unit,
     ) {
         AlertDialog.Builder(requireContext())
             .setTitle(R.string.ad_question)
@@ -87,12 +87,16 @@ class OffersFragment : BaseFragment<OffersViewModel>(OffersViewModel::class), Of
             override fun onAdLoaded(rewardedAd: RewardedAd) {
                 rewardedAd.fullScreenContentCallback = object : FullScreenContentCallback() {
 
-                    override fun onAdFailedToShowFullScreenContent(p0: AdError) { onAdLoadingFailure() }
+                    override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+                        onAdLoadingFailure()
+                    }
                 }
                 rewardedAd.show(requireActivity()) { onAdWatched(it) }
             }
 
-            override fun onAdFailedToLoad(p0: LoadAdError) { onAdLoadingFailure() }
+            override fun onAdFailedToLoad(p0: LoadAdError) {
+                onAdLoadingFailure()
+            }
         })
     }
 
@@ -122,7 +126,7 @@ class OffersFragment : BaseFragment<OffersViewModel>(OffersViewModel::class), Of
 
     private fun setupBinding(
         layoutInflater: LayoutInflater,
-        container: ViewGroup?
+        container: ViewGroup?,
     ): FragmentOffersBinding {
         val binding = FragmentOffersBinding.inflate(layoutInflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner

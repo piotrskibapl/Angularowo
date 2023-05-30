@@ -9,7 +9,7 @@ import pl.piotrskiba.angularowo.domain.friend.model.FriendModel
 import pl.piotrskiba.angularowo.domain.friend.repository.FriendRepository
 
 class FriendRepositoryImpl(
-    private val friendDao: FriendDao
+    private val friendDao: FriendDao,
 ) : FriendRepository {
 
     override fun getAllFriends(): Observable<List<FriendModel>> =

@@ -10,7 +10,7 @@ import pl.piotrskiba.angularowo.R
 @BindingAdapter("visible")
 fun setVisibility(
     view: View,
-    visible: Boolean
+    visible: Boolean,
 ) {
     view.visibility = when (visible) {
         true -> View.VISIBLE

@@ -30,7 +30,7 @@ class PlayerListFragment : BaseFragment<PlayerListViewModel>(PlayerListViewModel
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         return setupBinding(layoutInflater, container).root
     }
@@ -50,7 +50,7 @@ class PlayerListFragment : BaseFragment<PlayerListViewModel>(PlayerListViewModel
 
     private fun setupBinding(
         layoutInflater: LayoutInflater,
-        container: ViewGroup?
+        container: ViewGroup?,
     ): FragmentPlayerListBinding {
         val binding = FragmentPlayerListBinding.inflate(layoutInflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner

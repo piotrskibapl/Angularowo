@@ -10,17 +10,17 @@ interface PlayerRepository {
 
     fun getPlayerDetailsFromUsername(
         accessToken: String,
-        username: String
+        username: String,
     ): Single<DetailedPlayerModel>
 
     fun getPlayerDetailsFromUuid(
         accessToken: String,
-        uuid: String
+        uuid: String,
     ): Single<DetailedPlayerModel>
 
     fun observeOnlinePlayerList(): Observable<List<PlayerModel>>
 
     fun refreshOnlinePlayerList(
-        accessToken: String
+        accessToken: String,
     ): Completable
 }

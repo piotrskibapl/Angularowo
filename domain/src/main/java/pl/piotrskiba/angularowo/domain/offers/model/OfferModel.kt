@@ -9,5 +9,5 @@ data class OfferModel(
     val price: Int,
     val imageUrl: String,
     val timeBreak: Int,
-    val availabilityDate: Date?
+    val availabilityDate: Date?,
 )

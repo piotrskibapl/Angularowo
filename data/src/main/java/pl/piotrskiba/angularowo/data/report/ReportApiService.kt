@@ -11,6 +11,6 @@ interface ReportApiService {
     fun getReportList(
         @Query("api_key") apiKey: String,
         @Query("access_token") access_token: String,
-        @Query("filter") filter: String
+        @Query("filter") filter: String,
     ): Single<List<ReportRemote>>
 }

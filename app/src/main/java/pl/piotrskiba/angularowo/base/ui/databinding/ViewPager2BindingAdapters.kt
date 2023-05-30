@@ -6,7 +6,7 @@ import androidx.viewpager2.widget.ViewPager2
 @BindingAdapter("userInputEnabled")
 fun setUserInputEnabled(
     view: ViewPager2,
-    enabled: Boolean
+    enabled: Boolean,
 ) {
     view.isUserInputEnabled = enabled
 }

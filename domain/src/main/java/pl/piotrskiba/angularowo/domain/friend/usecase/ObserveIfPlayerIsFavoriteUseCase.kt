@@ -5,7 +5,7 @@ import pl.piotrskiba.angularowo.domain.friend.repository.FriendRepository
 import javax.inject.Inject
 
 class ObserveIfPlayerIsFavoriteUseCase @Inject constructor(
-    private val friendRepository: FriendRepository
+    private val friendRepository: FriendRepository,
 ) {
 
     fun execute(uuid: String): Observable<Boolean> {

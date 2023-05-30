@@ -13,7 +13,7 @@ data class ReportRemote(
     val reporter: String,
     val reported: String,
     val reason: String,
-    val archived: Boolean
+    val archived: Boolean,
 )
 
 fun List<ReportRemote>.toDomain() = map { it.toDomain() }

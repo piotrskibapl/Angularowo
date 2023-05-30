@@ -26,7 +26,7 @@ import javax.inject.Inject
 class MainScreenViewModel @Inject constructor(
     private val getMainScreenDataAndSavePlayerUseCase: GetMainScreenDataAndSavePlayerUseCase,
     private val updateCloudMessagingSubscriptionsUseCase: UpdateCloudMessagingSubscriptionsUseCase,
-    private val facade: SchedulersProvider
+    private val facade: SchedulersProvider,
 ) : LifecycleViewModel() {
 
     val state = MutableLiveData<ViewModelState>(Loading.Fetch)

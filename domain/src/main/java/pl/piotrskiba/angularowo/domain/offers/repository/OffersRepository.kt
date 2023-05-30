@@ -7,16 +7,16 @@ import pl.piotrskiba.angularowo.domain.offers.model.OffersInfoModel
 interface OffersRepository {
 
     fun getOffersInfo(
-        accessToken: String
+        accessToken: String,
     ): Single<OffersInfoModel>
 
     fun redeemAdOffer(
         accessToken: String,
-        offerId: String
+        offerId: String,
     ): Completable
 
     fun redeemOffer(
         accessToken: String,
-        offerId: String
+        offerId: String,
     ): Completable
 }

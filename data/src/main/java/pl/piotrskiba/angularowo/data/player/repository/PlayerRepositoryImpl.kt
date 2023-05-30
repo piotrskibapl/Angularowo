@@ -13,14 +13,14 @@ import pl.piotrskiba.angularowo.domain.player.model.PlayerModel
 import pl.piotrskiba.angularowo.domain.player.repository.PlayerRepository
 
 class PlayerRepositoryImpl(
-    private val playerApi: PlayerApiService
+    private val playerApi: PlayerApiService,
 ) : PlayerRepository {
 
     private var onlinePlayerList: BehaviorSubject<List<PlayerRemote>> = BehaviorSubject.create()
 
     override fun getPlayerDetailsFromUsername(
         accessToken: String,
-        username: String
+        username: String,
     ): Single<DetailedPlayerModel> =
         playerApi
             .getPlayerInfoFromUsername(BuildConfig.API_KEY, username, accessToken)
@@ -28,14 +28,14 @@ class PlayerRepositoryImpl(
 
     override fun getPlayerDetailsFromUuid(
         accessToken: String,
-        uuid: String
+        uuid: String,
     ): Single<DetailedPlayerModel> =
         playerApi
             .getPlayerInfoFromUuid(BuildConfig.API_KEY, uuid, accessToken)
             .map { it.toDomain() }
 
     override fun refreshOnlinePlayerList(
-        accessToken: String
+        accessToken: String,
     ): Completable =
         Completable.fromSingle(
             playerApi

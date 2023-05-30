@@ -6,7 +6,7 @@ import pl.piotrskiba.angularowo.domain.friend.repository.FriendRepository
 import javax.inject.Inject
 
 class MarkPlayerAsFavoriteUseCase @Inject constructor(
-    private val friendRepository: FriendRepository
+    private val friendRepository: FriendRepository,
 ) {
 
     fun execute(uuid: String): Completable {

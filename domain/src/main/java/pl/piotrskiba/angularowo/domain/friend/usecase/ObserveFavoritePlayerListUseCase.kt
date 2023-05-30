@@ -6,7 +6,7 @@ import pl.piotrskiba.angularowo.domain.friend.repository.FriendRepository
 import javax.inject.Inject
 
 class ObserveFavoritePlayerListUseCase @Inject constructor(
-    private val friendRepository: FriendRepository
+    private val friendRepository: FriendRepository,
 ) {
 
     fun execute(): Observable<List<FriendModel>> {

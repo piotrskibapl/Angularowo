@@ -8,5 +8,5 @@ data class PlayerModel(
     val partnerUuid: String?,
     val username: String,
     val rank: RankModel,
-    val isVanished: Boolean
+    val isVanished: Boolean,
 )

@@ -7,5 +7,5 @@ data class AdOfferModel(
     val points: Int,
     val adId: String,
     val timeBreak: Int,
-    val availabilityDate: Date?
+    val availabilityDate: Date?,
 )

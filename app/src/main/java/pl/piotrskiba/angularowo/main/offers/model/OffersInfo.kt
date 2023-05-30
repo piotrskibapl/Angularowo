@@ -6,9 +6,8 @@ data class OffersInfo(
     private val points: Int,
     val pointsLimitReached: Boolean,
     val adOffers: List<AdOffer>,
-    val offers: List<Offer>
+    val offers: List<Offer>,
 ) {
-
 
     val pointsText = points.toString()
 }

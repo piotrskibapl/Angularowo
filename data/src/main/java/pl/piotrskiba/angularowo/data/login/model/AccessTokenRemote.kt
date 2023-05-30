@@ -8,7 +8,7 @@ data class AccessTokenRemote(
     val username: String? = null,
     @SerializedName("access_token")
     val accessToken: String? = null,
-    val message: String? = null
+    val message: String? = null,
 )
 
 fun AccessTokenRemote.toDomain() = AccessTokenModel(

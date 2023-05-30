@@ -4,5 +4,5 @@ data class AccessTokenModel(
         val uuid: String,
         val username: String,
         val accessToken: String,
-        val message: String
+        val message: String,
 )

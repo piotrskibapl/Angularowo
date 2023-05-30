@@ -27,7 +27,7 @@ class ReportListTabFragment : BaseFragment<ReportListTabViewModel>(ReportListTab
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         val binding = setupBinding(layoutInflater, container)
         return binding.root
@@ -43,7 +43,7 @@ class ReportListTabFragment : BaseFragment<ReportListTabViewModel>(ReportListTab
 
     private fun setupBinding(
         layoutInflater: LayoutInflater,
-        container: ViewGroup?
+        container: ViewGroup?,
     ): FragmentReportListTabBinding {
         val binding = FragmentReportListTabBinding.inflate(layoutInflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner

@@ -16,7 +16,7 @@ data class Offer(
     val imageUrl: String,
     private val timeBreak: Int,
     private val availabilityDate: Date?,
-    private val canAfford: Boolean
+    private val canAfford: Boolean,
 ) {
 
     private val currentDate = Calendar.getInstance().time
@@ -46,6 +46,7 @@ data class Offer(
         } else {
             R.drawable.ic_coin_disabled
         }
+
     @ColorRes
     val priceTextColor =
         if (canRedeem) {

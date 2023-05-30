@@ -6,7 +6,7 @@ class MotdRemote(
     val text: String,
     val url: String?,
     val textColor: String,
-    val backgroundColor: String
+    val backgroundColor: String,
 )
 
 fun MotdRemote.toDomain() = MotdModel(

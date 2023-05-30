@@ -11,5 +11,5 @@ data class ReportModel(
     val reporterName: String,
     val reportedName: String,
     val reason: String,
-    val archived: Boolean
+    val archived: Boolean,
 ) : Serializable

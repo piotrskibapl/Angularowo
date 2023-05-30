@@ -6,6 +6,6 @@ import pl.piotrskiba.angularowo.domain.server.model.ServerStatusModel
 interface ServerRepository {
 
     fun getServerStatus(
-        accessToken: String
+        accessToken: String,
     ): Single<ServerStatusModel>
 }
