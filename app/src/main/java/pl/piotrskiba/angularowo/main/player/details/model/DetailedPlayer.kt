@@ -18,7 +18,7 @@ data class DetailedPlayer(
 
     fun greetingText(context: Context) = context.getString(R.string.greeting, username)
 
-    fun balanceText() = "$" + NumberFormat.getInstance().format(balance.toInt())
+    fun balanceText() = "$${NumberFormat.getInstance().format(balance.toInt())}"
 
     fun tokensText(): String = NumberFormat.getInstance().format(tokens)
 
