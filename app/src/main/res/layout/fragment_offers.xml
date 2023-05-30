@@ -39,7 +39,7 @@
                         android:drawablePadding="8dp"
                         android:text="@{viewModel.offersInfo.pointsText}"
                         android:textColor="@color/color_coin"
-                        android:textSize="@dimen/coins_text_size"
+                        android:textSize="48sp"
                         app:drawableStartCompat="@drawable/ic_coin_big"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

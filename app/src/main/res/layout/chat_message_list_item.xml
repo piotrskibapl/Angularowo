@@ -23,6 +23,6 @@
         android:layout_marginBottom="4dp"
         android:onClick="@{() -> navigator.onChatMessageClick(chatMessage)}"
         android:text="@{chatMessage.formattedMessage(context)}"
-        android:textSize="@dimen/chat_message_text_size"
+        android:textSize="16sp"
         tools:text="Sample message" />
 </layout>

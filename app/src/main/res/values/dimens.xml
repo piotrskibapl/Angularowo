@@ -7,38 +7,8 @@
     <dimen name="label_text_size">14sp</dimen>
     <dimen name="content_text_size">22sp</dimen>
 
-    <!-- navigation_drawer_header.xml -->
-    <dimen name="navigation_drawer_header_height">170dp</dimen>
-
     <!-- player_list_item.xml, ban_list_item.xml -->
     <dimen name="username_text_size">16sp</dimen>
     <dimen name="rank_text_size">12sp</dimen>
     <dimen name="avatar_size">48dp</dimen>
-
-    <!-- activity_login.xml -->
-    <dimen name="login_header_text_size">32sp</dimen>
-    <dimen name="login_header_margin_top">24dp</dimen>
-    <dimen name="login_description_margin_top">24dp</dimen>
-    <dimen name="login_pin_text_size">20sp</dimen>
-    <dimen name="login_pin_padding">40dp</dimen>
-    <dimen name="login_pin_margin_top">60dp</dimen>
-
-    <!-- fragment_main_screen.xml -->
-    <dimen name="motd_text_size">16sp</dimen>
-
-    <!-- fragment_offers.xml -->
-    <dimen name="coins_text_size">48sp</dimen>
-    <dimen name="coins_text_size_small">24sp</dimen>
-    <dimen name="offer_title_text_size">20sp</dimen>
-    <dimen name="offer_description_text_size">14sp</dimen>
-
-    <!-- chat_message.xml -->
-    <dimen name="chat_message_text_size">16sp</dimen>
-
-    <!-- navigation_drawer_header.xml -->
-    <dimen name="navheader_title_text_size">18sp</dimen>
-    <dimen name="navheader_subtitle_text_size">14sp</dimen>
-
-    <!-- time_amount_picker_view.xml -->
-    <dimen name="time_amount_picker_edittext_min_size">40dp</dimen>
 </resources>

@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:inputType="numberDecimal"
-        android:minWidth="@dimen/time_amount_picker_edittext_min_size"
+        android:minWidth="40dp"
         android:textAlignment="center" />
 
     <Spinner

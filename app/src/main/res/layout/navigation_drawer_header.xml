@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/navigation_drawer_header_height">
+    android:layout_height="170dp">
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:textSize="@dimen/navheader_title_text_size"
+            android:textSize="18sp"
             android:textColor="@color/color_navheader" />
         <TextView
             android:id="@+id/navheader_rank"
@@ -28,7 +28,7 @@
             android:layout_gravity="bottom"
             android:layout_marginTop="4dp"
             android:paddingHorizontal="8dp"
-            android:textSize="@dimen/navheader_subtitle_text_size"
+            android:textSize="14sp"
             android:textColor="@color/color_navheader" />
     </LinearLayout>
 
