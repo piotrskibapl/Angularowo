@@ -25,6 +25,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="4dp"
+            android:contentDescription="@string/settings_category_icon_content_description"
             android:src="@{categoryIconResId}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/category_name"

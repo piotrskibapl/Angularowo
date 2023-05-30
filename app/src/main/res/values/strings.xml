@@ -166,6 +166,7 @@
     <string name="report_status_image_description">Ikona statusu zgłoszenia</string>
     <string name="access_restricted_icon_content_description">Ikona odmowy dostępu</string>
     <string name="navigation_drawer_header_content_description">Obrazek tła</string>
+    <string name="settings_category_icon_content_description">Ikona kategorii</string>
 
     <!-- universal -->
     <string name="no_internet">Wystąpił błąd przy pobieraniu danych.\nSprawdź czy masz połączenie z Internetem oraz spróbuj ponownie.</string>
