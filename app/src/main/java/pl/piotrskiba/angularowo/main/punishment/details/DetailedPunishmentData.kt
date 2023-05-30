@@ -26,13 +26,14 @@ data class DetailedPunishmentData(
         return dateFormat.format(created)
     }
 
-    fun endDate(context: Context) = when (expires.time) {
-        0L -> context.getString(R.string.punishment_expiration_never)
-        else -> {
-            val dateFormat = SimpleDateFormat(context.getString(R.string.punishment_date_format), Locale.getDefault())
-            dateFormat.format(expires)
+    fun endDate(context: Context): String =
+        when (expires.time) {
+            0L -> context.getString(R.string.punishment_expiration_never)
+            else -> {
+                val dateFormat = SimpleDateFormat(context.getString(R.string.punishment_date_format), Locale.getDefault())
+                dateFormat.format(expires)
+            }
         }
-    }
 
     fun type(context: Context) = when (punishmentType) {
         PunishmentTypeModel.BAN -> context.getString(R.string.punishment_type_ban)
