@@ -3,6 +3,7 @@ package pl.piotrskiba.angularowo.main.player.details.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
+import pl.piotrskiba.angularowo.base.extensions.applyDefaultSchedulers
 import pl.piotrskiba.angularowo.base.model.ViewModelState
 import pl.piotrskiba.angularowo.base.model.ViewModelState.Error
 import pl.piotrskiba.angularowo.base.model.ViewModelState.Loaded
@@ -60,8 +61,7 @@ class PlayerDetailsViewModel @Inject constructor(
     fun onFavoriteClick() {
         disposables.add(
             markPlayerAsFavoriteUseCase.execute(args.previewedPlayerUuid)
-                .subscribeOn(facade.io())
-                .observeOn(facade.ui())
+                .applyDefaultSchedulers(facade)
                 .subscribe(
                     {
                         navigator.displayMarkedAsFavoriteSnackbar()
@@ -76,8 +76,7 @@ class PlayerDetailsViewModel @Inject constructor(
     fun onUnfavoriteClick() {
         disposables.add(
             unmarkPlayerAsFavoriteUseCase.execute(args.previewedPlayerUuid)
-                .subscribeOn(facade.io())
-                .observeOn(facade.ui())
+                .applyDefaultSchedulers(facade)
                 .subscribe(
                     {
                         navigator.displayUnmarkedAsFavoriteSnackbar()
@@ -93,8 +92,7 @@ class PlayerDetailsViewModel @Inject constructor(
         state.value = Loading.Send
         disposables.add(
             punishPlayerUseCase.execute(args.previewedPlayerUuid, reason, type.toDomain(), time)
-                .subscribeOn(facade.io())
-                .observeOn(facade.ui())
+                .applyDefaultSchedulers(facade)
                 .subscribe(
                     {
                         state.value = Loaded
@@ -111,8 +109,7 @@ class PlayerDetailsViewModel @Inject constructor(
     private fun loadPlayerDetails() {
         disposables.add(
             getPlayerDetailsFromUuidUseCase.execute(args.previewedPlayerUuid)
-                .subscribeOn(facade.io())
-                .observeOn(facade.ui())
+                .applyDefaultSchedulers(facade)
                 .subscribe(
                     { detailedPlayer ->
                         state.value = Loaded
@@ -130,8 +127,7 @@ class PlayerDetailsViewModel @Inject constructor(
     private fun checkIfShouldDisplayFavoriteShowcase() {
         disposables.add(
             checkIfShouldDisplayFavoriteShowcaseUseCase.execute()
-                .subscribeOn(facade.io())
-                .observeOn(facade.ui())
+                .applyDefaultSchedulers(facade)
                 .subscribe { shouldShow ->
                     if (shouldShow) {
                         navigator.displayFavoriteShowcase()
@@ -143,8 +139,7 @@ class PlayerDetailsViewModel @Inject constructor(
     private fun observeIfPlayerIsFavorite() {
         disposables.add(
             observeIfPlayerIsFavoriteUseCase.execute(args.previewedPlayerUuid)
-                .subscribeOn(facade.io())
-                .observeOn(facade.ui())
+                .applyDefaultSchedulers(facade)
                 .subscribe {
                     isPreviewedPlayerFavorite = it
                     previewedPlayerBanner.value = previewedPlayerBanner.value?.copy(isFavorite = it)

@@ -5,6 +5,7 @@ import androidx.lifecycle.map
 import me.tatarka.bindingcollectionadapter2.ItemBinding
 import pl.piotrskiba.angularowo.BR
 import pl.piotrskiba.angularowo.R
+import pl.piotrskiba.angularowo.base.extensions.applyDefaultSchedulers
 import pl.piotrskiba.angularowo.base.extensions.combineLatest
 import pl.piotrskiba.angularowo.base.model.ViewModelState
 import pl.piotrskiba.angularowo.base.model.ViewModelState.Error
@@ -46,8 +47,7 @@ class PlayerListViewModel @Inject constructor(
     private fun observePlayerList() {
         disposables.add(
             observeOnlinePlayerListWithFavoriteInformationUseCase.execute()
-                .subscribeOn(facade.io())
-                .observeOn(facade.ui())
+                .applyDefaultSchedulers(facade)
                 .subscribe(
                     { playerList ->
                         val bannerList = playerList
@@ -70,8 +70,7 @@ class PlayerListViewModel @Inject constructor(
     private fun refreshPlayerList() {
         disposables.add(
             refreshOnlinePlayerListUseCase.execute()
-                .subscribeOn(facade.io())
-                .observeOn(facade.ui())
+                .applyDefaultSchedulers(facade)
                 .subscribe(
                     { },
                     { error ->

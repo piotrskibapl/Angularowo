@@ -2,6 +2,7 @@ package pl.piotrskiba.angularowo.settings.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import pl.piotrskiba.angularowo.BuildConfig
+import pl.piotrskiba.angularowo.base.extensions.applyDefaultSchedulers
 import pl.piotrskiba.angularowo.base.rx.SchedulersFacade
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.settings.usecase.GetSettingsInitialValuesUseCase
@@ -34,8 +35,7 @@ class SettingsViewModel @Inject constructor(
     override fun onFirstCreate() {
         disposables.add(
             getSettingsInitialValuesUseCase.execute()
-                .subscribeOn(facade.io())
-                .observeOn(facade.ui())
+                .applyDefaultSchedulers(facade)
                 .subscribe { settings ->
                     eventsChecked.value = settings.subscribedToEvents
                     privateMessagesChecked.value = settings.subscribedToPrivateMessages
@@ -55,8 +55,7 @@ class SettingsViewModel @Inject constructor(
         eventsChecked.value = newValue
         disposables.add(
             updateNewEventsSubscriptionUseCase.execute(newValue)
-                .subscribeOn(facade.io())
-                .observeOn(facade.ui())
+                .applyDefaultSchedulers(facade)
                 .subscribe()
         )
     }
@@ -66,8 +65,7 @@ class SettingsViewModel @Inject constructor(
         privateMessagesChecked.value = newValue
         disposables.add(
             updatePrivateMessagesSubscriptionUseCase.execute(newValue)
-                .subscribeOn(facade.io())
-                .observeOn(facade.ui())
+                .applyDefaultSchedulers(facade)
                 .subscribe()
         )
     }
@@ -77,8 +75,7 @@ class SettingsViewModel @Inject constructor(
         accountIncidentsChecked.value = newValue
         disposables.add(
             updateAccountIncidentsSubscriptionUseCase.execute(newValue)
-                .subscribeOn(facade.io())
-                .observeOn(facade.ui())
+                .applyDefaultSchedulers(facade)
                 .subscribe()
         )
     }
@@ -88,8 +85,7 @@ class SettingsViewModel @Inject constructor(
         newReportsChecked.value = newValue
         disposables.add(
             updateNewReportsSubscriptionUseCase.execute(newValue)
-                .subscribeOn(facade.io())
-                .observeOn(facade.ui())
+                .applyDefaultSchedulers(facade)
                 .subscribe()
         )
     }
@@ -98,8 +94,7 @@ class SettingsViewModel @Inject constructor(
         navigator.displayLogoutConfirmationDialog {
             disposables.add(
                 logoutUserUseCase.execute(BuildConfig.VERSION_CODE)
-                    .subscribeOn(facade.io())
-                    .observeOn(facade.ui())
+                    .applyDefaultSchedulers(facade)
                     .subscribe {
                         navigator.displayLogin()
                     }

@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import me.tatarka.bindingcollectionadapter2.ItemBinding
 import pl.piotrskiba.angularowo.BR
 import pl.piotrskiba.angularowo.R
+import pl.piotrskiba.angularowo.base.extensions.applyDefaultSchedulers
 import pl.piotrskiba.angularowo.base.model.ViewModelState
 import pl.piotrskiba.angularowo.base.model.ViewModelState.Error
 import pl.piotrskiba.angularowo.base.model.ViewModelState.Loaded
@@ -50,8 +51,7 @@ class ReportListTabViewModel @Inject constructor(
     private fun loadOwnedReportList() {
         disposables.add(
             getOwnedReportsUseCase.execute()
-                .subscribeOn(facade.io())
-                .observeOn(facade.ui())
+                .applyDefaultSchedulers(facade)
                 .subscribe(
                     { reportModels ->
                         state.value = Loaded
@@ -68,8 +68,7 @@ class ReportListTabViewModel @Inject constructor(
     private fun loadOtherPlayersReportList() {
         disposables.add(
             getNotArchivedReportsUseCase.execute()
-                .subscribeOn(facade.io())
-                .observeOn(facade.ui())
+                .applyDefaultSchedulers(facade)
                 .subscribe(
                     { reportModels ->
                         state.value = Loaded

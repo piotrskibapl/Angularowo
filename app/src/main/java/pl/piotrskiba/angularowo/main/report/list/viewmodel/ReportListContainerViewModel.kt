@@ -1,6 +1,7 @@
 package pl.piotrskiba.angularowo.main.report.list.viewmodel
 
 import androidx.lifecycle.MutableLiveData
+import pl.piotrskiba.angularowo.base.extensions.applyDefaultSchedulers
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.base.preferences.usecase.CheckIfIsStaffUserUseCase
@@ -17,8 +18,7 @@ class ReportListContainerViewModel @Inject constructor(
         super.onFirstCreate()
         disposables.add(
             checkIfIsStaffUserUseCase.execute()
-                .subscribeOn(facade.io())
-                .observeOn(facade.ui())
+                .applyDefaultSchedulers(facade)
                 .subscribe { isStaff ->
                     othersReportsTabAvailable.value = isStaff
                 }

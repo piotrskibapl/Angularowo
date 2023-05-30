@@ -2,6 +2,7 @@ package pl.piotrskiba.angularowo.main.base.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import pl.piotrskiba.angularowo.BuildConfig
+import pl.piotrskiba.angularowo.base.extensions.applyDefaultSchedulers
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.network.usecase.ObserveUnauthorizedResponsesUseCase
@@ -21,8 +22,7 @@ class MainViewModel @Inject constructor(
         super.onFirstCreate()
         disposables.add(
             observeUnauthorizedResponsesUseCase.execute(BuildConfig.VERSION_CODE)
-                .subscribeOn(facade.io())
-                .observeOn(facade.ui())
+                .applyDefaultSchedulers(facade)
                 .subscribe {
                     navigator.navigateToLogin()
                 }

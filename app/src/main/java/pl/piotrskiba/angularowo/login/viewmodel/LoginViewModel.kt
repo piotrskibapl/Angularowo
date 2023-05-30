@@ -1,6 +1,7 @@
 package pl.piotrskiba.angularowo.login.viewmodel
 
 import androidx.lifecycle.MutableLiveData
+import pl.piotrskiba.angularowo.base.extensions.applyDefaultSchedulers
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.login.model.AccessTokenError
@@ -20,8 +21,7 @@ class LoginViewModel @Inject constructor(
         loginState.value = LoginState.Loading
         disposables.add(
             registerDeviceUseCase.execute(pin)
-                .subscribeOn(facade.io())
-                .observeOn(facade.ui())
+                .applyDefaultSchedulers(facade)
                 .subscribe(
                     { accessToken ->
                         AnalyticsUtils().logLogin(accessToken.uuid, accessToken.username)

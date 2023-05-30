@@ -6,6 +6,7 @@ import me.tatarka.bindingcollectionadapter2.ItemBinding
 import pl.piotrskiba.angularowo.BR
 import pl.piotrskiba.angularowo.BuildConfig
 import pl.piotrskiba.angularowo.R
+import pl.piotrskiba.angularowo.base.extensions.applyDefaultSchedulers
 import pl.piotrskiba.angularowo.base.model.ViewModelState
 import pl.piotrskiba.angularowo.base.model.ViewModelState.Error
 import pl.piotrskiba.angularowo.base.model.ViewModelState.Loaded
@@ -53,8 +54,7 @@ class MainScreenViewModel @Inject constructor(
     private fun loadData() {
         disposables.add(
             getMainScreenDataAndSavePlayerUseCase.execute()
-                .subscribeOn(facade.io())
-                .observeOn(facade.ui())
+                .applyDefaultSchedulers(facade)
                 .subscribe(
                     { mainScreenDataModel ->
                         state.value = Loaded
@@ -74,8 +74,7 @@ class MainScreenViewModel @Inject constructor(
     private fun updateCloudMessagingSubscriptions() {
         disposables.add(
             updateCloudMessagingSubscriptionsUseCase.execute(BuildConfig.VERSION_CODE)
-                .subscribeOn(facade.io())
-                .observeOn(facade.ui())
+                .applyDefaultSchedulers(facade)
                 .subscribe()
         )
     }

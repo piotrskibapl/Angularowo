@@ -6,6 +6,7 @@ import com.google.android.gms.ads.rewarded.RewardItem
 import me.tatarka.bindingcollectionadapter2.ItemBinding
 import pl.piotrskiba.angularowo.BR
 import pl.piotrskiba.angularowo.R
+import pl.piotrskiba.angularowo.base.extensions.applyDefaultSchedulers
 import pl.piotrskiba.angularowo.base.model.ViewModelState
 import pl.piotrskiba.angularowo.base.model.ViewModelState.Error
 import pl.piotrskiba.angularowo.base.model.ViewModelState.Loaded
@@ -64,8 +65,7 @@ class OffersViewModel @Inject constructor(
             state.value = Loading.Send
             disposables.add(
                 redeemOfferUseCase.execute(offer.id)
-                    .subscribeOn(facade.io())
-                    .observeOn(facade.ui())
+                    .applyDefaultSchedulers(facade)
                     .subscribe {
                         navigator.displayOfferRedeemedDialog()
                         loadOffersInfo()
@@ -78,8 +78,7 @@ class OffersViewModel @Inject constructor(
         state.value = Loading.Fetch
         disposables.add(
             redeemAdOfferUseCase.execute(rewardItem.type)
-                .subscribeOn(facade.io())
-                .observeOn(facade.ui())
+                .applyDefaultSchedulers(facade)
                 .subscribe {
                     navigator.displayAdOfferRedeemedDialog()
                     loadOffersInfo()
@@ -95,8 +94,7 @@ class OffersViewModel @Inject constructor(
     private fun loadOffersInfo() {
         disposables.add(
             getOffersInfoUseCase.execute()
-                .subscribeOn(facade.io())
-                .observeOn(facade.ui())
+                .applyDefaultSchedulers(facade)
                 .subscribe(
                     { offersInfoModel ->
                         offersInfo.value = offersInfoModel.toUi()

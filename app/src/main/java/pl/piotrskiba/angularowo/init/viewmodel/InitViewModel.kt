@@ -1,5 +1,6 @@
 package pl.piotrskiba.angularowo.init.viewmodel
 
+import pl.piotrskiba.angularowo.base.extensions.applyDefaultSchedulers
 import pl.piotrskiba.angularowo.base.rx.SchedulersFacade
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.applock.usecase.CheckIfAppLockIsEnabledUseCase
@@ -22,8 +23,7 @@ class InitViewModel @Inject constructor(
     private fun checkIfAppLockIsEnabled() {
         disposables.add(
             checkIfAppLockIsEnabledUseCase.execute()
-                .subscribeOn(facade.io())
-                .observeOn(facade.ui())
+                .applyDefaultSchedulers(facade)
                 .subscribe { enabled ->
                     if (enabled) {
                         navigator.displayAppLock()
@@ -37,8 +37,7 @@ class InitViewModel @Inject constructor(
     private fun checkIfUserIsLoggedIn() {
         disposables.add(
             checkIfUserIsLoggedInUseCase.execute()
-                .subscribeOn(facade.io())
-                .observeOn(facade.ui())
+                .applyDefaultSchedulers(facade)
                 .subscribe { loggedIn ->
                     if (loggedIn) {
                         navigator.displayMainScreen()

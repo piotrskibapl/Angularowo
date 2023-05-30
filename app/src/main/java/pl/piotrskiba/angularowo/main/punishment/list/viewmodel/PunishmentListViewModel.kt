@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import me.tatarka.bindingcollectionadapter2.ItemBinding
 import pl.piotrskiba.angularowo.BR
 import pl.piotrskiba.angularowo.R
+import pl.piotrskiba.angularowo.base.extensions.applyDefaultSchedulers
 import pl.piotrskiba.angularowo.base.model.ViewModelState
 import pl.piotrskiba.angularowo.base.model.ViewModelState.Error
 import pl.piotrskiba.angularowo.base.model.ViewModelState.Loaded
@@ -39,8 +40,7 @@ class PunishmentListViewModel @Inject constructor(
     private fun loadPunishmentList() {
         disposables.add(
             getActivePunishmentsUseCase.execute()
-                .subscribeOn(facade.io())
-                .observeOn(facade.ui())
+                .applyDefaultSchedulers(facade)
                 .subscribe(
                     { punishmentModels ->
                         state.value = Loaded

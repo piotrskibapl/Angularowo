@@ -3,6 +3,7 @@ package pl.piotrskiba.angularowo.applock.viewmodel
 import androidx.lifecycle.MutableLiveData
 import pl.piotrskiba.angularowo.applock.model.AppLockData
 import pl.piotrskiba.angularowo.applock.model.toUi
+import pl.piotrskiba.angularowo.base.extensions.applyDefaultSchedulers
 import pl.piotrskiba.angularowo.base.model.ViewModelState
 import pl.piotrskiba.angularowo.base.model.ViewModelState.Loaded
 import pl.piotrskiba.angularowo.base.model.ViewModelState.Loading
@@ -22,8 +23,7 @@ class AppLockViewModel @Inject constructor(
     override fun onFirstCreate() {
         disposables.add(
             getAppLockDataUseCase.execute()
-                .subscribeOn(facade.io())
-                .observeOn(facade.ui())
+                .applyDefaultSchedulers(facade)
                 .subscribe { data ->
                     appLockData.value = data.config.toUi()
                     state.value = Loaded
