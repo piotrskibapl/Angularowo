@@ -41,7 +41,7 @@ open class BaseActivity<out VM : LifecycleViewModel>(viewModelClass: KClass<VM>)
     override fun onResume() {
         super.onResume()
         if (this::class.qualifiedName != null && this::class.simpleName != null) {
-            AnalyticsUtils().logScreenView(
+            AnalyticsUtils.logScreenView(
                 this::class.qualifiedName!!,
                 this::class.simpleName!!
             )

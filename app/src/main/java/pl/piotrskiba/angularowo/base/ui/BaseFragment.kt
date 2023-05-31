@@ -41,7 +41,7 @@ open class BaseFragment<out VM : LifecycleViewModel>(viewModelClass: KClass<VM>)
         super.onResume()
 
         if (context != null && this::class.qualifiedName != null && this::class.simpleName != null) {
-            AnalyticsUtils().logScreenView(
+            AnalyticsUtils.logScreenView(
                 this::class.qualifiedName!!,
                 this::class.simpleName!!
             )

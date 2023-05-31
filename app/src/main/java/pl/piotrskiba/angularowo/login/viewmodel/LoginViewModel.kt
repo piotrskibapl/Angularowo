@@ -24,11 +24,11 @@ class LoginViewModel @Inject constructor(
                 .applyDefaultSchedulers(facade)
                 .subscribe(
                     { accessToken ->
-                        AnalyticsUtils().logLogin(accessToken.uuid, accessToken.username)
+                        AnalyticsUtils.logLogin(accessToken.uuid, accessToken.username)
                         loginState.value = LoginState.Success
                     },
                     { error ->
-                        AnalyticsUtils().logLoginError(error::class.simpleName)
+                        AnalyticsUtils.logLoginError(error::class.simpleName)
                         loginState.value = LoginState.Error(error as AccessTokenError)
                     }
                 )

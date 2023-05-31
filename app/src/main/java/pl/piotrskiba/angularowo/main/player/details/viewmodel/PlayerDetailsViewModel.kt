@@ -25,6 +25,7 @@ import pl.piotrskiba.angularowo.main.player.details.nav.PlayerDetailsNavigator
 import pl.piotrskiba.angularowo.main.player.details.ui.PlayerDetailsFragmentArgs
 import pl.piotrskiba.angularowo.main.player.model.PlayerBanner
 import pl.piotrskiba.angularowo.main.player.model.toPlayerBannerData
+import pl.piotrskiba.angularowo.utils.AnalyticsUtils
 import javax.inject.Inject
 
 class PlayerDetailsViewModel @Inject constructor(
@@ -64,6 +65,7 @@ class PlayerDetailsViewModel @Inject constructor(
                 .applyDefaultSchedulers(facade)
                 .subscribe(
                     {
+                        AnalyticsUtils.logFavorite(args.player.uuid, args.player.username, args.previewedPlayerUuid, previewedPlayerDetails.value!!.username)
                         navigator.displayMarkedAsFavoriteSnackbar()
                     },
                     {
@@ -79,6 +81,7 @@ class PlayerDetailsViewModel @Inject constructor(
                 .applyDefaultSchedulers(facade)
                 .subscribe(
                     {
+                        AnalyticsUtils.logUnfavorite(args.player.uuid, args.player.username, args.previewedPlayerUuid, previewedPlayerDetails.value!!.username)
                         navigator.displayUnmarkedAsFavoriteSnackbar()
                     },
                     {

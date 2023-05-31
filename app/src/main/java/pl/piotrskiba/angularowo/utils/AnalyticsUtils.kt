@@ -16,7 +16,7 @@ private const val EVENT_FAVORITE = "action_favorite"
 private const val EVENT_UNFAVORITE = "action_unfavorite"
 private const val EVENT_ERROR_MESSAGE = "error_message"
 
-class AnalyticsUtils {
+object AnalyticsUtils {
 
     fun logLogin(playerUuid: String, playerName: String) {
         val bundle = Bundle()
@@ -38,7 +38,6 @@ class AnalyticsUtils {
         Firebase.analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle)
     }
 
-    // TODO: track favorite/unfavorite actions
     fun logFavorite(playerUuid: String, playerName: String, targetUuid: String, targetName: String) {
         val bundle = Bundle()
         bundle.putString(PLAYER_UUID, playerUuid)
