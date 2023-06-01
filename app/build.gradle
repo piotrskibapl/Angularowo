@@ -6,6 +6,10 @@ apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'com.google.firebase.firebase-perf'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
 
+kotlin {
+    jvmToolchain(17)
+}
+
 android {
     namespace 'pl.piotrskiba.angularowo'
     compileSdkVersion Integer.parseInt(ANDROID_COMPILE_SDK_VERSION)
@@ -44,8 +48,9 @@ android {
         dataBinding true
         viewBinding true
     }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 

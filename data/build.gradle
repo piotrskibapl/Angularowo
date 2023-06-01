@@ -4,17 +4,19 @@ plugins {
     id 'kotlin-kapt'
 }
 
+kotlin {
+    jvmToolchain(17)
+}
+
 android {
     namespace 'pl.piotrskiba.angularowo.data'
     compileSdkVersion Integer.parseInt(ANDROID_COMPILE_SDK_VERSION)
-
     defaultConfig {
         minSdkVersion Integer.parseInt(ANDROID_MIN_SDK_VERSION)
         targetSdkVersion Integer.parseInt(ANDROID_TARGET_SDK_VERSION)
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
-
     buildTypes {
         release {
             minifyEnabled true
@@ -27,9 +29,9 @@ android {
             buildConfigField "String", "API_KEY", API_KEY
         }
     }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
