@@ -6,7 +6,7 @@ buildscript {
     ext.dagger_version = '2.46.1'
     ext.rxandroid_version = '3.0.2'
     ext.rxjava_version = '3.1.6'
-    ext.firebase_version = '32.0.0'
+    ext.firebase_version = '32.1.0'
     ext.okhttp_version = '4.11.0'
     ext.nav_version = '2.5.3'
     ext.junit_version = '4.13.2'
