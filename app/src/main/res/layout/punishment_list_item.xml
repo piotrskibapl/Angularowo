@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="pl.piotrskiba.angularowo.R" />
+
+        <variable
+            name="navigator"
+            type="pl.piotrskiba.angularowo.main.punishment.list.nav.PunishmentListNavigator" />
+
+        <variable
+            name="punishment"
+            type="pl.piotrskiba.angularowo.main.punishment.model.PunishmentBannerData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:background="@color/color_minecraft_7"
+        android:onClick="@{(view) -> navigator.onPunishmentClick(view, punishment)}"
+        android:padding="8dp"
+        android:transitionName="@{punishment.id}">
+
+        <ImageView
+            android:id="@+id/iv_player_avatar"
+            android:layout_width="@dimen/avatar_size"
+            android:layout_height="@dimen/avatar_size"
+            android:contentDescription="@string/player_avatar_image_description"
+            android:src="@drawable/default_avatar"
+            app:imageUrl="@{punishment.userAvatarUrl(context)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:placeholderImage="@{R.drawable.default_avatar}" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/iv_punishment_type"
+            app:layout_constraintStart_toEndOf="@+id/iv_player_avatar"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_player_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@{punishment.username}"
+                android:textAlignment="center"
+                android:textSize="@dimen/username_text_size"
+                tools:text="Username" />
+
+            <TextView
+                android:id="@+id/tv_punishment_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@{punishment.reason(context)}"
+                android:textAlignment="center"
+                android:textSize="@dimen/rank_text_size"
+                tools:text="reason" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_punishment_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/ban_type_image_description"
+            android:src="@{punishment.punishmentIcon}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_ban" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

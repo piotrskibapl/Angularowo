@@ -1,96 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_layout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/margin_small"
-    android:background="@color/color_minecraft_7"
-    android:padding="@dimen/padding_default">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/iv_player_avatar"
-        android:layout_width="@dimen/avatar_size"
-        android:layout_height="@dimen/avatar_size"
-        android:contentDescription="@string/player_avatar_image_description"
-        android:src="@drawable/default_avatar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+        <import type="pl.piotrskiba.angularowo.R" />
+
+        <variable
+            name="navigator"
+            type="pl.piotrskiba.angularowo.main.player.list.nav.PlayerListNavigator" />
+
+        <variable
+            name="player"
+            type="pl.piotrskiba.angularowo.main.player.model.PlayerBanner" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingStart="@dimen/padding_default"
-        android:paddingEnd="@dimen/padding_default"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/iv_player_avatar"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_marginBottom="4dp"
+        android:background="@{player.rankColor(context)}"
+        android:onClick="@{(view) -> navigator.onPlayerClick(view, player)}"
+        android:padding="8dp"
+        android:transitionName="@{player.uuid}"
+        tools:background="@color/color_minecraft_7">
+
+        <ImageView
+            android:id="@+id/iv_player_avatar"
+            android:layout_width="@dimen/avatar_size"
+            android:layout_height="@dimen/avatar_size"
+            android:contentDescription="@string/player_avatar_image_description"
+            android:src="@drawable/default_avatar"
+            app:imageUrl="@{player.avatarUrl(context)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:placeholderImage="@{R.drawable.default_avatar}" />
 
         <TextView
             android:id="@+id/tv_player_name"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
+            android:paddingHorizontal="8dp"
+            android:text="@{player.username}"
             android:textAlignment="center"
             android:textSize="@dimen/username_text_size"
+            app:layout_constraintBottom_toTopOf="@+id/tv_player_rank"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_player_avatar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
             tools:text="Username" />
 
         <TextView
             android:id="@+id/tv_player_rank"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
+            android:paddingHorizontal="8dp"
+            android:text="@{player.rankName}"
             android:textAlignment="center"
             android:textSize="@dimen/rank_text_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_player_avatar"
+            app:layout_constraintTop_toBottomOf="@+id/tv_player_name"
             tools:text="Rank" />
-    </LinearLayout>
 
-    <ImageView
-        android:id="@+id/iv_vanish_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/vanish_image_description"
-        android:src="@drawable/ic_vanished"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/heartIconBarrierStart"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/iv_vanish_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:contentDescription="@string/vanish_image_description"
+            android:src="@drawable/ic_vanished"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/heartIconBarrierStart"
+            app:layout_constraintTop_toTopOf="parent"
+            app:visible="@{player.vanished}" />
 
-    <ImageView
-        android:id="@+id/iv_favorite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_small"
-        android:layout_marginLeft="@dimen/margin_small"
-        android:contentDescription="@string/heart_image_description"
-        android:src="@drawable/ic_unfavorite"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/iv_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:contentDescription="@string/heart_image_description"
+            android:src="@drawable/ic_unfavorite"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:visible="@{player.favorite}" />
 
-    <ImageView
-        android:id="@+id/iv_married"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_small"
-        android:layout_marginLeft="@dimen/margin_small"
-        android:contentDescription="@string/heart_image_description"
-        android:src="@drawable/ic_married"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <!-- map married icon visibility -->
+        <ImageView
+            android:id="@+id/iv_married"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/heart_image_description"
+            android:src="@drawable/ic_married"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:visible="@{false}"
+            tools:visibility="gone" />
 
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/heartIconBarrierStart"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:barrierDirection="start"
-        app:constraint_referenced_ids="iv_favorite,iv_married" />
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/heartIconBarrierStart"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:barrierDirection="start"
+            app:constraint_referenced_ids="iv_favorite,iv_married" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

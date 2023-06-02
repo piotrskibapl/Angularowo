@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="pl.piotrskiba.angularowo.R" />
+
+        <variable
+            name="viewModel"
+            type="pl.piotrskiba.angularowo.settings.viewmodel.SettingsViewModel" />
+    </data>
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include
+                layout="@layout/settings_category"
+                app:categoryIconResId="@{R.drawable.ic_notifications}"
+                app:categoryNameResId="@{R.string.pref_category_notifications}" />
+
+            <include
+                layout="@layout/settings_item"
+                app:checkable="@{false}"
+                app:itemDescriptionResId="@{R.string.pref_summary_enable_notifications}"
+                app:itemNameResId="@{R.string.pref_title_enable_notifications}"
+                app:onClick="@{() -> viewModel.onEnableNotificationsClicked()}"
+                app:visible="@{!viewModel.notificationsEnabled}" />
+
+            <include
+                layout="@layout/settings_item"
+                app:checkable="@{true}"
+                app:checked="@{viewModel.eventsChecked}"
+                app:itemDescriptionResId="@{R.string.pref_summary_subscribed_to_events}"
+                app:itemNameResId="@{R.string.pref_title_subscribed_to_events}"
+                app:onClick="@{() -> viewModel.onEventsNotificationsClicked()}"
+                app:visible="@{viewModel.notificationsEnabled}" />
+
+            <include
+                layout="@layout/settings_item"
+                app:checkable="@{true}"
+                app:checked="@{viewModel.privateMessagesChecked}"
+                app:itemDescriptionResId="@{R.string.pref_summary_subscribed_to_private_messages}"
+                app:itemNameResId="@{R.string.pref_title_subscribed_to_private_messages}"
+                app:onClick="@{() -> viewModel.onPrivateMessagesNotificationsClicked()}"
+                app:visible="@{viewModel.notificationsEnabled}" />
+
+            <include
+                layout="@layout/settings_item"
+                app:checkable="@{true}"
+                app:checked="@{viewModel.accountIncidentsChecked}"
+                app:itemDescriptionResId="@{R.string.pref_summary_subscribed_to_account_incidents}"
+                app:itemNameResId="@{R.string.pref_title_subscribed_to_account_incidents}"
+                app:onClick="@{() -> viewModel.onAccountIncidentsNotificationsClicked()}"
+                app:visible="@{viewModel.notificationsEnabled}" />
+
+            <include
+                layout="@layout/settings_item"
+                app:checkable="@{true}"
+                app:checked="@{viewModel.newReportsChecked}"
+                app:itemDescriptionResId="@{R.string.pref_summary_subscribed_to_new_reports}"
+                app:itemNameResId="@{R.string.pref_title_subscribed_to_new_reports}"
+                app:onClick="@{() -> viewModel.onNewReportsNotificationsClicked()}"
+                app:visible="@{viewModel.notificationsEnabled &amp;&amp; viewModel.newReportsVisible}" />
+
+            <include
+                layout="@layout/settings_category"
+                app:categoryIconResId="@{R.drawable.ic_settings}"
+                app:categoryNameResId="@{R.string.pref_category_others}" />
+
+            <include
+                layout="@layout/settings_item"
+                app:checkable="@{false}"
+                app:itemDescriptionResId="@{R.string.pref_summary_logout}"
+                app:itemNameResId="@{R.string.pref_title_logout}"
+                app:onClick="@{() -> viewModel.onLogoutClicked()}" />
+        </LinearLayout>
+    </ScrollView>
+</layout>

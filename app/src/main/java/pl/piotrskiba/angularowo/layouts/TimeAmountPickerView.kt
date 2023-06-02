@@ -2,41 +2,34 @@ package pl.piotrskiba.angularowo.layouts
 
 import android.content.Context
 import android.widget.ArrayAdapter
-import android.widget.EditText
 import android.widget.LinearLayout
-import android.widget.Spinner
-import butterknife.BindView
-import butterknife.ButterKnife
 import pl.piotrskiba.angularowo.R
+import pl.piotrskiba.angularowo.databinding.TimeAmountPickerViewBinding
 
 class TimeAmountPickerView(context: Context) : LinearLayout(context) {
 
-    @BindView(R.id.amount)
-    lateinit var timeAmountEditText: EditText
-
-    @BindView(R.id.timeunit)
-    lateinit var timeUnitSpinner: Spinner
+    private val binding: TimeAmountPickerViewBinding
 
     init {
         inflate(context, R.layout.time_amount_picker_view, this)
-        ButterKnife.bind(this)
+        binding = TimeAmountPickerViewBinding.bind(this)
 
         ArrayAdapter.createFromResource(
-                context,
-                R.array.time_units,
-                android.R.layout.simple_spinner_item
+            context,
+            R.array.time_units,
+            android.R.layout.simple_spinner_item
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            timeUnitSpinner.adapter = adapter
+            binding.timeunit.adapter = adapter
         }
     }
 
     fun getTimeAmount(): Long {
         var amount = 0L
-        if (timeAmountEditText.text.isNotEmpty()) {
-            amount = timeAmountEditText.text.toString().toLong()
+        if (binding.amount.text.isNotEmpty()) {
+            amount = binding.amount.text.toString().toLong()
         }
-        val multiplier = when (timeUnitSpinner.selectedItemPosition) {
+        val multiplier = when (binding.timeunit.selectedItemPosition) {
             1 -> 60
             2 -> 60 * 60
             3 -> 24 * 60 * 60

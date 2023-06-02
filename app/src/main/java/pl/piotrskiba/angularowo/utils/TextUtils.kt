@@ -4,28 +4,29 @@ import android.content.Context
 import androidx.core.content.ContextCompat
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
-import java.text.Normalizer
+import java.util.Date
+import java.util.concurrent.TimeUnit
 
 object TextUtils {
 
     @JvmStatic
-    fun formatPlaytime(context: Context, playtime: Int): String {
-        var playtime = playtime
+    fun formatPlaytime(context: Context, playtime: Long): String {
+        var remainingSeconds = playtime/1000
         var days = 0
         var hours = 0
         var minutes = 0
 
-        while (playtime >= 60 * 60 * 24) {
+        while (remainingSeconds >= 60 * 60 * 24) {
             days++
-            playtime -= 60 * 60 * 24
+            remainingSeconds -= 60 * 60 * 24
         }
-        while (playtime >= 60 * 60) {
+        while (remainingSeconds >= 60 * 60) {
             hours++
-            playtime -= 60 * 60
+            remainingSeconds -= 60 * 60
         }
-        while (playtime >= 60) {
+        while (remainingSeconds >= 60) {
             minutes++
-            playtime -= 60
+            remainingSeconds -= 60
         }
 
         var result = ""
@@ -56,42 +57,32 @@ object TextUtils {
     }
 
     @JvmStatic
-    fun formatApproximateTimeLeft(seconds: Int): String {
-        val minutes = seconds / 60
-        val hours = minutes / 60
-        val days = hours / 24
+    fun formatTimeDifference(from: Date, to: Date): String {
+        var remainingMilliseconds = from.time - to.time
+        val days = remainingMilliseconds / TimeUnit.DAYS.toMillis(1)
+        remainingMilliseconds %= TimeUnit.DAYS.toMillis(1)
+        val hours = remainingMilliseconds / TimeUnit.HOURS.toMillis(1)
+        remainingMilliseconds %= TimeUnit.HOURS.toMillis(1)
+        val minutes = remainingMilliseconds / TimeUnit.MINUTES.toMillis(1)
+        remainingMilliseconds %= TimeUnit.MINUTES.toMillis(1)
+        val seconds = remainingMilliseconds / TimeUnit.SECONDS.toMillis(1)
+        remainingMilliseconds %= TimeUnit.SECONDS.toMillis(1)
+
         val builder = StringBuilder()
-
-        if (days > 0)
-            builder.append(days).append(" d")
-
-        if (hours % 24 > 0) {
-            if (builder.isNotEmpty())
-                builder.append(" ")
-            builder.append(hours % 24).append(" h")
+        if (days > 0) builder.append(days).append(" d")
+        if (hours > 0) {
+            if (builder.isNotEmpty()) builder.append(" ")
+            builder.append(hours).append(" h")
         }
-
-        if (minutes % 60 > 0 && days == 0) {
-            if (builder.isNotEmpty())
-                builder.append(" ")
-            builder.append(minutes % 60).append(" m")
+        if (minutes > 0 && days == 0L) {
+            if (builder.isNotEmpty()) builder.append(" ")
+            builder.append(minutes).append(" m")
         }
-
-        if (seconds % 60 > 0 && days == 0 && hours == 0) {
-            if (builder.isNotEmpty())
-                builder.append(" ")
-            builder.append(seconds % 60).append(" s")
+        if (seconds > 0 && days == 0L && hours == 0L) {
+            if (builder.isNotEmpty()) builder.append(" ")
+            builder.append(seconds).append(" s")
         }
-
         return builder.toString()
-    }
-
-    @JvmStatic
-    fun formatTps(tps: Double): String {
-        return if (tps == (tps.toInt()).toDouble())
-            String.format(java.util.Locale.getDefault(), "%d", tps.toInt())
-        else
-            String.format(java.util.Locale.getDefault(), "%s", tps)
     }
 
     @JvmStatic
@@ -116,11 +107,6 @@ object TextUtils {
         s = s.replace("§f", "</font><font color=#" + Integer.toHexString(ContextCompat.getColor(context, R.color.color_minecraft_f)).substring(2, 8) + ">")
 
         return s
-    }
-
-    @JvmStatic
-    fun normalize(s: String?): String {
-        return Normalizer.normalize(s, Normalizer.Form.NFD).replace("[^\\p{ASCII}]".toRegex(), "")
     }
 
     fun replaceQualifiers(context: Context, s: String): String {

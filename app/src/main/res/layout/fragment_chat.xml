@@ -1,20 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activities.MainActivity">
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_chat"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="pl.piotrskiba.angularowo.main.chat.viewmodel.ChatViewModel" />
+    </data>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"/>
-    <ProgressBar
-        android:id="@+id/pb_loading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" />
-    <include layout="@layout/no_internet_layout" />
-    <include layout="@layout/server_error_layout" />
-    <include layout="@layout/account_banned_layout" />
-</FrameLayout>
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/message_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:itemBinding="@{viewModel.chatMessagesBinding}"
+            app:items="@{viewModel.chatMessages}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/chat_message_list_item" />
+
+        <include
+            layout="@layout/loading_layout"
+            app:state="@{viewModel.state}" />
+
+        <include
+            layout="@layout/error_layout"
+            app:state="@{viewModel.state}" />
+    </FrameLayout>
+</layout>

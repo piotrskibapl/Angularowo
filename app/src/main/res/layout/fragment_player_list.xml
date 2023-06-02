@@ -1,58 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/swiperefresh"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activities.MainActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout
+    <data>
+
+        <variable
+            name="viewModel"
+            type="pl.piotrskiba.angularowo.main.player.list.viewmodel.PlayerListViewModel" />
+    </data>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swiperefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:onRefreshListener="@{() -> viewModel.onRefresh()}"
+        app:state="@{viewModel.state}"
+        tools:context=".main.base.ui.MainActivity">
 
-        <androidx.core.widget.NestedScrollView
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
-            <LinearLayout
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/scroll_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/favorite_player_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        app:itemBinding="@{viewModel.playersBinding}"
+                        app:items="@{viewModel.favoritePlayers}"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:spanCount="@integer/player_list_span_count"
+                        app:visible="@{viewModel.favoritePlayerListNotEmpty}" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/player_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        app:itemBinding="@{viewModel.playersBinding}"
+                        app:items="@{viewModel.players}"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:spanCount="@integer/player_list_span_count" />
+
+                </LinearLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+            <TextView
+                android:id="@+id/tv_no_players"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="@dimen/error_margin"
+                android:gravity="center_horizontal"
+                android:text="@string/error_no_players"
+                android:textAlignment="center"
+                android:textSize="@dimen/error_text_size"
+                app:visible="@{viewModel.isNoPlayersOnline}" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_players_favorite"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_default"
-                    android:visibility="gone" />
+            <include
+                layout="@layout/loading_layout"
+                app:state="@{viewModel.state}" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_players"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_default" />
-
-            </LinearLayout>
-
-        </androidx.core.widget.NestedScrollView>
-
-        <TextView
-            android:id="@+id/tv_no_players"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/error_no_players"
-            android:textSize="@dimen/error_text_size"
-            android:textAlignment="center"
-            android:visibility="gone"
-            android:layout_marginTop="@dimen/error_margin"
-            android:layout_marginStart="@dimen/margin_default"
-            android:layout_marginEnd="@dimen/margin_default"
-            android:gravity="center_horizontal" />
-
-        <include layout="@layout/no_internet_layout" />
-
-        <include layout="@layout/server_error_layout" />
-
-    </FrameLayout>
-
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            <include
+                layout="@layout/error_layout"
+                app:state="@{viewModel.state}" />
+        </FrameLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</layout>

@@ -1,53 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="@dimen/padding_default"
-    android:layout_marginBottom="@dimen/margin_small"
-    android:background="@color/color_minecraft_7">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
-        android:layout_width="0dp"
+    <data>
+
+        <import type="pl.piotrskiba.angularowo.R" />
+
+        <variable
+            name="navigator"
+            type="pl.piotrskiba.angularowo.main.report.list.nav.ReportListNavigator" />
+
+        <variable
+            name="report"
+            type="pl.piotrskiba.angularowo.main.report.model.ReportBannerData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="@dimen/padding_default"
-        android:paddingEnd="@dimen/padding_default"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/iv_report_status"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_marginBottom="4dp"
+        android:background="@color/color_minecraft_7"
+        android:onClick="@{(view) -> navigator.onReportClick(view, report)}"
+        android:padding="8dp"
+        android:transitionName="@{String.valueOf(report.id)}">
 
         <TextView
             android:id="@+id/tv_player_name"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:text="@{report.reportedName}"
             android:textSize="@dimen/username_text_size"
-            android:gravity="center_horizontal" />
+            app:layout_constraintEnd_toStartOf="@+id/iv_report_status"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Username" />
 
         <TextView
             android:id="@+id/tv_report_reason"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/rank_text_size" />
+            android:layout_marginEnd="8dp"
+            android:text="@{report.reasonText(context)}"
+            android:textSize="@dimen/rank_text_size"
+            app:layout_constraintEnd_toStartOf="@+id/iv_report_status"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_player_name"
+            tools:text="Report reason: reason" />
 
         <TextView
-            android:id="@+id/tv_report_status"
-            android:layout_width="match_parent"
+            android:id="@+id/tv_report_appreciation"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/rank_text_size" />
-    </LinearLayout>
+            android:layout_marginEnd="8dp"
+            android:text="@{report.appreciationText(context)}"
+            android:textSize="@dimen/rank_text_size"
+            app:layout_constraintEnd_toStartOf="@+id/iv_report_status"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_report_reason"
+            tools:text="Report status: pending" />
 
-    <ImageView
-        android:id="@+id/iv_report_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_report_pending"
-        android:contentDescription="@string/report_status_image_description"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/iv_report_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/report_status_image_description"
+            android:src="@{report.appreciationIcon()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_report_pending" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

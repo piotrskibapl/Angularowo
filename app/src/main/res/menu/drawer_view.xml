@@ -4,29 +4,29 @@
         android:id="@+id/nav_group1"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_main_screen"
+            android:id="@+id/mainScreenFragment"
             android:title="@string/main_screen" />
         <item
-            android:id="@+id/nav_player_list"
+            android:id="@+id/playerListFragment"
             android:title="@string/player_list" />
         <item
-            android:id="@+id/nav_chat"
+            android:id="@+id/chatFragment"
             android:title="@string/chat" />
         <item
-            android:id="@+id/nav_last_bans"
-            android:title="@string/last_bans" />
+            android:id="@+id/lastPunishmentsFragment"
+            android:title="@string/last_punishments" />
         <item
-            android:id="@+id/nav_free_ranks"
+            android:id="@+id/offersFragment"
             android:title="@string/free_ranks" />
     </group>
     <group
         android:id="@+id/nav_group2"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_reports_history"
+            android:id="@+id/reportListContainerFragment"
             android:title="@string/reports_history" />
         <item
-            android:id="@+id/nav_settings"
+            android:id="@+id/settingsFragment"
             android:title="@string/settings"
             android:checkable="false" />
     </group>

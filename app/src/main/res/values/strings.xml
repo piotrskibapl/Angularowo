@@ -8,24 +8,9 @@
     <string name="notification_channel_name_silent">Ciche powiadomienia</string>
     <string name="notification_channel_description_silent">Powiadomienia w aplikacji dla których wyłączony jest dźwięk oraz wibracje</string>
 
-    <!-- preferences -->
-    <string name="pref_key_uuid" translatable="false">uuid</string>
-    <string name="pref_key_skin_uuid" translatable="false">skin_uuid</string>
-    <string name="pref_key_nickname" translatable="false">nickname</string>
-    <string name="pref_key_rank" translatable="false">rank</string>
-    <string name="pref_key_balance" translatable="false">balance</string>
-    <string name="pref_key_tokens" translatable="false">tokens</string>
-    <string name="pref_key_playtime" translatable="false">playtime</string>
-    <string name="pref_key_access_token" translatable="false">access_token</string>
-    <string name="pref_key_subscribed_to_app_version_topic" translatable="false">app_version_%1$d_subscribed</string>
-    <string name="pref_key_subscribed_to_uuid_topic" translatable="false">uuid_topic_subscribed</string>
-    <string name="pref_key_subscribed_to_events" translatable="false">events_subscribed</string>
-    <string name="pref_key_subscribed_to_private_messages" translatable="false">private_messages_subscribed</string>
-    <string name="pref_key_subscribed_to_account_incidents" translatable="false">account_incidents_subscribed</string>
-    <string name="pref_key_subscribed_to_new_reports" translatable="false">new_reports_subscribed</string>
-    <string name="pref_key_logout" translatable="false">logout</string>
-    <string name="pref_key_showcase_favorite" translatable="false">showcase_favorite_shown</string>
-
+    <!-- settings -->
+    <string name="pref_key_uuid" translatable="false">uuid</string> <!-- TODO: remove after migration -->
+    <string name="pref_key_nickname" translatable="false">nickname</string> <!-- TODO: remove after migration -->
     <string name="pref_category_notifications">Powiadomienia</string>
     <string name="pref_category_others">Inne</string>
     <string name="pref_title_subscribed_to_new_reports">Nowe zgłoszenia</string>
@@ -36,50 +21,50 @@
     <string name="pref_summary_subscribed_to_private_messages">Otrzymuj powiadomienia o nowych wiadomościach mail na serwerze</string>
     <string name="pref_title_subscribed_to_account_incidents">Zdarzenia na koncie</string>
     <string name="pref_summary_subscribed_to_account_incidents">Otrzymuj powiadomienia o zdarzeniach takich jak nowe ostrzeżenie lub blokada konta</string>
-    <string name="pref_title_logout">Wyloguj</string>
+    <string name="pref_title_logout">Wyloguj się</string>
+    <string name="pref_summary_logout">Wyloguj się z aplikacji</string>
+    <string name="pref_title_enable_notifications">Włącz powiadomienia</string>
+    <string name="pref_summary_enable_notifications">Wcześniej nie wyraziłeś zgody na powiadomienia. Kliknij, aby zmienić to ustawienie.</string>
+    <string name="dialog_title_notifications_permission_denied_permanently">Odrzucono zgodę na powiadomienia</string>
+    <string name="dialog_message_notifications_permission_denied_permanently">Aby otrzymywać powiadomienia, włącz uprawnienia do powiadomień w ustawieniach urządzenia.</string>
+    <string name="dialog_proceed_button_notifications_permission_denied_permanently">Otwórz ustawienia</string>
 
     <string name="logout_question">Wylogowywanie</string>
     <string name="logout_question_description">Czy na pewno chcesz się wylogować?</string>
 
-    <!-- activity_login.xml -->
+    <!-- login -->
     <string name="login_header">Witaj!</string>
     <string name="login_description">Aby korzystać z aplikacji, musisz powiązać ją ze swoim kontem w grze.\nPoniżej wpisz swój kod dostępu.\nKod dostępu uzyskasz wpisując komendę /android w grze.</string>
-
-    <string name="login_api_response_code_not_found" translatable="false">code not found</string>
-    <string name="login_api_response_code_expired" translatable="false">code expired</string>
-
     <string name="login_error_code_not_found">Podany kod jest nieprawidłowy.</string>
     <string name="login_error_code_expired">Podany kod jest prawidłowy, jednak skończyła się jego ważność. Wpisz komendę /android ponownie.</string>
     <string name="login_error_unknown">Wystąpił nieznany błąd. Spróbuj ponownie później.</string>
     <string name="logging_in">Logowanie…</string>
 
-    <!-- drawer_view.xml -->
+    <!-- drawer view -->
     <string name="main_screen">Strona główna</string>
     <string name="player_list">Lista graczy online</string>
     <string name="chat">Podgląd chatu</string>
-    <string name="last_bans">Ostatnie bany</string>
+    <string name="last_punishments">Ostatnie kary</string>
     <string name="free_ranks">Odbierz darmowe nagrody</string>
     <string name="reports_history">Historia zgłoszeń</string>
     <string name="settings">Ustawienia</string>
 
-    <!-- fragment_main_screen.xml -->
+    <!-- main screen -->
     <string name="greeting">Witaj, %1$s!</string>
     <string name="balance_title">Stan konta:</string>
-    <string name="balance_format">$%1$d</string>
     <string name="tokens_title">Twoje tokeny:</string>
     <string name="playtime_title">Spędzony czas online:</string>
     <string name="last_player_bans">Twoje aktywne kary:</string>
 
-    <!-- fragment_player_list.xml -->
+    <!-- players -->
     <string name="actionbar_title_player_list">Lista graczy online</string>
     <string name="error_no_players">Aktualnie nie ma nikogo na serwerze.</string>
 
-    <!-- activity_player_details.xml -->
+    <!-- player details -->
     <string name="mark_as_favorite">Dodaj do ulubionych</string>
     <string name="unmark_as_favorite">Usuń z ulubionych</string>
     <string name="player_info">Informacje o graczu</string>
     <string name="tokens_title_others">Tokeny gracza:</string>
-    <string name="player_banner_transition_name" translatable="false">player_banner</string>
     <string name="marked_as_favorite">Gracz został dodany do ulubionych.</string>
     <string name="unmarked_as_favorite">Gracz został usunięty z ulubionych.</string>
     <string name="showcase_favorite_title">Dodaj do ulubionych</string>
@@ -114,26 +99,28 @@
     <string name="dialog_warn_success_description">Gracz został ostrzeżony.</string>
     <string name="dialog_ban_success_description">Gracz został zbanowany.</string>
 
-    <!-- fragment_ban_list.xml -->
-    <string name="actionbar_title_ban_list">Ostatnie bany</string>
+    <!-- punishments -->
+    <string name="actionbar_title_punishment_list">Ostatnie kary</string>
 
-    <!-- activity_ban_details.xml -->
-    <string name="ban_info">Informacje o banie</string>
-    <string name="ban_reason">Powód:</string>
-    <string name="ban_banner">Administrator:</string>
-    <string name="ban_start_date">Data nałożenia:</string>
-    <string name="ban_end_date">Wygasa:</string>
-    <string name="ban_expiration_never">nigdy</string>
-    <string name="ban_banner_transition_name" translatable="false">ban_banner</string>
+    <!-- punishment details -->
+    <string name="punishment_info">Informacje o banie</string>
+    <string name="punishment_reason">Powód:</string>
+    <string name="punishment_banner">Administrator:</string>
+    <string name="punishment_start_date">Data nałożenia:</string>
+    <string name="punishment_end_date">Wygasa:</string>
+    <string name="punishment_expiration_never">nigdy</string>
+    <string name="punishment_type_ban">Ban</string>
+    <string name="punishment_type_mute">Wyciszenie</string>
+    <string name="punishment_type_kick">Wyrzucenie z gry</string>
+    <string name="punishment_type_warn">Ostrzeżenie</string>
+    <string name="punishment_ban_description_format">Zbanowany za %1$s</string>
+    <string name="punishment_warn_description_format">Ostrzeżony za %1$s</string>
+    <string name="punishment_mute_description_format">Wyciszony za %1$s</string>
+    <string name="punishment_kick_description_format">Wyrzucony za %1$s</string>
+    <string name="punishment_date_format" translatable="false">dd.MM.yyyy HH:mm</string>
 
-    <!-- BanListAdapter -->
-    <string name="ban_description_format">Zbanowany za %1$s</string>
-    <string name="warn_description_format">Ostrzeżony za %1$s</string>
-    <string name="mute_description_format">Wyciszony za %1$s</string>
-
-    <!-- fragment_offers.xml -->
+    <!-- offers -->
     <string name="actionbar_title_free_ranks">Darmowe nagrody</string>
-    <string name="no_rewards_found">Aktualnie nie masz żadnych nagród do odebrania.</string>
     <string name="no_ads">Brak reklam</string>
     <string name="no_ads_description">Nie znaleziono żadnych reklam. Spróbuj ponownie za kilka godzin.</string>
     <string name="ad_offer_redeemed">Punkty przyznane!</string>
@@ -141,18 +128,16 @@
     <string name="offer_redeemed">Nagroda przyznana!</string>
     <string name="offer_redeemed_description">Gratulacje, odebrałeś swoją ofertę - zostanie ona aktywowana automatycznie.\nMiłej gry!</string>
     <string name="ad_question">Odbiór monet</string>
-    <string name="ad_question_description">Czy chcesz obejrzeć reklamę w zamian za wybraną ilość monet?</string>
     <string name="offer_question">Aktywacja oferty</string>
     <string name="earn_more_coins">Zdobądź więcej monet</string>
     <string name="exchange_coins_to_prizes">Wymień monety na nagrody</string>
     <string name="coin_limit_reached">Nie możesz zdobyć więcej monet!</string>
 
-    <!-- fragment_chat.xml -->
+    <!-- chat -->
     <string name="actionbar_title_chat">Podgląd chatu</string>
-    <string name="chat_error">Nie można połączyć z czatem.</string>
     <string name="chat_user_message"><![CDATA[<font color=#555555>[</font><font color=%4$s>%1$s</font><font color=#555555>]</font> <font color=%4$s>%2$s</font><font color=#555555>:</font> <font color=%5$s>%3$s</font>]]></string>
 
-    <!-- fragment_reports_history.xml -->
+    <!-- reports -->
     <string name="actionbar_title_report_list">Historia zgłoszeń</string>
     <string name="error_no_reports">Nie zgłosiłeś jeszcze żadnego gracza.</string>
     <string name="error_no_reports_admin">Aktualnie nie ma żadnych aktywnych zgłoszeń.</string>
@@ -164,12 +149,12 @@
     <string name="reports_own">Twoje zgłoszenia</string>
     <string name="reports_others">Zgłoszenia graczy</string>
 
-    <!-- activity_report_details -->
+    <!-- report details -->
     <string name="report_info">Szczegóły zgłoszenia</string>
-    <string name="report_banner_transition_name" translatable="false">report_banner</string>
     <string name="report_details_reason">Powód zgłoszenia:</string>
     <string name="report_details_reporter">Zgłaszający:</string>
     <string name="report_details_date">Data zgłoszenia:</string>
+    <string name="report_date_format" translatable="false">dd.MM.yyyy HH:mm</string>
 
     <!-- content descriptions -->
     <string name="player_body_image_description">Obrazek postaci</string>
@@ -181,10 +166,13 @@
     <string name="report_status_image_description">Ikona statusu zgłoszenia</string>
     <string name="access_restricted_icon_content_description">Ikona odmowy dostępu</string>
     <string name="navigation_drawer_header_content_description">Obrazek tła</string>
+    <string name="settings_category_icon_content_description">Ikona kategorii</string>
+    <string name="error_layout_icon_content_description">Ikona błędu</string>
 
     <!-- universal -->
     <string name="no_internet">Wystąpił błąd przy pobieraniu danych.\nSprawdź czy masz połączenie z Internetem oraz spróbuj ponownie.</string>
     <string name="server_error">Wygląda na to, że nasze serwery chwilowo nie działają.\nSpróbuj ponownie później.</string>
+    <string name="unknown_error">Ups, coś poszło nie tak.\nJeśli ten problem będzie się powtarzał, skontaktuj się z Administracją.</string>
     <string name="dialog_error_title">Wystąpił błąd.</string>
     <string name="dialog_error_description">Wystąpił nieoczekiwany błąd. Spróbuj ponownie.</string>
     <string name="account_banned">Twoje konto jest zbanowane.\nDostęp do tej funkcjonalności zostanie przywrócony po wygaśnięciu bana.</string>
