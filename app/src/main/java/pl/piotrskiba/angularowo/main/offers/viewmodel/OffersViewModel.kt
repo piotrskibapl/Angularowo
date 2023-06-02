@@ -54,6 +54,7 @@ class OffersViewModel @Inject constructor(
             state.value = Loading.Send
             navigator.displayRewardedAd(
                 adOffer.adId,
+                ::onAdLoaded,
                 ::onAdWatched,
                 ::onAdLoadingFailure
             )
@@ -72,6 +73,10 @@ class OffersViewModel @Inject constructor(
                     }
             )
         }
+    }
+
+    private fun onAdLoaded() {
+        state.value = Loaded
     }
 
     private fun onAdWatched(rewardItem: RewardItem) {

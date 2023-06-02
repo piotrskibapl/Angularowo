@@ -75,7 +75,7 @@ class OffersFragment : BaseFragment<OffersViewModel>(OffersViewModel::class), Of
             .show()
     }
 
-    override fun displayRewardedAd(adId: String, onAdWatched: (RewardItem) -> Unit, onAdLoadingFailure: () -> Unit) {
+    override fun displayRewardedAd(adId: String, onAdLoaded: () -> Unit, onAdWatched: (RewardItem) -> Unit, onAdLoadingFailure: () -> Unit) {
         val extras = Bundle().apply {
             putString("npa", "1")
         }
@@ -85,6 +85,7 @@ class OffersFragment : BaseFragment<OffersViewModel>(OffersViewModel::class), Of
         RewardedAd.load(requireContext(), adId, adRequest, object : RewardedAdLoadCallback() {
 
             override fun onAdLoaded(rewardedAd: RewardedAd) {
+                onAdLoaded()
                 rewardedAd.fullScreenContentCallback = object : FullScreenContentCallback() {
 
                     override fun onAdFailedToShowFullScreenContent(p0: AdError) {

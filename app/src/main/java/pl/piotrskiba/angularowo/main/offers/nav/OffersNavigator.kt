@@ -8,7 +8,7 @@ interface OffersNavigator {
 
     fun displayAdOfferConfirmationDialog(adOffer: AdOffer, onConfirm: (adOffer: AdOffer) -> Unit)
     fun displayOfferConfirmationDialog(offer: Offer, onConfirm: (offer: Offer) -> Unit)
-    fun displayRewardedAd(adId: String, onAdWatched: (RewardItem) -> Unit, onAdLoadingFailure: () -> Unit)
+    fun displayRewardedAd(adId: String, onAdLoaded: () -> Unit, onAdWatched: (RewardItem) -> Unit, onAdLoadingFailure: () -> Unit)
     fun displayRewardedAdLoadingFailureDialog()
     fun displayAdOfferRedeemedDialog()
     fun displayOfferRedeemedDialog()
