@@ -129,7 +129,7 @@ class PlayerDetailsViewModel @Inject constructor(
 
     private fun checkIfShouldDisplayFavoriteShowcase() {
         disposables.add(
-            checkIfShouldDisplayFavoriteShowcaseUseCase.execute()
+            checkIfShouldDisplayFavoriteShowcaseUseCase.execute(args.previewedPlayerUuid)
                 .applyDefaultSchedulers(facade)
                 .subscribe { shouldShow ->
                     if (shouldShow) {

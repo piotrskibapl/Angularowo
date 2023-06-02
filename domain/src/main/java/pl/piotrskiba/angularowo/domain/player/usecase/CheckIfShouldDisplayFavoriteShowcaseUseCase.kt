@@ -8,12 +8,20 @@ class CheckIfShouldDisplayFavoriteShowcaseUseCase @Inject constructor(
     val preferencesRepository: PreferencesRepository,
 ) {
 
-    fun execute() =
-        preferencesRepository.hasSeenFavoriteShowcase()
-            .flatMap { hasSeenFavoriteShowcase ->
-                if (!hasSeenFavoriteShowcase) {
-                    preferencesRepository.setHasSeenFavoriteShowcase(true)
-                        .toSingleDefault(true)
+    fun execute(previewedPlayerUuid: String) =
+        preferencesRepository.uuid()
+            .toSingle()
+            .flatMap { uuid ->
+                if (uuid != previewedPlayerUuid) {
+                    preferencesRepository.hasSeenFavoriteShowcase()
+                        .flatMap { hasSeenFavoriteShowcase ->
+                            if (!hasSeenFavoriteShowcase) {
+                                preferencesRepository.setHasSeenFavoriteShowcase(true)
+                                    .toSingleDefault(true)
+                            } else {
+                                Single.just(false)
+                            }
+                        }
                 } else {
                     Single.just(false)
                 }
