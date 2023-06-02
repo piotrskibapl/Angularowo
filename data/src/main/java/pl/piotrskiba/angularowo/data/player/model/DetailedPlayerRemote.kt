@@ -1,6 +1,5 @@
 package pl.piotrskiba.angularowo.data.player.model
 
-import com.google.gson.annotations.SerializedName
 import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
 import pl.piotrskiba.angularowo.domain.player.model.PermissionModel
 import pl.piotrskiba.angularowo.domain.rank.model.RankModel
@@ -11,8 +10,8 @@ data class DetailedPlayerRemote(
     val partnerUuid: String?,
     val username: String,
     val status: String,
-    @SerializedName(value = "rank") val rankName: String,
-    @SerializedName(value = "vanished") val isVanished: Boolean,
+    val rank: String,
+    val vanished: Boolean,
     val balance: Float,
     val playtime: Long,
     val tokens: Int,
@@ -25,8 +24,8 @@ fun DetailedPlayerRemote.toDomain() = DetailedPlayerModel(
     partnerUuid,
     username,
     status,
-    RankModel.unknownRank(rankName),
-    isVanished,
+    RankModel.unknownRank(rank),
+    vanished,
     balance,
     playtime,
     tokens,
