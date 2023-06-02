@@ -10,6 +10,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.EditText
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
@@ -32,6 +33,8 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
 
     private lateinit var binding: FragmentPlayerDetailsBinding
     private var snackbar: Snackbar? = null
+    private var shouldDisplayFavoriteShowcase = false
+    private val onGlobalLayoutListener = OnGlobalLayoutListener { displayFavoriteShowcaseIfReady() }
     private val args: PlayerDetailsFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,6 +55,16 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
     ): View {
         binding = setupBinding(inflater, container)
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.root.viewTreeObserver.addOnGlobalLayoutListener(onGlobalLayoutListener)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.root.viewTreeObserver.removeOnGlobalLayoutListener(onGlobalLayoutListener)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -187,14 +200,23 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
     }
 
     override fun displayFavoriteShowcase() {
-        MaterialShowcaseView.Builder(requireActivity())
-            .setTarget(requireView().findViewById(R.id.nav_favorite))
-            .setTitleText(R.string.showcase_favorite_title)
-            .setContentText(R.string.showcase_favorite_description)
-            .setDelay(SHOWCASE_DELAY_MS)
-            .setDismissOnTouch(true)
-            .setTargetTouchable(true)
-            .show()
+        shouldDisplayFavoriteShowcase = true
+        displayFavoriteShowcaseIfReady()
+    }
+
+    private fun displayFavoriteShowcaseIfReady() {
+        val target = requireActivity().findViewById<View>(R.id.nav_favorite)
+        if (shouldDisplayFavoriteShowcase && target != null) {
+            shouldDisplayFavoriteShowcase = false
+            MaterialShowcaseView.Builder(requireActivity())
+                .setTarget(target)
+                .setTitleText(R.string.showcase_favorite_title)
+                .setContentText(R.string.showcase_favorite_description)
+                .setDelay(SHOWCASE_DELAY_MS)
+                .setDismissOnTouch(true)
+                .setTargetTouchable(true)
+                .show()
+        }
     }
 
     override fun displayPunishmentSuccessDialog(type: PunishmentType) {
