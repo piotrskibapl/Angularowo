@@ -11,7 +11,6 @@ import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.android.play.core.ktx.clientVersionStalenessDays
-import com.google.android.play.core.ktx.updatePriority
 import pl.piotrskiba.angularowo.R
 import javax.inject.Inject
 
@@ -50,7 +49,7 @@ class InAppUpdateManager @Inject constructor(
     private fun checkUpdateAvailability() {
         appUpdateManager.appUpdateInfo.addOnSuccessListener { updateInfo ->
             if (updateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
-                val priority = updateInfo.updatePriority
+                val priority = updateInfo.updatePriority()
                 val stalenessDays = updateInfo.clientVersionStalenessDays ?: 0
                 val updateType = when {
                     priority == 5 && updateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE) -> AppUpdateType.IMMEDIATE
@@ -72,10 +71,11 @@ class InAppUpdateManager @Inject constructor(
     }
 
     private fun startUpdate(updateInfo: AppUpdateInfo, updateType: Int) {
-        appUpdateManager.startUpdateFlow(
+        appUpdateManager.startUpdateFlowForResult(
             updateInfo,
             activity,
             AppUpdateOptions.defaultOptions(updateType),
+            updateType,
         )
     }
 

@@ -1,6 +1,7 @@
 package pl.piotrskiba.angularowo.main.base.ui
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
@@ -12,6 +13,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
+import com.google.android.play.core.install.model.AppUpdateType
 import pl.piotrskiba.angularowo.MainNavGraphDirections
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.ui.BaseActivity
@@ -80,6 +82,13 @@ class MainActivity : BaseActivity<MainViewModel>(MainViewModel::class), MainNavi
         super.onResume()
         setNavigationItemSelectedListener()
         inAppUpdateManager.onResume()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == AppUpdateType.IMMEDIATE && resultCode == RESULT_CANCELED) {
+            finishAffinity()
+        }
     }
 
     override fun onDestroy() {
