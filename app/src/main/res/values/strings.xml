@@ -168,6 +168,10 @@
     <string name="navigation_drawer_header_content_description">Obrazek tła</string>
     <string name="settings_category_icon_content_description">Ikona kategorii</string>
     <string name="error_layout_icon_content_description">Ikona błędu</string>
+    
+    <!-- in-app updates -->
+    <string name="in_app_update_downloaded">Ukończono pobieranie aktualizacji.</string>
+    <string name="in_app_update_action_restart">Uruchom ponownie</string>
 
     <!-- universal -->
     <string name="no_internet">Wystąpił błąd przy pobieraniu danych.\nSprawdź czy masz połączenie z Internetem oraz spróbuj ponownie.</string>

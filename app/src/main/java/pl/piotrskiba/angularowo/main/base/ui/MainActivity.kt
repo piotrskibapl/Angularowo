@@ -1,6 +1,7 @@
 package pl.piotrskiba.angularowo.main.base.ui
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
@@ -12,16 +13,22 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
+import com.google.android.play.core.install.model.AppUpdateType
 import pl.piotrskiba.angularowo.MainNavGraphDirections
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.ui.BaseActivity
 import pl.piotrskiba.angularowo.databinding.ActivityMainBinding
+import pl.piotrskiba.angularowo.main.base.InAppUpdateManager
 import pl.piotrskiba.angularowo.main.base.model.NavigationComponent
 import pl.piotrskiba.angularowo.main.base.nav.MainNavigator
 import pl.piotrskiba.angularowo.main.base.viewmodel.MainViewModel
 import pl.piotrskiba.angularowo.utils.PreferenceUtils
+import javax.inject.Inject
 
 class MainActivity : BaseActivity<MainViewModel>(MainViewModel::class), MainNavigator {
+
+    @Inject
+    lateinit var inAppUpdateManager: InAppUpdateManager
 
     private lateinit var preferenceUtils: PreferenceUtils
     private lateinit var binding: ActivityMainBinding
@@ -63,6 +70,7 @@ class MainActivity : BaseActivity<MainViewModel>(MainViewModel::class), MainNavi
         }
 
         preferenceUtils = PreferenceUtils(this)
+        inAppUpdateManager.init(this)
     }
 
     override fun onPause() {
@@ -73,6 +81,19 @@ class MainActivity : BaseActivity<MainViewModel>(MainViewModel::class), MainNavi
     override fun onResume() {
         super.onResume()
         setNavigationItemSelectedListener()
+        inAppUpdateManager.onResume()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == AppUpdateType.IMMEDIATE && resultCode == RESULT_CANCELED) {
+            finishAffinity()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        inAppUpdateManager.onDestroy()
     }
 
     private fun setupBinding() {
