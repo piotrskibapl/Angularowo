@@ -11,16 +11,18 @@ class AccessTokenRemoteTest {
             "uuid",
             "username",
             "accessToken",
-            "message"
+            "message",
         )
 
         val result = tested.toDomain()
 
-        assert(result == AccessTokenModel(
-            "uuid",
-            "username",
-            "accessToken",
-            "message"
-        ))
+        assert(
+            result == AccessTokenModel(
+                "uuid",
+                "username",
+                "accessToken",
+                "message",
+            ),
+        )
     }
 }

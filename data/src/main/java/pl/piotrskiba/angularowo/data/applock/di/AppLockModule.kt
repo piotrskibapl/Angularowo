@@ -11,8 +11,8 @@ import pl.piotrskiba.angularowo.domain.applock.repository.AppLockRepository
 @Module(
     includes = [
         NetworkModule::class,
-        FirebaseModule::class
-    ]
+        FirebaseModule::class,
+    ],
 )
 class AppLockModule {
 

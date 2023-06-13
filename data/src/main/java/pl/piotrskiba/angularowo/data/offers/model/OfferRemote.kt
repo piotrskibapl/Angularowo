@@ -24,5 +24,5 @@ private fun OfferRemote.toDomain() =
         price,
         imageUrl,
         timeBreak,
-        if (availabilityDate == null) null else Date(availabilityDate)
+        if (availabilityDate == null) null else Date(availabilityDate),
     )

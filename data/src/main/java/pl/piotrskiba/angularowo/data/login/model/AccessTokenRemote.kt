@@ -13,5 +13,5 @@ fun AccessTokenRemote.toDomain() = AccessTokenModel(
     uuid ?: "",
     username ?: "",
     access_token ?: "",
-    message ?: ""
+    message ?: "",
 )

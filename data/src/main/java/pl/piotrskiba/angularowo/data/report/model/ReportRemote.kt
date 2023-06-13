@@ -26,7 +26,7 @@ private fun ReportRemote.toDomain() = ReportModel(
     reporter,
     reported,
     reason,
-    archived
+    archived,
 )
 
 private fun String.toReportStatus() =

@@ -9,8 +9,8 @@ import org.junit.Test
 import pl.piotrskiba.angularowo.data.login.LoginApiService
 import pl.piotrskiba.angularowo.data.login.model.AccessTokenRemote
 import pl.piotrskiba.angularowo.data.login.model.toDomain
-import pl.piotrskiba.angularowo.domain.login.model.AccessTokenModel
 import pl.piotrskiba.angularowo.domain.login.model.AccessTokenError
+import pl.piotrskiba.angularowo.domain.login.model.AccessTokenModel
 import java.io.IOException
 
 class LoginRepositoryImplTest {
@@ -34,7 +34,7 @@ class LoginRepositoryImplTest {
             val accessTokenRemote: AccessTokenRemote = mockk()
             val accessTokenModel: AccessTokenModel = mockk()
             every { loginApi.registerDevice(any(), userCode) } returns Single.just(
-                accessTokenRemote
+                accessTokenRemote,
             )
             every { accessTokenRemote.toDomain() } returns accessTokenModel
 

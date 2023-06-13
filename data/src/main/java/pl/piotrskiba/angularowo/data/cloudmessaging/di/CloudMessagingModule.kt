@@ -8,7 +8,7 @@ import pl.piotrskiba.angularowo.data.firebase.di.FirebaseModule
 import pl.piotrskiba.angularowo.domain.cloudmessaging.repository.CloudMessagingRepository
 
 @Module(
-    includes = [FirebaseModule::class]
+    includes = [FirebaseModule::class],
 )
 class CloudMessagingModule {
 
