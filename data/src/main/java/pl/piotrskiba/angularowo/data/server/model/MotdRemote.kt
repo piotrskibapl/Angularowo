@@ -13,5 +13,5 @@ fun MotdRemote.toDomain() = MotdModel(
     text,
     url,
     textColor,
-    backgroundColor
+    backgroundColor,
 )

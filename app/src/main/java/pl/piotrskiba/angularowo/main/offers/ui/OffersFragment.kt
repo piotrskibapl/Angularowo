@@ -47,8 +47,8 @@ class OffersFragment : BaseFragment<OffersViewModel>(OffersViewModel::class), Of
                 resources.getQuantityString(
                     R.plurals.ad_question_description,
                     adOffer.points,
-                    adOffer.points
-                )
+                    adOffer.points,
+                ),
             )
             .setPositiveButton(R.string.button_yes) { _: DialogInterface, _: Int ->
                 onConfirm(adOffer)
@@ -65,8 +65,8 @@ class OffersFragment : BaseFragment<OffersViewModel>(OffersViewModel::class), Of
                     R.plurals.offer_question_description,
                     offer.price,
                     offer.title,
-                    offer.price
-                )
+                    offer.price,
+                ),
             )
             .setPositiveButton(R.string.button_yes) { _: DialogInterface, _: Int ->
                 onConfirm(offer)
@@ -82,23 +82,28 @@ class OffersFragment : BaseFragment<OffersViewModel>(OffersViewModel::class), Of
         val adRequest = AdRequest.Builder()
             .addNetworkExtrasBundle(AdMobAdapter::class.java, extras)
             .build()
-        RewardedAd.load(requireContext(), adId, adRequest, object : RewardedAdLoadCallback() {
+        RewardedAd.load(
+            requireContext(),
+            adId,
+            adRequest,
+            object : RewardedAdLoadCallback() {
 
-            override fun onAdLoaded(rewardedAd: RewardedAd) {
-                onAdLoaded()
-                rewardedAd.fullScreenContentCallback = object : FullScreenContentCallback() {
+                override fun onAdLoaded(rewardedAd: RewardedAd) {
+                    onAdLoaded()
+                    rewardedAd.fullScreenContentCallback = object : FullScreenContentCallback() {
 
-                    override fun onAdFailedToShowFullScreenContent(p0: AdError) {
-                        onAdLoadingFailure()
+                        override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+                            onAdLoadingFailure()
+                        }
                     }
+                    rewardedAd.show(requireActivity()) { onAdWatched(it) }
                 }
-                rewardedAd.show(requireActivity()) { onAdWatched(it) }
-            }
 
-            override fun onAdFailedToLoad(p0: LoadAdError) {
-                onAdLoadingFailure()
-            }
-        })
+                override fun onAdFailedToLoad(p0: LoadAdError) {
+                    onAdLoadingFailure()
+                }
+            },
+        )
     }
 
     override fun displayRewardedAdLoadingFailureDialog() {

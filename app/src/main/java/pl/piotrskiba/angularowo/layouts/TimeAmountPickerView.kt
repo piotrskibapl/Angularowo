@@ -17,7 +17,7 @@ class TimeAmountPickerView(context: Context) : LinearLayout(context) {
         ArrayAdapter.createFromResource(
             context,
             R.array.time_units,
-            android.R.layout.simple_spinner_item
+            android.R.layout.simple_spinner_item,
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.timeunit.adapter = adapter

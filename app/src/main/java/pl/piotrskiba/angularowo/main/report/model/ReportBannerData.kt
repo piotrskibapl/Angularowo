@@ -23,7 +23,7 @@ data class ReportBannerData(
                 ReportAppreciation.FALSE -> R.string.report_status_false
                 ReportAppreciation.UNCERTAIN -> R.string.report_status_uncertain
                 ReportAppreciation.NONE -> R.string.report_status_awaiting
-            }
+            },
         )
 
     @DrawableRes
@@ -41,7 +41,7 @@ fun ReportModel.toReportBannerData() =
         id,
         reportedName,
         reason,
-        appreciation
+        appreciation,
     )
 
 fun List<ReportModel>.toReportBannerDataList() =

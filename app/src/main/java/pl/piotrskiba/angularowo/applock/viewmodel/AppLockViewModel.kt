@@ -27,7 +27,7 @@ class AppLockViewModel @Inject constructor(
                 .subscribe { data ->
                     appLockData.value = data.config.toUi()
                     state.value = Loaded
-                }
+                },
         )
     }
 }

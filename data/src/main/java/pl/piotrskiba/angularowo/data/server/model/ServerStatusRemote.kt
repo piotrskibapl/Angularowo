@@ -11,5 +11,5 @@ class ServerStatusRemote(
 fun ServerStatusRemote.toDomain() = ServerStatusModel(
     player_count,
     tps_5,
-    motd?.toDomain()
+    motd?.toDomain(),
 )

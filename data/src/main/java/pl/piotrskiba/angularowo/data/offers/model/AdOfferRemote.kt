@@ -20,5 +20,5 @@ private fun AdOfferRemote.toDomain() =
         points,
         adId,
         timeBreak,
-        if (availabilityDate == null) null else Date(availabilityDate)
+        if (availabilityDate == null) null else Date(availabilityDate),
     )

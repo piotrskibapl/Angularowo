@@ -96,10 +96,12 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
                 viewModel.onFavoriteClick()
                 true
             }
+
             R.id.nav_unfavorite -> {
                 viewModel.onUnfavoriteClick()
                 true
             }
+
             R.id.nav_mute -> {
                 showPunishmentReasonDialog(
                     title = getString(R.string.dialog_mute_reason_title),
@@ -119,6 +121,7 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
                 }
                 true
             }
+
             R.id.nav_kick -> {
                 showPunishmentReasonDialog(
                     title = getString(R.string.dialog_kick_reason_title),
@@ -133,6 +136,7 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
                 }
                 true
             }
+
             R.id.nav_warn -> {
                 showPunishmentReasonDialog(
                     title = getString(R.string.dialog_warn_reason_title),
@@ -147,6 +151,7 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
                 }
                 true
             }
+
             R.id.nav_ban -> {
                 showPunishmentReasonDialog(
                     title = getString(R.string.dialog_ban_reason_title),
@@ -166,6 +171,7 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
                 }
                 true
             }
+
             else -> false
         }
 
@@ -227,8 +233,8 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
                     PunishmentType.KICK -> R.string.dialog_kick_success_description
                     PunishmentType.WARN -> R.string.dialog_warn_success_description
                     PunishmentType.BAN -> R.string.dialog_ban_success_description
-                }
-            )
+                },
+            ),
         )
     }
 

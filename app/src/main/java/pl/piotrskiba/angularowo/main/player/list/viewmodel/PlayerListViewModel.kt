@@ -62,8 +62,8 @@ class PlayerListViewModel @Inject constructor(
                     },
                     { error ->
                         state.value = Error(error)
-                    }
-                )
+                    },
+                ),
         )
     }
 
@@ -75,8 +75,8 @@ class PlayerListViewModel @Inject constructor(
                     { },
                     { error ->
                         state.value = Error(error)
-                    }
-                )
+                    },
+                ),
         )
     }
 }

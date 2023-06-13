@@ -48,7 +48,7 @@ data class DetailedPunishmentData(
             uuid,
             username,
             reason,
-            punishmentType
+            punishmentType,
         )
 }
 

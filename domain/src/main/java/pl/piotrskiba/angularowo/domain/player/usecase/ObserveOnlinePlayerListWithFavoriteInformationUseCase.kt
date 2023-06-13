@@ -37,10 +37,11 @@ class ObserveOnlinePlayerListWithFavoriteInformationUseCase @Inject constructor(
                             }
                             .map { playerList ->
                                 playerList.map { player ->
-                                    Pair(player,
+                                    Pair(
+                                        player,
                                         friendList
                                             .map { friend -> friend.uuid }
-                                            .contains(player.uuid)
+                                            .contains(player.uuid),
                                     )
                                 }
                             }

@@ -41,7 +41,7 @@ data class AdOffer(
     val timeLeftVisible = !availabilityDateReached
     val timeLeftText = TextUtils.formatTimeDifference(
         availabilityDate ?: currentDate,
-        currentDate
+        currentDate,
     )
 }
 
@@ -52,7 +52,7 @@ fun AdOfferModel.toUi(pointsLimitReached: Boolean) =
         adId,
         timeBreak,
         availabilityDate,
-        pointsLimitReached
+        pointsLimitReached,
     )
 
 fun List<AdOfferModel>.toUi(pointsLimitReached: Boolean) =

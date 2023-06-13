@@ -19,7 +19,7 @@ data class ReportData(
     fun date(context: Context): String {
         val dateFormat = SimpleDateFormat(
             context.getString(R.string.report_date_format),
-            Locale.getDefault()
+            Locale.getDefault(),
         )
         return dateFormat.format(date)
     }
@@ -31,5 +31,5 @@ fun ReportModel.toUi() =
         reporterName = reporterName,
         reportedName = reportedName,
         reason = reason,
-        date = date
+        date = date,
     )

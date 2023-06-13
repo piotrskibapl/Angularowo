@@ -65,7 +65,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(SettingsViewModel::clas
 
     override fun displayLogin() {
         findNavController().navigate(
-            SettingsFragmentDirections.toLoginFragment()
+            SettingsFragmentDirections.toLoginFragment(),
         )
     }
 
@@ -84,7 +84,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(SettingsViewModel::clas
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             viewModel.notificationsEnabled.value = ContextCompat.checkSelfPermission(
                 requireContext(),
-                android.Manifest.permission.POST_NOTIFICATIONS
+                android.Manifest.permission.POST_NOTIFICATIONS,
             ) == PackageManager.PERMISSION_GRANTED
         }
     }
@@ -94,10 +94,12 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(SettingsViewModel::clas
             .setTitle(R.string.dialog_title_notifications_permission_denied_permanently)
             .setMessage(R.string.dialog_message_notifications_permission_denied_permanently)
             .setPositiveButton(R.string.dialog_proceed_button_notifications_permission_denied_permanently) { _: DialogInterface?, _: Int ->
-                startActivity(Intent().apply {
-                    action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                    data = Uri.fromParts("package", requireContext().packageName, null)
-                })
+                startActivity(
+                    Intent().apply {
+                        action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                        data = Uri.fromParts("package", requireContext().packageName, null)
+                    },
+                )
             }
             .setNegativeButton(android.R.string.cancel) { _, _ -> }
             .show()

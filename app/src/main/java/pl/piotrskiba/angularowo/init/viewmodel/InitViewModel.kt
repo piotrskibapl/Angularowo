@@ -30,7 +30,7 @@ class InitViewModel @Inject constructor(
                     } else {
                         checkIfUserIsLoggedIn()
                     }
-                }
+                },
         )
     }
 
@@ -44,7 +44,7 @@ class InitViewModel @Inject constructor(
                     } else {
                         navigator.displayLogin()
                     }
-                }
+                },
         )
     }
 }

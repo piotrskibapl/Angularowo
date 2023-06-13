@@ -1,8 +1,8 @@
 package pl.piotrskiba.angularowo.utils
 
-import android.net.Uri
 import android.content.ContentResolver
 import android.content.Context
+import android.net.Uri
 import pl.piotrskiba.angularowo.R
 
 object UrlUtils {
@@ -26,14 +26,14 @@ object UrlUtils {
                 .appendPath(context.resources.getResourceEntryName(R.drawable.default_avatar))
                 .build()
                 .toString()
+
             false -> {
                 val uriBuilder = Uri.parse(BASE_CRAFATAR_URL).buildUpon()
                     .path(BASE_AVATAR_PATH + uuid)
                     .appendQueryParameter(PARAM_SIZE, DEFAULT_AVATAR_SIZE.toString())
-
-                if (showOverlay)
+                if (showOverlay) {
                     uriBuilder.appendQueryParameter(PARAM_SHOW_OVERLAY, true.toString())
-
+                }
                 uriBuilder.build().toString()
             }
         }
@@ -42,11 +42,10 @@ object UrlUtils {
     @JvmStatic
     fun buildBodyUrl(uuid: String, showOverlay: Boolean): String {
         val uriBuilder = Uri.parse(BASE_CRAFATAR_URL).buildUpon()
-                .path(BASE_BODY_PATH + uuid)
-
-        if (showOverlay)
+            .path(BASE_BODY_PATH + uuid)
+        if (showOverlay) {
             uriBuilder.appendQueryParameter(PARAM_SHOW_OVERLAY, true.toString())
-
+        }
         return uriBuilder.build().toString()
     }
 }

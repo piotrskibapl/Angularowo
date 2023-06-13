@@ -9,7 +9,7 @@ import androidx.databinding.BindingAdapter
     "drawableTop",
     "drawableRight",
     "drawableBottom",
-    requireAll = false
+    requireAll = false,
 )
 fun setDrawables(
     textView: TextView,
@@ -22,6 +22,6 @@ fun setDrawables(
         drawableLeft,
         drawableTop,
         drawableRight,
-        drawableBottom
+        drawableBottom,
     )
 }

@@ -21,6 +21,6 @@ class AppLockRepositoryImpl(
                 body = firebaseRemoteConfig.getString(BODY_KEY),
                 startTimestamp = firebaseRemoteConfig.getLong(START_KEY),
                 endTimestamp = firebaseRemoteConfig.getLong(END_KEY),
-            )
+            ),
         )
 }

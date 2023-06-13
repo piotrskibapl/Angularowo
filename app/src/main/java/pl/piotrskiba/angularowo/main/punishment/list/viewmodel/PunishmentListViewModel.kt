@@ -50,8 +50,8 @@ class PunishmentListViewModel @Inject constructor(
                     },
                     { error ->
                         state.value = Error(error)
-                    }
-                )
+                    },
+                ),
         )
     }
 }

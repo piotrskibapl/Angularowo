@@ -40,7 +40,7 @@ class PlayerRepositoryImpl(
         Completable.fromSingle(
             playerApi
                 .getOnlinePlayerList(BuildConfig.API_KEY, accessToken)
-                .doAfterSuccess { onlinePlayerList.onNext(it) }
+                .doAfterSuccess { onlinePlayerList.onNext(it) },
         )
 
     override fun observeOnlinePlayerList(): Observable<List<PlayerModel>> =

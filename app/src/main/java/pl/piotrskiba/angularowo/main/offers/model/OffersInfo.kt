@@ -17,5 +17,5 @@ fun OffersInfoModel.toUi() =
         points,
         pointsLimitReached,
         adOffers.toUi(pointsLimitReached),
-        offers.toUi(points)
+        offers.toUi(points),
     )

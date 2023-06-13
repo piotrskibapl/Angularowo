@@ -12,8 +12,8 @@ import pl.piotrskiba.angularowo.domain.rank.repository.RankRepository
 @Module(
     includes = [
         NetworkModule::class,
-        FirebaseModule::class
-    ]
+        FirebaseModule::class,
+    ],
 )
 class RankModule {
 

@@ -30,8 +30,8 @@ class LoginViewModel @Inject constructor(
                     { error ->
                         AnalyticsUtils.logLoginError(error::class.simpleName)
                         loginState.value = LoginState.Error(error as AccessTokenError)
-                    }
-                )
+                    },
+                ),
         )
     }
 }

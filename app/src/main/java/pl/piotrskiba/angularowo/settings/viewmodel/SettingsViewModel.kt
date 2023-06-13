@@ -42,7 +42,7 @@ class SettingsViewModel @Inject constructor(
                     accountIncidentsChecked.value = settings.subscribedToAccountIncidents
                     newReportsChecked.value = settings.subscribedToNewReports
                     newReportsVisible.value = settings.newReportsVisible
-                }
+                },
         )
     }
 
@@ -56,7 +56,7 @@ class SettingsViewModel @Inject constructor(
         disposables.add(
             updateNewEventsSubscriptionUseCase.execute(newValue)
                 .applyDefaultSchedulers(facade)
-                .subscribe()
+                .subscribe(),
         )
     }
 
@@ -66,7 +66,7 @@ class SettingsViewModel @Inject constructor(
         disposables.add(
             updatePrivateMessagesSubscriptionUseCase.execute(newValue)
                 .applyDefaultSchedulers(facade)
-                .subscribe()
+                .subscribe(),
         )
     }
 
@@ -76,7 +76,7 @@ class SettingsViewModel @Inject constructor(
         disposables.add(
             updateAccountIncidentsSubscriptionUseCase.execute(newValue)
                 .applyDefaultSchedulers(facade)
-                .subscribe()
+                .subscribe(),
         )
     }
 
@@ -86,7 +86,7 @@ class SettingsViewModel @Inject constructor(
         disposables.add(
             updateNewReportsSubscriptionUseCase.execute(newValue)
                 .applyDefaultSchedulers(facade)
-                .subscribe()
+                .subscribe(),
         )
     }
 
@@ -97,7 +97,7 @@ class SettingsViewModel @Inject constructor(
                     .applyDefaultSchedulers(facade)
                     .subscribe {
                         navigator.displayLogin()
-                    }
+                    },
             )
         }
     }

@@ -16,5 +16,5 @@ fun MainScreenDataModel.toUi() =
     MainScreenData(
         server = serverStatusModel.toUi(detailedPlayerModel.rank.staff),
         player = detailedPlayerModel.toUi(),
-        punishments = playerPunishments.toPunishmentBannerData()
+        punishments = playerPunishments.toPunishmentBannerData(),
     )

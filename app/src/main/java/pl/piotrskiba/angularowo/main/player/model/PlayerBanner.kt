@@ -25,13 +25,13 @@ data class PlayerBanner(
         val colorResId = context.resources.getIdentifier(
             COLOR_CODE_RES_PREFIX + rankColorCode,
             "color",
-            context.packageName
+            context.packageName,
         )
         return context.getColor(
             when (colorResId) {
                 0 -> R.color.color_minecraft_7
                 else -> colorResId
-            }
+            },
         )
     }
 
@@ -45,7 +45,7 @@ fun PlayerModel.toPlayerBannerData(isFavorite: Boolean) = PlayerBanner(
     rank.name,
     isVanished,
     isFavorite,
-    rank.colorCode
+    rank.colorCode,
 )
 
 fun DetailedPlayerModel.toPlayerBannerData(isFavorite: Boolean) = PlayerBanner(
@@ -55,5 +55,5 @@ fun DetailedPlayerModel.toPlayerBannerData(isFavorite: Boolean) = PlayerBanner(
     rank.name,
     isVanished,
     isFavorite,
-    rank.colorCode
+    rank.colorCode,
 )

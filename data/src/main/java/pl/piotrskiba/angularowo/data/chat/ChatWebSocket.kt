@@ -50,7 +50,8 @@ class ChatWebSocket @Inject constructor(
                         this@ChatWebSocket.webSocket = null
                         emitError(t)
                     }
-                })
+                },
+            )
         }
         return Observable.create { emitter ->
             emitters.add(emitter)
@@ -61,7 +62,7 @@ class ChatWebSocket @Inject constructor(
                         webSocket?.close(CLOSE_CODE_NORMAL, CLOSE_REASON_DISCONNECTED)
                         webSocket = null
                     }
-                }
+                },
             )
         }
     }

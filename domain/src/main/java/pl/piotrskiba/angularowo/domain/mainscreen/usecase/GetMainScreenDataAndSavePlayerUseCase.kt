@@ -25,7 +25,7 @@ class GetMainScreenDataAndSavePlayerUseCase @Inject constructor(
             preferencesRepository.accessToken(),
             preferencesRepository.uuid(),
             preferencesRepository.username(),
-            ::Triple
+            ::Triple,
         )
             .toSingle()
             .flatMap { (accessToken, uuid, username) ->
@@ -33,7 +33,7 @@ class GetMainScreenDataAndSavePlayerUseCase @Inject constructor(
                     getServerStatus(accessToken),
                     getAndSavePlayerData(accessToken, uuid),
                     getPlayerPunishments(accessToken, username),
-                    ::Triple
+                    ::Triple,
                 ).map { (serverStatus, playerData, playerPunishments) ->
                     MainScreenDataModel(serverStatus, playerData, playerPunishments)
                 }

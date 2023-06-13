@@ -28,13 +28,13 @@ class InitFragment : BaseFragment<InitViewModel>(InitViewModel::class), InitNavi
 
     override fun displayAppLock() {
         findNavController().navigate(
-            InitFragmentDirections.toAppLockFragment()
+            InitFragmentDirections.toAppLockFragment(),
         )
     }
 
     override fun displayLogin() {
         findNavController().navigate(
-            InitFragmentDirections.toLoginFragment()
+            InitFragmentDirections.toLoginFragment(),
         )
     }
 

@@ -63,7 +63,7 @@ class UpdateCloudMessagingSubscriptionsUseCase @Inject constructor(
             .switchIfEmpty(
                 cloudMessagingRepository.subscribeToNewEvents()
                     .andThen(preferencesRepository.setSubscribedToFirebaseEventsTopic(true))
-                    .toSingleDefault(true)
+                    .toSingleDefault(true),
             )
             .ignoreElement()
 
@@ -72,7 +72,7 @@ class UpdateCloudMessagingSubscriptionsUseCase @Inject constructor(
             .switchIfEmpty(
                 cloudMessagingRepository.subscribeToPrivateMessages()
                     .andThen(preferencesRepository.setSubscribedToFirebasePrivateMessagesTopic(true))
-                    .toSingleDefault(true)
+                    .toSingleDefault(true),
             )
             .ignoreElement()
 
@@ -81,7 +81,7 @@ class UpdateCloudMessagingSubscriptionsUseCase @Inject constructor(
             .switchIfEmpty(
                 cloudMessagingRepository.subscribeToAccountIncidents()
                     .andThen(preferencesRepository.setSubscribedToFirebaseAccountIncidentsTopic(true))
-                    .toSingleDefault(true)
+                    .toSingleDefault(true),
             )
             .ignoreElement()
 

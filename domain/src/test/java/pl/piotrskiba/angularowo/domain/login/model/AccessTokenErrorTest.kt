@@ -21,19 +21,19 @@ class AccessTokenErrorTest(
         fun parameters() = listOf(
             arrayOf(
                 mockk<HttpException> { every { code() } returns 403 },
-                AccessTokenError.CodeExpiredError
+                AccessTokenError.CodeExpiredError,
             ),
             arrayOf(
                 mockk<HttpException> { every { code() } returns 404 },
-                AccessTokenError.CodeNotFoundError
+                AccessTokenError.CodeNotFoundError,
             ),
             arrayOf(
                 mockk<HttpException> { every { code() } returns 500 },
-                AccessTokenError.UnknownError
+                AccessTokenError.UnknownError,
             ),
             arrayOf(
                 IOException(),
-                AccessTokenError.UnknownError
+                AccessTokenError.UnknownError,
             ),
         )
     }

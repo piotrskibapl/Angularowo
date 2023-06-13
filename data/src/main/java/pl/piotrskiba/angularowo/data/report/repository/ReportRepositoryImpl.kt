@@ -20,6 +20,6 @@ class ReportRepositoryImpl(
         reportApi.getReportList(
             BuildConfig.API_KEY,
             accessToken,
-            filterList.toRemote()
+            filterList.toRemote(),
         ).map { it.toDomain() }
 }

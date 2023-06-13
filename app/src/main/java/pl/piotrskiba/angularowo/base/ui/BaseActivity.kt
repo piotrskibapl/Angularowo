@@ -43,7 +43,7 @@ open class BaseActivity<out VM : LifecycleViewModel>(viewModelClass: KClass<VM>)
         if (this::class.qualifiedName != null && this::class.simpleName != null) {
             AnalyticsUtils.logScreenView(
                 this::class.qualifiedName!!,
-                this::class.simpleName!!
+                this::class.simpleName!!,
             )
         }
     }

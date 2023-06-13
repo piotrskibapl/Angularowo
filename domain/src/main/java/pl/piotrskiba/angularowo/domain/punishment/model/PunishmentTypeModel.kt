@@ -9,5 +9,5 @@ enum class PunishmentTypeModel {
 fun List<PunishmentTypeModel>.toRemote() =
     joinToString(
         separator = ",",
-        transform = { it.toString().lowercase(Locale.ROOT) }
+        transform = { it.toString().lowercase(Locale.ROOT) },
     )

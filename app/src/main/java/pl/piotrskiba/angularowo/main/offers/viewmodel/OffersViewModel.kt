@@ -56,7 +56,7 @@ class OffersViewModel @Inject constructor(
                 adOffer.adId,
                 ::onAdLoaded,
                 ::onAdWatched,
-                ::onAdLoadingFailure
+                ::onAdLoadingFailure,
             )
         }
     }
@@ -70,7 +70,7 @@ class OffersViewModel @Inject constructor(
                     .subscribe {
                         navigator.displayOfferRedeemedDialog()
                         loadOffersInfo()
-                    }
+                    },
             )
         }
     }
@@ -87,7 +87,7 @@ class OffersViewModel @Inject constructor(
                 .subscribe {
                     navigator.displayAdOfferRedeemedDialog()
                     loadOffersInfo()
-                }
+                },
         )
     }
 
@@ -107,7 +107,8 @@ class OffersViewModel @Inject constructor(
                     },
                     { error ->
                         state.value = Error(error)
-                    })
+                    },
+                ),
         )
     }
 }

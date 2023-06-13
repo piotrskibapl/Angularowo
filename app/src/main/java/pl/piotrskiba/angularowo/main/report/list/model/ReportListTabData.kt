@@ -19,7 +19,7 @@ data class ReportListTabData(
                 R.string.error_no_reports_admin
             } else {
                 R.string.error_no_reports
-            }
+            },
         )
 }
 
