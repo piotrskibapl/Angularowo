@@ -11,7 +11,7 @@ object TextUtils {
 
     @JvmStatic
     fun formatPlaytime(context: Context, playtime: Long): String {
-        var remainingSeconds = playtime/1000
+        var remainingSeconds = playtime / 1000
         var days = 0
         var hours = 0
         var minutes = 0
@@ -30,16 +30,19 @@ object TextUtils {
         }
 
         var result = ""
-        if (days > 0)
+        if (days > 0) {
             result = context.resources.getQuantityString(R.plurals.days, days, days)
+        }
         if (hours > 0) {
             when {
                 result.isEmpty() -> {
                     result = context.resources.getQuantityString(R.plurals.hours, hours, hours)
                 }
+
                 minutes > 0 -> {
                     result += ", " + context.resources.getQuantityString(R.plurals.hours, hours, hours)
                 }
+
                 else -> {
                     result += " i " + context.resources.getQuantityString(R.plurals.hours, hours, hours)
                 }

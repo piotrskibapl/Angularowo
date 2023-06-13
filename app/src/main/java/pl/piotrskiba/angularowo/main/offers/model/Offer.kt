@@ -59,7 +59,7 @@ data class Offer(
     val timeLeftVisible = !availabilityDateReached
     val timeLeftText = TextUtils.formatTimeDifference(
         availabilityDate ?: currentDate,
-        currentDate
+        currentDate,
     )
 }
 
@@ -72,7 +72,7 @@ fun OfferModel.toUi(userPoints: Int) =
         imageUrl,
         timeBreak,
         availabilityDate,
-        userPoints >= price
+        userPoints >= price,
     )
 
 fun List<OfferModel>.toUi(userPoints: Int) =

@@ -19,5 +19,4 @@ class IntegerVersionSignature(private val currentVersion: Int) : Key {
     override fun updateDiskCacheKey(messageDigest: MessageDigest) {
         messageDigest.update(ByteBuffer.allocate(Integer.SIZE).putInt(currentVersion).array())
     }
-
 }

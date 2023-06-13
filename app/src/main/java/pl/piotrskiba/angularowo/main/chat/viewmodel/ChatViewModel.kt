@@ -37,8 +37,8 @@ class ChatViewModel @Inject constructor(
                     },
                     { error ->
                         state.value = Error(error)
-                    }
-                )
+                    },
+                ),
         )
     }
 }

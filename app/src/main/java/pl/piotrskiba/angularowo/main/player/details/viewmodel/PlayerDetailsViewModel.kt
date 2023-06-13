@@ -70,8 +70,8 @@ class PlayerDetailsViewModel @Inject constructor(
                     },
                     {
                         navigator.displayGenericErrorSnackbar()
-                    }
-                )
+                    },
+                ),
         )
     }
 
@@ -86,8 +86,8 @@ class PlayerDetailsViewModel @Inject constructor(
                     },
                     {
                         navigator.displayGenericErrorSnackbar()
-                    }
-                )
+                    },
+                ),
         )
     }
 
@@ -104,8 +104,8 @@ class PlayerDetailsViewModel @Inject constructor(
                     {
                         state.value = Loaded
                         navigator.displayPunishmentErrorDialog()
-                    }
-                )
+                    },
+                ),
         )
     }
 
@@ -122,8 +122,8 @@ class PlayerDetailsViewModel @Inject constructor(
                     },
                     { error ->
                         state.value = Error(error)
-                    }
-                )
+                    },
+                ),
         )
     }
 
@@ -135,7 +135,7 @@ class PlayerDetailsViewModel @Inject constructor(
                     if (shouldShow) {
                         navigator.displayFavoriteShowcase()
                     }
-                }
+                },
         )
     }
 
@@ -146,7 +146,7 @@ class PlayerDetailsViewModel @Inject constructor(
                 .subscribe {
                     isPreviewedPlayerFavorite = it
                     previewedPlayerBanner.value = previewedPlayerBanner.value?.copy(isFavorite = it)
-                }
+                },
         )
     }
 }

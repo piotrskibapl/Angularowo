@@ -60,8 +60,8 @@ class ReportListTabViewModel @Inject constructor(
                     },
                     { error ->
                         state.value = Error(error)
-                    }
-                )
+                    },
+                ),
         )
     }
 
@@ -77,8 +77,8 @@ class ReportListTabViewModel @Inject constructor(
                     },
                     { error ->
                         state.value = Error(error)
-                    }
-                )
+                    },
+                ),
         )
     }
 }

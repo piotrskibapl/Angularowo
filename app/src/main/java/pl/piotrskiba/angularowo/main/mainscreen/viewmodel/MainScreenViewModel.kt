@@ -66,8 +66,8 @@ class MainScreenViewModel @Inject constructor(
                     },
                     { error ->
                         state.value = Error(error)
-                    }
-                )
+                    },
+                ),
         )
     }
 
@@ -75,7 +75,7 @@ class MainScreenViewModel @Inject constructor(
         disposables.add(
             updateCloudMessagingSubscriptionsUseCase.execute(BuildConfig.VERSION_CODE)
                 .applyDefaultSchedulers(facade)
-                .subscribe()
+                .subscribe(),
         )
     }
 }

@@ -82,7 +82,7 @@ class LoginFragment : BaseFragment<LoginViewModel>(LoginViewModel::class) {
         snackbar = Snackbar.make(
             binding.coordinatorLayout,
             getString(R.string.logging_in),
-            Snackbar.LENGTH_INDEFINITE
+            Snackbar.LENGTH_INDEFINITE,
         )
         val contentLayout =
             snackbar!!.view.findViewById<View>(R.id.snackbar_text).parent as ViewGroup
@@ -96,7 +96,7 @@ class LoginFragment : BaseFragment<LoginViewModel>(LoginViewModel::class) {
         snackbar = Snackbar.make(
             binding.coordinatorLayout,
             message,
-            Snackbar.LENGTH_LONG
+            Snackbar.LENGTH_LONG,
         )
         snackbar!!.show()
     }

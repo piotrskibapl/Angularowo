@@ -40,7 +40,7 @@ class ChatFragment : BaseFragment<ChatViewModel>(ChatViewModel::class), ChatNavi
 
     override fun onChatMessageClick(chatMessage: ChatMessage) {
         findNavController().navigate(
-            PlayerListFragmentDirections.toPlayerDetailsFragment(mainViewModel.player.value!!, chatMessage.uuid, previewedPlayerBanner = null)
+            PlayerListFragmentDirections.toPlayerDetailsFragment(mainViewModel.player.value!!, chatMessage.uuid, previewedPlayerBanner = null),
         )
     }
 

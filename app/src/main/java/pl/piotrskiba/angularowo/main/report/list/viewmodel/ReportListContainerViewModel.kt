@@ -21,7 +21,7 @@ class ReportListContainerViewModel @Inject constructor(
                 .applyDefaultSchedulers(facade)
                 .subscribe { isStaff ->
                     othersReportsTabAvailable.value = isStaff
-                }
+                },
         )
     }
 }

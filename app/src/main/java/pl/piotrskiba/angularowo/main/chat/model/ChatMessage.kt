@@ -18,20 +18,24 @@ data class ChatMessage(
 
     fun formattedMessage(context: Context): Spanned {
         val rankColor = String.format(
-            "#%06X", 0xFFFFFF and ColorUtils.changeBrightness(
+            "#%06X",
+            0xFFFFFF and ColorUtils.changeBrightness(
                 ColorUtils.getColorFromCode(
                     context,
-                    rank.colorCode
-                ), 1.4f
-            )
+                    rank.colorCode,
+                ),
+                1.4f,
+            ),
         )
         val messageColor = String.format(
-            "#%06X", 0xFFFFFF and ColorUtils.changeBrightness(
+            "#%06X",
+            0xFFFFFF and ColorUtils.changeBrightness(
                 ColorUtils.getColorFromCode(
                     context,
-                    rank.chatColorCode
-                ), 1.4f
-            )
+                    rank.chatColorCode,
+                ),
+                1.4f,
+            ),
         )
         val htmlText = TextUtils.replaceColorCodes(
             context,
@@ -41,7 +45,7 @@ data class ChatMessage(
                 username,
                 message,
                 rankColor,
-                messageColor
+                messageColor,
             ),
         )
         return HtmlCompat.fromHtml(htmlText, HtmlCompat.FROM_HTML_MODE_LEGACY)

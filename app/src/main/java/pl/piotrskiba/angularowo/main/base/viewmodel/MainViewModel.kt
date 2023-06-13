@@ -25,7 +25,7 @@ class MainViewModel @Inject constructor(
                 .applyDefaultSchedulers(facade)
                 .subscribe {
                     navigator.navigateToLogin()
-                }
+                },
         )
     }
 }

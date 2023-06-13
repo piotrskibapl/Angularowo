@@ -16,7 +16,8 @@ import pl.piotrskiba.angularowo.main.player.list.nav.PlayerListNavigator
 import pl.piotrskiba.angularowo.main.player.list.viewmodel.PlayerListViewModel
 import pl.piotrskiba.angularowo.main.player.model.PlayerBanner
 
-class PlayerListFragment : BaseFragment<PlayerListViewModel>(PlayerListViewModel::class),
+class PlayerListFragment :
+    BaseFragment<PlayerListViewModel>(PlayerListViewModel::class),
     PlayerListNavigator {
 
     private lateinit var mainViewModel: MainViewModel

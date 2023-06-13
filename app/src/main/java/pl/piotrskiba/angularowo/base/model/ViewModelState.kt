@@ -39,7 +39,7 @@ sealed class ViewModelState {
                 R.color.windowBackground
             } else {
                 R.color.windowBackgroundA50
-            }
+            },
         )
 
     @DrawableRes
@@ -56,7 +56,6 @@ sealed class ViewModelState {
                 isNetworkError() -> R.string.no_internet
                 isApiError() -> R.string.server_error
                 else -> R.string.unknown_error
-            }
+            },
         )
 }
-

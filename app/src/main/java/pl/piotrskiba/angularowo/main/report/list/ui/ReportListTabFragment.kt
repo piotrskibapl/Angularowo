@@ -15,7 +15,8 @@ import pl.piotrskiba.angularowo.main.report.model.ReportBannerData
 
 const val OTHERS_REPORTS_VARIANT_KEY = "others-reports-variant"
 
-class ReportListTabFragment : BaseFragment<ReportListTabViewModel>(ReportListTabViewModel::class),
+class ReportListTabFragment :
+    BaseFragment<ReportListTabViewModel>(ReportListTabViewModel::class),
     ReportListNavigator {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +38,7 @@ class ReportListTabFragment : BaseFragment<ReportListTabViewModel>(ReportListTab
         val reportModel = viewModel.reportModels.value!!.first { it.id == report.id }
         findNavController().navigate(
             directions = ReportListContainerFragmentDirections.toReportDetailsFragment(reportModel),
-            navigatorExtras = FragmentNavigatorExtras(view to report.id.toString())
+            navigatorExtras = FragmentNavigatorExtras(view to report.id.toString()),
         )
     }
 

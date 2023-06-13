@@ -43,7 +43,7 @@ import javax.inject.Singleton
         ActivityBindingModule::class,
         FragmentBindingModule::class,
         AppLockModule::class,
-    ]
+    ],
 )
 interface AppComponent : AndroidInjector<AngularowoApplication> {
 
