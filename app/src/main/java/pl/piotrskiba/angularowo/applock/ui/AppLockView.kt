@@ -23,13 +23,13 @@ fun AppLockView(data: AppLockData?, state: ViewModelState) {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
-                modifier = Modifier.padding(8.dp, 60.dp, 8.dp, 8.dp),
+                modifier = Modifier.padding(8.dp, 64.dp, 8.dp, 8.dp),
                 style = MaterialTheme.typography.h1,
                 text = data.title,
                 textAlign = TextAlign.Center,
             )
             Text(
-                modifier = Modifier.padding(8.dp, 24.dp, 8.dp, 8.dp),
+                modifier = Modifier.padding(8.dp, 32.dp, 8.dp, 8.dp),
                 style = MaterialTheme.typography.body1,
                 text = data.body,
                 textAlign = TextAlign.Center,
