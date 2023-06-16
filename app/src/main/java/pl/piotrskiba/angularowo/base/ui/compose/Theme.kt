@@ -1,10 +1,12 @@
 package pl.piotrskiba.angularowo.base.ui.compose
 
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ProvideTextStyle
 import androidx.compose.material.darkColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.TextStyle
 import pl.piotrskiba.angularowo.R
 
 fun ComposeView.setThemedContent(content: @Composable () -> Unit) {
@@ -22,6 +24,11 @@ private fun Theme(content: @Composable () -> Unit) {
             secondary = colorResource(id = R.color.colorAccent),
             background = colorResource(id = R.color.windowBackground),
         ),
-        content = content,
+        content = {
+            ProvideTextStyle(
+                value = TextStyle(color = colorResource(id = R.color.secondary_text)),
+                content = content,
+            )
+        },
     )
 }

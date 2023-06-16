@@ -1,6 +1,7 @@
 package pl.piotrskiba.angularowo.applock.viewmodel
 
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import pl.piotrskiba.angularowo.applock.model.AppLockData
 import pl.piotrskiba.angularowo.applock.model.toUi
 import pl.piotrskiba.angularowo.base.extensions.applyDefaultSchedulers
@@ -17,8 +18,8 @@ class AppLockViewModel @Inject constructor(
     private val facade: SchedulersProvider,
 ) : LifecycleViewModel() {
 
-    val appLockData = MutableLiveData<AppLockData>()
-    val state = MutableLiveData<ViewModelState>(Loading.Fetch)
+    val appLockData: MutableState<AppLockData?> = mutableStateOf(null)
+    val state: MutableState<ViewModelState> = mutableStateOf(Loading.Fetch)
 
     override fun onFirstCreate() {
         disposables.add(
