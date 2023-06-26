@@ -24,7 +24,7 @@ fun AppLockView(data: AppLockData?, state: ViewModelState) {
         ) {
             Text(
                 modifier = Modifier.padding(8.dp, 64.dp, 8.dp, 8.dp),
-                style = MaterialTheme.typography.h1,
+                style = MaterialTheme.typography.h3,
                 text = data.title,
                 textAlign = TextAlign.Center,
             )

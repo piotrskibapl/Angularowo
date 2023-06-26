@@ -27,11 +27,27 @@ private fun Theme(content: @Composable () -> Unit) {
     val typography = Typography(
         h1 = TextStyle(
             color = colorResource(id = R.color.secondary_text),
+            fontSize = 24.sp,
+        ),
+        h2 = TextStyle(
+            color = colorResource(id = R.color.secondary_text),
+            fontSize = 22.sp,
+        ),
+        h3 = TextStyle(
+            color = colorResource(id = R.color.secondary_text),
             fontSize = 20.sp,
+        ),
+        h6 = TextStyle(
+            color = colorResource(id = R.color.secondary_text),
+            fontSize = 16.sp,
         ),
         body1 = TextStyle(
             color = colorResource(id = R.color.secondary_text),
             fontSize = 14.sp,
+        ),
+        body2 = TextStyle(
+            color = colorResource(id = R.color.secondary_text),
+            fontSize = 12.sp,
         ),
     )
     MaterialTheme(
