@@ -37,6 +37,6 @@
     <color name="blackA50">#80000000</color>
     <color name="white">#ffffff</color>
     <color name="whiteA50">#80ffffff</color>
-    <color name="lightGray">#bebebe</color>
-    <color name="lightGrayA50">#80bebebe</color>
+    <color name="lightGray">#cfcfcf</color>
+    <color name="lightGrayA50">#80cfcfcf</color>
 </resources>
