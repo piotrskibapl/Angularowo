@@ -19,6 +19,8 @@ pipeline {
                     discordSend title: title, description: description, result: currentBuild.currentResult, link: env.JOB_DISPLAY_URL, webhookURL: webhookUrl
                 }
                 checkout scm
+                sh 'chmod +x -R ${WORKSPACE}'
+                sh './gradlew clean'
             }
         }
         stage('Analyze') {
@@ -26,7 +28,6 @@ pipeline {
                 withCredentials([file(credentialsId: '05734911-26ea-4d2d-b31d-b988f17a2934', variable: 'google_services')]) {
                    writeFile file: 'app/google-services.json', text: readFile(google_services)
                 }
-                sh 'chmod +x -R ${WORKSPACE}'
                 sh './gradlew ktlintCheck'
             }
         }
