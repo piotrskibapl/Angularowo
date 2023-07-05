@@ -1,3 +1,4 @@
+def webhookUrl = 'https://discord.com/api/webhooks/1081761276797128754/0yXcIoxXm_aui4VhomSpuUXfOFNO1V12NGJQSGP0DsX-LGUuxXba9mLOj15F0iYdDWcY'
 pipeline {
     agent any
     options {
@@ -15,7 +16,7 @@ pipeline {
                         Branch: ${env.BRANCH_NAME}
                         Build: ${env.BUILD_NUMBER}
                     """.stripIndent()
-                    discordSend title: title, description: description, result: currentBuild.currentResult, webhookURL: 'https://discord.com/api/webhooks/1081761276797128754/0yXcIoxXm_aui4VhomSpuUXfOFNO1V12NGJQSGP0DsX-LGUuxXba9mLOj15F0iYdDWcY'
+                    discordSend title: title, description: description, result: currentBuild.currentResult, link: env.JOB_DISPLAY_URL, webhookURL: webhookUrl
                 }
                 checkout scm
             }
@@ -77,7 +78,7 @@ pipeline {
                     |Status: ${currentBuild.currentResult.toLowerCase().capitalize()}
                     |Changes: $changelog
                 """.stripMargin()
-                discordSend title: title, description: description, result: currentBuild.currentResult, webhookURL: 'https://discord.com/api/webhooks/1081761276797128754/0yXcIoxXm_aui4VhomSpuUXfOFNO1V12NGJQSGP0DsX-LGUuxXba9mLOj15F0iYdDWcY'
+                discordSend title: title, description: description, result: currentBuild.currentResult, link: env.JOB_DISPLAY_URL, webhookURL: webhookUrl
             }
         }
         success {
