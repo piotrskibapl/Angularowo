@@ -53,7 +53,13 @@ pipeline {
                 branch 'master'
             }
             steps {
-                sh './gradlew assembleRelease'
+                withCredentials([
+                    file(credentialsId: 'androidKeyStore', variable: 'key_store'),
+                    string(credentialsId: 'androidKeyPass', variable: 'key_pass'),
+                    string(credentialsId: 'androidStorePass', variable: 'store_pass'),
+                ]) {
+                    sh './gradlew assembleRelease -PkeyAlias=\'key0\' -PkeyPass=${key_pass} -PstoreFilePath=${key_store} -PstorePass=${store_pass}'
+                }
             }
         }
     }
