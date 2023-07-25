@@ -18,6 +18,7 @@ poEditor {
     apiToken = project["poEditorApiToken"]
     projectId = Integer.parseInt(project["poEditorProjectId"])
     defaultLang = "pl"
+    filters = ["translated"]
 }
 
 android {
