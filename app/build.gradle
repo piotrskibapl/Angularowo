@@ -7,10 +7,17 @@ plugins {
     id 'com.google.firebase.firebase-perf'
     id 'androidx.navigation.safeargs.kotlin'
     id 'org.jlleitschuh.gradle.ktlint' version "$ktlint_version"
+    id 'com.hyperdevs.poeditor'
 }
 
 kotlin {
     jvmToolchain(17)
+}
+
+poEditor {
+    apiToken = project["poEditorApiToken"]
+    projectId = Integer.parseInt(project["poEditorProjectId"])
+    defaultLang = "pl"
 }
 
 android {

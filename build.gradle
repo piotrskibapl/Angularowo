@@ -17,6 +17,7 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        maven { url "https://jitpack.io" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:8.0.2'
@@ -29,6 +30,7 @@ buildscript {
         classpath 'com.google.firebase:perf-plugin:1.4.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
+        classpath "com.github.hyperdevs-team:poeditor-android-gradle-plugin:3.4.1"
     }
 }
 
