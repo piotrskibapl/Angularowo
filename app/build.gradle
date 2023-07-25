@@ -22,11 +22,11 @@ poEditor {
 
 android {
     namespace 'pl.piotrskiba.angularowo'
-    compileSdkVersion Integer.parseInt(ANDROID_COMPILE_SDK_VERSION)
+    compileSdkVersion Integer.parseInt(androidCompileSdkVersion)
     defaultConfig {
         applicationId "pl.piotrskiba.angularowo"
-        minSdkVersion Integer.parseInt(ANDROID_MIN_SDK_VERSION)
-        targetSdkVersion Integer.parseInt(ANDROID_TARGET_SDK_VERSION)
+        minSdkVersion Integer.parseInt(androidMinSdkVersion)
+        targetSdkVersion Integer.parseInt(androidTargetSdkVersion)
         versionCode 74
         versionName "4.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
