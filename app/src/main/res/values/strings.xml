@@ -162,4 +162,54 @@ Dostęp do tej funkcjonalności zostanie przywrócony po wygaśnięciu bana."</s
     <string name="button_dismiss">"Zamknij"</string>
     <string name="button_cancel">"Anuluj"</string>
     <string name="button_next">"Dalej"</string>
+    <plurals name="days">
+        <item quantity="one">"%d dzień"</item>
+        <item quantity="few">"%d dni"</item>
+        <item quantity="many">"%d dni"</item>
+        <item quantity="other">"%d dni"</item>
+    </plurals>
+    <plurals name="hours">
+        <item quantity="one">"%d godzina"</item>
+        <item quantity="few">"%d godziny"</item>
+        <item quantity="many">"%d godzin"</item>
+        <item quantity="other">"%d godzin"</item>
+    </plurals>
+    <plurals name="minutes">
+        <item quantity="one">"%d minuta"</item>
+        <item quantity="few">"%d minuty"</item>
+        <item quantity="many">"%d minut"</item>
+        <item quantity="other">"%d minut"</item>
+    </plurals>
+    <plurals name="main_screen_playercount">
+        <item quantity="one">"%d gracz online"</item>
+        <item quantity="few">"%d graczy online"</item>
+        <item quantity="many">"%d graczy online"</item>
+        <item quantity="other">"%d graczy online"</item>
+    </plurals>
+    <plurals name="main_screen_playercount_tps">
+        <item quantity="one">"%d gracz online
+%s TPS"</item>
+        <item quantity="few">"%d graczy online
+%s TPS"</item>
+        <item quantity="many">"%d graczy online
+%s TPS"</item>
+        <item quantity="other">"%d graczy online
+%s TPS"</item>
+    </plurals>
+    <plurals name="offers_ad_question_dialog_description">
+        <item quantity="one">"Czy chcesz obejrzeć reklamę w zamian za %1$d monetę?"</item>
+        <item quantity="few">"Czy chcesz obejrzeć reklamę w zamian za %1$d monety?"</item>
+        <item quantity="many">"Czy chcesz obejrzeć reklamę w zamian za %1$d monet?"</item>
+        <item quantity="other">"Czy chcesz obejrzeć reklamę w zamian za %1$d monet?"</item>
+    </plurals>
+    <plurals name="offers_offer_question_dialog_description">
+        <item quantity="one">"Czy na pewno chcesz odebrać ofertę \"%1$s\"?
+Z Twojego konta zostanie pobrana %2$d moneta."</item>
+        <item quantity="few">"Czy na pewno chcesz odebrać ofertę \"%1$s\"?
+Z Twojego konta zostaną pobrane %2$d monety."</item>
+        <item quantity="many">"Czy na pewno chcesz odebrać ofertę \"%1$s\"?
+Z Twojego konta zostanie pobrane %2$d monet."</item>
+        <item quantity="other">"Czy na pewno chcesz odebrać ofertę \"%1$s\"?
+Z Twojego konta zostanie pobrane %2$d monet."</item>
+    </plurals>
 </resources>
