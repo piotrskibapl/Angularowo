@@ -102,7 +102,7 @@
     <fragment
         android:id="@+id/offersFragment"
         android:name="pl.piotrskiba.angularowo.main.offers.ui.OffersFragment"
-        android:label="@string/actionbar_title_free_ranks"
+        android:label="@string/actionbar_title_offers"
         tools:layout="@layout/fragment_offers" />
 
     <fragment

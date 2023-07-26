@@ -30,14 +30,14 @@ data class MainScreenServerData(
     fun playerCountText(context: Context) =
         if (displayTps) {
             context.resources.getQuantityString(
-                R.plurals.playercount_tps,
+                R.plurals.main_screen_playercount_tps,
                 playerCount,
                 playerCount,
                 tpsText(tps),
             )
         } else {
             context.resources.getQuantityString(
-                R.plurals.playercount,
+                R.plurals.main_screen_playercount,
                 playerCount,
                 playerCount,
             )

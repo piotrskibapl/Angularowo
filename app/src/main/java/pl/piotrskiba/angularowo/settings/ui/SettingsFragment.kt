@@ -91,9 +91,9 @@ class SettingsFragment : BaseFragment<SettingsViewModel>(SettingsViewModel::clas
 
     private fun showNotificationsPermanentlyDeniedDialog() {
         AlertDialog.Builder(requireContext())
-            .setTitle(R.string.dialog_title_notifications_permission_denied_permanently)
-            .setMessage(R.string.dialog_message_notifications_permission_denied_permanently)
-            .setPositiveButton(R.string.dialog_proceed_button_notifications_permission_denied_permanently) { _: DialogInterface?, _: Int ->
+            .setTitle(R.string.notifications_permission_denied_permanently_dialog_title)
+            .setMessage(R.string.notifications_permission_denied_permanently_dialog_message)
+            .setPositiveButton(R.string.notifications_permission_denied_permanently_dialog_open_settings_button) { _: DialogInterface?, _: Int ->
                 startActivity(
                     Intent().apply {
                         action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS

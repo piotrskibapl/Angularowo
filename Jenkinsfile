@@ -59,8 +59,8 @@ pipeline {
                     string(credentialsId: 'androidKeyPass', variable: 'key_pass'),
                     string(credentialsId: 'androidStorePass', variable: 'store_pass'),
                 ]) {
-                    sh './gradlew assembleRelease -PkeyAlias=\'key0\' -PkeyPass=${key_pass} -PstoreFilePath=${key_store} -PstorePass=${store_pass}'
-                    sh './gradlew bundleRelease -PkeyAlias=\'key0\' -PkeyPass=${key_pass} -PstoreFilePath=${key_store} -PstorePass=${store_pass}'
+                    sh './gradlew assembleRelease -PsigningKeyAlias=\'key0\' -PsigningKeyPass=${key_pass} -PsigningStoreFilePath=${key_store} -PsigningStorePass=${store_pass}'
+                    sh './gradlew bundleRelease -PsigningKeyAlias=\'key0\' -PsigningKeyPass=${key_pass} -PsigningStoreFilePath=${key_store} -PsigningStorePass=${store_pass}'
                 }
             }
         }

@@ -7,19 +7,28 @@ plugins {
     id 'com.google.firebase.firebase-perf'
     id 'androidx.navigation.safeargs.kotlin'
     id 'org.jlleitschuh.gradle.ktlint' version "$ktlint_version"
+    id 'com.hyperdevs.poeditor'
 }
 
 kotlin {
     jvmToolchain(17)
 }
 
+poEditor {
+    apiToken = project["poEditorApiToken"]
+    projectId = Integer.parseInt(project["poEditorProjectId"])
+    defaultLang = "pl"
+    filters = ["translated"]
+    unquoted = true
+}
+
 android {
     namespace 'pl.piotrskiba.angularowo'
-    compileSdkVersion Integer.parseInt(ANDROID_COMPILE_SDK_VERSION)
+    compileSdkVersion Integer.parseInt(androidCompileSdkVersion)
     defaultConfig {
         applicationId "pl.piotrskiba.angularowo"
-        minSdkVersion Integer.parseInt(ANDROID_MIN_SDK_VERSION)
-        targetSdkVersion Integer.parseInt(ANDROID_TARGET_SDK_VERSION)
+        minSdkVersion Integer.parseInt(androidMinSdkVersion)
+        targetSdkVersion Integer.parseInt(androidTargetSdkVersion)
         versionCode 74
         versionName "4.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -27,10 +36,10 @@ android {
     }
     signingConfigs {
         release {
-            keyAlias project["keyAlias"]
-            keyPassword project["keyPass"]
-            storeFile file(project["storeFilePath"])
-            storePassword project["storePass"]
+            keyAlias project["signingKeyAlias"]
+            keyPassword project["signingKeyPass"]
+            storeFile file(project["signingStoreFilePath"])
+            storePassword project["signingStorePass"]
         }
     }
     buildTypes {
@@ -109,7 +118,7 @@ dependencies {
     }
 
     // AdMob
-    implementation 'com.google.android.gms:play-services-ads:22.1.0'
+    implementation 'com.google.android.gms:play-services-ads:22.2.0'
 
     // MultiDex
     implementation "androidx.multidex:multidex:2.0.1"

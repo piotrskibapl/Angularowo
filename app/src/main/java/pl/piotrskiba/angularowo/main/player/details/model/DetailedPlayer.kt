@@ -16,7 +16,7 @@ data class DetailedPlayer(
     private val playtime: Long,
 ) {
 
-    fun greetingText(context: Context) = context.getString(R.string.greeting, username)
+    fun greetingText(context: Context) = context.getString(R.string.main_screen_greeting, username)
 
     fun balanceText() = "$${NumberFormat.getInstance().format(balance.toInt())}"
 
