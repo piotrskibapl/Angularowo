@@ -42,10 +42,10 @@ class OffersFragment : BaseFragment<OffersViewModel>(OffersViewModel::class), Of
         onConfirm: (adOffer: AdOffer) -> Unit,
     ) {
         AlertDialog.Builder(requireContext())
-            .setTitle(R.string.ad_question)
+            .setTitle(R.string.offers_ad_question_dialog_title)
             .setMessage(
                 resources.getQuantityString(
-                    R.plurals.ad_question_description,
+                    R.plurals.offers_ad_question_dialog_description,
                     adOffer.points,
                     adOffer.points,
                 ),
@@ -59,10 +59,10 @@ class OffersFragment : BaseFragment<OffersViewModel>(OffersViewModel::class), Of
 
     override fun displayOfferConfirmationDialog(offer: Offer, onConfirm: (offer: Offer) -> Unit) {
         AlertDialog.Builder(requireContext())
-            .setTitle(R.string.offer_question)
+            .setTitle(R.string.offers_offer_question_dialog_title)
             .setMessage(
                 resources.getQuantityString(
-                    R.plurals.offer_question_description,
+                    R.plurals.offers_offer_question_dialog_description,
                     offer.price,
                     offer.title,
                     offer.price,
@@ -108,24 +108,24 @@ class OffersFragment : BaseFragment<OffersViewModel>(OffersViewModel::class), Of
 
     override fun displayRewardedAdLoadingFailureDialog() {
         AlertDialog.Builder(requireContext())
-            .setTitle(R.string.no_ads)
-            .setMessage(R.string.no_ads_description)
+            .setTitle(R.string.offers_no_ads_dialog_title)
+            .setMessage(R.string.offers_no_ads_dialog_description)
             .setPositiveButton(R.string.button_dismiss) { _, _ -> }
             .show()
     }
 
     override fun displayAdOfferRedeemedDialog() {
         AlertDialog.Builder(requireContext())
-            .setTitle(R.string.ad_offer_redeemed)
-            .setMessage(R.string.ad_offer_redeemed_description)
+            .setTitle(R.string.offers_ad_offer_redeemed_dialog_title)
+            .setMessage(R.string.offers_ad_offer_redeemed_dialog_description)
             .setPositiveButton(R.string.button_dismiss) { _, _ -> }
             .show()
     }
 
     override fun displayOfferRedeemedDialog() {
         AlertDialog.Builder(requireContext())
-            .setTitle(R.string.offer_redeemed)
-            .setMessage(R.string.offer_redeemed_description)
+            .setTitle(R.string.offers_offer_redeemed_dialog_title)
+            .setMessage(R.string.offers_offer_redeemed_dialog_description)
             .setPositiveButton(R.string.button_dismiss) { _, _ -> }
             .show()
     }

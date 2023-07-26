@@ -81,7 +81,7 @@ class LoginFragment : BaseFragment<LoginViewModel>(LoginViewModel::class) {
         snackbar?.dismiss()
         snackbar = Snackbar.make(
             binding.coordinatorLayout,
-            getString(R.string.logging_in),
+            getString(R.string.login_in_progress),
             Snackbar.LENGTH_INDEFINITE,
         )
         val contentLayout =

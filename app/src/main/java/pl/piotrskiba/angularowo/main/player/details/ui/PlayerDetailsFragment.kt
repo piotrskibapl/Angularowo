@@ -104,16 +104,16 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
 
             R.id.nav_mute -> {
                 showPunishmentReasonDialog(
-                    title = getString(R.string.dialog_mute_reason_title),
-                    description = getString(R.string.dialog_mute_reason_description),
+                    title = getString(R.string.player_details_mute_dialog_reason_title),
+                    description = getString(R.string.player_details_mute_dialog_reason_description),
                 ) { reason ->
                     showPunishmentTimeDialog(
-                        title = getString(R.string.dialog_mute_time_title),
-                        description = getString(R.string.dialog_mute_time_description),
+                        title = getString(R.string.player_details_mute_dialog_time_title),
+                        description = getString(R.string.player_details_mute_dialog_time_description),
                     ) { time ->
                         showPunishmentConfirmationDialog(
-                            title = getString(R.string.dialog_mute_confirm_title),
-                            description = getString(R.string.dialog_mute_confirm_description),
+                            title = getString(R.string.player_details_mute_dialog_confirm_title),
+                            description = getString(R.string.player_details_mute_dialog_confirm_description),
                         ) {
                             viewModel.onPunish(PunishmentType.MUTE, reason, time)
                         }
@@ -124,12 +124,12 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
 
             R.id.nav_kick -> {
                 showPunishmentReasonDialog(
-                    title = getString(R.string.dialog_kick_reason_title),
-                    description = getString(R.string.dialog_kick_reason_description),
+                    title = getString(R.string.player_details_kick_dialog_reason_title),
+                    description = getString(R.string.player_details_kick_dialog_reason_description),
                 ) { reason ->
                     showPunishmentConfirmationDialog(
-                        title = getString(R.string.dialog_kick_confirm_title),
-                        description = getString(R.string.dialog_kick_confirm_description),
+                        title = getString(R.string.player_details_kick_dialog_confirm_title),
+                        description = getString(R.string.player_details_kick_dialog_confirm_description),
                     ) {
                         viewModel.onPunish(PunishmentType.KICK, reason, time = null)
                     }
@@ -139,12 +139,12 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
 
             R.id.nav_warn -> {
                 showPunishmentReasonDialog(
-                    title = getString(R.string.dialog_warn_reason_title),
-                    description = getString(R.string.dialog_warn_reason_description),
+                    title = getString(R.string.player_details_warn_dialog_reason_title),
+                    description = getString(R.string.player_details_warn_dialog_reason_description),
                 ) { reason ->
                     showPunishmentConfirmationDialog(
-                        title = getString(R.string.dialog_warn_confirm_title),
-                        description = getString(R.string.dialog_warn_confirm_description),
+                        title = getString(R.string.player_details_warn_dialog_confirm_title),
+                        description = getString(R.string.player_details_warn_dialog_confirm_description),
                     ) {
                         viewModel.onPunish(PunishmentType.WARN, reason, TimeUnit.DAYS.toSeconds(3))
                     }
@@ -154,16 +154,16 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
 
             R.id.nav_ban -> {
                 showPunishmentReasonDialog(
-                    title = getString(R.string.dialog_ban_reason_title),
-                    description = getString(R.string.dialog_ban_reason_description),
+                    title = getString(R.string.player_details_ban_dialog_reason_title),
+                    description = getString(R.string.player_details_ban_dialog_reason_description),
                 ) { reason ->
                     showPunishmentTimeDialog(
-                        title = getString(R.string.dialog_ban_time_title),
-                        description = getString(R.string.dialog_ban_time_description),
+                        title = getString(R.string.player_details_ban_dialog_time_title),
+                        description = getString(R.string.player_details_ban_dialog_time_description),
                     ) { time ->
                         showPunishmentConfirmationDialog(
-                            title = getString(R.string.dialog_ban_confirm_title),
-                            description = getString(R.string.dialog_ban_confirm_description),
+                            title = getString(R.string.player_details_ban_dialog_confirm_title),
+                            description = getString(R.string.player_details_ban_dialog_confirm_description),
                         ) {
                             viewModel.onPunish(PunishmentType.BAN, reason, time)
                         }
@@ -179,7 +179,7 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
         snackbar?.dismiss()
         snackbar = Snackbar.make(
             binding.coordinatorLayout,
-            getString(R.string.marked_as_favorite),
+            getString(R.string.player_details_marked_as_favorite),
             Snackbar.LENGTH_SHORT,
         )
         snackbar!!.show()
@@ -189,7 +189,7 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
         snackbar?.dismiss()
         snackbar = Snackbar.make(
             binding.coordinatorLayout,
-            getString(R.string.unmarked_as_favorite),
+            getString(R.string.player_details_unmarked_as_favorite),
             Snackbar.LENGTH_SHORT,
         )
         snackbar!!.show()
@@ -216,8 +216,8 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
             shouldDisplayFavoriteShowcase = false
             MaterialShowcaseView.Builder(requireActivity())
                 .setTarget(target)
-                .setTitleText(R.string.showcase_favorite_title)
-                .setContentText(R.string.showcase_favorite_description)
+                .setTitleText(R.string.player_details_showcase_favorite_title)
+                .setContentText(R.string.player_details_showcase_favorite_description)
                 .setDelay(SHOWCASE_DELAY_MS)
                 .setDismissOnTouch(true)
                 .setTargetTouchable(true)
@@ -229,10 +229,10 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
         showPunishmentSuccessDialog(
             getString(
                 when (type) {
-                    PunishmentType.MUTE -> R.string.dialog_mute_success_description
-                    PunishmentType.KICK -> R.string.dialog_kick_success_description
-                    PunishmentType.WARN -> R.string.dialog_warn_success_description
-                    PunishmentType.BAN -> R.string.dialog_ban_success_description
+                    PunishmentType.MUTE -> R.string.player_details_mute_dialog_success_description
+                    PunishmentType.KICK -> R.string.player_details_kick_dialog_success_description
+                    PunishmentType.WARN -> R.string.player_details_warn_dialog_success_description
+                    PunishmentType.BAN -> R.string.player_details_ban_dialog_success_description
                 },
             ),
         )
@@ -308,7 +308,7 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
 
     private fun showPunishmentSuccessDialog(description: String) {
         AlertDialog.Builder(context)
-            .setTitle(getString(R.string.dialog_punish_success_title))
+            .setTitle(getString(R.string.player_details_punish_dialog_success_title))
             .setMessage(description)
             .setPositiveButton(R.string.button_dismiss, null)
             .show()
