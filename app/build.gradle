@@ -19,6 +19,7 @@ poEditor {
     projectId = Integer.parseInt(project["poEditorProjectId"])
     defaultLang = "pl"
     filters = ["translated"]
+    unquoted = true
 }
 
 android {
