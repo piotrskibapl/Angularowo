@@ -3,7 +3,6 @@ package pl.piotrskiba.angularowo.data.login.repository
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
-import io.mockk.verify
 import io.reactivex.rxjava3.core.Single
 import org.junit.Test
 import pl.piotrskiba.angularowo.data.login.LoginApiService
@@ -20,23 +19,13 @@ class LoginRepositoryImplTest {
     val tested = LoginRepositoryImpl(loginApi)
 
     @Test
-    fun `SHOULD call registerDevice on loginApi WHEN registerDevice called`() {
-        every { loginApi.registerDevice(userCode) } returns Single.never()
-
-        tested.registerDevice(userCode)
-
-        verify { loginApi.registerDevice(userCode) }
-    }
-
-    @Test
-    fun `SHOULD return value WHEN loginApi registerDevice succeeded`() {
+    fun `SHOULD return value WHEN registerDevice succeeded`() {
         mockkStatic(AccessTokenRemote::toDomain) {
-            val accessTokenRemote: AccessTokenRemote = mockk()
             val accessTokenModel: AccessTokenModel = mockk()
-            every { loginApi.registerDevice(userCode) } returns Single.just(
-                accessTokenRemote,
-            )
-            every { accessTokenRemote.toDomain() } returns accessTokenModel
+            val accessTokenRemote: AccessTokenRemote = mockk {
+                every { toDomain() } returns accessTokenModel
+            }
+            every { loginApi.registerDevice(userCode) } returns Single.just(accessTokenRemote)
 
             val result = tested.registerDevice(userCode).test()
 
@@ -45,7 +34,7 @@ class LoginRepositoryImplTest {
     }
 
     @Test
-    fun `SHOULD throw error WHEN loginApi registerDevice failed`() {
+    fun `SHOULD throw error WHEN registerDevice failed`() {
         every { loginApi.registerDevice(userCode) } returns Single.error(IOException())
 
         val result = tested.registerDevice(userCode).test()
