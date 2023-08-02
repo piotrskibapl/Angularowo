@@ -4,10 +4,11 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import pl.piotrskiba.angularowo.data.BuildConfig
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
+import javax.inject.Inject
 
 private const val API_HOST = "piotrskiba.pl"
 
-class AuthInterceptor(
+class AuthInterceptor @Inject constructor(
     private val preferencesRepository: PreferencesRepository,
 ) : Interceptor {
 

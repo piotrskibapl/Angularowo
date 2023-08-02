@@ -11,7 +11,6 @@ import pl.piotrskiba.angularowo.data.BuildConfig
 import pl.piotrskiba.angularowo.data.network.NetworkRepositoryImpl
 import pl.piotrskiba.angularowo.data.network.interceptors.AuthInterceptor
 import pl.piotrskiba.angularowo.data.network.interceptors.UnauthorizedInterceptor
-import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
 import pl.piotrskiba.angularowo.domain.network.repository.NetworkRepository
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
@@ -21,22 +20,12 @@ import javax.inject.Singleton
 @Module
 class NetworkModule {
 
-    @Singleton
-    @Provides
-    fun provideAuthInterceptor(preferencesRepository: PreferencesRepository): AuthInterceptor =
-        AuthInterceptor(preferencesRepository)
-
     @Provides
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor =
         HttpLoggingInterceptor().apply {
             val level = if (BuildConfig.DEBUG) Level.BASIC else Level.NONE
             setLevel(level)
         }
-
-    @Singleton
-    @Provides
-    fun provideUnauthorizedInterceptor(): UnauthorizedInterceptor =
-        UnauthorizedInterceptor()
 
     @Provides
     fun provideUnauthorizedRepository(unauthorizedInterceptor: UnauthorizedInterceptor): NetworkRepository =

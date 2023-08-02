@@ -4,8 +4,9 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
+import javax.inject.Inject
 
-class UnauthorizedInterceptor : Interceptor {
+class UnauthorizedInterceptor @Inject constructor() : Interceptor {
 
     val unauthorizedResponses: PublishSubject<Unit> = PublishSubject.create()
 
