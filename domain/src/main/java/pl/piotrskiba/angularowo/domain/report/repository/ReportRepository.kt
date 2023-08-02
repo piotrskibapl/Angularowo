@@ -7,7 +7,6 @@ import pl.piotrskiba.angularowo.domain.report.model.ReportModel
 interface ReportRepository {
 
     fun getReportList(
-        accessToken: String,
         filterList: List<ReportFilter>,
     ): Single<List<ReportModel>>
 }

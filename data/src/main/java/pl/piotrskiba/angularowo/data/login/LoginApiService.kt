@@ -9,7 +9,6 @@ interface LoginApiService {
 
     @GET("register_device.php")
     fun registerDevice(
-        @Query("api_key") apiKey: String,
         @Query("user_code") userCode: String,
     ): Single<AccessTokenRemote>
 }

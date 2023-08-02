@@ -1,7 +1,6 @@
 package pl.piotrskiba.angularowo.data.login.repository
 
 import io.reactivex.rxjava3.core.Single
-import pl.piotrskiba.angularowo.data.BuildConfig
 import pl.piotrskiba.angularowo.data.login.LoginApiService
 import pl.piotrskiba.angularowo.data.login.model.toDomain
 import pl.piotrskiba.angularowo.domain.login.model.AccessTokenModel
@@ -14,7 +13,7 @@ class LoginRepositoryImpl(
 
     override fun registerDevice(userCode: String): Single<AccessTokenModel> =
         loginApi
-            .registerDevice(BuildConfig.API_KEY, userCode)
+            .registerDevice(userCode)
             .map { it.toDomain() }
             .onErrorResumeNext { Single.error(it.toAccessTokenError()) }
 }

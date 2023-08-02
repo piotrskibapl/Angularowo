@@ -9,6 +9,7 @@ import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 import pl.piotrskiba.angularowo.data.chat.model.ChatMessageRemote
+import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
 import javax.inject.Inject
 
 private const val CHAT_WEBSOCKET_URL = "ws://asmc-serwer.piotrskiba.pl:25772"
@@ -18,17 +19,18 @@ private const val CLOSE_REASON_DISCONNECTED = "Disconnected"
 
 class ChatWebSocket @Inject constructor(
     private val okHttpClient: OkHttpClient,
+    private val preferencesRepository: PreferencesRepository,
 ) {
 
     private var webSocket: WebSocket? = null
     private val emitters = mutableListOf<ObservableEmitter<ChatMessageRemote>>()
 
-    fun open(accessToken: String): Observable<ChatMessageRemote> {
+    fun open(): Observable<ChatMessageRemote> {
         if (webSocket == null) {
             webSocket = okHttpClient.newWebSocket(
                 request = Request.Builder()
                     .url(CHAT_WEBSOCKET_URL)
-                    .addHeader(ACCESS_TOKEN_HEADER, accessToken)
+                    .addHeader(ACCESS_TOKEN_HEADER, preferencesRepository.accessToken().blockingGet()!!)
                     .build(),
                 listener = object : WebSocketListener() {
 

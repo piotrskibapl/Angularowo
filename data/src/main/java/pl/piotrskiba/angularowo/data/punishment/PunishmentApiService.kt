@@ -10,8 +10,6 @@ interface PunishmentApiService {
 
     @GET("get_punishment_list.php")
     fun getPunishmentList(
-        @Query("api_key") apiKey: String,
-        @Query("access_token") accessToken: String,
         @Query("username") username: String?,
         @Query("type") type: String,
         @Query("filter") filter: String,
@@ -19,8 +17,6 @@ interface PunishmentApiService {
 
     @GET("punish_player.php?type=mute")
     fun mutePlayer(
-        @Query("api_key") apiKey: String,
-        @Query("access_token") accessToken: String,
         @Query("uuid") uuid: String,
         @Query("reason") reason: String,
         @Query("length") length: Long,
@@ -28,16 +24,12 @@ interface PunishmentApiService {
 
     @GET("punish_player.php?type=kick")
     fun kickPlayer(
-        @Query("api_key") apiKey: String,
-        @Query("access_token") accessToken: String,
         @Query("uuid") uuid: String,
         @Query("reason") reason: String,
     ): Completable
 
     @GET("punish_player.php?type=warn")
     fun warnPlayer(
-        @Query("api_key") apiKey: String,
-        @Query("access_token") accessToken: String,
         @Query("uuid") uuid: String,
         @Query("reason") reason: String,
         @Query("length") length: Long,
@@ -45,8 +37,6 @@ interface PunishmentApiService {
 
     @GET("punish_player.php?type=player_ban")
     fun banPlayer(
-        @Query("api_key") apiKey: String,
-        @Query("access_token") accessToken: String,
         @Query("uuid") uuid: String,
         @Query("reason") reason: String,
         @Query("length") length: Long,

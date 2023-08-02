@@ -21,6 +21,5 @@ class RankModule {
     fun provideRankRepository(
         firebaseRemoteConfig: FirebaseRemoteConfig,
         gson: Gson,
-    ): RankRepository =
-        RankRepositoryImpl(firebaseRemoteConfig, gson)
+    ): RankRepository = RankRepositoryImpl(firebaseRemoteConfig, gson)
 }

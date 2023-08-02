@@ -25,9 +25,8 @@ class GetAppLockDataUseCase @Inject constructor(
 
     private fun checkIgnoreAppLockPermission() =
         preferencesRepository.uuid()
-            .zipWith(preferencesRepository.accessToken(), ::Pair)
-            .flatMapSingle { (accessToken, uuid) ->
-                playerRepository.getPlayerDetailsFromUuid(accessToken, uuid)
+            .flatMapSingle { uuid ->
+                playerRepository.getPlayerDetailsFromUuid(uuid)
                     .map { it.permissions.contains(PermissionModel.IGNORE_APP_LOCK) }
             }
             .defaultIfEmpty(false)

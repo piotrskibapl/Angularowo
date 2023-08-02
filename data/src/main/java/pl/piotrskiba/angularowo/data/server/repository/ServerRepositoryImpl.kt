@@ -1,7 +1,6 @@
 package pl.piotrskiba.angularowo.data.server.repository
 
 import io.reactivex.rxjava3.core.Single
-import pl.piotrskiba.angularowo.data.BuildConfig
 import pl.piotrskiba.angularowo.data.server.ServerApiService
 import pl.piotrskiba.angularowo.data.server.model.toDomain
 import pl.piotrskiba.angularowo.domain.server.model.ServerStatusModel
@@ -11,10 +10,8 @@ class ServerRepositoryImpl(
     private val serverApi: ServerApiService,
 ) : ServerRepository {
 
-    override fun getServerStatus(
-        accessToken: String,
-    ): Single<ServerStatusModel> =
+    override fun getServerStatus(): Single<ServerStatusModel> =
         serverApi
-            .getServerStatus(BuildConfig.API_KEY, accessToken)
+            .getServerStatus()
             .map { it.toDomain() }
 }

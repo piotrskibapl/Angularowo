@@ -21,11 +21,11 @@ class LoginRepositoryImplTest {
 
     @Test
     fun `SHOULD call registerDevice on loginApi WHEN registerDevice called`() {
-        every { loginApi.registerDevice(any(), userCode) } returns Single.never()
+        every { loginApi.registerDevice(userCode) } returns Single.never()
 
         tested.registerDevice(userCode)
 
-        verify { loginApi.registerDevice(any(), userCode) }
+        verify { loginApi.registerDevice(userCode) }
     }
 
     @Test
@@ -33,7 +33,7 @@ class LoginRepositoryImplTest {
         mockkStatic(AccessTokenRemote::toDomain) {
             val accessTokenRemote: AccessTokenRemote = mockk()
             val accessTokenModel: AccessTokenModel = mockk()
-            every { loginApi.registerDevice(any(), userCode) } returns Single.just(
+            every { loginApi.registerDevice(userCode) } returns Single.just(
                 accessTokenRemote,
             )
             every { accessTokenRemote.toDomain() } returns accessTokenModel
@@ -46,7 +46,7 @@ class LoginRepositoryImplTest {
 
     @Test
     fun `SHOULD throw error WHEN loginApi registerDevice failed`() {
-        every { loginApi.registerDevice(any(), userCode) } returns Single.error(IOException())
+        every { loginApi.registerDevice(userCode) } returns Single.error(IOException())
 
         val result = tested.registerDevice(userCode).test()
 
