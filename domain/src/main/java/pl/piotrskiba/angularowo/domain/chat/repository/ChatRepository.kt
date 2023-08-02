@@ -6,7 +6,7 @@ import pl.piotrskiba.angularowo.domain.chat.model.ChatMessageModel
 
 interface ChatRepository {
 
-    fun getLastChatMessages(accessToken: String): Single<List<ChatMessageModel>>
+    fun getLastChatMessages(): Single<List<ChatMessageModel>>
 
     fun observeChatMessages(accessToken: String): Observable<ChatMessageModel>
 }

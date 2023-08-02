@@ -22,43 +22,46 @@ class GetMainScreenDataAndSavePlayerUseCase @Inject constructor(
 
     fun execute(): Single<MainScreenDataModel> =
         Maybe.zip(
-            preferencesRepository.accessToken(),
             preferencesRepository.uuid(),
             preferencesRepository.username(),
-            ::Triple,
+            ::Pair,
         )
             .toSingle()
-            .flatMap { (accessToken, uuid, username) ->
+            .flatMap { (uuid, username) ->
                 Single.zip(
-                    getServerStatus(accessToken),
-                    getAndSavePlayerData(accessToken, uuid),
-                    getPlayerPunishments(accessToken, username),
+                    getServerStatus(),
+                    getAndSavePlayerData(uuid),
+                    getPlayerPunishments(username),
                     ::Triple,
                 ).map { (serverStatus, playerData, playerPunishments) ->
                     MainScreenDataModel(serverStatus, playerData, playerPunishments)
                 }
             }
 
-    private fun getServerStatus(accessToken: String) =
-        serverRepository.getServerStatus(accessToken)
+    private fun getServerStatus() =
+        serverRepository.getServerStatus()
 
-    private fun getAndSavePlayerData(accessToken: String, uuid: String) =
-        playerRepository.getPlayerDetailsFromUuid(accessToken, uuid)
+    private fun getAndSavePlayerData(uuid: String) =
+        playerRepository.getPlayerDetailsFromUuid(uuid)
             .flatMap { player ->
                 preferencesRepository.setUsername(player.username)
                     .mergeWith(preferencesRepository.setRankName(player.rank.name))
                     .andThen(rankRepository.getAllRanks())
                     .map { ranks ->
-                        val playerRank = ranks.firstOrNull { it.name == player.rank.name } ?: player.rank
+                        val playerRank =
+                            ranks.firstOrNull { it.name == player.rank.name } ?: player.rank
                         player.copy(rank = playerRank)
                     }
             }
 
-    private fun getPlayerPunishments(accessToken: String, username: String) =
+    private fun getPlayerPunishments(username: String) =
         punishmentRepository.getPlayerPunishments(
-            accessToken = accessToken,
             username = username,
-            punishmentTypes = listOf(PunishmentTypeModel.MUTE, PunishmentTypeModel.WARN, PunishmentTypeModel.BAN),
+            punishmentTypes = listOf(
+                PunishmentTypeModel.MUTE,
+                PunishmentTypeModel.WARN,
+                PunishmentTypeModel.BAN,
+            ),
             filter = PunishmentFilterModel.ACTIVE,
         )
 }

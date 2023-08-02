@@ -7,25 +7,13 @@ import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
 
-private const val PREF_KEY_ACCESS_TOKEN = "access_token"
-private const val PREF_KEY_UUID = "uuid"
-private const val PREF_KEY_USERNAME = "nickname"
-private const val PREF_KEY_RANK_NAME = "rank"
-private const val PREF_KEY_FAVORITE_SHOWCASE_SHOWN = "showcase_favorite_shown"
-private const val PREF_KEY_FIREBASE_SUBSCRIBED_APP_VERSION = "subscribed_app_version"
-private const val PREF_KEY_FIREBASE_SUBSCRIBED_PLAYER_RANK_NAME = "subscribed_player_rank_name"
-private const val PREF_KEY_FIREBASE_EVENTS_SUBSCRIBED = "events_subscribed"
-private const val PREF_KEY_FIREBASE_PRIVATE_MESSAGES_SUBSCRIBED = "private_messages_subscribed"
-private const val PREF_KEY_FIREBASE_ACCOUNT_INCIDENTS_SUBSCRIBED = "account_incidents_subscribed"
-private const val PREF_KEY_FIREBASE_NEW_REPORTS_SUBSCRIBED = "new_reports_subscribed"
-
 @SuppressLint("ApplySharedPref")
 class PreferencesRepositoryImpl(
     private val sharedPreferences: SharedPreferences,
 ) : PreferencesRepository {
 
     override fun accessToken(): Maybe<String> =
-        sharedPreferences.getString(PREF_KEY_ACCESS_TOKEN, null).let { accessToken ->
+        sharedPreferences.getString(PrefKey.accessToken, null).let { accessToken ->
             if (accessToken == null) {
                 Maybe.empty()
             } else {
@@ -35,11 +23,11 @@ class PreferencesRepositoryImpl(
 
     override fun setAccessToken(accessToken: String): Completable =
         Completable.fromAction {
-            applyValue(PREF_KEY_ACCESS_TOKEN, accessToken)
+            applyValue(PrefKey.accessToken, accessToken)
         }
 
     override fun uuid(): Maybe<String> =
-        sharedPreferences.getString(PREF_KEY_UUID, null).let { uuid ->
+        sharedPreferences.getString(PrefKey.uuid, null).let { uuid ->
             if (uuid == null) {
                 Maybe.empty()
             } else {
@@ -49,11 +37,11 @@ class PreferencesRepositoryImpl(
 
     override fun setUuid(uuid: String): Completable =
         Completable.fromAction {
-            applyValue(PREF_KEY_UUID, uuid)
+            applyValue(PrefKey.uuid, uuid)
         }
 
     override fun username(): Maybe<String> =
-        sharedPreferences.getString(PREF_KEY_USERNAME, null).let { username ->
+        sharedPreferences.getString(PrefKey.username, null).let { username ->
             if (username == null) {
                 Maybe.empty()
             } else {
@@ -63,11 +51,11 @@ class PreferencesRepositoryImpl(
 
     override fun setUsername(username: String): Completable =
         Completable.fromAction {
-            applyValue(PREF_KEY_USERNAME, username)
+            applyValue(PrefKey.username, username)
         }
 
     override fun rankName(): Maybe<String> =
-        sharedPreferences.getString(PREF_KEY_RANK_NAME, null).let { rankName ->
+        sharedPreferences.getString(PrefKey.rankName, null).let { rankName ->
             if (rankName == null) {
                 Maybe.empty()
             } else {
@@ -77,21 +65,21 @@ class PreferencesRepositoryImpl(
 
     override fun setRankName(rankName: String): Completable =
         Completable.fromAction {
-            applyValue(PREF_KEY_RANK_NAME, rankName)
+            applyValue(PrefKey.rankName, rankName)
         }
 
     override fun hasSeenFavoriteShowcase(): Single<Boolean> =
         Single.fromCallable {
-            sharedPreferences.getBoolean(PREF_KEY_FAVORITE_SHOWCASE_SHOWN, false)
+            sharedPreferences.getBoolean(PrefKey.favoriteShowcaseShown, false)
         }
 
     override fun setHasSeenFavoriteShowcase(hasSeenFavoriteShowcase: Boolean): Completable =
         Completable.fromAction {
-            applyValue(PREF_KEY_FAVORITE_SHOWCASE_SHOWN, hasSeenFavoriteShowcase)
+            applyValue(PrefKey.favoriteShowcaseShown, hasSeenFavoriteShowcase)
         }
 
     override fun subscribedFirebaseAppVersion(): Maybe<Int> =
-        sharedPreferences.getInt(PREF_KEY_FIREBASE_SUBSCRIBED_APP_VERSION, -1).let { version ->
+        sharedPreferences.getInt(PrefKey.fcmSubscribedAppVersion, -1).let { version ->
             if (version == -1) {
                 Maybe.empty()
             } else {
@@ -101,11 +89,11 @@ class PreferencesRepositoryImpl(
 
     override fun setSubscribedFirebaseAppVersion(subscribedFirebaseAppVersion: Int): Completable =
         Completable.fromAction {
-            applyValue(PREF_KEY_FIREBASE_SUBSCRIBED_APP_VERSION, subscribedFirebaseAppVersion)
+            applyValue(PrefKey.fcmSubscribedAppVersion, subscribedFirebaseAppVersion)
         }
 
     override fun subscribedFirebasePlayerRankName(): Maybe<String> =
-        sharedPreferences.getString(PREF_KEY_FIREBASE_SUBSCRIBED_PLAYER_RANK_NAME, null).let { rankName ->
+        sharedPreferences.getString(PrefKey.fcmSubscribedPlayerRankName, null).let { rankName ->
             if (rankName == null) {
                 Maybe.empty()
             } else {
@@ -115,64 +103,64 @@ class PreferencesRepositoryImpl(
 
     override fun setSubscribedFirebasePlayerRankName(subscribedFirebasePlayerRankName: String): Completable =
         Completable.fromAction {
-            applyValue(PREF_KEY_FIREBASE_SUBSCRIBED_PLAYER_RANK_NAME, subscribedFirebasePlayerRankName)
+            applyValue(PrefKey.fcmSubscribedPlayerRankName, subscribedFirebasePlayerRankName)
         }
 
     override fun subscribedToFirebaseEventsTopic(): Maybe<Boolean> =
-        if (sharedPreferences.contains(PREF_KEY_FIREBASE_EVENTS_SUBSCRIBED)) {
-            Maybe.just(sharedPreferences.getBoolean(PREF_KEY_FIREBASE_EVENTS_SUBSCRIBED, false))
+        if (sharedPreferences.contains(PrefKey.fcmEventsSubscribed)) {
+            Maybe.just(sharedPreferences.getBoolean(PrefKey.fcmEventsSubscribed, false))
         } else {
             Maybe.empty()
         }
 
     override fun setSubscribedToFirebaseEventsTopic(subscribedToFirebaseEventsTopic: Boolean): Completable =
         Completable.fromAction {
-            applyValue(PREF_KEY_FIREBASE_EVENTS_SUBSCRIBED, subscribedToFirebaseEventsTopic)
+            applyValue(PrefKey.fcmEventsSubscribed, subscribedToFirebaseEventsTopic)
         }
 
     override fun subscribedToFirebasePrivateMessagesTopic(): Maybe<Boolean> =
-        if (sharedPreferences.contains(PREF_KEY_FIREBASE_PRIVATE_MESSAGES_SUBSCRIBED)) {
-            Maybe.just(sharedPreferences.getBoolean(PREF_KEY_FIREBASE_PRIVATE_MESSAGES_SUBSCRIBED, false))
+        if (sharedPreferences.contains(PrefKey.fcmPrivateMessagesSubscribed)) {
+            Maybe.just(sharedPreferences.getBoolean(PrefKey.fcmPrivateMessagesSubscribed, false))
         } else {
             Maybe.empty()
         }
 
     override fun setSubscribedToFirebasePrivateMessagesTopic(subscribedToFirebasePrivateMessagesTopic: Boolean): Completable =
         Completable.fromAction {
-            applyValue(PREF_KEY_FIREBASE_PRIVATE_MESSAGES_SUBSCRIBED, subscribedToFirebasePrivateMessagesTopic)
+            applyValue(PrefKey.fcmPrivateMessagesSubscribed, subscribedToFirebasePrivateMessagesTopic)
         }
 
     override fun subscribedToFirebaseAccountIncidentsTopic(): Maybe<Boolean> =
-        if (sharedPreferences.contains(PREF_KEY_FIREBASE_ACCOUNT_INCIDENTS_SUBSCRIBED)) {
-            Maybe.just(sharedPreferences.getBoolean(PREF_KEY_FIREBASE_ACCOUNT_INCIDENTS_SUBSCRIBED, false))
+        if (sharedPreferences.contains(PrefKey.fcmAccountIncidentsSubscribed)) {
+            Maybe.just(sharedPreferences.getBoolean(PrefKey.fcmAccountIncidentsSubscribed, false))
         } else {
             Maybe.empty()
         }
 
     override fun setSubscribedToFirebaseAccountIncidentsTopic(subscribedToFirebaseAccountIncidentsTopic: Boolean): Completable =
         Completable.fromAction {
-            applyValue(PREF_KEY_FIREBASE_ACCOUNT_INCIDENTS_SUBSCRIBED, subscribedToFirebaseAccountIncidentsTopic)
+            applyValue(PrefKey.fcmAccountIncidentsSubscribed, subscribedToFirebaseAccountIncidentsTopic)
         }
 
     override fun subscribedToFirebaseNewReportsTopic(): Maybe<Boolean> =
-        if (sharedPreferences.contains(PREF_KEY_FIREBASE_NEW_REPORTS_SUBSCRIBED)) {
-            Maybe.just(sharedPreferences.getBoolean(PREF_KEY_FIREBASE_NEW_REPORTS_SUBSCRIBED, false))
+        if (sharedPreferences.contains(PrefKey.fcmNewReportsSubscribed)) {
+            Maybe.just(sharedPreferences.getBoolean(PrefKey.fcmNewReportsSubscribed, false))
         } else {
             Maybe.empty()
         }
 
     override fun setSubscribedToFirebaseNewReportsTopic(subscribedToFirebaseNewReportsTopic: Boolean): Completable =
         Completable.fromAction {
-            applyValue(PREF_KEY_FIREBASE_NEW_REPORTS_SUBSCRIBED, subscribedToFirebaseNewReportsTopic)
+            applyValue(PrefKey.fcmNewReportsSubscribed, subscribedToFirebaseNewReportsTopic)
         }
 
     override fun clearUserData(): Completable =
         Completable.fromAction {
             sharedPreferences.edit().apply {
-                remove(PREF_KEY_ACCESS_TOKEN)
-                remove(PREF_KEY_UUID)
-                remove(PREF_KEY_USERNAME)
-                remove(PREF_KEY_RANK_NAME)
+                remove(PrefKey.accessToken)
+                remove(PrefKey.uuid)
+                remove(PrefKey.username)
+                remove(PrefKey.rankName)
                 commit()
             }
         }
@@ -196,5 +184,19 @@ class PreferencesRepositoryImpl(
             putBoolean(key, value)
             commit()
         }
+    }
+
+    private object PrefKey {
+        const val accessToken = "access_token"
+        const val uuid = "uuid"
+        const val username = "nickname"
+        const val rankName = "rank"
+        const val favoriteShowcaseShown = "showcase_favorite_shown"
+        const val fcmSubscribedAppVersion = "subscribed_app_version"
+        const val fcmSubscribedPlayerRankName = "subscribed_player_rank_name"
+        const val fcmEventsSubscribed = "events_subscribed"
+        const val fcmPrivateMessagesSubscribed = "private_messages_subscribed"
+        const val fcmAccountIncidentsSubscribed = "account_incidents_subscribed"
+        const val fcmNewReportsSubscribed = "new_reports_subscribed"
     }
 }

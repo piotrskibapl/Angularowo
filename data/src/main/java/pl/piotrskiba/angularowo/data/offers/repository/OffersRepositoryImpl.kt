@@ -11,14 +11,14 @@ class OffersRepositoryImpl(
     private val offersApi: OffersApiService,
 ) : OffersRepository {
 
-    override fun getOffersInfo(accessToken: String): Single<OffersInfoModel> =
+    override fun getOffersInfo(): Single<OffersInfoModel> =
         offersApi
-            .getOffersInfo(accessToken)
+            .getOffersInfo()
             .map { it.toDomain() }
 
-    override fun redeemAdOffer(accessToken: String, offerId: String): Completable =
-        offersApi.redeemAdOffer(offerId, accessToken)
+    override fun redeemAdOffer(offerId: String): Completable =
+        offersApi.redeemAdOffer(offerId)
 
-    override fun redeemOffer(accessToken: String, offerId: String): Completable =
-        offersApi.redeemOffer(offerId, accessToken)
+    override fun redeemOffer(offerId: String): Completable =
+        offersApi.redeemOffer(offerId)
 }

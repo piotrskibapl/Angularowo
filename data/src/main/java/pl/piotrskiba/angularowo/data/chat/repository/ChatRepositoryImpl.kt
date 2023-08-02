@@ -13,8 +13,8 @@ class ChatRepositoryImpl(
     private val chatWebSocket: ChatWebSocket,
 ) : ChatRepository {
 
-    override fun getLastChatMessages(accessToken: String): Single<List<ChatMessageModel>> =
-        chatApi.getLastChatMessages(accessToken)
+    override fun getLastChatMessages(): Single<List<ChatMessageModel>> =
+        chatApi.getLastChatMessages()
             .map { it.toDomain() }
 
     override fun observeChatMessages(accessToken: String): Observable<ChatMessageModel> =

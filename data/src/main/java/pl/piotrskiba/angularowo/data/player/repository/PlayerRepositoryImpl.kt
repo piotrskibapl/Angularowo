@@ -18,27 +18,23 @@ class PlayerRepositoryImpl(
     private var onlinePlayerList: BehaviorSubject<List<PlayerRemote>> = BehaviorSubject.create()
 
     override fun getPlayerDetailsFromUsername(
-        accessToken: String,
         username: String,
     ): Single<DetailedPlayerModel> =
         playerApi
-            .getPlayerInfoFromUsername(username, accessToken)
+            .getPlayerInfoFromUsername(username)
             .map { it.toDomain() }
 
     override fun getPlayerDetailsFromUuid(
-        accessToken: String,
         uuid: String,
     ): Single<DetailedPlayerModel> =
         playerApi
-            .getPlayerInfoFromUuid(uuid, accessToken)
+            .getPlayerInfoFromUuid(uuid)
             .map { it.toDomain() }
 
-    override fun refreshOnlinePlayerList(
-        accessToken: String,
-    ): Completable =
+    override fun refreshOnlinePlayerList(): Completable =
         Completable.fromSingle(
             playerApi
-                .getOnlinePlayerList(accessToken)
+                .getOnlinePlayerList()
                 .doAfterSuccess { onlinePlayerList.onNext(it) },
         )
 

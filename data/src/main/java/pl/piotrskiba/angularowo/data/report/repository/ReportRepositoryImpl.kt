@@ -13,11 +13,9 @@ class ReportRepositoryImpl(
 ) : ReportRepository {
 
     override fun getReportList(
-        accessToken: String,
         filterList: List<ReportFilter>,
     ): Single<List<ReportModel>> =
         reportApi.getReportList(
-            accessToken,
             filterList.toRemote(),
         ).map { it.toDomain() }
 }

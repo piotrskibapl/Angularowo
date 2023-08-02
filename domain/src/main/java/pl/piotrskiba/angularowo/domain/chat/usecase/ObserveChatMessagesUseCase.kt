@@ -16,7 +16,7 @@ class ObserveChatMessagesUseCase @Inject constructor(
             .toSingle()
             .zipWith(rankRepository.getAllRanks(), ::Pair)
             .flatMapObservable { (accessToken, ranks) ->
-                chatRepository.getLastChatMessages(accessToken)
+                chatRepository.getLastChatMessages()
                     .flattenAsObservable { it.reversed() }
                     .concatWith(chatRepository.observeChatMessages(accessToken))
                     .map { chatMessageModel ->

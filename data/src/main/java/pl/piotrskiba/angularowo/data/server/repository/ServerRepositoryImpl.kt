@@ -10,10 +10,8 @@ class ServerRepositoryImpl(
     private val serverApi: ServerApiService,
 ) : ServerRepository {
 
-    override fun getServerStatus(
-        accessToken: String,
-    ): Single<ServerStatusModel> =
+    override fun getServerStatus(): Single<ServerStatusModel> =
         serverApi
-            .getServerStatus(accessToken)
+            .getServerStatus()
             .map { it.toDomain() }
 }
