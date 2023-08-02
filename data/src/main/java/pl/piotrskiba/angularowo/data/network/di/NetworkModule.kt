@@ -9,6 +9,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level
 import pl.piotrskiba.angularowo.data.BuildConfig
 import pl.piotrskiba.angularowo.data.network.NetworkRepositoryImpl
+import pl.piotrskiba.angularowo.data.network.interceptors.AuthInterceptor
 import pl.piotrskiba.angularowo.data.network.interceptors.UnauthorizedInterceptor
 import pl.piotrskiba.angularowo.domain.network.repository.NetworkRepository
 import retrofit2.Retrofit
@@ -18,6 +19,11 @@ import javax.inject.Singleton
 
 @Module
 class NetworkModule {
+
+    @Singleton
+    @Provides
+    fun provideAuthInterceptor(): AuthInterceptor =
+        AuthInterceptor()
 
     @Provides
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor =
@@ -37,10 +43,12 @@ class NetworkModule {
 
     @Provides
     fun provideOkHttpClient(
+        authInterceptor: AuthInterceptor,
         httpLoggingInterceptor: HttpLoggingInterceptor,
         unauthorizedInterceptor: UnauthorizedInterceptor,
     ): OkHttpClient {
         return OkHttpClient.Builder()
+            .addInterceptor(authInterceptor)
             .addInterceptor(httpLoggingInterceptor)
             .addInterceptor(unauthorizedInterceptor)
             .build()

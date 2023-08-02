@@ -2,7 +2,6 @@ package pl.piotrskiba.angularowo.data.offers.repository
 
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
-import pl.piotrskiba.angularowo.data.BuildConfig
 import pl.piotrskiba.angularowo.data.offers.OffersApiService
 import pl.piotrskiba.angularowo.data.offers.model.toDomain
 import pl.piotrskiba.angularowo.domain.offers.model.OffersInfoModel
@@ -14,14 +13,12 @@ class OffersRepositoryImpl(
 
     override fun getOffersInfo(accessToken: String): Single<OffersInfoModel> =
         offersApi
-            .getOffersInfo(BuildConfig.API_KEY, accessToken)
+            .getOffersInfo(accessToken)
             .map { it.toDomain() }
 
     override fun redeemAdOffer(accessToken: String, offerId: String): Completable =
-        offersApi
-            .redeemAdOffer(BuildConfig.API_KEY, offerId, accessToken)
+        offersApi.redeemAdOffer(offerId, accessToken)
 
     override fun redeemOffer(accessToken: String, offerId: String): Completable =
-        offersApi
-            .redeemOffer(BuildConfig.API_KEY, offerId, accessToken)
+        offersApi.redeemOffer(offerId, accessToken)
 }

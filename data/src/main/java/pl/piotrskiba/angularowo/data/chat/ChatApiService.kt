@@ -9,7 +9,6 @@ interface ChatApiService {
 
     @GET("get_last_chat_messages.php")
     fun getLastChatMessages(
-        @Query("api_key") apiKey: String,
         @Query("access_token") access_token: String,
     ): Single<List<ChatMessageRemote>>
 }

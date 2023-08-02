@@ -2,7 +2,6 @@ package pl.piotrskiba.angularowo.data.punishment.repository
 
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
-import pl.piotrskiba.angularowo.data.BuildConfig
 import pl.piotrskiba.angularowo.data.punishment.PunishmentApiService
 import pl.piotrskiba.angularowo.data.punishment.model.toDomain
 import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentFilterModel
@@ -22,7 +21,6 @@ class PunishmentRepositoryImpl(
     ): Single<List<PunishmentModel>> =
         punishmentApi
             .getPunishmentList(
-                apiKey = BuildConfig.API_KEY,
                 accessToken = accessToken,
                 username = null,
                 type = punishmentTypes.toRemote(),
@@ -38,7 +36,6 @@ class PunishmentRepositoryImpl(
     ): Single<List<PunishmentModel>> =
         punishmentApi
             .getPunishmentList(
-                apiKey = BuildConfig.API_KEY,
                 accessToken = accessToken,
                 username = username,
                 type = punishmentTypes.toRemote(),
@@ -53,7 +50,6 @@ class PunishmentRepositoryImpl(
         length: Long,
     ): Completable =
         punishmentApi.mutePlayer(
-            apiKey = BuildConfig.API_KEY,
             accessToken = accessToken,
             uuid = uuid,
             reason = reason,
@@ -62,7 +58,6 @@ class PunishmentRepositoryImpl(
 
     override fun kickPlayer(accessToken: String, uuid: String, reason: String): Completable =
         punishmentApi.kickPlayer(
-            apiKey = BuildConfig.API_KEY,
             accessToken = accessToken,
             uuid = uuid,
             reason = reason,
@@ -70,7 +65,6 @@ class PunishmentRepositoryImpl(
 
     override fun warnPlayer(accessToken: String, uuid: String, reason: String, length: Long): Completable =
         punishmentApi.warnPlayer(
-            apiKey = BuildConfig.API_KEY,
             accessToken = accessToken,
             uuid = uuid,
             reason = reason,
@@ -79,7 +73,6 @@ class PunishmentRepositoryImpl(
 
     override fun banPlayer(accessToken: String, uuid: String, reason: String, length: Long): Completable =
         punishmentApi.banPlayer(
-            apiKey = BuildConfig.API_KEY,
             accessToken = accessToken,
             uuid = uuid,
             reason = reason,

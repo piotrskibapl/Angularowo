@@ -9,7 +9,6 @@ interface ReportApiService {
 
     @GET("get_report_list.php")
     fun getReportList(
-        @Query("api_key") apiKey: String,
         @Query("access_token") access_token: String,
         @Query("filter") filter: String,
     ): Single<List<ReportRemote>>

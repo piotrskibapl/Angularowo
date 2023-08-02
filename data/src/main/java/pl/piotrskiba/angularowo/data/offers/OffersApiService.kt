@@ -10,20 +10,17 @@ interface OffersApiService {
 
     @GET("get_offers_info.php")
     fun getOffersInfo(
-        @Query("api_key") apiKey: String,
         @Query("access_token") access_token: String,
     ): Single<OffersInfoRemote>
 
     @GET("redeem_ad_offer.php")
     fun redeemAdOffer(
-        @Query("api_key") apiKey: String,
         @Query("offer_id") offerId: String,
         @Query("access_token") access_token: String,
     ): Completable
 
     @GET("redeem_offer.php")
     fun redeemOffer(
-        @Query("api_key") apiKey: String,
         @Query("offer_id") offerId: String,
         @Query("access_token") access_token: String,
     ): Completable

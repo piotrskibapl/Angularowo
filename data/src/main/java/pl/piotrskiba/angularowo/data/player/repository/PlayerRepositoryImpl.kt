@@ -4,7 +4,6 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.BehaviorSubject
-import pl.piotrskiba.angularowo.data.BuildConfig
 import pl.piotrskiba.angularowo.data.player.PlayerApiService
 import pl.piotrskiba.angularowo.data.player.model.PlayerRemote
 import pl.piotrskiba.angularowo.data.player.model.toDomain
@@ -23,7 +22,7 @@ class PlayerRepositoryImpl(
         username: String,
     ): Single<DetailedPlayerModel> =
         playerApi
-            .getPlayerInfoFromUsername(BuildConfig.API_KEY, username, accessToken)
+            .getPlayerInfoFromUsername(username, accessToken)
             .map { it.toDomain() }
 
     override fun getPlayerDetailsFromUuid(
@@ -31,7 +30,7 @@ class PlayerRepositoryImpl(
         uuid: String,
     ): Single<DetailedPlayerModel> =
         playerApi
-            .getPlayerInfoFromUuid(BuildConfig.API_KEY, uuid, accessToken)
+            .getPlayerInfoFromUuid(uuid, accessToken)
             .map { it.toDomain() }
 
     override fun refreshOnlinePlayerList(
@@ -39,7 +38,7 @@ class PlayerRepositoryImpl(
     ): Completable =
         Completable.fromSingle(
             playerApi
-                .getOnlinePlayerList(BuildConfig.API_KEY, accessToken)
+                .getOnlinePlayerList(accessToken)
                 .doAfterSuccess { onlinePlayerList.onNext(it) },
         )
 
