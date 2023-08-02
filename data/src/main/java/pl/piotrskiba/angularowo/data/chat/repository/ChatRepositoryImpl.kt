@@ -17,7 +17,7 @@ class ChatRepositoryImpl(
         chatApi.getLastChatMessages()
             .map { it.toDomain() }
 
-    override fun observeChatMessages(accessToken: String): Observable<ChatMessageModel> =
-        chatWebSocket.open(accessToken)
+    override fun observeChatMessages(): Observable<ChatMessageModel> =
+        chatWebSocket.open()
             .map { it.toDomain() }
 }

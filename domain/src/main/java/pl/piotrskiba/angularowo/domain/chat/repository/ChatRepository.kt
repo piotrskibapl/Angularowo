@@ -8,5 +8,5 @@ interface ChatRepository {
 
     fun getLastChatMessages(): Single<List<ChatMessageModel>>
 
-    fun observeChatMessages(accessToken: String): Observable<ChatMessageModel>
+    fun observeChatMessages(): Observable<ChatMessageModel>
 }
