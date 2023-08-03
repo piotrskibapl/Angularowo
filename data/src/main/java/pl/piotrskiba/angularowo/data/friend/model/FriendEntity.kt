@@ -15,5 +15,5 @@ fun FriendEntity.toDomain() =
 fun List<FriendEntity>.toDomain() =
     map { it.toDomain() }
 
-fun FriendModel.toData() =
+fun FriendModel.toRemote() =
     FriendEntity(uuid)
