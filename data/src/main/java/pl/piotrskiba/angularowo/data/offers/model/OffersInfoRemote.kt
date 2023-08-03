@@ -11,8 +11,8 @@ data class OffersInfoRemote(
 
 fun OffersInfoRemote.toDomain() =
     OffersInfoModel(
-        points,
-        pointsLimitReached,
-        adOffers.toDomain(),
-        offers.toDomain(),
+        points = points,
+        pointsLimitReached = pointsLimitReached,
+        adOffers = adOffers.toDomain(),
+        offers = offers.toDomain(),
     )

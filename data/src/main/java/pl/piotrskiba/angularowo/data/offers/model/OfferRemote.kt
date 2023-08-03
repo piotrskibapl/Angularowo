@@ -18,11 +18,11 @@ fun List<OfferRemote>.toDomain() =
 
 private fun OfferRemote.toDomain() =
     OfferModel(
-        id,
-        title,
-        description,
-        price,
-        imageUrl,
-        timeBreak,
-        if (availabilityDate == null) null else Date(availabilityDate),
+        id = id,
+        title = title,
+        description = description,
+        price = price,
+        imageUrl = imageUrl,
+        timeBreak = timeBreak,
+        availabilityDate = if (availabilityDate == null) null else Date(availabilityDate),
     )

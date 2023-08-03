@@ -12,8 +12,7 @@ class OffersRepositoryImpl(
 ) : OffersRepository {
 
     override fun getOffersInfo(): Single<OffersInfoModel> =
-        offersApi
-            .getOffersInfo()
+        offersApi.getOffersInfo()
             .map { it.toDomain() }
 
     override fun redeemAdOffer(offerId: String): Completable =
