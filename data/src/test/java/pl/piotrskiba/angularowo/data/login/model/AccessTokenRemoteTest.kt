@@ -7,7 +7,7 @@ import pl.piotrskiba.angularowo.domain.login.model.AccessTokenModel
 class AccessTokenRemoteTest {
 
     @Test
-    fun `SHOULD map AccessTokenData to AccessToken WHEN toDomain called`() {
+    fun `SHOULD map remote object to domain`() {
         val tested = AccessTokenRemote(
             uuid = "uuid",
             username = "username",
