@@ -1,7 +1,7 @@
 package pl.piotrskiba.angularowo.data.login.model
 
 import org.amshove.kluent.shouldBeEqualTo
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import pl.piotrskiba.angularowo.domain.login.model.AccessTokenModel
 
 class AccessTokenRemoteTest {

@@ -6,15 +6,17 @@ import io.mockk.mockkStatic
 import io.mockk.unmockkAll
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
-import org.junit.After
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.AfterAll
+import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import pl.piotrskiba.angularowo.data.chat.ChatApiService
 import pl.piotrskiba.angularowo.data.chat.ChatWebSocket
 import pl.piotrskiba.angularowo.data.chat.model.ChatMessageRemote
 import pl.piotrskiba.angularowo.data.chat.model.toDomain
 import pl.piotrskiba.angularowo.domain.chat.model.ChatMessageModel
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ChatRepositoryImplTest {
 
     val chatApi: ChatApiService = mockk()
@@ -23,13 +25,13 @@ class ChatRepositoryImplTest {
     val chatMessageRemote: ChatMessageRemote = mockk()
     val tested = ChatRepositoryImpl(chatApi, chatWebSocket)
 
-    @Before
+    @BeforeAll
     fun setup() {
         mockkStatic(ChatMessageRemote::toDomain)
         every { chatMessageRemote.toDomain() } returns chatMessageDomain
     }
 
-    @After
+    @AfterAll
     fun teardown() {
         unmockkAll()
     }

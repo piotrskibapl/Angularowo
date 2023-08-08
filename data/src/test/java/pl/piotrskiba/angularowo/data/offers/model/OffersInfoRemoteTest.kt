@@ -5,16 +5,16 @@ import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.unmockkAll
 import org.amshove.kluent.shouldBeEqualTo
-import org.junit.After
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import pl.piotrskiba.angularowo.domain.offers.model.AdOfferModel
 import pl.piotrskiba.angularowo.domain.offers.model.OfferModel
 import pl.piotrskiba.angularowo.domain.offers.model.OffersInfoModel
 
 class OffersInfoRemoteTest {
 
-    @Before
+    @BeforeEach
     fun setup() {
         mockkStatic(
             List<AdOfferRemote>::toDomain,
@@ -22,7 +22,7 @@ class OffersInfoRemoteTest {
         )
     }
 
-    @After
+    @AfterEach
     fun teardown() {
         unmockkAll()
     }

@@ -4,7 +4,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
 import org.amshove.kluent.shouldBeEqualTo
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import pl.piotrskiba.angularowo.domain.chat.model.ChatMessageModel
 import pl.piotrskiba.angularowo.domain.rank.model.RankModel
 

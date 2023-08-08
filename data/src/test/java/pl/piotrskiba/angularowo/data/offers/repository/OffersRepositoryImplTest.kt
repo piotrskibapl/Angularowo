@@ -8,25 +8,27 @@ import io.mockk.verify
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import org.amshove.kluent.assertSoftly
-import org.junit.After
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.AfterAll
+import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import pl.piotrskiba.angularowo.data.offers.OffersApiService
 import pl.piotrskiba.angularowo.data.offers.model.OffersInfoRemote
 import pl.piotrskiba.angularowo.data.offers.model.toDomain
 import pl.piotrskiba.angularowo.domain.offers.model.OffersInfoModel
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class OffersRepositoryImplTest {
 
     val offersApi: OffersApiService = mockk()
     val tested = OffersRepositoryImpl(offersApi)
 
-    @Before
+    @BeforeAll
     fun setup() {
         mockkStatic(OffersInfoRemote::toDomain)
     }
 
-    @After
+    @AfterAll
     fun teardown() {
         unmockkAll()
     }

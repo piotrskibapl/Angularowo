@@ -5,9 +5,10 @@ import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.unmockkAll
 import io.reactivex.rxjava3.core.Single
-import org.junit.After
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.AfterAll
+import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import pl.piotrskiba.angularowo.data.login.LoginApiService
 import pl.piotrskiba.angularowo.data.login.model.AccessTokenRemote
 import pl.piotrskiba.angularowo.data.login.model.toDomain
@@ -15,18 +16,19 @@ import pl.piotrskiba.angularowo.domain.login.model.AccessTokenError
 import pl.piotrskiba.angularowo.domain.login.model.AccessTokenModel
 import java.io.IOException
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class LoginRepositoryImplTest {
 
     val userCode = "user_code"
     val loginApi: LoginApiService = mockk()
     val tested = LoginRepositoryImpl(loginApi)
 
-    @Before
+    @BeforeAll
     fun setup() {
         mockkStatic(AccessTokenRemote::toDomain)
     }
 
-    @After
+    @AfterAll
     fun teardown() {
         unmockkAll()
     }

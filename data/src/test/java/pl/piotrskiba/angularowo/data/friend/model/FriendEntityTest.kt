@@ -1,7 +1,7 @@
 package pl.piotrskiba.angularowo.data.friend.model
 
 import org.amshove.kluent.shouldBeEqualTo
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import pl.piotrskiba.angularowo.domain.friend.model.FriendModel
 
 class FriendEntityTest {

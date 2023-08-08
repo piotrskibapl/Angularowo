@@ -8,21 +8,23 @@ import io.mockk.verify
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import org.amshove.kluent.assertSoftly
-import org.junit.After
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.AfterAll
+import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import pl.piotrskiba.angularowo.data.friend.dao.FriendDao
 import pl.piotrskiba.angularowo.data.friend.model.FriendEntity
 import pl.piotrskiba.angularowo.data.friend.model.toDomain
 import pl.piotrskiba.angularowo.data.friend.model.toRemote
 import pl.piotrskiba.angularowo.domain.friend.model.FriendModel
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class FriendRepositoryImplTest {
 
     val friendDao: FriendDao = mockk()
     val tested = FriendRepositoryImpl(friendDao)
 
-    @Before
+    @BeforeAll
     fun setup() {
         mockkStatic(
             List<FriendEntity>::toDomain,
@@ -30,7 +32,7 @@ class FriendRepositoryImplTest {
         )
     }
 
-    @After
+    @AfterAll
     fun teardown() {
         unmockkAll()
     }

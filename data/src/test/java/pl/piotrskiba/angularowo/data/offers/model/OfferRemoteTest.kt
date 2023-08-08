@@ -1,7 +1,7 @@
 package pl.piotrskiba.angularowo.data.offers.model
 
 import org.amshove.kluent.shouldBeEqualTo
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import pl.piotrskiba.angularowo.domain.offers.model.OfferModel
 import java.util.Date
 
