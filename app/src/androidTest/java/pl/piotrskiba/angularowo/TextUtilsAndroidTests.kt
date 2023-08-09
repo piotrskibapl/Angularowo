@@ -24,7 +24,8 @@ class TextUtilsAndroidTests {
 
     @Test
     fun replaceColorCodes_threeColorCodes_success() {
-        val expected = "Simple colored </font><font color=#00005e>text</font><font color=#808080>, with </font><font color=#5e005e>three color codes"
+        val expected =
+            "Simple colored </font><font color=#00005e>text</font><font color=#808080>, with </font><font color=#5e005e>three color codes"
         val actual = TextUtils.replaceColorCodes(instrumentationContext, "Simple colored §1text§f, with §5three color codes")
         Assert.assertEquals(expected, actual)
     }

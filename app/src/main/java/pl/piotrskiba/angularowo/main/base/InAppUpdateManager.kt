@@ -51,16 +51,18 @@ class InAppUpdateManager @Inject constructor(
             if (updateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
                 val priority = updateInfo.updatePriority()
                 val stalenessDays = updateInfo.clientVersionStalenessDays ?: 0
+                val immediateUpdateAllowed = updateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)
+                val flexibleUpdateAllowed = updateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)
                 val updateType = when {
-                    priority == 5 && updateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE) -> AppUpdateType.IMMEDIATE
-                    priority == 5 && updateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE) -> AppUpdateType.FLEXIBLE
-                    priority == 4 && stalenessDays >= 7 && updateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE) -> AppUpdateType.IMMEDIATE
-                    priority == 4 && updateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE) -> AppUpdateType.FLEXIBLE
-                    priority == 3 && stalenessDays >= 30 && updateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE) -> AppUpdateType.IMMEDIATE
-                    priority == 3 && stalenessDays >= 7 && updateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE) -> AppUpdateType.FLEXIBLE
-                    priority == 2 && stalenessDays >= 90 && updateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE) -> AppUpdateType.IMMEDIATE
-                    priority == 2 && stalenessDays >= 30 && updateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE) -> AppUpdateType.FLEXIBLE
-                    priority == 1 && stalenessDays >= 90 && updateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE) -> AppUpdateType.FLEXIBLE
+                    priority == 5 && immediateUpdateAllowed -> AppUpdateType.IMMEDIATE
+                    priority == 5 && flexibleUpdateAllowed -> AppUpdateType.FLEXIBLE
+                    priority == 4 && stalenessDays >= 7 && immediateUpdateAllowed -> AppUpdateType.IMMEDIATE
+                    priority == 4 && flexibleUpdateAllowed -> AppUpdateType.FLEXIBLE
+                    priority == 3 && stalenessDays >= 30 && immediateUpdateAllowed -> AppUpdateType.IMMEDIATE
+                    priority == 3 && stalenessDays >= 7 && flexibleUpdateAllowed -> AppUpdateType.FLEXIBLE
+                    priority == 2 && stalenessDays >= 90 && immediateUpdateAllowed -> AppUpdateType.IMMEDIATE
+                    priority == 2 && stalenessDays >= 30 && flexibleUpdateAllowed -> AppUpdateType.FLEXIBLE
+                    priority == 1 && stalenessDays >= 90 && flexibleUpdateAllowed -> AppUpdateType.FLEXIBLE
                     else -> null
                 }
                 if (updateType != null) {

@@ -18,7 +18,14 @@ data class PlayerDetailsMenuItemsVisibility(
         // TODO: nullable previewedPlayerBanner is only a temporary solution
         fun from(player: DetailedPlayerModel, previewedPlayerBanner: PlayerBanner?) =
             if (previewedPlayerBanner == null) {
-                PlayerDetailsMenuItemsVisibility(favorite = false, unfavorite = false, mute = false, kick = false, warn = false, ban = false)
+                PlayerDetailsMenuItemsVisibility(
+                    favorite = false,
+                    unfavorite = false,
+                    mute = false,
+                    kick = false,
+                    warn = false,
+                    ban = false,
+                )
             } else {
                 PlayerDetailsMenuItemsVisibility(
                     favorite = !previewingSelfOrPartner(player, previewedPlayerBanner) && !previewedPlayerBanner.isFavorite,
