@@ -75,7 +75,12 @@ class OffersFragment : BaseFragment<OffersViewModel>(OffersViewModel::class), Of
             .show()
     }
 
-    override fun displayRewardedAd(adId: String, onAdLoaded: () -> Unit, onAdWatched: (RewardItem) -> Unit, onAdLoadingFailure: () -> Unit) {
+    override fun displayRewardedAd(
+        adId: String,
+        onAdLoaded: () -> Unit,
+        onAdWatched: (RewardItem) -> Unit,
+        onAdLoadingFailure: () -> Unit,
+    ) {
         val extras = Bundle().apply {
             putString("npa", "1")
         }

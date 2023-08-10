@@ -65,7 +65,12 @@ class PlayerDetailsViewModel @Inject constructor(
                 .applyDefaultSchedulers(facade)
                 .subscribe(
                     {
-                        AnalyticsUtils.logFavorite(args.player.uuid, args.player.username, args.previewedPlayerUuid, previewedPlayerDetails.value!!.username)
+                        AnalyticsUtils.logFavorite(
+                            args.player.uuid,
+                            args.player.username,
+                            args.previewedPlayerUuid,
+                            previewedPlayerDetails.value!!.username,
+                        )
                         navigator.displayMarkedAsFavoriteSnackbar()
                     },
                     {
@@ -81,7 +86,12 @@ class PlayerDetailsViewModel @Inject constructor(
                 .applyDefaultSchedulers(facade)
                 .subscribe(
                     {
-                        AnalyticsUtils.logUnfavorite(args.player.uuid, args.player.username, args.previewedPlayerUuid, previewedPlayerDetails.value!!.username)
+                        AnalyticsUtils.logUnfavorite(
+                            args.player.uuid,
+                            args.player.username,
+                            args.previewedPlayerUuid,
+                            previewedPlayerDetails.value!!.username,
+                        )
                         navigator.displayUnmarkedAsFavoriteSnackbar()
                     },
                     {
