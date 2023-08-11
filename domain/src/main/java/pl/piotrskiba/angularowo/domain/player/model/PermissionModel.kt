@@ -6,5 +6,4 @@ enum class PermissionModel {
     MUTE_PLAYERS,
     WARN_PLAYERS,
     BAN_PLAYERS,
-    UNKNOWN,
 }
