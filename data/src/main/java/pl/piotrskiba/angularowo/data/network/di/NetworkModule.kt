@@ -8,9 +8,9 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level
 import pl.piotrskiba.angularowo.data.BuildConfig
-import pl.piotrskiba.angularowo.data.network.NetworkRepositoryImpl
 import pl.piotrskiba.angularowo.data.network.interceptors.AuthInterceptor
 import pl.piotrskiba.angularowo.data.network.interceptors.UnauthorizedInterceptor
+import pl.piotrskiba.angularowo.data.network.repository.NetworkRepositoryImpl
 import pl.piotrskiba.angularowo.domain.network.repository.NetworkRepository
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
