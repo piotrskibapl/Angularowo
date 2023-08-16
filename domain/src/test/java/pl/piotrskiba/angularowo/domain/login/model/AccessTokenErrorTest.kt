@@ -2,6 +2,7 @@ package pl.piotrskiba.angularowo.domain.login.model
 
 import io.mockk.every
 import io.mockk.mockk
+import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -14,33 +15,21 @@ class AccessTokenErrorTest {
 
         @JvmStatic
         fun parameters() = listOf(
-            Pair(
-                mockk<HttpException> { every { code() } returns 403 },
-                AccessTokenError.CodeExpiredError,
-            ),
-            Pair(
-                mockk<HttpException> { every { code() } returns 404 },
-                AccessTokenError.CodeNotFoundError,
-            ),
-            Pair(
-                mockk<HttpException> { every { code() } returns 500 },
-                AccessTokenError.UnknownError,
-            ),
-            Pair(
-                IOException(),
-                AccessTokenError.UnknownError,
-            ),
+            mockk<HttpException> { every { code() } returns 403 } to AccessTokenError.CodeExpiredError,
+            mockk<HttpException> { every { code() } returns 404 } to AccessTokenError.CodeNotFoundError,
+            mockk<HttpException> { every { code() } returns 500 } to AccessTokenError.UnknownError,
+            IOException() to AccessTokenError.UnknownError,
         ).map { Arguments.of(it.first, it.second) }
     }
 
     @ParameterizedTest
     @MethodSource("parameters")
-    fun `SHOULD map Throwable to AccessTokenError WHEN toAccessTokenError called`(
+    fun `SHOULD map Throwable to AccessTokenError`(
         throwable: Throwable,
         expectedAccessTokenError: AccessTokenError,
     ) {
         val result = throwable.toAccessTokenError()
 
-        assert(result == expectedAccessTokenError)
+        result shouldBeEqualTo expectedAccessTokenError
     }
 }
