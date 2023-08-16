@@ -32,7 +32,7 @@ class UnauthorizedInterceptorTest {
 
     @ParameterizedTest
     @ValueSource(ints = [200, 400, 403, 404, 500])
-    fun `SHOULD NOT signal unauthorized response WHEN response code is {0}`(responseCode: Int) {
+    fun `SHOULD NOT signal unauthorized response WHEN response code is not 401`(responseCode: Int) {
         val request: Request = mockk()
         val response: Response = mockk {
             every { code } returns responseCode

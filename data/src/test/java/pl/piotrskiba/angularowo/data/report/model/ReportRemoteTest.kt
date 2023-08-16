@@ -33,7 +33,7 @@ class ReportRemoteTest {
 
     @ParameterizedTest
     @MethodSource("parameters")
-    fun `SHOULD map list of remote objects to domain WHEN status is {0} AND appreciation is {1}`(
+    fun `SHOULD map list of remote objects to domain`(
         statusRemote: String,
         appreciationRemote: String,
         statusAndAppreciation: Pair<ReportStatus, ReportAppreciation>,

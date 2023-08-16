@@ -26,7 +26,7 @@ class DetailedPlayerRemoteTest {
 
     @ParameterizedTest
     @MethodSource("parameters")
-    fun `SHOULD map remote object to domain WHEN permission is {0}`(permissionsRemote: List<String>, permissionModels: List<PermissionModel>) {
+    fun `SHOULD map remote object to domain`(permissionsRemote: List<String>, permissionModels: List<PermissionModel>) {
         val tested = DetailedPlayerRemote(
             uuid = "uuid",
             skinUuid = "skinUuid",

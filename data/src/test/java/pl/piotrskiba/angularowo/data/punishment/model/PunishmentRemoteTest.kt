@@ -23,7 +23,7 @@ class PunishmentRemoteTest {
 
     @ParameterizedTest
     @MethodSource("parameters")
-    fun `SHOULD map remote object to domain WHEN punishment type is {0}`(
+    fun `SHOULD map remote object to domain`(
         punishmentTypeRemote: String,
         punishmentType: PunishmentTypeModel,
     ) {
