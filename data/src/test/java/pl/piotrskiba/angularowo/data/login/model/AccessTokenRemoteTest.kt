@@ -1,28 +1,25 @@
 package pl.piotrskiba.angularowo.data.login.model
 
-import org.junit.Test
+import org.amshove.kluent.shouldBeEqualTo
+import org.junit.jupiter.api.Test
 import pl.piotrskiba.angularowo.domain.login.model.AccessTokenModel
 
 class AccessTokenRemoteTest {
 
     @Test
-    fun `SHOULD map AccessTokenData to AccessToken WHEN toDomain called`() {
+    fun `SHOULD map remote object to domain`() {
         val tested = AccessTokenRemote(
-            "uuid",
-            "username",
-            "accessToken",
-            "message",
+            uuid = "uuid",
+            username = "username",
+            access_token = "accessToken",
+            message = "message",
         )
 
-        val result = tested.toDomain()
-
-        assert(
-            result == AccessTokenModel(
-                "uuid",
-                "username",
-                "accessToken",
-                "message",
-            ),
+        tested.toDomain() shouldBeEqualTo AccessTokenModel(
+            uuid = "uuid",
+            username = "username",
+            accessToken = "accessToken",
+            message = "message",
         )
     }
 }

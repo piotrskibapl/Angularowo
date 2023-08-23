@@ -12,7 +12,9 @@ data class PlayerRemote(
     val vanished: Boolean,
 )
 
-fun PlayerRemote.toDomain() = PlayerModel(
+fun List<PlayerRemote>.toDomain() = map { it.toDomain() }
+
+private fun PlayerRemote.toDomain() = PlayerModel(
     uuid,
     skinUuid,
     partnerUuid,

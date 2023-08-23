@@ -16,9 +16,9 @@ fun List<AdOfferRemote>.toDomain() =
 
 private fun AdOfferRemote.toDomain() =
     AdOfferModel(
-        id,
-        points,
-        adId,
-        timeBreak,
-        if (availabilityDate == null) null else Date(availabilityDate),
+        id = id,
+        points = points,
+        adId = adId,
+        timeBreak = timeBreak,
+        availabilityDate = if (availabilityDate == null) null else Date(availabilityDate),
     )

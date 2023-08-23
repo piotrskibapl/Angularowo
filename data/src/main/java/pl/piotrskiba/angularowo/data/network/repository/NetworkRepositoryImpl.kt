@@ -1,4 +1,4 @@
-package pl.piotrskiba.angularowo.data.network
+package pl.piotrskiba.angularowo.data.network.repository
 
 import io.reactivex.rxjava3.core.Observable
 import pl.piotrskiba.angularowo.data.network.interceptors.UnauthorizedInterceptor

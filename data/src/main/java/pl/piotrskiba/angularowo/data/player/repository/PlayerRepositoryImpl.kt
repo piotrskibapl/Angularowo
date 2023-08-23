@@ -40,6 +40,6 @@ class PlayerRepositoryImpl(
 
     override fun observeOnlinePlayerList(): Observable<List<PlayerModel>> =
         onlinePlayerList.map { playerList ->
-            playerList.map { it.toDomain() }
+            playerList.toDomain()
         }
 }
