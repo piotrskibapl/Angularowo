@@ -76,7 +76,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.preference:preference-ktx:1.2.0'
+    implementation 'androidx.preference:preference-ktx:1.2.1'
 
     testImplementation platform("org.junit:junit-bom:$junit_version")
     testImplementation "org.junit.jupiter:junit-jupiter"
@@ -126,7 +126,7 @@ dependencies {
     }
 
     // AdMob
-    implementation 'com.google.android.gms:play-services-ads:22.2.0'
+    implementation 'com.google.android.gms:play-services-ads:22.3.0'
 
     // MultiDex
     implementation "androidx.multidex:multidex:2.0.1"
