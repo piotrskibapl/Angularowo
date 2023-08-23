@@ -1,6 +1,7 @@
 package pl.piotrskiba.angularowo.domain.applock.usecase
 
 import pl.piotrskiba.angularowo.domain.applock.repository.AppLockRepository
+import java.util.Calendar
 import javax.inject.Inject
 
 class CheckIfAppLockIsEnabledUseCase @Inject constructor(
@@ -9,5 +10,8 @@ class CheckIfAppLockIsEnabledUseCase @Inject constructor(
 
     fun execute() =
         appLockRepository.getAppLockConfig()
-            .map { it.startTimestamp * 1000 <= System.currentTimeMillis() && it.endTimestamp * 1000 > System.currentTimeMillis() }
+            .map {
+                val calendar = Calendar.getInstance()
+                it.startTimestamp * 1000 <= calendar.timeInMillis && it.endTimestamp * 1000 > calendar.timeInMillis
+            }
 }

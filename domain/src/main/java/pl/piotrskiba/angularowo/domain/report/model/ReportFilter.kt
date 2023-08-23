@@ -7,4 +7,7 @@ enum class ReportFilter {
 }
 
 fun List<ReportFilter>.toRemote() =
-    joinToString { it.toString().lowercase() }
+    joinToString(
+        separator = ",",
+        transform = { it.toString().lowercase() },
+    )
