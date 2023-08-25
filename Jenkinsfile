@@ -38,7 +38,7 @@ pipeline {
         }
         stage('Test release') {
             when {
-                branch 'master'
+                anyOf { branch 'master'; tag 'v*.*.*' }
             }
             steps {
                 sh './gradlew testRelease'
@@ -51,7 +51,7 @@ pipeline {
         }
         stage('Build release') {
             when {
-                branch 'master'
+                anyOf { branch 'master'; tag 'v*.*.*' }
             }
             steps {
                 withCredentials([
