@@ -3,9 +3,9 @@ package pl.piotrskiba.angularowo.domain.login.model
 import retrofit2.HttpException
 
 sealed class AccessTokenError : Throwable() {
-    object CodeNotFoundError : AccessTokenError()
-    object CodeExpiredError : AccessTokenError()
-    object UnknownError : AccessTokenError()
+    data object CodeNotFoundError : AccessTokenError()
+    data object CodeExpiredError : AccessTokenError()
+    data object UnknownError : AccessTokenError()
 }
 
 fun Throwable.toAccessTokenError(): AccessTokenError = when (this) {

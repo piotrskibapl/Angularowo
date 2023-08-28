@@ -10,12 +10,12 @@ import java.io.IOException
 sealed class ViewModelState {
     sealed class Loading : ViewModelState() {
 
-        object Fetch : Loading()
-        object Send : Loading()
-        object Refresh : Loading()
+        data object Fetch : Loading()
+        data object Send : Loading()
+        data object Refresh : Loading()
     }
 
-    object Loaded : ViewModelState()
+    data object Loaded : ViewModelState()
     data class Error(val error: Throwable?) : ViewModelState()
 
     fun fullscreenLoaderVisible() = isFetching() || isSending()
