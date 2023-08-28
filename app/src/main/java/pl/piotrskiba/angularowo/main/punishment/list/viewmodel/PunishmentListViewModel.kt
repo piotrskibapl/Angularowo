@@ -12,7 +12,7 @@ import pl.piotrskiba.angularowo.base.model.ViewModelState.Loading
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.punishment.usecase.GetActivePunishmentsUseCase
-import pl.piotrskiba.angularowo.main.punishment.details.model.DetailedPunishmentData
+import pl.piotrskiba.angularowo.main.punishment.details.model.DetailedPunishment
 import pl.piotrskiba.angularowo.main.punishment.details.model.toUi
 import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBanner
 import pl.piotrskiba.angularowo.main.punishment.model.toPunishmentBanners
@@ -24,7 +24,7 @@ class PunishmentListViewModel @Inject constructor(
 ) : LifecycleViewModel() {
 
     val state = MutableLiveData<ViewModelState>(Loading.Fetch)
-    val punishments: MutableList<DetailedPunishmentData> = mutableListOf()
+    val punishments: MutableList<DetailedPunishment> = mutableListOf()
     val punishmentBanners: MutableLiveData<List<PunishmentBanner>> = MutableLiveData()
     val punishmentsBinding = ItemBinding.of<PunishmentBanner>(BR.punishment, R.layout.punishment_list_item)
 

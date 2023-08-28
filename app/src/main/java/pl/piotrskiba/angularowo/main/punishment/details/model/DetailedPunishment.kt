@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-data class DetailedPunishmentData(
+data class DetailedPunishment(
     val id: String,
     val uuid: String?,
     val username: String,
@@ -53,7 +53,7 @@ data class DetailedPunishmentData(
 }
 
 fun PunishmentModel.toUi() =
-    DetailedPunishmentData(
+    DetailedPunishment(
         id,
         uuid,
         username,
