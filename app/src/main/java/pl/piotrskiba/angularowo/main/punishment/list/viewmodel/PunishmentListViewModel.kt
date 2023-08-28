@@ -12,8 +12,8 @@ import pl.piotrskiba.angularowo.base.model.ViewModelState.Loading
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.punishment.usecase.GetActivePunishmentsUseCase
-import pl.piotrskiba.angularowo.main.punishment.details.DetailedPunishmentData
-import pl.piotrskiba.angularowo.main.punishment.details.toUi
+import pl.piotrskiba.angularowo.main.punishment.details.model.DetailedPunishmentData
+import pl.piotrskiba.angularowo.main.punishment.details.model.toUi
 import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBanner
 import pl.piotrskiba.angularowo.main.punishment.model.toPunishmentBanners
 import javax.inject.Inject

@@ -19,8 +19,8 @@ import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
 import pl.piotrskiba.angularowo.main.mainscreen.model.MainScreenData
 import pl.piotrskiba.angularowo.main.mainscreen.model.toUi
 import pl.piotrskiba.angularowo.main.mainscreen.nav.MainScreenNavigator
-import pl.piotrskiba.angularowo.main.punishment.details.DetailedPunishmentData
-import pl.piotrskiba.angularowo.main.punishment.details.toUi
+import pl.piotrskiba.angularowo.main.punishment.details.model.DetailedPunishmentData
+import pl.piotrskiba.angularowo.main.punishment.details.model.toUi
 import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBanner
 import javax.inject.Inject
 

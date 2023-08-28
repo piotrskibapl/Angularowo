@@ -1,4 +1,4 @@
-package pl.piotrskiba.angularowo.main.punishment.details
+package pl.piotrskiba.angularowo.main.punishment.details.model
 
 import android.content.Context
 import pl.piotrskiba.angularowo.R
