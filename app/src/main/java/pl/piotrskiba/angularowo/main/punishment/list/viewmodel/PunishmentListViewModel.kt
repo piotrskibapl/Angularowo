@@ -12,10 +12,10 @@ import pl.piotrskiba.angularowo.base.model.ViewModelState.Loading
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.punishment.usecase.GetActivePunishmentsUseCase
-import pl.piotrskiba.angularowo.main.punishment.details.DetailedPunishmentData
-import pl.piotrskiba.angularowo.main.punishment.details.toUi
-import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBannerData
-import pl.piotrskiba.angularowo.main.punishment.model.toPunishmentBannerData
+import pl.piotrskiba.angularowo.main.punishment.details.model.DetailedPunishment
+import pl.piotrskiba.angularowo.main.punishment.details.model.toUi
+import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBanner
+import pl.piotrskiba.angularowo.main.punishment.model.toPunishmentBanners
 import javax.inject.Inject
 
 class PunishmentListViewModel @Inject constructor(
@@ -24,9 +24,9 @@ class PunishmentListViewModel @Inject constructor(
 ) : LifecycleViewModel() {
 
     val state = MutableLiveData<ViewModelState>(Loading.Fetch)
-    val punishments: MutableList<DetailedPunishmentData> = mutableListOf()
-    val punishmentBanners: MutableLiveData<List<PunishmentBannerData>> = MutableLiveData()
-    val punishmentsBinding = ItemBinding.of<PunishmentBannerData>(BR.punishment, R.layout.punishment_list_item)
+    val punishments: MutableList<DetailedPunishment> = mutableListOf()
+    val punishmentBanners: MutableLiveData<List<PunishmentBanner>> = MutableLiveData()
+    val punishmentsBinding = ItemBinding.of<PunishmentBanner>(BR.punishment, R.layout.punishment_list_item)
 
     override fun onFirstCreate() {
         loadPunishmentList()
@@ -46,7 +46,7 @@ class PunishmentListViewModel @Inject constructor(
                         state.value = Loaded
                         punishments.clear()
                         punishments.addAll(punishmentModels.toUi())
-                        punishmentBanners.value = punishmentModels.toPunishmentBannerData()
+                        punishmentBanners.value = punishmentModels.toPunishmentBanners()
                     },
                     { error ->
                         state.value = Error(error)

@@ -167,7 +167,7 @@ dependencies {
     implementation("com.google.android.play:app-update-ktx:$inappupdates_version")
 }
 
-configurations.all {
+configurations.configureEach {
     all*.exclude group: 'com.google.guava', module: 'listenablefuture'
 }
 

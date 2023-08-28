@@ -19,9 +19,9 @@ import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
 import pl.piotrskiba.angularowo.main.mainscreen.model.MainScreenData
 import pl.piotrskiba.angularowo.main.mainscreen.model.toUi
 import pl.piotrskiba.angularowo.main.mainscreen.nav.MainScreenNavigator
-import pl.piotrskiba.angularowo.main.punishment.details.DetailedPunishmentData
-import pl.piotrskiba.angularowo.main.punishment.details.toUi
-import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBannerData
+import pl.piotrskiba.angularowo.main.punishment.details.model.DetailedPunishment
+import pl.piotrskiba.angularowo.main.punishment.details.model.toUi
+import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBanner
 import javax.inject.Inject
 
 class MainScreenViewModel @Inject constructor(
@@ -33,8 +33,8 @@ class MainScreenViewModel @Inject constructor(
     val state = MutableLiveData<ViewModelState>(Loading.Fetch)
     val player = MutableLiveData<DetailedPlayerModel>() // exposed for MainViewModel synchronization
     val uiData = MutableLiveData<MainScreenData>()
-    val punishments: MutableList<DetailedPunishmentData> = mutableListOf()
-    val punishmentsBinding = ItemBinding.of<PunishmentBannerData>(BR.punishment, R.layout.punishment_list_item)
+    val punishments: MutableList<DetailedPunishment> = mutableListOf()
+    val punishmentsBinding = ItemBinding.of<PunishmentBanner>(BR.punishment, R.layout.punishment_list_item)
     val isPunishmentListNotEmpty = uiData.map { it.punishments.isNotEmpty() }
     lateinit var navigator: MainScreenNavigator
 

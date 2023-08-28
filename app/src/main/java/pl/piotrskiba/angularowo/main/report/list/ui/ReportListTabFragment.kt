@@ -11,7 +11,7 @@ import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.databinding.FragmentReportListTabBinding
 import pl.piotrskiba.angularowo.main.report.list.nav.ReportListNavigator
 import pl.piotrskiba.angularowo.main.report.list.viewmodel.ReportListTabViewModel
-import pl.piotrskiba.angularowo.main.report.model.ReportBannerData
+import pl.piotrskiba.angularowo.main.report.model.ReportBanner
 
 const val OTHERS_REPORTS_VARIANT_KEY = "others-reports-variant"
 
@@ -34,7 +34,7 @@ class ReportListTabFragment :
         return binding.root
     }
 
-    override fun onReportClick(view: View, report: ReportBannerData) {
+    override fun onReportClick(view: View, report: ReportBanner) {
         val reportModel = viewModel.reportModels.value!!.first { it.id == report.id }
         findNavController().navigate(
             directions = ReportListContainerFragmentDirections.toReportDetailsFragment(reportModel),

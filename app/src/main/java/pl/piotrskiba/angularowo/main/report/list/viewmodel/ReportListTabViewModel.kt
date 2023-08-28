@@ -16,7 +16,7 @@ import pl.piotrskiba.angularowo.domain.report.usecase.GetNotArchivedReportsUseCa
 import pl.piotrskiba.angularowo.domain.report.usecase.GetOwnedReportsUseCase
 import pl.piotrskiba.angularowo.main.report.list.model.ReportListTabData
 import pl.piotrskiba.angularowo.main.report.list.model.toUi
-import pl.piotrskiba.angularowo.main.report.model.ReportBannerData
+import pl.piotrskiba.angularowo.main.report.model.ReportBanner
 import javax.inject.Inject
 
 class ReportListTabViewModel @Inject constructor(
@@ -28,7 +28,7 @@ class ReportListTabViewModel @Inject constructor(
     val state = MutableLiveData<ViewModelState>(Loading.Fetch)
     val reportModels: MutableLiveData<List<ReportModel>> = MutableLiveData()
     val tabData: MutableLiveData<ReportListTabData> = MutableLiveData()
-    val reportsBinding = ItemBinding.of<ReportBannerData>(BR.report, R.layout.report_list_item)
+    val reportsBinding = ItemBinding.of<ReportBanner>(BR.report, R.layout.report_list_item)
     var othersReportsVariant = false
 
     override fun onFirstCreate() {

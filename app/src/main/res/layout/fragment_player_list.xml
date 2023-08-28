@@ -41,7 +41,7 @@
                         app:items="@{viewModel.favoritePlayers}"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:spanCount="@integer/player_list_span_count"
-                        app:visible="@{viewModel.favoritePlayerListNotEmpty}" />
+                        app:visible="@{viewModel.isFavoritePlayerListNotEmpty}" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/player_list"

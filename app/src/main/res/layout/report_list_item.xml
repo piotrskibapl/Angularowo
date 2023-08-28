@@ -13,7 +13,7 @@
 
         <variable
             name="report"
-            type="pl.piotrskiba.angularowo.main.report.model.ReportBannerData" />
+            type="pl.piotrskiba.angularowo.main.report.model.ReportBanner" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

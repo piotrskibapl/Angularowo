@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-data class ReportData(
+data class Report(
     val id: Int,
     val reporterName: String,
     val reportedName: String,
@@ -26,7 +26,7 @@ data class ReportData(
 }
 
 fun ReportModel.toUi() =
-    ReportData(
+    Report(
         id = id,
         reporterName = reporterName,
         reportedName = reportedName,

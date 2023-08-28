@@ -2,13 +2,11 @@ package pl.piotrskiba.angularowo.main.player.model
 
 import android.content.Context
 import androidx.annotation.ColorInt
-import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
 import pl.piotrskiba.angularowo.domain.player.model.PlayerModel
+import pl.piotrskiba.angularowo.main.base.MinecraftColor
 import pl.piotrskiba.angularowo.utils.UrlUtils
 import java.io.Serializable
-
-private const val COLOR_CODE_RES_PREFIX = "color_minecraft_"
 
 data class PlayerBanner(
     val uuid: String,
@@ -21,19 +19,8 @@ data class PlayerBanner(
 ) : Serializable {
 
     @ColorInt
-    fun rankColor(context: Context): Int {
-        val colorResId = context.resources.getIdentifier(
-            COLOR_CODE_RES_PREFIX + rankColorCode,
-            "color",
-            context.packageName,
-        )
-        return context.getColor(
-            when (colorResId) {
-                0 -> R.color.color_minecraft_7
-                else -> colorResId
-            },
-        )
-    }
+    fun rankColor(context: Context) =
+        context.getColor(MinecraftColor.colorCode[rankColorCode] ?: MinecraftColor.default)
 
     fun avatarUrl(context: Context) = UrlUtils.buildAvatarUrl(skinUuid, true, context)
 }

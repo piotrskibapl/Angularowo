@@ -11,10 +11,10 @@ kotlin {
 
 android {
     namespace 'pl.piotrskiba.angularowo.domain'
-    compileSdkVersion Integer.parseInt(androidCompileSdkVersion)
+    compileSdk Integer.parseInt(androidCompileSdkVersion)
     defaultConfig {
-        minSdkVersion Integer.parseInt(androidMinSdkVersion)
-        targetSdkVersion Integer.parseInt(androidTargetSdkVersion)
+        minSdk Integer.parseInt(androidMinSdkVersion)
+        targetSdk Integer.parseInt(androidTargetSdkVersion)
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }

@@ -6,8 +6,10 @@ import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
-import pl.piotrskiba.angularowo.IntegerVersionSignature
-import pl.piotrskiba.angularowo.utils.GlideUtils
+import pl.piotrskiba.angularowo.base.IntegerVersionSignature
+import java.util.Calendar
+
+private const val IMAGE_LIFETIME_DAYS = 5
 
 @BindingAdapter("imageUrl", "placeholderImage", requireAll = false)
 fun loadImage(
@@ -18,7 +20,13 @@ fun loadImage(
     if (!url.isNullOrEmpty()) {
         Glide.with(imageView.context)
             .load(url)
-            .signature(IntegerVersionSignature(GlideUtils.getSignatureVersionNumber(5)))
+            .signature(
+                IntegerVersionSignature(
+                    with(Calendar.getInstance()) {
+                        get(Calendar.YEAR) * 1000 + get(Calendar.DAY_OF_YEAR) / IMAGE_LIFETIME_DAYS
+                    },
+                ),
+            )
             .placeholder(placeholder ?: 0)
             .into(imageView)
     }

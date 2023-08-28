@@ -24,7 +24,7 @@ import pl.piotrskiba.angularowo.main.base.viewmodel.MainViewModel
 import pl.piotrskiba.angularowo.main.mainscreen.nav.MainScreenNavigator
 import pl.piotrskiba.angularowo.main.mainscreen.viewmodel.MainScreenViewModel
 import pl.piotrskiba.angularowo.main.punishment.list.nav.PunishmentListNavigator
-import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBannerData
+import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBanner
 
 class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel::class), MainScreenNavigator, PunishmentListNavigator {
 
@@ -58,7 +58,7 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel
         view.doOnPreDraw { startPostponedEnterTransition() }
     }
 
-    override fun onPunishmentClick(view: View, punishment: PunishmentBannerData) {
+    override fun onPunishmentClick(view: View, punishment: PunishmentBanner) {
         val detailedPunishmentData = viewModel.punishments.first { it.id == punishment.id }
         findNavController().navigate(
             directions = MainScreenFragmentDirections.toPunishmentDetailsFragment(detailedPunishmentData),

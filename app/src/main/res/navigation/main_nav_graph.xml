@@ -96,7 +96,7 @@
         tools:layout="@layout/fragment_punishment_details">
         <argument
             android:name="punishment"
-            app:argType="pl.piotrskiba.angularowo.main.punishment.details.DetailedPunishmentData" />
+            app:argType="pl.piotrskiba.angularowo.main.punishment.details.model.DetailedPunishment" />
     </fragment>
 
     <fragment

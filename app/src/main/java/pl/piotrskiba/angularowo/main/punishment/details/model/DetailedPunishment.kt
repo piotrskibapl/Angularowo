@@ -1,16 +1,16 @@
-package pl.piotrskiba.angularowo.main.punishment.details
+package pl.piotrskiba.angularowo.main.punishment.details.model
 
 import android.content.Context
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentModel
 import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentTypeModel
-import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBannerData
+import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBanner
 import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-data class DetailedPunishmentData(
+data class DetailedPunishment(
     val id: String,
     val uuid: String?,
     val username: String,
@@ -42,8 +42,8 @@ data class DetailedPunishmentData(
         PunishmentTypeModel.KICK -> context.getString(R.string.punishment_type_kick)
     }
 
-    fun toPunishmentBannerData() =
-        PunishmentBannerData(
+    fun toPunishmentBanner() =
+        PunishmentBanner(
             id,
             uuid,
             username,
@@ -53,7 +53,7 @@ data class DetailedPunishmentData(
 }
 
 fun PunishmentModel.toUi() =
-    DetailedPunishmentData(
+    DetailedPunishment(
         id,
         uuid,
         username,

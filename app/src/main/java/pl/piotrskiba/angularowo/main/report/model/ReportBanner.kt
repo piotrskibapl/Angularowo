@@ -6,7 +6,7 @@ import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.domain.report.model.ReportAppreciation
 import pl.piotrskiba.angularowo.domain.report.model.ReportModel
 
-data class ReportBannerData(
+data class ReportBanner(
     val id: Int,
     val reportedName: String,
     private val reason: String,
@@ -36,13 +36,13 @@ data class ReportBannerData(
         }
 }
 
-fun ReportModel.toReportBannerData() =
-    ReportBannerData(
+fun ReportModel.toReportBanner() =
+    ReportBanner(
         id,
         reportedName,
         reason,
         appreciation,
     )
 
-fun List<ReportModel>.toReportBannerDataList() =
-    map { it.toReportBannerData() }
+fun List<ReportModel>.toReportBanners() =
+    map { it.toReportBanner() }

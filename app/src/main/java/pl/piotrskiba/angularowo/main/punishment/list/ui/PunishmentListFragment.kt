@@ -13,7 +13,7 @@ import pl.piotrskiba.angularowo.databinding.FragmentPunishmentListBinding
 import pl.piotrskiba.angularowo.main.mainscreen.ui.MainScreenFragmentDirections
 import pl.piotrskiba.angularowo.main.punishment.list.nav.PunishmentListNavigator
 import pl.piotrskiba.angularowo.main.punishment.list.viewmodel.PunishmentListViewModel
-import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBannerData
+import pl.piotrskiba.angularowo.main.punishment.model.PunishmentBanner
 
 class PunishmentListFragment :
     BaseFragment<PunishmentListViewModel>(PunishmentListViewModel::class),
@@ -48,7 +48,7 @@ class PunishmentListFragment :
         return binding
     }
 
-    override fun onPunishmentClick(view: View, punishment: PunishmentBannerData) {
+    override fun onPunishmentClick(view: View, punishment: PunishmentBanner) {
         val detailedPunishmentData = viewModel.punishments.first { it.id == punishment.id }
         findNavController().navigate(
             directions = MainScreenFragmentDirections.toPunishmentDetailsFragment(detailedPunishmentData),
