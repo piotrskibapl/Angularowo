@@ -13,7 +13,7 @@
 
         <variable
             name="punishment"
-            type="pl.piotrskiba.angularowo.main.punishment.model.PunishmentBannerData" />
+            type="pl.piotrskiba.angularowo.main.punishment.model.PunishmentBanner" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

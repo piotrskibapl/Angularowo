@@ -9,7 +9,7 @@ import pl.piotrskiba.angularowo.utils.UrlUtils
 import java.io.Serializable
 import java.util.Locale
 
-data class PunishmentBannerData(
+data class PunishmentBanner(
     val id: String,
     val uuid: String?,
     val username: String,
@@ -40,8 +40,8 @@ data class PunishmentBannerData(
         }
 }
 
-fun PunishmentModel.toPunishmentBannerData() =
-    PunishmentBannerData(
+fun PunishmentModel.toPunishmentBanner() =
+    PunishmentBanner(
         id,
         uuid,
         username,
@@ -49,5 +49,5 @@ fun PunishmentModel.toPunishmentBannerData() =
         type,
     )
 
-fun List<PunishmentModel>.toPunishmentBannerData() =
-    map { it.toPunishmentBannerData() }
+fun List<PunishmentModel>.toPunishmentBanners() =
+    map { it.toPunishmentBanner() }
