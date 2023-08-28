@@ -1,4 +1,4 @@
-package pl.piotrskiba.angularowo
+package pl.piotrskiba.angularowo.base
 
 import com.bumptech.glide.load.Key
 import java.nio.ByteBuffer

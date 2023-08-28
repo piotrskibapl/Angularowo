@@ -6,7 +6,7 @@ import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
-import pl.piotrskiba.angularowo.IntegerVersionSignature
+import pl.piotrskiba.angularowo.base.IntegerVersionSignature
 import java.util.Calendar
 
 private const val IMAGE_LIFETIME_DAYS = 5
