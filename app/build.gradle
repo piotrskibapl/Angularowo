@@ -165,6 +165,9 @@ dependencies {
     // In-app updates
     implementation("com.google.android.play:app-update:$inappupdates_version")
     implementation("com.google.android.play:app-update-ktx:$inappupdates_version")
+
+    // Lottie
+    implementation 'com.airbnb.android:lottie:6.1.0'
 }
 
 configurations.configureEach {
