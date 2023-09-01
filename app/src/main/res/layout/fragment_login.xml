@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -49,5 +50,9 @@
                 android:textIsSelectable="false"
                 android:textSize="20sp" />
         </LinearLayout>
+
+        <include
+            layout="@layout/error_layout"
+            app:state="@{viewModel.state}" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

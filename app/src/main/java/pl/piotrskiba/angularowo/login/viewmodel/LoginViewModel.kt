@@ -2,12 +2,16 @@ package pl.piotrskiba.angularowo.login.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import pl.piotrskiba.angularowo.base.extensions.applyDefaultSchedulers
+import pl.piotrskiba.angularowo.base.model.ViewModelState
 import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.login.model.AccessTokenError
 import pl.piotrskiba.angularowo.domain.login.usecase.RegisterDeviceUseCase
 import pl.piotrskiba.angularowo.login.model.LoginState
 import pl.piotrskiba.angularowo.utils.AnalyticsUtils
+import retrofit2.HttpException
+import retrofit2.Response
+import java.io.IOException
 import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(
@@ -15,6 +19,7 @@ class LoginViewModel @Inject constructor(
     private val facade: SchedulersProvider,
 ) : LifecycleViewModel() {
 
+    val state = ViewModelState.Error(error = HttpException(Response.success(null)))
     val loginState = MutableLiveData<LoginState>(LoginState.Unknown)
 
     fun onPinEntered(pin: String) {

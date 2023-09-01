@@ -17,7 +17,16 @@
         android:background="@color/windowBackground"
         android:orientation="vertical"
         app:visible="@{state.error}"
-        tools:visibility="gone">
+        tools:visibility="visible">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="240dp"
+            android:layout_height="240dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/error_margin"
+            app:lottie_rawRes="@raw/lottie_error"
+            app:lottie_loop="false"
+            app:lottie_autoPlay="true" />
 
         <ImageView
             android:layout_width="wrap_content"
