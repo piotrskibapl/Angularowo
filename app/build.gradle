@@ -74,7 +74,7 @@ dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'com.google.android.material:material:1.10.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.preference:preference-ktx:1.2.1'
 
@@ -126,18 +126,18 @@ dependencies {
     }
 
     // AdMob
-    implementation 'com.google.android.gms:play-services-ads:22.3.0'
+    implementation 'com.google.android.gms:play-services-ads:22.4.0'
 
     // MultiDex
     implementation "androidx.multidex:multidex:2.0.1"
 
     // Activity
-    implementation 'androidx.activity:activity-ktx:1.7.2'
+    implementation 'androidx.activity:activity-ktx:1.8.0'
 
     // ViewModel
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.1"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.2"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.2"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     // Room
