@@ -46,7 +46,11 @@ pipeline {
         }
         stage('Build debug') {
             steps {
-                sh './gradlew assembleDebug'
+                withCredentials([
+                    string(credentialsId: 'angularowoDebugApiKey', variable: 'api_key'),
+                ]) {
+                    sh './gradlew assembleDebug -PapiKey=${api_key}'
+                }
             }
         }
         stage('Build release') {
@@ -58,9 +62,10 @@ pipeline {
                     file(credentialsId: 'androidKeyStore', variable: 'key_store'),
                     string(credentialsId: 'androidKeyPass', variable: 'key_pass'),
                     string(credentialsId: 'androidStorePass', variable: 'store_pass'),
+                    string(credentialsId: 'angularowoReleaseApiKey', variable: 'api_key'),
                 ]) {
-                    sh './gradlew assembleRelease -PsigningKeyAlias=\'key0\' -PsigningKeyPass=${key_pass} -PsigningStoreFilePath=${key_store} -PsigningStorePass=${store_pass}'
-                    sh './gradlew bundleRelease -PsigningKeyAlias=\'key0\' -PsigningKeyPass=${key_pass} -PsigningStoreFilePath=${key_store} -PsigningStorePass=${store_pass}'
+                    sh './gradlew assembleRelease -PsigningKeyAlias=\'key0\' -PsigningKeyPass=${key_pass} -PsigningStoreFilePath=${key_store} -PsigningStorePass=${store_pass} -PapiKey=${api_key}'
+                    sh './gradlew bundleRelease -PsigningKeyAlias=\'key0\' -PsigningKeyPass=${key_pass} -PsigningStoreFilePath=${key_store} -PsigningStorePass=${store_pass} -PapiKey=${api_key}'
                 }
             }
         }
