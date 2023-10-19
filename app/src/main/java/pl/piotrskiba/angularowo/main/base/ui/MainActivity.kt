@@ -55,7 +55,7 @@ class MainActivity : BaseActivity<MainViewModel>(MainViewModel::class), MainNavi
             if (navController.currentDestination?.id in NavigationComponent.topLevelDestinations) {
                 drawerLayout.open()
             } else {
-                navController.navigateUp()
+                onBackPressed()
             }
         }
         navController.addOnDestinationChangedListener { _, destination, _ ->
