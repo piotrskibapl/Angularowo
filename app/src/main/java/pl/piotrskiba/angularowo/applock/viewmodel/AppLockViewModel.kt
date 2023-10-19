@@ -21,22 +21,20 @@ class AppLockViewModel @Inject constructor(
     val appLockData = MutableLiveData<AppLockData>()
     val state = MutableLiveData<ViewModelState>(Loading.Fetch)
     lateinit var navigator: AppLockNavigator
-    private var canSkip = false
 
     override fun onFirstCreate() {
         disposables.add(
             getAppLockDataUseCase.execute()
                 .applyDefaultSchedulers(facade)
                 .subscribe { data ->
-                    appLockData.value = data.config.toUi()
-                    canSkip = data.canSkip
+                    appLockData.value = data.toUi()
                     state.value = Loaded
                 },
         )
     }
 
     fun onBackPressed() {
-        if (canSkip) {
+        if (appLockData.value!!.canSkip) {
             navigator.navigateToMainScreen()
         } else {
             navigator.closeApp()

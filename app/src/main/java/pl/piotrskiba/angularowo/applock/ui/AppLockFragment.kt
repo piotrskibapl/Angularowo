@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.widget.Toolbar
 import androidx.navigation.fragment.findNavController
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.applock.nav.AppLockNavigator
@@ -33,6 +34,12 @@ class AppLockFragment : BaseFragment<AppLockViewModel>(AppLockViewModel::class),
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
+        viewModel.appLockData.observe(viewLifecycleOwner) { appLockData ->
+            if (appLockData.canSkip) {
+                val toolbar: Toolbar = requireActivity().findViewById(R.id.toolbar)
+                toolbar.setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_ab_back_material)
+            }
+        }
         return setupBinding(inflater, container).root
     }
 

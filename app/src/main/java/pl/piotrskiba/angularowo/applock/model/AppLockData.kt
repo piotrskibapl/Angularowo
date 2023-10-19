@@ -1,14 +1,16 @@
 package pl.piotrskiba.angularowo.applock.model
 
-import pl.piotrskiba.angularowo.domain.applock.model.AppLockConfigModel
+import pl.piotrskiba.angularowo.domain.applock.model.AppLockDataModel
 
 data class AppLockData(
     val title: String,
     val body: String,
+    val canSkip: Boolean,
 )
 
-fun AppLockConfigModel.toUi() =
+fun AppLockDataModel.toUi() =
     AppLockData(
-        title = title.replace("\\n", "\n"),
-        body = body.replace("\\n", "\n"),
+        title = config.title.replace("\\n", "\n"),
+        body = config.body.replace("\\n", "\n"),
+        canSkip = canSkip,
     )
