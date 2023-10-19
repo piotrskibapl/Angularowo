@@ -3,6 +3,7 @@ package pl.piotrskiba.angularowo.applock.viewmodel
 import androidx.lifecycle.MutableLiveData
 import pl.piotrskiba.angularowo.applock.model.AppLockData
 import pl.piotrskiba.angularowo.applock.model.toUi
+import pl.piotrskiba.angularowo.applock.nav.AppLockNavigator
 import pl.piotrskiba.angularowo.base.extensions.applyDefaultSchedulers
 import pl.piotrskiba.angularowo.base.model.ViewModelState
 import pl.piotrskiba.angularowo.base.model.ViewModelState.Loaded
@@ -19,15 +20,24 @@ class AppLockViewModel @Inject constructor(
 
     val appLockData = MutableLiveData<AppLockData>()
     val state = MutableLiveData<ViewModelState>(Loading.Fetch)
+    lateinit var navigator: AppLockNavigator
 
     override fun onFirstCreate() {
         disposables.add(
             getAppLockDataUseCase.execute()
                 .applyDefaultSchedulers(facade)
                 .subscribe { data ->
-                    appLockData.value = data.config.toUi()
+                    appLockData.value = data.toUi()
                     state.value = Loaded
                 },
         )
+    }
+
+    fun onBackPressed() {
+        if (appLockData.value!!.canSkip) {
+            navigator.navigateToMainScreen()
+        } else {
+            navigator.closeApp()
+        }
     }
 }
