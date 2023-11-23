@@ -3,6 +3,7 @@ Angularowo is an Android application created for Minecraft "Angularowo" server p
 
 ## Download
 This application can be downloaded from the Play Store: https://play.google.com/store/apps/details?id=pl.piotrskiba.angularowo
+
 To test the app, use "757575" login code.
 
 ## Features
@@ -13,6 +14,13 @@ To test the app, use "757575" login code.
 * Redeem special offers for watching ads
 * Receive notifications related to your account and get notified about special events
 * Kick, mute, warn or ban online players as an admin
+
+## Additional tools and services
+* [Jenkins](https://ci.piotrskiba.pl/job/Angularowo%20-%20Android%20-%20Multibranch%20Pipeline/) - Continuous Integration
+* [POEditor](https://poeditor.com/projects/view?id=634693) - translation management; run `./gradlew importPoEditorStrings` to fetch the most recent translations
+* [ktlint](https://github.com/pinterest/ktlint) is used to enforce consistent code formatting; run `./gradlew ktlintCheck` to run a check
+
+You might want to check your `gradle.properties` file for a basic project configuration
 
 ## API
 Unfortunately the API documentation is not available at the moment.
