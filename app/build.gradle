@@ -126,13 +126,13 @@ dependencies {
     }
 
     // AdMob
-    implementation 'com.google.android.gms:play-services-ads:22.4.0'
+    implementation 'com.google.android.gms:play-services-ads:22.5.0'
 
     // MultiDex
     implementation "androidx.multidex:multidex:2.0.1"
 
     // Activity
-    implementation 'androidx.activity:activity-ktx:1.8.0'
+    implementation 'androidx.activity:activity-ktx:1.8.1'
 
     // ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2"
