@@ -18,6 +18,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
 import com.google.android.material.snackbar.Snackbar
 import pl.piotrskiba.angularowo.R
+import pl.piotrskiba.angularowo.base.biometric.BiometricAuthenticationResult.FAILURE
 import pl.piotrskiba.angularowo.base.biometric.BiometricAuthenticationResult.NOT_AVAILABLE
 import pl.piotrskiba.angularowo.base.biometric.BiometricAuthenticationResult.SUCCESS
 import pl.piotrskiba.angularowo.base.biometric.BiometricAuthenticator
@@ -302,18 +303,22 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
     }
 
     private fun showPunishmentConfirmationDialog(title: String, description: String, listener: () -> Unit) {
-        AlertDialog.Builder(context)
-            .setTitle(title)
-            .setMessage(description)
-            .setPositiveButton(R.string.button_yes) { _, _ ->
-                biometricAuthenticator.requestWeakAuthentication(this) { result ->
-                    if (result == SUCCESS || result == NOT_AVAILABLE) {
-                        listener()
-                    }
+        biometricAuthenticator.requestWeakAuthentication(this) { result ->
+            when (result) {
+                SUCCESS -> listener()
+                FAILURE -> Unit
+                NOT_AVAILABLE -> {
+                    AlertDialog.Builder(context)
+                        .setTitle(title)
+                        .setMessage(description)
+                        .setPositiveButton(R.string.button_yes) { _, _ ->
+                            listener()
+                        }
+                        .setNegativeButton(R.string.button_cancel, null)
+                        .show()
                 }
             }
-            .setNegativeButton(R.string.button_cancel, null)
-            .show()
+        }
     }
 
     private fun showPunishmentSuccessDialog(description: String) {
