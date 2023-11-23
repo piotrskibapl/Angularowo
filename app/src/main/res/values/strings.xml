@@ -196,4 +196,6 @@
         <item quantity="many">Czy na pewno chcesz odebrać ofertę \"%1$s\"?\nZ Twojego konta zostanie pobrane %2$d monet.</item>
         <item quantity="other">Czy na pewno chcesz odebrać ofertę \"%1$s\"?\nZ Twojego konta zostanie pobrane %2$d monet.</item>
     </plurals>
+    <string name="biometric_authentication_dialog_title">Potwierdź wykonanie akcji</string>
+    <string name="biometric_authentication_dialog_subtitle">Użyj biometrii lub wzoru odblokowywania aby potwierdzić wykonanie tej akcji</string>
 </resources>
