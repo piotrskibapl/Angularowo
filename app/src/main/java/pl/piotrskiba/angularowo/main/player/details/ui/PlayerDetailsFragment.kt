@@ -18,6 +18,10 @@ import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
 import com.google.android.material.snackbar.Snackbar
 import pl.piotrskiba.angularowo.R
+import pl.piotrskiba.angularowo.base.biometric.BiometricAuthenticationResult.FAILURE
+import pl.piotrskiba.angularowo.base.biometric.BiometricAuthenticationResult.NOT_AVAILABLE
+import pl.piotrskiba.angularowo.base.biometric.BiometricAuthenticationResult.SUCCESS
+import pl.piotrskiba.angularowo.base.biometric.BiometricAuthenticator
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.databinding.FragmentPlayerDetailsBinding
 import pl.piotrskiba.angularowo.layouts.TimeAmountPickerView
@@ -26,11 +30,14 @@ import pl.piotrskiba.angularowo.main.player.details.nav.PlayerDetailsNavigator
 import pl.piotrskiba.angularowo.main.player.details.viewmodel.PlayerDetailsViewModel
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 private const val SHOWCASE_DELAY_MS = 500
 
 class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetailsViewModel::class), MenuProvider, PlayerDetailsNavigator {
 
+    @Inject
+    lateinit var biometricAuthenticator: BiometricAuthenticator
     private lateinit var binding: FragmentPlayerDetailsBinding
     private var snackbar: Snackbar? = null
     private var shouldDisplayFavoriteShowcase = false
@@ -296,14 +303,22 @@ class PlayerDetailsFragment : BaseFragment<PlayerDetailsViewModel>(PlayerDetails
     }
 
     private fun showPunishmentConfirmationDialog(title: String, description: String, listener: () -> Unit) {
-        AlertDialog.Builder(context)
-            .setTitle(title)
-            .setMessage(description)
-            .setPositiveButton(R.string.button_yes) { _, _ ->
-                listener()
+        biometricAuthenticator.requestWeakAuthentication(this) { result ->
+            when (result) {
+                SUCCESS -> listener()
+                FAILURE -> Unit
+                NOT_AVAILABLE -> {
+                    AlertDialog.Builder(context)
+                        .setTitle(title)
+                        .setMessage(description)
+                        .setPositiveButton(R.string.button_yes) { _, _ ->
+                            listener()
+                        }
+                        .setNegativeButton(R.string.button_cancel, null)
+                        .show()
+                }
             }
-            .setNegativeButton(R.string.button_cancel, null)
-            .show()
+        }
     }
 
     private fun showPunishmentSuccessDialog(description: String) {

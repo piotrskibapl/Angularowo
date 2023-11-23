@@ -175,4 +175,6 @@
         <item quantity="one">Do you want to claim \"%1$s\" offer?\n%2$d coin will be removed from your account.</item>
         <item quantity="other">Do you want to claim \"%1$s\" offer?\n%2$d coins will be removed from your account.</item>
     </plurals>
+    <string name="biometric_authentication_dialog_title">Confirm the action</string>
+    <string name="biometric_authentication_dialog_subtitle">Use biometrics or unlock pattern to confirm this action</string>
 </resources>
