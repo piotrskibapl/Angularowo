@@ -21,13 +21,13 @@ pipeline {
                 checkout scm
                 sh 'chmod +x -R ${WORKSPACE}'
                 sh './gradlew clean'
+                withCredentials([file(credentialsId: 'angularowoGoogleServices', variable: 'google_services')]) {
+                   writeFile file: 'app/google-services.json', text: readFile(google_services)
+                }
             }
         }
         stage('Analyze') {
             steps {
-                withCredentials([file(credentialsId: '05734911-26ea-4d2d-b31d-b988f17a2934', variable: 'google_services')]) {
-                   writeFile file: 'app/google-services.json', text: readFile(google_services)
-                }
                 sh './gradlew ktlintCheck'
             }
         }
