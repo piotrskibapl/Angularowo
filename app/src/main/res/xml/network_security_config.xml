@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="false">asmc-serwer.piotrskiba.pl</domain>
+        <domain includeSubdomains="false">mcsrv.angularowo.pl</domain>
     </domain-config>
     <base-config>
         <trust-anchors>
