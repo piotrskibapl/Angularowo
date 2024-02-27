@@ -34,7 +34,7 @@ class AuthInterceptorTest {
         val newRequestResponse: Response = mockk()
         val chain: Interceptor.Chain = mockk {
             every { request() } returns mockk {
-                every { url.host } returns "piotrskiba.pl"
+                every { url.host } returns "api.angularowo.pl"
                 every { url.newBuilder() } returns newUrlBuilder
                 every { newBuilder() } returns newRequestBuilder
             }
@@ -67,7 +67,7 @@ class AuthInterceptorTest {
         val newRequestResponse: Response = mockk()
         val chain: Interceptor.Chain = mockk {
             every { request() } returns mockk {
-                every { url.host } returns "piotrskiba.pl"
+                every { url.host } returns "api.angularowo.pl"
                 every { url.newBuilder() } returns newUrlBuilder
                 every { newBuilder() } returns newRequestBuilder
             }
@@ -99,7 +99,7 @@ class AuthInterceptorTest {
         val newRequestResponse: Response = mockk()
         val chain: Interceptor.Chain = mockk {
             every { request() } returns mockk {
-                every { url.host } returns "piotrskiba.pl"
+                every { url.host } returns "api.angularowo.pl"
                 every { url.newBuilder() } returns newUrlBuilder
                 every { newBuilder() } returns newRequestBuilder
             }

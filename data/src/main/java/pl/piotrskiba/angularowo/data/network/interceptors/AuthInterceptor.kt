@@ -6,7 +6,7 @@ import pl.piotrskiba.angularowo.data.BuildConfig
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
 import javax.inject.Inject
 
-private const val API_HOST = "piotrskiba.pl"
+private const val API_HOST = "api.angularowo.pl"
 
 class AuthInterceptor @Inject constructor(
     private val preferencesRepository: PreferencesRepository,
