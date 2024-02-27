@@ -12,7 +12,7 @@ import pl.piotrskiba.angularowo.data.chat.model.ChatMessageRemote
 import pl.piotrskiba.angularowo.domain.base.preferences.repository.PreferencesRepository
 import javax.inject.Inject
 
-private const val CHAT_WEBSOCKET_URL = "ws://asmc-serwer.piotrskiba.pl:25772"
+private const val CHAT_WEBSOCKET_URL = "ws://mcsrv.angularowo.pl:25772"
 private const val ACCESS_TOKEN_HEADER = "access_token"
 private const val CLOSE_CODE_NORMAL = 1000
 private const val CLOSE_REASON_DISCONNECTED = "Disconnected"
