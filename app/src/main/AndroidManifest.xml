@@ -46,6 +46,15 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+        <!--
+            FIXME: this is a fix for Google services libraries conflicting with each other
+                @see https://stackoverflow.com/questions/78085458/manifest-merger-failed-with-agp-8-3-0/78086604#78086604
+         -->
+        <property
+            android:name="android.adservices.AD_SERVICES_CONFIG"
+            android:resource="@xml/gma_ad_services_config"
+            tools:replace="android:resource" />
     </application>
 
 </manifest>
