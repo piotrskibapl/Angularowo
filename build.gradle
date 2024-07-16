@@ -3,18 +3,19 @@
 buildscript {
     ext.kotlin_version = '1.9.22'
     ext.room_version = '2.6.1'
-    ext.dagger_version = '2.50'
+    ext.dagger_version = '2.51.1'
     ext.rxandroid_version = '3.0.2'
     ext.rxjava_version = '3.1.8'
-    ext.firebase_version = '32.7.2'
+    ext.firebase_version = '33.1.2'
     ext.okhttp_version = '4.12.0'
     ext.nav_version = '2.7.7'
     ext.inappupdates_version = '2.1.0'
-    ext.junit_version = '5.10.1'
-    ext.mockk_version = '1.13.8'
+    ext.junit_version = '5.10.3'
+    ext.mockk_version = '1.13.12'
     ext.kluent_version = '1.73'
     ext.ktlint_version = '11.4.0'
     ext.glide_version = '4.16.0'
+    ext.retrofit_version = '2.11.0'
 
     repositories {
         google()
@@ -27,8 +28,8 @@ buildscript {
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
 
-        classpath 'com.google.gms:google-services:4.4.1'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.9'
+        classpath 'com.google.gms:google-services:4.4.2'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:3.0.2'
         classpath 'com.google.firebase:perf-plugin:1.4.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
