@@ -22,7 +22,6 @@ import pl.piotrskiba.angularowo.main.base.InAppUpdateManager
 import pl.piotrskiba.angularowo.main.base.model.NavigationComponent
 import pl.piotrskiba.angularowo.main.base.nav.MainNavigator
 import pl.piotrskiba.angularowo.main.base.viewmodel.MainViewModel
-import pl.piotrskiba.angularowo.utils.PreferenceUtils
 import javax.inject.Inject
 
 class MainActivity : BaseActivity<MainViewModel>(MainViewModel::class), MainNavigator {
@@ -30,7 +29,6 @@ class MainActivity : BaseActivity<MainViewModel>(MainViewModel::class), MainNavi
     @Inject
     lateinit var inAppUpdateManager: InAppUpdateManager
 
-    private lateinit var preferenceUtils: PreferenceUtils
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
 
@@ -68,8 +66,6 @@ class MainActivity : BaseActivity<MainViewModel>(MainViewModel::class), MainNavi
                 toolbar.navigationIcon = null
             }
         }
-
-        preferenceUtils = PreferenceUtils(this)
         inAppUpdateManager.init(this)
     }
 
