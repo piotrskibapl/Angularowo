@@ -18,6 +18,6 @@ class OffersRepositoryImpl(
     override fun redeemAdOffer(offerId: String): Completable =
         offersApi.redeemAdOffer(offerId)
 
-    override fun redeemOffer(offerId: String): Completable =
+    override fun redeemPrizeOffer(offerId: String): Completable =
         offersApi.redeemOffer(offerId)
 }

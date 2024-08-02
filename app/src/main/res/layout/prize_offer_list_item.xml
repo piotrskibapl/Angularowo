@@ -10,15 +10,15 @@
             type="pl.piotrskiba.angularowo.main.offers.viewmodel.OffersViewModel" />
 
         <variable
-            name="offer"
-            type="pl.piotrskiba.angularowo.main.offers.model.Offer" />
+            name="prizeOffer"
+            type="pl.piotrskiba.angularowo.main.offers.model.PrizeOffer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="@{offer.canRedeem}"
-        android:onClick="@{(view) -> viewModel.onOfferClick(offer)}"
+        android:clickable="@{prizeOffer.canRedeem}"
+        android:onClick="@{(view) -> viewModel.onPrizeOfferClick(prizeOffer)}"
         android:paddingHorizontal="8dp"
         android:paddingTop="8dp"
         android:paddingBottom="16dp">
@@ -29,11 +29,11 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/reward_image_description"
             android:scaleType="fitCenter"
-            app:imageUrl="@{offer.imageUrl}"
+            app:imageUrl="@{prizeOffer.imageUrl}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@{offer.imageTintColor}"
+            app:tint="@{prizeOffer.imageTintColor}"
             tools:src="@drawable/default_avatar"
             tools:tint="@color/blackA85" />
 
@@ -45,9 +45,9 @@
             android:gravity="center_horizontal"
             android:shadowColor="@color/text_shadow"
             android:shadowRadius="3"
-            android:text="@{offer.title}"
+            android:text="@{prizeOffer.title}"
             android:textAlignment="center"
-            android:textColor="@{context.getColor(offer.textColor)}"
+            android:textColor="@{context.getColor(prizeOffer.textColor)}"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -62,9 +62,9 @@
             android:gravity="center_horizontal"
             android:shadowColor="@color/text_shadow"
             android:shadowRadius="3"
-            android:text="@{offer.description}"
+            android:text="@{prizeOffer.description}"
             android:textAlignment="center"
-            android:textColor="@{context.getColor(offer.textColor)}"
+            android:textColor="@{context.getColor(prizeOffer.textColor)}"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -78,10 +78,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:drawablePadding="8dp"
-            android:text="@{offer.priceText}"
-            android:textColor="@{context.getColor(offer.priceTextColor)}"
+            android:text="@{prizeOffer.priceText}"
+            android:textColor="@{context.getColor(prizeOffer.priceTextColor)}"
             android:textSize="24sp"
-            app:drawableLeft="@{offer.priceIconDrawable}"
+            app:drawableLeft="@{prizeOffer.priceIconDrawable}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/offer_image"
@@ -93,13 +93,13 @@
             android:id="@+id/offer_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{offer.timeLeftText}"
+            android:text="@{prizeOffer.timeLeftText}"
             android:textColor="@color/color_minecraft_c"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/offer_price"
-            app:visible="@{offer.timeLeftVisible}"
+            app:visible="@{prizeOffer.timeLeftVisible}"
             tools:text="5m" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

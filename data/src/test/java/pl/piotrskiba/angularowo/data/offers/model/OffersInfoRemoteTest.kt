@@ -48,7 +48,7 @@ class OffersInfoRemoteTest {
             points = 999,
             pointsLimitReached = true,
             adOffers = adOffers,
-            offers = offers,
+            prizeOffers = offers,
         )
     }
 }

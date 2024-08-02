@@ -97,22 +97,22 @@
                         app:layout_constraintTop_toBottomOf="@+id/limitReachedText" />
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/offersList"
+                        android:id="@+id/prizeOffersList"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:itemBinding="@{viewModel.offersBinding}"
-                        app:items="@{viewModel.offersInfo.offers}"
+                        app:itemBinding="@{viewModel.prizeOffersBinding}"
+                        app:items="@{viewModel.offersInfo.prizeOffers}"
                         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                         app:layout_constraintTop_toBottomOf="@+id/exchangeCoinsText"
                         app:spanCount="@integer/offer_list_span_count"
                         tools:itemCount="6"
-                        tools:listitem="@layout/offer_list_item" />
+                        tools:listitem="@layout/prize_offer_list_item" />
 
                     <androidx.constraintlayout.widget.Group
                         android:id="@+id/defaultLayoutGroup"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:constraint_referenced_ids="coinsText,earnMoreCoinsText,adOffersList,exchangeCoinsText,offersList"
+                        app:constraint_referenced_ids="coinsText,earnMoreCoinsText,adOffersList,exchangeCoinsText,prizeOffersList"
                         app:visible="@{viewModel.isDataLoaded}" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.core.widget.NestedScrollView>

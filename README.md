@@ -11,7 +11,7 @@ To test the app, use "757575" login code.
 * Access online players list and check basic info about them
 * View last punishments and its details
 * Preview in-game chat in realtime
-* Redeem special offers for watching ads
+* Redeem special prizes for watching ads
 * Receive notifications related to your account and get notified about special events
 * Kick, mute, warn or ban online players as an admin
 

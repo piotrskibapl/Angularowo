@@ -33,7 +33,7 @@
     <string name="player_list">Online player list</string>
     <string name="chat">Chat preview</string>
     <string name="last_punishments">Last punishments</string>
-    <string name="free_ranks">Claim free rewards</string>
+    <string name="redeem_prizes">Claim free rewards</string>
     <string name="reports_history">Reports history</string>
     <string name="settings">Settings</string>
     <string name="main_screen_greeting">Hi, %1$s!</string>
@@ -100,10 +100,10 @@
     <string name="offers_no_ads_dialog_description">No ads found. Try again in a few hours.</string>
     <string name="offers_ad_offer_redeemed_dialog_title">Points added!</string>
     <string name="offers_ad_offer_redeemed_dialog_description">Points for watching an ad have been added to your account.</string>
-    <string name="offers_offer_redeemed_dialog_title">Reward granted!</string>
-    <string name="offers_offer_redeemed_dialog_description">Congratulations, you claimed your offer - it will be activated automatically.\nEnjoy!</string>
+    <string name="offers_prize_offer_redeemed_dialog_title">Reward granted!</string>
+    <string name="offers_prize_offer_redeemed_dialog_description">Congratulations, you claimed your offer - it will be activated automatically.\nEnjoy!</string>
     <string name="offers_ad_question_dialog_title">Claim coins</string>
-    <string name="offers_offer_question_dialog_title">Claim offer</string>
+    <string name="offers_prize_offer_question_dialog_title">Claim offer</string>
     <string name="offers_earn_more_coins">Earn more coins</string>
     <string name="offers_exchange_coins_to_prizes">Exchange coins for prizes</string>
     <string name="offers_coin_limit_reached">You can\'t claim more coins!</string>
@@ -170,7 +170,7 @@
         <item quantity="one">Do you want to watch an ad for %1$d coin?</item>
         <item quantity="other">Do you want to watch an ad for %1$d coins?</item>
     </plurals>
-    <plurals name="offers_offer_question_dialog_description">
+    <plurals name="offers_prize_offer_question_dialog_description">
         <item quantity="one">Do you want to claim \"%1$s\" offer?\n%2$d coin will be removed from your account.</item>
         <item quantity="other">Do you want to claim \"%1$s\" offer?\n%2$d coins will be removed from your account.</item>
     </plurals>

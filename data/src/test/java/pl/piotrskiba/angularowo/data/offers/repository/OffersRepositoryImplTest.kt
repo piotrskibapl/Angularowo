@@ -60,11 +60,11 @@ class OffersRepositoryImplTest {
     }
 
     @Test
-    fun `SHOULD redeem offer`() {
+    fun `SHOULD redeem prize offer`() {
         val offerId = "offerId"
         every { offersApi.redeemOffer(offerId) } returns Completable.complete()
 
-        val result = tested.redeemOffer(offerId).test()
+        val result = tested.redeemPrizeOffer(offerId).test()
 
         assertSoftly {
             verify { offersApi.redeemOffer(offerId) }

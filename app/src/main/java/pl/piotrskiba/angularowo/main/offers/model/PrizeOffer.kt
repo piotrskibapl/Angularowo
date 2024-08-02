@@ -8,7 +8,7 @@ import pl.piotrskiba.angularowo.utils.TextUtils
 import java.util.Calendar
 import java.util.Date
 
-data class Offer(
+data class PrizeOffer(
     val id: String,
     val title: String,
     val description: String,
@@ -64,7 +64,7 @@ data class Offer(
 }
 
 fun OfferModel.toUi(userPoints: Int) =
-    Offer(
+    PrizeOffer(
         id,
         title,
         description,

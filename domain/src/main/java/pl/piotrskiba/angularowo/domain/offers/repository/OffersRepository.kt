@@ -12,7 +12,7 @@ interface OffersRepository {
         offerId: String,
     ): Completable
 
-    fun redeemOffer(
+    fun redeemPrizeOffer(
         offerId: String,
     ): Completable
 }
