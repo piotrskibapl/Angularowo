@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
+<?xml version="1.0" encoding="utf-8"?><resources>
     <string name="notification_channel_name">Default notifications</string>
     <string name="notification_channel_description">Notifications for which sound and vibration are turned on</string>
     <string name="notification_channel_name_silent">Silent notifications</string>
@@ -177,4 +176,5 @@
     </plurals>
     <string name="biometric_authentication_dialog_title">Confirm the action</string>
     <string name="biometric_authentication_dialog_subtitle">Use biometrics or unlock pattern to confirm this action</string>
+    <string name="and">and</string>
 </resources>

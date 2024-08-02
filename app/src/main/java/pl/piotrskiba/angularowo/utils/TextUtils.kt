@@ -13,94 +13,54 @@ object TextUtils {
 
     @JvmStatic
     fun formatPlaytime(context: Context, playtime: Long): String {
-        var remainingSeconds = playtime / 1000
-        var days = 0
-        var hours = 0
-        var minutes = 0
+        val millis = playtime
+        val days = (millis / TimeUnit.DAYS.toMillis(1)).toInt()
+        val hours = (millis / TimeUnit.HOURS.toMillis(1) % 24).toInt()
+        val minutes = (millis / TimeUnit.MINUTES.toMillis(1) % 60).toInt()
 
-        while (remainingSeconds >= 60 * 60 * 24) {
-            days++
-            remainingSeconds -= 60 * 60 * 24
-        }
-        while (remainingSeconds >= 60 * 60) {
-            hours++
-            remainingSeconds -= 60 * 60
-        }
-        while (remainingSeconds >= 60) {
-            minutes++
-            remainingSeconds -= 60
-        }
-
-        var result = ""
-        if (days > 0) {
-            result = context.resources.getQuantityString(R.plurals.days, days, days)
-        }
-        if (hours > 0) {
-            when {
-                result.isEmpty() -> {
-                    result = context.resources.getQuantityString(R.plurals.hours, hours, hours)
+        val result = StringBuilder()
+        with(context.resources) {
+            if (days > 0) result.append(getQuantityString(R.plurals.days, days, days))
+            if (hours > 0) {
+                when {
+                    result.isEmpty() -> result.append(getQuantityString(R.plurals.hours, hours, hours))
+                    minutes > 0 -> result.append(", ${getQuantityString(R.plurals.hours, hours, hours)}")
+                    else -> result.append(" ${getString(R.string.and)} ${getQuantityString(R.plurals.hours, hours, hours)}")
                 }
-
-                minutes > 0 -> {
-                    result += ", " + context.resources.getQuantityString(R.plurals.hours, hours, hours)
-                }
-
-                else -> {
-                    result += " i " + context.resources.getQuantityString(R.plurals.hours, hours, hours)
+            }
+            if (minutes > 0) {
+                if (result.isEmpty()) {
+                    result.append(getQuantityString(R.plurals.minutes, minutes, minutes))
+                } else {
+                    result.append(" ${getString(R.string.and)} ${getQuantityString(R.plurals.minutes, minutes, minutes)}")
                 }
             }
         }
-        if (minutes > 0) {
-            if (result.isEmpty()) {
-                result = context.resources.getQuantityString(R.plurals.minutes, minutes, minutes)
-            } else {
-                result += " i " + context.resources.getQuantityString(R.plurals.minutes, minutes, minutes)
-            }
-        }
-
-        return result
+        return result.toString()
     }
 
     @JvmStatic
     fun formatTimeDifference(from: Date, to: Date): String {
-        var remainingMilliseconds = from.time - to.time
-        val days = remainingMilliseconds / TimeUnit.DAYS.toMillis(1)
-        remainingMilliseconds %= TimeUnit.DAYS.toMillis(1)
-        val hours = remainingMilliseconds / TimeUnit.HOURS.toMillis(1)
-        remainingMilliseconds %= TimeUnit.HOURS.toMillis(1)
-        val minutes = remainingMilliseconds / TimeUnit.MINUTES.toMillis(1)
-        remainingMilliseconds %= TimeUnit.MINUTES.toMillis(1)
-        val seconds = remainingMilliseconds / TimeUnit.SECONDS.toMillis(1)
-        remainingMilliseconds %= TimeUnit.SECONDS.toMillis(1)
+        val millis = from.time - to.time
+        val days = (millis / TimeUnit.DAYS.toMillis(1)).toInt()
+        val hours = (millis / TimeUnit.HOURS.toMillis(1) % 24).toInt()
+        val minutes = (millis / TimeUnit.MINUTES.toMillis(1) % 60).toInt()
+        val seconds = (millis / TimeUnit.SECONDS.toMillis(1) % 60).toInt()
 
         val builder = StringBuilder()
-        if (days > 0) builder.append(days).append(" d")
-        if (hours > 0) {
-            if (builder.isNotEmpty()) builder.append(" ")
-            builder.append(hours).append(" h")
-        }
-        if (minutes > 0 && days == 0L) {
-            if (builder.isNotEmpty()) builder.append(" ")
-            builder.append(minutes).append(" m")
-        }
-        if (seconds > 0 && days == 0L && hours == 0L) {
-            if (builder.isNotEmpty()) builder.append(" ")
-            builder.append(seconds).append(" s")
-        }
-        return builder.toString()
+        if (days > 0) builder.append(" $days d")
+        if (hours > 0) builder.append(" $hours h")
+        if (minutes > 0 && days == 0) builder.append(" $minutes m")
+        if (seconds > 0 && days == 0 && hours == 0) builder.append(" $seconds s")
+        return builder.toString().trim()
     }
 
     fun replaceQualifiers(context: Context, s: String): String {
-        return if (s.contains(USERNAME_QUALIFIER)) {
-            val preferences = PreferenceManager.getDefaultSharedPreferences(context)
-            val username = preferences.getString(context.getString(R.string.pref_key_nickname), null)
-            if (username != null) {
-                s.replace(USERNAME_QUALIFIER, username)
-            } else {
-                s
-            }
-        } else {
-            s
+        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val username = preferences.getString(context.getString(R.string.pref_key_nickname), null)
+        if (s.contains(USERNAME_QUALIFIER) && username != null) {
+            return s.replace(USERNAME_QUALIFIER, username)
         }
+        return s
     }
 }

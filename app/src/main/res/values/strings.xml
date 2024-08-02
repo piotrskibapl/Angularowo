@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
+<?xml version="1.0" encoding="utf-8"?><resources>
     <string name="app_name" translatable="false">Angularowo</string>
     <string name="notification_channel_name">Domyślne powiadomienia</string>
     <string name="notification_channel_description">Powiadomienia dla których włączony jest dźwięk oraz wibracje</string>
@@ -198,4 +197,5 @@
     </plurals>
     <string name="biometric_authentication_dialog_title">Potwierdź wykonanie akcji</string>
     <string name="biometric_authentication_dialog_subtitle">Użyj biometrii lub wzoru odblokowywania aby potwierdzić wykonanie tej akcji</string>
+    <string name="and">i</string>
 </resources>
