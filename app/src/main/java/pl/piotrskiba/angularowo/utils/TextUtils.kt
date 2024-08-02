@@ -3,13 +3,14 @@ package pl.piotrskiba.angularowo.utils
 import android.content.Context
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
-import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import java.util.Date
 import java.util.concurrent.TimeUnit
 
 // TODO: should be dropped
 object TextUtils {
+
+    private const val USERNAME_QUALIFIER = "%player%"
 
     @JvmStatic
     fun formatPlaytime(context: Context, playtime: Long): String {
@@ -163,11 +164,11 @@ object TextUtils {
     }
 
     fun replaceQualifiers(context: Context, s: String): String {
-        return if (s.contains(Constants.USERNAME_QUALIFIER)) {
+        return if (s.contains(USERNAME_QUALIFIER)) {
             val preferences = PreferenceManager.getDefaultSharedPreferences(context)
             val username = preferences.getString(context.getString(R.string.pref_key_nickname), null)
             if (username != null) {
-                s.replace(Constants.USERNAME_QUALIFIER, username)
+                s.replace(USERNAME_QUALIFIER, username)
             } else {
                 s
             }

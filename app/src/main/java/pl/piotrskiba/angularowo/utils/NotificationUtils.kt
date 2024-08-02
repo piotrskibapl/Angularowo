@@ -14,12 +14,20 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
-import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.main.base.ui.MainActivity
 import javax.inject.Inject
 
 class NotificationUtils @Inject constructor(private val context: Context) {
+
+    private object VibrationPattern {
+        val DEFAULT = longArrayOf(0, 250, 250, 250)
+    }
+
+    private object ChannelId {
+        const val DEFAULT = "default_notification_channel"
+        const val SILENT = "silent_notification_channel"
+    }
 
     /**
      * creates all the notification channels for the app
@@ -40,9 +48,9 @@ class NotificationUtils @Inject constructor(private val context: Context) {
             val description = context.getString(R.string.notification_channel_description)
             val importance = NotificationManager.IMPORTANCE_DEFAULT
 
-            val channel = NotificationChannel(Constants.DEFAULT_CHANNEL_ID, name, importance)
+            val channel = NotificationChannel(ChannelId.DEFAULT, name, importance)
             channel.description = description
-            channel.vibrationPattern = Constants.DEFAULT_VIBRATE_PATTERN
+            channel.vibrationPattern = VibrationPattern.DEFAULT
             channel.enableVibration(true)
 
             val soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
@@ -66,7 +74,7 @@ class NotificationUtils @Inject constructor(private val context: Context) {
             val description = context.getString(R.string.notification_channel_description_silent)
             val importance = NotificationManager.IMPORTANCE_DEFAULT
 
-            val channel = NotificationChannel(Constants.SILENT_CHANNEL_ID, name, importance)
+            val channel = NotificationChannel(ChannelId.SILENT, name, importance)
             channel.description = description
             channel.vibrationPattern = longArrayOf(0)
             channel.enableVibration(true)
@@ -99,7 +107,7 @@ class NotificationUtils @Inject constructor(private val context: Context) {
             val title = TextUtils.replaceQualifiers(context, rawTitle)
             val body = TextUtils.replaceQualifiers(context, rawBody)
 
-            val channelId = if (sound) Constants.DEFAULT_CHANNEL_ID else Constants.SILENT_CHANNEL_ID
+            val channelId = if (sound) ChannelId.DEFAULT else ChannelId.SILENT
             val builder = NotificationCompat.Builder(context, channelId).apply {
                 setSmallIcon(R.drawable.ic_notification)
                 color = ContextCompat.getColor(context, R.color.color_notification)
@@ -111,7 +119,7 @@ class NotificationUtils @Inject constructor(private val context: Context) {
                 setAutoCancel(true)
                 if (sound) {
                     setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                    setVibrate(Constants.DEFAULT_VIBRATE_PATTERN)
+                    setVibrate(VibrationPattern.DEFAULT)
                 }
             }
             notificationManager.notify(notificationId, builder.build())
