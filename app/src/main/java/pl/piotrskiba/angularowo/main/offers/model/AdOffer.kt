@@ -4,22 +4,16 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.domain.offers.model.AdOfferModel
-import pl.piotrskiba.angularowo.utils.TextUtils
-import java.util.Calendar
 import java.util.Date
 
 data class AdOffer(
-    private val id: String,
+    override val id: String,
     val points: Int,
     val adId: String,
     private val timeBreak: Int,
     private val availabilityDate: Date?,
     private val pointsLimitReached: Boolean,
-) {
-
-    private val currentDate = Calendar.getInstance().time
-    private val availabilityDateReached = (availabilityDate ?: currentDate).time <= currentDate.time
-    val canRedeem = !pointsLimitReached && availabilityDateReached
+) : Offer(id = id, availabilityDate = availabilityDate, redeemable = !pointsLimitReached) {
 
     @ColorRes
     val pointsTextColor =
@@ -37,12 +31,6 @@ data class AdOffer(
         } else {
             R.drawable.ic_coin_disabled
         }
-
-    val timeLeftVisible = !availabilityDateReached
-    val timeLeftText = TextUtils.formatTimeDifference(
-        availabilityDate ?: currentDate,
-        currentDate,
-    )
 }
 
 fun AdOfferModel.toUi(pointsLimitReached: Boolean) =

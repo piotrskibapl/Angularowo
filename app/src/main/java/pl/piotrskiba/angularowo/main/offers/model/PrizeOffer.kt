@@ -4,12 +4,10 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.domain.offers.model.OfferModel
-import pl.piotrskiba.angularowo.utils.TextUtils
-import java.util.Calendar
 import java.util.Date
 
 data class PrizeOffer(
-    val id: String,
+    override val id: String,
     val title: String,
     val description: String,
     val price: Int,
@@ -17,11 +15,7 @@ data class PrizeOffer(
     private val timeBreak: Int,
     private val availabilityDate: Date?,
     private val canAfford: Boolean,
-) {
-
-    private val currentDate = Calendar.getInstance().time
-    private val availabilityDateReached = (availabilityDate ?: currentDate).time <= currentDate.time
-    val canRedeem = canAfford && availabilityDateReached
+) : Offer(id = id, availabilityDate = availabilityDate, redeemable = canAfford) {
 
     @ColorRes
     val imageTintColor =
@@ -55,12 +49,6 @@ data class PrizeOffer(
             R.color.color_coin_disabled
         }
     val priceText = price.toString()
-
-    val timeLeftVisible = !availabilityDateReached
-    val timeLeftText = TextUtils.formatTimeDifference(
-        availabilityDate ?: currentDate,
-        currentDate,
-    )
 }
 
 fun OfferModel.toUi(userPoints: Int) =
