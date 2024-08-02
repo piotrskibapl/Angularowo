@@ -14,6 +14,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import androidx.preference.PreferenceManager
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.main.base.ui.MainActivity
 import javax.inject.Inject
@@ -23,10 +24,12 @@ class NotificationUtils @Inject constructor(private val context: Context) {
     private object VibrationPattern {
         val DEFAULT = longArrayOf(0, 250, 250, 250)
     }
-
     private object ChannelId {
         const val DEFAULT = "default_notification_channel"
         const val SILENT = "silent_notification_channel"
+    }
+    private object Qualifier {
+        const val USERNAME = "%player%"
     }
 
     /**
@@ -104,8 +107,8 @@ class NotificationUtils @Inject constructor(private val context: Context) {
 
             val notificationManager = NotificationManagerCompat.from(context)
 
-            val title = TextUtils.replaceQualifiers(context, rawTitle)
-            val body = TextUtils.replaceQualifiers(context, rawBody)
+            val title = replaceQualifiers(context, rawTitle)
+            val body = replaceQualifiers(context, rawBody)
 
             val channelId = if (sound) ChannelId.DEFAULT else ChannelId.SILENT
             val builder = NotificationCompat.Builder(context, channelId).apply {
@@ -124,6 +127,15 @@ class NotificationUtils @Inject constructor(private val context: Context) {
             }
             notificationManager.notify(notificationId, builder.build())
         }
+    }
+
+    private fun replaceQualifiers(context: Context, s: String): String {
+        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val username = preferences.getString(context.getString(R.string.pref_key_nickname), null)
+        if (s.contains(Qualifier.USERNAME) && username != null) {
+            return s.replace(Qualifier.USERNAME, username)
+        }
+        return s
     }
 
     private val notificationId: Int
