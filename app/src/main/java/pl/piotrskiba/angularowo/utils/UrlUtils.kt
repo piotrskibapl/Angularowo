@@ -9,7 +9,6 @@ object UrlUtils {
     private const val BASE_CRAFATAR_URL = "https://crafatar.com/"
 
     private const val BASE_AVATAR_PATH = "avatars/"
-    private const val BASE_BODY_PATH = "renders/body/"
 
     private const val PARAM_SIZE = "size"
     private const val PARAM_SHOW_OVERLAY = "overlay"
@@ -37,15 +36,5 @@ object UrlUtils {
                 uriBuilder.build().toString()
             }
         }
-    }
-
-    @JvmStatic
-    fun buildBodyUrl(uuid: String, showOverlay: Boolean): String {
-        val uriBuilder = Uri.parse(BASE_CRAFATAR_URL).buildUpon()
-            .path(BASE_BODY_PATH + uuid)
-        if (showOverlay) {
-            uriBuilder.appendQueryParameter(PARAM_SHOW_OVERLAY, true.toString())
-        }
-        return uriBuilder.build().toString()
     }
 }

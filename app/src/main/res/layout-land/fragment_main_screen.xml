@@ -66,8 +66,7 @@
                             android:layout_height="match_parent"
                             android:layout_margin="@dimen/section_margin"
                             android:contentDescription="@string/player_body_image_description"
-                            app:imageUrl="@{viewModel.uiData.player.bodyImageUrl()}"
-                            app:placeholderImage="@{R.drawable.default_body}"
+                            app:crafatarBodyUuid="@{viewModel.uiData.player.skinUuid}"
                             tools:src="@drawable/default_body" />
 
                         <androidx.constraintlayout.widget.ConstraintLayout
