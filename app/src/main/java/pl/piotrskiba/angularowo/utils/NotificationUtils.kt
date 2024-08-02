@@ -17,8 +17,9 @@ import androidx.core.content.ContextCompat
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.main.base.ui.MainActivity
+import javax.inject.Inject
 
-class NotificationUtils(private val context: Context) {
+class NotificationUtils @Inject constructor(private val context: Context) {
 
     /**
      * creates all the notification channels for the app
