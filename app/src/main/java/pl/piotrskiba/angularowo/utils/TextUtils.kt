@@ -2,11 +2,13 @@ package pl.piotrskiba.angularowo.utils
 
 import android.content.Context
 import androidx.core.content.ContextCompat
+import androidx.preference.PreferenceManager
 import pl.piotrskiba.angularowo.Constants
 import pl.piotrskiba.angularowo.R
 import java.util.Date
 import java.util.concurrent.TimeUnit
 
+// TODO: should be dropped
 object TextUtils {
 
     @JvmStatic
@@ -162,8 +164,8 @@ object TextUtils {
 
     fun replaceQualifiers(context: Context, s: String): String {
         return if (s.contains(Constants.USERNAME_QUALIFIER)) {
-            val username = PreferenceUtils(context).username
-
+            val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+            val username = preferences.getString(context.getString(R.string.pref_key_nickname), null)
             if (username != null) {
                 s.replace(Constants.USERNAME_QUALIFIER, username)
             } else {
