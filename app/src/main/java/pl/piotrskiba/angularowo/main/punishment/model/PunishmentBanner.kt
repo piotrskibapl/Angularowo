@@ -5,7 +5,6 @@ import androidx.annotation.DrawableRes
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentModel
 import pl.piotrskiba.angularowo.domain.punishment.model.PunishmentTypeModel
-import pl.piotrskiba.angularowo.utils.UrlUtils
 import java.io.Serializable
 import java.util.Locale
 
@@ -27,8 +26,6 @@ data class PunishmentBanner(
             PunishmentTypeModel.KICK -> context.getString(R.string.punishment_kick_description_format, trimmedReason)
         }
     }
-
-    fun userAvatarUrl(context: Context) = UrlUtils.buildAvatarUrl(uuid, true, context)
 
     @DrawableRes
     fun punishmentIcon() =

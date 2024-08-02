@@ -12,8 +12,11 @@ import pl.piotrskiba.angularowo.base.IntegerVersionSignature
 import java.util.Calendar
 
 private const val CRAFATAR_URL = "https://crafatar.com/"
+private const val CRAFATAR_AVATAR_PATH = "avatars/"
 private const val CRAFATAR_BODY_PATH = "renders/body/"
+private const val CRAFATAR_SIZE_PARAMETER = "size"
 private const val CRAFATAR_SHOW_OVERLAY_PARAMETER = "overlay"
+private const val DEFAULT_AVATAR_SIZE = 100
 private const val IMAGE_LIFETIME_DAYS = 5
 
 @BindingAdapter("imageUrl", "placeholderImage", requireAll = false)
@@ -37,6 +40,23 @@ fun loadImage(
     }
 }
 
+@BindingAdapter("crafatarAvatarUuid")
+fun loadCrafatarAvatar(
+    imageView: ImageView,
+    uuid: String?,
+) {
+    if (uuid != null) {
+        val url = Uri.parse(CRAFATAR_URL)
+            .buildUpon()
+            .path(CRAFATAR_AVATAR_PATH + uuid)
+            .appendQueryParameter(CRAFATAR_SIZE_PARAMETER, DEFAULT_AVATAR_SIZE.toString())
+            .appendQueryParameter(CRAFATAR_SHOW_OVERLAY_PARAMETER, true.toString())
+            .build()
+            .toString()
+        loadImage(imageView, url, R.drawable.default_avatar)
+    }
+}
+
 @BindingAdapter("crafatarBodyUuid")
 fun loadCrafatarBody(
     imageView: ImageView,
@@ -49,17 +69,7 @@ fun loadCrafatarBody(
             .appendQueryParameter(CRAFATAR_SHOW_OVERLAY_PARAMETER, true.toString())
             .build()
             .toString()
-        Glide.with(imageView.context)
-            .load(url)
-            .signature(
-                IntegerVersionSignature(
-                    with(Calendar.getInstance()) {
-                        get(Calendar.YEAR) * 1000 + get(Calendar.DAY_OF_YEAR) / IMAGE_LIFETIME_DAYS
-                    },
-                ),
-            )
-            .placeholder(R.drawable.default_body)
-            .into(imageView)
+        loadImage(imageView, url, R.drawable.default_body)
     }
 }
 
