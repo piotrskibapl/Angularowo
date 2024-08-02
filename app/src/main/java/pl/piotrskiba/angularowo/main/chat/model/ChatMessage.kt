@@ -10,6 +10,7 @@ import pl.piotrskiba.angularowo.domain.chat.model.ChatMessageModel
 import pl.piotrskiba.angularowo.domain.rank.model.RankModel
 import pl.piotrskiba.angularowo.main.base.MinecraftColor
 import pl.piotrskiba.angularowo.utils.TextUtils
+import java.util.Locale
 
 data class ChatMessage(
     val uuid: String,
@@ -20,12 +21,14 @@ data class ChatMessage(
 
     fun formattedMessage(context: Context): Spanned {
         val rankColor = String.format(
+            Locale.getDefault(),
             "#%06X",
             0xFFFFFF and darkenColor(
                 ContextCompat.getColor(context, MinecraftColor.colorCode[rank.colorCode] ?: MinecraftColor.default),
             ),
         )
         val messageColor = String.format(
+            Locale.getDefault(),
             "#%06X",
             0xFFFFFF and darkenColor(
                 ContextCompat.getColor(context, MinecraftColor.colorCode[rank.chatColorCode] ?: MinecraftColor.default),

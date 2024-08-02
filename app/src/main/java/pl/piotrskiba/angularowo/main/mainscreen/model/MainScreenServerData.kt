@@ -5,6 +5,7 @@ import android.graphics.Color
 import androidx.annotation.ColorInt
 import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.domain.server.model.ServerStatusModel
+import java.util.Locale
 import kotlin.math.round
 
 data class MainScreenServerData(
@@ -45,9 +46,9 @@ data class MainScreenServerData(
 
     private fun tpsText(tps: Double) =
         if (tps == round(tps)) {
-            String.format("%d", tps.toInt())
+            String.format(Locale.getDefault(), "%d", tps.toInt())
         } else {
-            String.format("%.1f", tps)
+            String.format(Locale.getDefault(), "%.1f", tps)
         }
 }
 
