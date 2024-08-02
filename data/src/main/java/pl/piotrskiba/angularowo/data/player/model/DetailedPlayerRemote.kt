@@ -34,7 +34,7 @@ fun DetailedPlayerRemote.toDomain() = DetailedPlayerModel(
 
 private fun List<String>.toPermissionModels() =
     mapNotNull { remote ->
-        PermissionModel.values().firstOrNull { permission ->
+        PermissionModel.entries.firstOrNull { permission ->
             permission.name.equals(remote, ignoreCase = true)
         }
     }
