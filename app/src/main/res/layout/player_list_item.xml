@@ -33,11 +33,10 @@
             android:layout_height="@dimen/avatar_size"
             android:contentDescription="@string/player_avatar_image_description"
             android:src="@drawable/default_avatar"
-            app:imageUrl="@{player.avatarUrl(context)}"
+            app:crafatarAvatarUuid="@{player.skinUuid}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:placeholderImage="@{R.drawable.default_avatar}" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_player_name"

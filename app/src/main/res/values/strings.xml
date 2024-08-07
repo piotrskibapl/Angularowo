@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
+<?xml version="1.0" encoding="utf-8"?><resources>
     <string name="app_name" translatable="false">Angularowo</string>
     <string name="notification_channel_name">Domyślne powiadomienia</string>
     <string name="notification_channel_description">Powiadomienia dla których włączony jest dźwięk oraz wibracje</string>
@@ -38,7 +37,7 @@
     <string name="player_list">Lista graczy online</string>
     <string name="chat">Podgląd chatu</string>
     <string name="last_punishments">Ostatnie kary</string>
-    <string name="free_ranks">Odbierz darmowe nagrody</string>
+    <string name="redeem_prizes">Odbierz darmowe nagrody</string>
     <string name="reports_history">Historia zgłoszeń</string>
     <string name="settings">Ustawienia</string>
     <string name="main_screen_greeting">Witaj, %1$s!</string>
@@ -106,10 +105,10 @@
     <string name="offers_no_ads_dialog_description">Nie znaleziono żadnych reklam. Spróbuj ponownie za kilka godzin.</string>
     <string name="offers_ad_offer_redeemed_dialog_title">Punkty przyznane!</string>
     <string name="offers_ad_offer_redeemed_dialog_description">Punkty za obejrzenie reklamy zostały dodane do Twojego konta.</string>
-    <string name="offers_offer_redeemed_dialog_title">Nagroda przyznana!</string>
-    <string name="offers_offer_redeemed_dialog_description">Gratulacje, odebrałeś swoją ofertę - zostanie ona aktywowana automatycznie.\nMiłej gry!</string>
+    <string name="offers_prize_offer_redeemed_dialog_title">Nagroda przyznana!</string>
+    <string name="offers_prize_offer_redeemed_dialog_description">Gratulacje, odebrałeś swoją ofertę - zostanie ona aktywowana automatycznie.\nMiłej gry!</string>
     <string name="offers_ad_question_dialog_title">Odbiór monet</string>
-    <string name="offers_offer_question_dialog_title">Aktywacja oferty</string>
+    <string name="offers_prize_offer_question_dialog_title">Aktywacja oferty</string>
     <string name="offers_earn_more_coins">Zdobądź więcej monet</string>
     <string name="offers_exchange_coins_to_prizes">Wymień monety na nagrody</string>
     <string name="offers_coin_limit_reached">Nie możesz zdobyć więcej monet!</string>
@@ -190,7 +189,7 @@
         <item quantity="many">Czy chcesz obejrzeć reklamę w zamian za %1$d monet?</item>
         <item quantity="other">Czy chcesz obejrzeć reklamę w zamian za %1$d monet?</item>
     </plurals>
-    <plurals name="offers_offer_question_dialog_description">
+    <plurals name="offers_prize_offer_question_dialog_description">
         <item quantity="one">Czy na pewno chcesz odebrać ofertę \"%1$s\"?\nZ Twojego konta zostanie pobrana %2$d moneta.</item>
         <item quantity="few">Czy na pewno chcesz odebrać ofertę \"%1$s\"?\nZ Twojego konta zostaną pobrane %2$d monety.</item>
         <item quantity="many">Czy na pewno chcesz odebrać ofertę \"%1$s\"?\nZ Twojego konta zostanie pobrane %2$d monet.</item>
@@ -198,4 +197,5 @@
     </plurals>
     <string name="biometric_authentication_dialog_title">Potwierdź wykonanie akcji</string>
     <string name="biometric_authentication_dialog_subtitle">Użyj biometrii lub wzoru odblokowywania aby potwierdzić wykonanie tej akcji</string>
+    <string name="and">i</string>
 </resources>

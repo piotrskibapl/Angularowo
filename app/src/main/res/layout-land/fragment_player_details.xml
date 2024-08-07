@@ -40,11 +40,10 @@
                     android:layout_height="0dp"
                     android:layout_margin="@dimen/section_margin"
                     android:contentDescription="@string/player_body_image_description"
-                    app:imageUrl="@{viewModel.previewedPlayerDetails.bodyImageUrl()}"
+                    app:crafatarBodyUuid="@{viewModel.previewedPlayerDetails.skinUuid}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/player_banner"
-                    app:placeholderImage="@{R.drawable.default_body}"
                     tools:src="@drawable/default_body" />
 
                 <TextView

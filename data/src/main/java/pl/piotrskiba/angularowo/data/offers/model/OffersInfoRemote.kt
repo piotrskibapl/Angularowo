@@ -14,5 +14,5 @@ fun OffersInfoRemote.toDomain() =
         points = points,
         pointsLimitReached = pointsLimitReached,
         adOffers = adOffers.toDomain(),
-        offers = offers.toDomain(),
+        prizeOffers = offers.toDomain(),
     )

@@ -6,15 +6,15 @@ import io.reactivex.rxjava3.core.Completable
 import org.junit.jupiter.api.Test
 import pl.piotrskiba.angularowo.domain.offers.repository.OffersRepository
 
-class RedeemOfferUseCaseTest {
+class RedeemPrizeOfferUseCaseTest {
 
     val offersRepository: OffersRepository = mockk()
-    val tested = RedeemOfferUseCase(offersRepository)
+    val tested = RedeemPrizeOfferUseCase(offersRepository)
 
     @Test
-    fun `SHOULD redeem offer`() {
+    fun `SHOULD redeem prize offer`() {
         val offerId = "id"
-        every { offersRepository.redeemOffer(offerId) } returns Completable.complete()
+        every { offersRepository.redeemPrizeOffer(offerId) } returns Completable.complete()
 
         val result = tested.execute(offerId).test()
 

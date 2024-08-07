@@ -4,5 +4,5 @@ data class OffersInfoModel(
     val points: Int,
     val pointsLimitReached: Boolean,
     val adOffers: List<AdOfferModel>,
-    val offers: List<OfferModel>,
+    val prizeOffers: List<OfferModel>,
 )

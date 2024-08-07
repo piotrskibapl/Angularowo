@@ -32,7 +32,6 @@ open class BaseActivity<out VM : LifecycleViewModel>(viewModelClass: KClass<VM>)
         super.onCreate(savedInstanceState)
         firstCreated = savedInstanceState?.getBoolean(FIRST_CREATED_KEY) ?: false
         if (!firstCreated) {
-            viewModel.intent = intent
             firstCreated = true
             viewModel.onFirstCreate()
         }

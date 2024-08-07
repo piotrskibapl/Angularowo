@@ -19,6 +19,9 @@ class AngularowoApplication : DaggerApplication() {
     @Inject
     lateinit var remoteConfig: FirebaseRemoteConfig
 
+    @Inject
+    lateinit var notificationUtils: NotificationUtils
+
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
         MultiDex.install(this)
@@ -35,7 +38,7 @@ class AngularowoApplication : DaggerApplication() {
         remoteConfig.setDefaultsAsync(R.xml.remote_config_default_values)
         remoteConfig.fetchAndActivate()
         MobileAds.initialize(applicationContext)
-        NotificationUtils(applicationContext).createNotificationChannels()
+        notificationUtils.createNotificationChannels()
     }
 
     private fun setupRxErrorHandler() {

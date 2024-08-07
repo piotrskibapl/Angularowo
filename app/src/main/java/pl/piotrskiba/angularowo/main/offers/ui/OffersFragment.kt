@@ -18,7 +18,7 @@ import pl.piotrskiba.angularowo.R
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.databinding.FragmentOffersBinding
 import pl.piotrskiba.angularowo.main.offers.model.AdOffer
-import pl.piotrskiba.angularowo.main.offers.model.Offer
+import pl.piotrskiba.angularowo.main.offers.model.PrizeOffer
 import pl.piotrskiba.angularowo.main.offers.nav.OffersNavigator
 import pl.piotrskiba.angularowo.main.offers.viewmodel.OffersViewModel
 
@@ -57,19 +57,19 @@ class OffersFragment : BaseFragment<OffersViewModel>(OffersViewModel::class), Of
             .show()
     }
 
-    override fun displayOfferConfirmationDialog(offer: Offer, onConfirm: (offer: Offer) -> Unit) {
+    override fun displayPrizeOfferConfirmationDialog(prizeOffer: PrizeOffer, onConfirm: (prizeOffer: PrizeOffer) -> Unit) {
         AlertDialog.Builder(requireContext())
-            .setTitle(R.string.offers_offer_question_dialog_title)
+            .setTitle(R.string.offers_prize_offer_question_dialog_title)
             .setMessage(
                 resources.getQuantityString(
-                    R.plurals.offers_offer_question_dialog_description,
-                    offer.price,
-                    offer.title,
-                    offer.price,
+                    R.plurals.offers_prize_offer_question_dialog_description,
+                    prizeOffer.price,
+                    prizeOffer.title,
+                    prizeOffer.price,
                 ),
             )
             .setPositiveButton(R.string.button_yes) { _: DialogInterface, _: Int ->
-                onConfirm(offer)
+                onConfirm(prizeOffer)
             }
             .setNegativeButton(R.string.button_no) { _, _ -> }
             .show()
@@ -127,10 +127,10 @@ class OffersFragment : BaseFragment<OffersViewModel>(OffersViewModel::class), Of
             .show()
     }
 
-    override fun displayOfferRedeemedDialog() {
+    override fun displayPrizeOfferRedeemedDialog() {
         AlertDialog.Builder(requireContext())
-            .setTitle(R.string.offers_offer_redeemed_dialog_title)
-            .setMessage(R.string.offers_offer_redeemed_dialog_description)
+            .setTitle(R.string.offers_prize_offer_redeemed_dialog_title)
+            .setMessage(R.string.offers_prize_offer_redeemed_dialog_description)
             .setPositiveButton(R.string.button_dismiss) { _, _ -> }
             .show()
     }

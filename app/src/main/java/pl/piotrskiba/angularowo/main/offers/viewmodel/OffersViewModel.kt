@@ -15,10 +15,10 @@ import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.offers.usecase.GetOffersInfoUseCase
 import pl.piotrskiba.angularowo.domain.offers.usecase.RedeemAdOfferUseCase
-import pl.piotrskiba.angularowo.domain.offers.usecase.RedeemOfferUseCase
+import pl.piotrskiba.angularowo.domain.offers.usecase.RedeemPrizeOfferUseCase
 import pl.piotrskiba.angularowo.main.offers.model.AdOffer
-import pl.piotrskiba.angularowo.main.offers.model.Offer
 import pl.piotrskiba.angularowo.main.offers.model.OffersInfo
+import pl.piotrskiba.angularowo.main.offers.model.PrizeOffer
 import pl.piotrskiba.angularowo.main.offers.model.toUi
 import pl.piotrskiba.angularowo.main.offers.nav.OffersNavigator
 import javax.inject.Inject
@@ -26,20 +26,20 @@ import javax.inject.Inject
 class OffersViewModel @Inject constructor(
     private val getOffersInfoUseCase: GetOffersInfoUseCase,
     private val redeemAdOfferUseCase: RedeemAdOfferUseCase,
-    private val redeemOfferUseCase: RedeemOfferUseCase,
+    private val redeemPrizeOfferUseCase: RedeemPrizeOfferUseCase,
     private val facade: SchedulersProvider,
 ) : LifecycleViewModel() {
 
     val offersInfo = MutableLiveData<OffersInfo>()
     val adOffersBinding = ItemBinding.of<AdOffer>(BR.adOffer, R.layout.ad_offer_list_item)
-    val offersBinding = ItemBinding.of<Offer>(BR.offer, R.layout.offer_list_item)
+    val prizeOffersBinding = ItemBinding.of<PrizeOffer>(BR.prizeOffer, R.layout.prize_offer_list_item)
     val state = MutableLiveData<ViewModelState>(Loading.Fetch)
     val isDataLoaded = offersInfo.map { it != null }
     lateinit var navigator: OffersNavigator
 
     override fun onFirstCreate() {
         adOffersBinding.bindExtra(BR.viewModel, this)
-        offersBinding.bindExtra(BR.viewModel, this)
+        prizeOffersBinding.bindExtra(BR.viewModel, this)
         super.onFirstCreate()
         loadOffersInfo()
     }
@@ -61,14 +61,14 @@ class OffersViewModel @Inject constructor(
         }
     }
 
-    fun onOfferClick(offer: Offer) {
-        navigator.displayOfferConfirmationDialog(offer) {
+    fun onPrizeOfferClick(prizeOffer: PrizeOffer) {
+        navigator.displayPrizeOfferConfirmationDialog(prizeOffer) {
             state.value = Loading.Send
             disposables.add(
-                redeemOfferUseCase.execute(offer.id)
+                redeemPrizeOfferUseCase.execute(prizeOffer.id)
                     .applyDefaultSchedulers(facade)
                     .subscribe {
-                        navigator.displayOfferRedeemedDialog()
+                        navigator.displayPrizeOfferRedeemedDialog()
                         loadOffersInfo()
                     },
             )

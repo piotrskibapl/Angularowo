@@ -5,7 +5,6 @@ import androidx.annotation.ColorInt
 import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
 import pl.piotrskiba.angularowo.domain.player.model.PlayerModel
 import pl.piotrskiba.angularowo.main.base.MinecraftColor
-import pl.piotrskiba.angularowo.utils.UrlUtils
 import java.io.Serializable
 
 data class PlayerBanner(
@@ -21,8 +20,6 @@ data class PlayerBanner(
     @ColorInt
     fun rankColor(context: Context) =
         context.getColor(MinecraftColor.colorCode[rankColorCode] ?: MinecraftColor.default)
-
-    fun avatarUrl(context: Context) = UrlUtils.buildAvatarUrl(skinUuid, true, context)
 }
 
 fun PlayerModel.toPlayerBannerData(isFavorite: Boolean) = PlayerBanner(
