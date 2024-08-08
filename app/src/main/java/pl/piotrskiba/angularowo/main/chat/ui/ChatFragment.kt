@@ -15,12 +15,12 @@ import pl.piotrskiba.angularowo.databinding.FragmentChatBinding
 import pl.piotrskiba.angularowo.main.chat.model.ChatMessage
 import pl.piotrskiba.angularowo.main.chat.nav.ChatNavigator
 import pl.piotrskiba.angularowo.main.chat.viewmodel.ChatViewModel
-import pl.piotrskiba.angularowo.main.player.list.ui.PlayerListFragmentDirections
 
 class ChatFragment : BaseFragment<ChatViewModel>(ChatViewModel::class), ChatNavigator {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        viewModel.chatMessagesBinding.bindExtra(BR.navigator, this)
+        viewModel.chatMessagesBinding.bindExtra(BR.viewModel, viewModel)
+        viewModel.navigator = this
         super.onCreate(savedInstanceState)
     }
 
@@ -33,10 +33,10 @@ class ChatFragment : BaseFragment<ChatViewModel>(ChatViewModel::class), ChatNavi
         setupRecyclerView()
     }
 
-    override fun onChatMessageClick(chatMessage: ChatMessage) {
+    override fun navigateToPlayerDetails(previewedPlayerUuid: String) {
         findNavController().navigate(
-            PlayerListFragmentDirections.toPlayerDetailsFragment(
-                chatMessage.uuid,
+            ChatFragmentDirections.toPlayerDetailsFragment(
+                previewedPlayerUuid,
                 previewedPlayerBanner = null,
             ),
         )
