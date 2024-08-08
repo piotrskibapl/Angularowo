@@ -15,7 +15,6 @@ import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.cloudmessaging.usecase.UpdateCloudMessagingSubscriptionsUseCase
 import pl.piotrskiba.angularowo.domain.mainscreen.usecase.GetMainScreenDataAndSavePlayerUseCase
-import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
 import pl.piotrskiba.angularowo.main.mainscreen.model.MainScreenData
 import pl.piotrskiba.angularowo.main.mainscreen.model.toUi
 import pl.piotrskiba.angularowo.main.mainscreen.nav.MainScreenNavigator
@@ -31,7 +30,6 @@ class MainScreenViewModel @Inject constructor(
 ) : LifecycleViewModel() {
 
     val state = MutableLiveData<ViewModelState>(Loading.Fetch)
-    val player = MutableLiveData<DetailedPlayerModel>() // exposed for MainViewModel synchronization
     val uiData = MutableLiveData<MainScreenData>()
     val punishments: MutableList<DetailedPunishment> = mutableListOf()
     val punishmentsBinding = ItemBinding.of<PunishmentBanner>(BR.punishment, R.layout.punishment_list_item)
@@ -61,7 +59,6 @@ class MainScreenViewModel @Inject constructor(
                         uiData.value = mainScreenDataModel.toUi()
                         punishments.clear()
                         punishments.addAll(mainScreenDataModel.playerPunishments.toUi())
-                        player.value = mainScreenDataModel.detailedPlayerModel
                         updateCloudMessagingSubscriptions()
                     },
                     { error ->
