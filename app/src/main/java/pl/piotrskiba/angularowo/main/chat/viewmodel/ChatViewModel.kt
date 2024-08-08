@@ -14,6 +14,7 @@ import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.chat.usecase.ObserveChatMessagesUseCase
 import pl.piotrskiba.angularowo.main.chat.model.ChatMessage
 import pl.piotrskiba.angularowo.main.chat.model.toUi
+import pl.piotrskiba.angularowo.main.chat.nav.ChatNavigator
 import javax.inject.Inject
 
 class ChatViewModel @Inject constructor(
@@ -25,6 +26,7 @@ class ChatViewModel @Inject constructor(
     val state = MutableLiveData<ViewModelState>(Loading.Fetch)
     val chatMessages = MutableLiveData<List<ChatMessage>>(emptyList())
     val chatMessagesBinding = ItemBinding.of<ChatMessage>(BR.chatMessage, R.layout.chat_message_list_item)
+    lateinit var navigator: ChatNavigator
 
     override fun onFirstCreate() {
         disposables.add(
@@ -40,5 +42,9 @@ class ChatViewModel @Inject constructor(
                     },
                 ),
         )
+    }
+
+    fun onChatMessageClick(chatMessage: ChatMessage) {
+        navigator.navigateToPlayerDetails(chatMessage.uuid)
     }
 }

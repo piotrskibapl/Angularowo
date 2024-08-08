@@ -58,9 +58,6 @@
         android:label="@string/player_info"
         tools:layout="@layout/fragment_player_details">
         <argument
-            android:name="player"
-            app:argType="pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel" />
-        <argument
             android:name="previewedPlayerUuid"
             app:argType="string" />
         <argument

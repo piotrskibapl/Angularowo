@@ -43,7 +43,6 @@ class MainScreenFragment : BaseFragment<MainScreenViewModel>(MainScreenViewModel
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        viewModel.player.observe(viewLifecycleOwner) { mainViewModel.player.value = it }
         viewModel.uiData.observe(viewLifecycleOwner) { uiData ->
             val navHeader = requireActivity().findViewById<NavigationView>(R.id.nav_view).getHeaderView(0)
             navHeader.findViewById<TextView>(R.id.navheader_username).text = uiData.player.username

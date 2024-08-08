@@ -5,5 +5,5 @@ import pl.piotrskiba.angularowo.main.player.model.PlayerBanner
 
 interface PlayerListNavigator {
 
-    fun onPlayerClick(view: View, player: PlayerBanner)
+    fun navigateToPlayerDetails(view: View, player: PlayerBanner)
 }
