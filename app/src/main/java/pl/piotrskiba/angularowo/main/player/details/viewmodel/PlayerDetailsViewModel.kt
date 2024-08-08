@@ -13,7 +13,9 @@ import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.friend.usecase.MarkPlayerAsFavoriteUseCase
 import pl.piotrskiba.angularowo.domain.friend.usecase.ObserveIfPlayerIsFavoriteUseCase
 import pl.piotrskiba.angularowo.domain.friend.usecase.UnmarkPlayerAsFavoriteUseCase
+import pl.piotrskiba.angularowo.domain.player.model.DetailedPlayerModel
 import pl.piotrskiba.angularowo.domain.player.usecase.CheckIfShouldDisplayFavoriteShowcaseUseCase
+import pl.piotrskiba.angularowo.domain.player.usecase.GetAppUserPlayerUseCase
 import pl.piotrskiba.angularowo.domain.player.usecase.GetPlayerDetailsFromUuidUseCase
 import pl.piotrskiba.angularowo.domain.punishment.usecase.PunishPlayerUseCase
 import pl.piotrskiba.angularowo.main.player.details.model.DetailedPlayer
@@ -35,6 +37,7 @@ class PlayerDetailsViewModel @Inject constructor(
     private val unmarkPlayerAsFavoriteUseCase: UnmarkPlayerAsFavoriteUseCase,
     private val checkIfShouldDisplayFavoriteShowcaseUseCase: CheckIfShouldDisplayFavoriteShowcaseUseCase,
     private val punishPlayerUseCase: PunishPlayerUseCase,
+    private val getAppUserPlayerUseCase: GetAppUserPlayerUseCase,
     private val facade: SchedulersProvider,
 ) : LifecycleViewModel() {
 
@@ -43,13 +46,15 @@ class PlayerDetailsViewModel @Inject constructor(
     val previewedPlayerBanner: MutableLiveData<PlayerBanner> by lazy { MutableLiveData(args.previewedPlayerBanner) }
     val previewedPlayerDetails: MutableLiveData<DetailedPlayer> = MutableLiveData()
     val playerBannerVisible: LiveData<Boolean> by lazy { previewedPlayerBanner.map { it != null } }
-    val menuItemsVisibility: LiveData<PlayerDetailsMenuItemsVisibility> by lazy {
-        previewedPlayerBanner.map { PlayerDetailsMenuItemsVisibility.from(args.player, it) }
+    val appUserPlayer: MutableLiveData<DetailedPlayerModel> = MutableLiveData()
+    val menuItemsVisibility = appUserPlayer.map { appUserPlayer -> // TODO: this could be moved to a separate usecase
+        PlayerDetailsMenuItemsVisibility.from(appUserPlayer, previewedPlayerBanner.value)
     }
     val state = MutableLiveData<ViewModelState>(Loading.Fetch)
     private var isPreviewedPlayerFavorite: Boolean = false
 
     override fun onFirstCreate() {
+        loadAppUserPlayer()
         loadPlayerDetails()
         observeIfPlayerIsFavorite()
     }
@@ -66,8 +71,8 @@ class PlayerDetailsViewModel @Inject constructor(
                 .subscribe(
                     {
                         AnalyticsUtils.logFavorite(
-                            args.player.uuid,
-                            args.player.username,
+                            appUserPlayer.value!!.uuid,
+                            appUserPlayer.value!!.username,
                             args.previewedPlayerUuid,
                             previewedPlayerDetails.value!!.username,
                         )
@@ -87,8 +92,8 @@ class PlayerDetailsViewModel @Inject constructor(
                 .subscribe(
                     {
                         AnalyticsUtils.logUnfavorite(
-                            args.player.uuid,
-                            args.player.username,
+                            appUserPlayer.value!!.uuid,
+                            appUserPlayer.value!!.username,
                             args.previewedPlayerUuid,
                             previewedPlayerDetails.value!!.username,
                         )
@@ -116,6 +121,16 @@ class PlayerDetailsViewModel @Inject constructor(
                         navigator.displayPunishmentErrorDialog()
                     },
                 ),
+        )
+    }
+
+    private fun loadAppUserPlayer() {
+        disposables.add(
+            getAppUserPlayerUseCase.execute(ignoreCache = false)
+                .applyDefaultSchedulers(facade)
+                .subscribe { player ->
+                    appUserPlayer.value = player
+                },
         )
     }
 

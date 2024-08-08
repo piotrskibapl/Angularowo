@@ -10,10 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter
 import pl.piotrskiba.angularowo.BR
 import pl.piotrskiba.angularowo.R
-import pl.piotrskiba.angularowo.base.di.obtainViewModel
 import pl.piotrskiba.angularowo.base.ui.BaseFragment
 import pl.piotrskiba.angularowo.databinding.FragmentChatBinding
-import pl.piotrskiba.angularowo.main.base.viewmodel.MainViewModel
 import pl.piotrskiba.angularowo.main.chat.model.ChatMessage
 import pl.piotrskiba.angularowo.main.chat.nav.ChatNavigator
 import pl.piotrskiba.angularowo.main.chat.viewmodel.ChatViewModel
@@ -21,11 +19,8 @@ import pl.piotrskiba.angularowo.main.player.list.ui.PlayerListFragmentDirections
 
 class ChatFragment : BaseFragment<ChatViewModel>(ChatViewModel::class), ChatNavigator {
 
-    private lateinit var mainViewModel: MainViewModel
-
     override fun onCreate(savedInstanceState: Bundle?) {
         viewModel.chatMessagesBinding.bindExtra(BR.navigator, this)
-        mainViewModel = viewModelFactory.obtainViewModel(requireActivity())
         super.onCreate(savedInstanceState)
     }
 
@@ -41,7 +36,6 @@ class ChatFragment : BaseFragment<ChatViewModel>(ChatViewModel::class), ChatNavi
     override fun onChatMessageClick(chatMessage: ChatMessage) {
         findNavController().navigate(
             PlayerListFragmentDirections.toPlayerDetailsFragment(
-                mainViewModel.player.value!!,
                 chatMessage.uuid,
                 previewedPlayerBanner = null,
             ),

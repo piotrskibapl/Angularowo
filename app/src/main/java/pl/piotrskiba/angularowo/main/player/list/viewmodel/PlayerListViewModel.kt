@@ -1,5 +1,6 @@
 package pl.piotrskiba.angularowo.main.player.list.viewmodel
 
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import me.tatarka.bindingcollectionadapter2.ItemBinding
@@ -15,6 +16,7 @@ import pl.piotrskiba.angularowo.base.rx.SchedulersProvider
 import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.player.usecase.ObserveOnlinePlayerListWithFavoriteInformationUseCase
 import pl.piotrskiba.angularowo.domain.player.usecase.RefreshOnlinePlayerListUseCase
+import pl.piotrskiba.angularowo.main.player.list.nav.PlayerListNavigator
 import pl.piotrskiba.angularowo.main.player.model.PlayerBanner
 import pl.piotrskiba.angularowo.main.player.model.toPlayerBannerData
 import javax.inject.Inject
@@ -33,6 +35,7 @@ class PlayerListViewModel @Inject constructor(
     val isNoPlayersOnline = combineLatest(players, favoritePlayers) { players, favoritePlayers ->
         players.isEmpty() && favoritePlayers.isEmpty()
     }
+    lateinit var navigator: PlayerListNavigator
 
     override fun onFirstCreate() {
         observePlayerList()
@@ -42,6 +45,10 @@ class PlayerListViewModel @Inject constructor(
     fun onRefresh() {
         state.value = Loading.Refresh
         refreshPlayerList()
+    }
+
+    fun onPlayerClick(view: View, playerBanner: PlayerBanner) {
+        navigator.navigateToPlayerDetails(view, playerBanner)
     }
 
     private fun observePlayerList() {

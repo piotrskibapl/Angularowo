@@ -8,8 +8,8 @@
         <import type="pl.piotrskiba.angularowo.R" />
 
         <variable
-            name="navigator"
-            type="pl.piotrskiba.angularowo.main.player.list.nav.PlayerListNavigator" />
+            name="viewModel"
+            type="pl.piotrskiba.angularowo.main.player.list.viewmodel.PlayerListViewModel" />
 
         <variable
             name="player"
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:background="@{player.rankColor(context)}"
-        android:onClick="@{(view) -> navigator.onPlayerClick(view, player)}"
+        android:onClick="@{(view) -> viewModel.onPlayerClick(view, player)}"
         android:padding="8dp"
         android:transitionName="@{player.uuid}"
         tools:background="@color/color_minecraft_7">
