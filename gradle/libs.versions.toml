@@ -1,0 +1,105 @@
+[versions]
+agp = "8.5.2"
+kotlin = "1.9.22"
+coreKtx = "1.13.1"
+appcompat = "1.7.0"
+navigationSafeArgs = "2.7.7"
+ktlint = "12.1.1"
+poEditor = "3.4.1"
+constraintlayout = "2.1.4"
+preference = "1.2.1"
+swiperefreshlayout = "1.1.0"
+recyclerview = "1.3.2"
+activity = "1.9.1"
+lifecycle = "2.8.4"
+room = "2.6.1"
+work = "2.9.1"
+navigation = "2.7.7"
+biometric = "1.2.0-alpha05"
+multidex = "2.0.1"
+material = "1.12.0"
+googleServices = "4.4.2"
+firebaseBom = "33.1.2"
+firebaseCrashlytics = "3.0.2"
+firebasePerf = "1.4.2"
+dagger = "2.52"
+gson = "2.11.0"
+retrofit = "2.11.0"
+okhttp = "4.12.0"
+glide = "4.16.0"
+admob = "23.3.0"
+rxjava = "3.1.9"
+rxandroid = "3.0.2"
+bindingcollectionadapter = "4.0.0"
+materialshowcase = "1.3.7"
+inappupdates = "2.1.0"
+pinentryedittext = "2.0.6"
+junit = "5.11.0"
+mockk = "1.13.12"
+kluent = "1.73"
+
+[libraries]
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+androidx-preference = { group = "androidx.preference", name = "preference-ktx", version.ref = "preference" }
+androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swiperefreshlayout" }
+androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
+androidx-activity = { group = "androidx.activity", name = "activity-ktx", version.ref = "activity" }
+androidx-lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "lifecycle" }
+androidx-lifecycle-viewmodel-savedstate = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-savedstate", version.ref = "lifecycle" }
+androidx-lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata", version.ref = "lifecycle" }
+androidx-room = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+androidx-room-rxjava = { group = "androidx.room", name = "room-rxjava3", version.ref = "room" }
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+androidx-work = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "work" }
+androidx-navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation" }
+androidx-navigation-ui = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation" }
+androidx-biometric = { group = "androidx.biometric", name = "biometric-ktx", version.ref = "biometric" }
+androidx-multidex = { group = "androidx.multidex", name = "multidex", version.ref = "multidex" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
+firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics" }
+firebase-perf = { group = "com.google.firebase", name = "firebase-perf" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
+firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging" }
+firebase-inappmessaging-display = { group = "com.google.firebase", name = "firebase-inappmessaging-display" }
+firebase-config = { group = "com.google.firebase", name = "firebase-config" }
+dagger-android = { group = "com.google.dagger", name = "dagger-android", version.ref = "dagger" }
+dagger-android-support = { group = "com.google.dagger", name = "dagger-android-support", version.ref = "dagger" }
+dagger-android-processor = { group = "com.google.dagger", name = "dagger-android-processor", version.ref = "dagger" }
+dagger-compiler = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "dagger" }
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+retrofit-adapter-rxjava3 = { group = "com.squareup.retrofit2", name = "adapter-rxjava3", version.ref = "retrofit" }
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
+okhttp-interceptor-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
+okhttp-tls = { group = "com.squareup.okhttp3", name = "okhttp-tls", version.ref = "okhttp" }
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide" }
+admob = { group = "com.google.android.gms", name = "play-services-ads", version.ref = "admob" }
+rxjava = { group = "io.reactivex.rxjava3", name = "rxjava", version.ref = "rxjava" }
+rxandroid = { group = "io.reactivex.rxjava3", name = "rxandroid", version.ref = "rxandroid" }
+bindingcollectionadapter = { group = "me.tatarka.bindingcollectionadapter2", name = "bindingcollectionadapter", version.ref = "bindingcollectionadapter" }
+bindingcollectionadapter-recyclerview = { group = "me.tatarka.bindingcollectionadapter2", name = "bindingcollectionadapter-recyclerview", version.ref = "bindingcollectionadapter" }
+materialshowcase = { group = "com.github.deano2390", name = "MaterialShowcaseView", version.ref = "materialshowcase" }
+inappupdates = { group = "com.google.android.play", name = "app-update", version.ref = "inappupdates" }
+inappupdates-ktx = { group = "com.google.android.play", name = "app-update-ktx", version.ref = "inappupdates" }
+pinentryedittext = { group = "com.alimuzaffar.lib", name = "pinentryedittext", version.ref = "pinentryedittext" }
+junit = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junit" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+kluent = { group = "org.amshove.kluent", name = "kluent-android", version.ref = "kluent" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlytics" }
+firebase-perf = { id = "com.google.firebase.firebase-perf", version.ref = "firebasePerf" }
+navigation-safeargs-plugin = { id = "androidx.navigation.safeargs.plugin", version.ref = "navigationSafeArgs" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+poeditor = { id = "com.hyperdevs.poeditor", version.ref = "poEditor" }
