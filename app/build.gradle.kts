@@ -30,7 +30,6 @@ android {
         targetSdk = targetSdkVersion
         versionCode = 77
         versionName = "4.0.1"
-        multiDexEnabled = true
     }
     signingConfigs {
         create("release") {
@@ -93,7 +92,6 @@ dependencies {
     implementation(libs.firebase.config)
     implementation(libs.pinentryedittext)
     implementation(libs.admob)
-    implementation(libs.androidx.multidex)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.lifecycle.viewmodel)
     implementation(libs.androidx.lifecycle.viewmodel.savedstate)

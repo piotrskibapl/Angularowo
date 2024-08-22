@@ -1,8 +1,6 @@
 package pl.piotrskiba.angularowo.base
 
-import android.content.Context
 import android.util.Log
-import androidx.multidex.MultiDex
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import dagger.android.AndroidInjector
@@ -21,11 +19,6 @@ class AngularowoApplication : DaggerApplication() {
 
     @Inject
     lateinit var notificationUtils: NotificationUtils
-
-    override fun attachBaseContext(base: Context?) {
-        super.attachBaseContext(base)
-        MultiDex.install(this)
-    }
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> =
         DaggerAppComponent.builder()

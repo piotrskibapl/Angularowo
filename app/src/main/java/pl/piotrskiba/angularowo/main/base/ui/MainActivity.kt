@@ -1,12 +1,10 @@
 package pl.piotrskiba.angularowo.main.base.ui
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.multidex.MultiDex
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -31,11 +29,6 @@ class MainActivity : BaseActivity<MainViewModel>(MainViewModel::class), MainNavi
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
-
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(newBase)
-        MultiDex.install(this)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

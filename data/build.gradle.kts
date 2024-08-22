@@ -10,7 +10,6 @@ android {
     compileSdk = project.properties["androidTargetSdkVersion"].toString().toInt()
     defaultConfig {
         minSdk = project.properties["androidMinSdkVersion"].toString().toInt()
-        multiDexEnabled = true
     }
     buildTypes {
         release {
