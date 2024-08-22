@@ -1,3 +1,6 @@
+val minSdkVersion = project.properties["androidMinSdkVersion"].toString().toInt()
+val targetSdkVersion = project.properties["androidTargetSdkVersion"].toString().toInt()
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -10,10 +13,6 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
 }
 
-kotlin {
-    jvmToolchain(17)
-}
-
 poEditor {
     apiToken.set(project.properties["poEditorApiToken"].toString())
     projectId.set(project.properties["poEditorProjectId"].toString().toInt())
@@ -24,14 +23,13 @@ poEditor {
 
 android {
     namespace = "pl.piotrskiba.angularowo"
-    compileSdk = project.properties["androidCompileSdkVersion"].toString().toInt()
+    compileSdk = targetSdkVersion
     defaultConfig {
         applicationId = "pl.piotrskiba.angularowo"
-        minSdk = project.properties["androidMinSdkVersion"].toString().toInt()
-        targetSdk = project.properties["androidTargetSdkVersion"].toString().toInt()
+        minSdk = minSdkVersion
+        targetSdk = targetSdkVersion
         versionCode = 77
         versionName = "4.0.1"
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled = true
     }
     signingConfigs {
@@ -43,13 +41,13 @@ android {
         }
     }
     buildTypes {
-        getByName("release") {
+        release {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             signingConfig = signingConfigs.getByName("release")
         }
-        getByName("debug") {
+        debug {
             ext.set("enableCrashlytics", false)
         }
     }

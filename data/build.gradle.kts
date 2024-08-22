@@ -5,23 +5,18 @@ plugins {
     alias(libs.plugins.ksp)
 }
 
-kotlin {
-    jvmToolchain(17)
-}
-
 android {
     namespace = "pl.piotrskiba.angularowo.data"
-    compileSdk = project.properties["androidCompileSdkVersion"].toString().toInt()
+    compileSdk = project.properties["androidTargetSdkVersion"].toString().toInt()
     defaultConfig {
         minSdk = project.properties["androidMinSdkVersion"].toString().toInt()
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled = true
     }
     buildTypes {
-        getByName("release") {
+        release {
             buildConfigField("String", "API_KEY", "\"${project.properties["apiKey"]}\"")
         }
-        getByName("debug") {
+        debug {
             buildConfigField("String", "API_KEY", "\"${project.properties["apiKey"]}\"")
         }
     }
