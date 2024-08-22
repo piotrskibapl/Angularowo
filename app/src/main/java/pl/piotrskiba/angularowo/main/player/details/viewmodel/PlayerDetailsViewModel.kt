@@ -27,7 +27,6 @@ import pl.piotrskiba.angularowo.main.player.details.nav.PlayerDetailsNavigator
 import pl.piotrskiba.angularowo.main.player.details.ui.PlayerDetailsFragmentArgs
 import pl.piotrskiba.angularowo.main.player.model.PlayerBanner
 import pl.piotrskiba.angularowo.main.player.model.toPlayerBannerData
-import pl.piotrskiba.angularowo.utils.AnalyticsUtils
 import javax.inject.Inject
 
 class PlayerDetailsViewModel @Inject constructor(
@@ -66,16 +65,10 @@ class PlayerDetailsViewModel @Inject constructor(
 
     fun onFavoriteClick() {
         disposables.add(
-            markPlayerAsFavoriteUseCase.execute(args.previewedPlayerUuid)
+            markPlayerAsFavoriteUseCase.execute(args.previewedPlayerUuid, previewedPlayerDetails.value!!.username)
                 .applyDefaultSchedulers(facade)
                 .subscribe(
                     {
-                        AnalyticsUtils.logFavorite(
-                            appUserPlayer.value!!.uuid,
-                            appUserPlayer.value!!.username,
-                            args.previewedPlayerUuid,
-                            previewedPlayerDetails.value!!.username,
-                        )
                         navigator.displayMarkedAsFavoriteSnackbar()
                     },
                     {
@@ -87,16 +80,10 @@ class PlayerDetailsViewModel @Inject constructor(
 
     fun onUnfavoriteClick() {
         disposables.add(
-            unmarkPlayerAsFavoriteUseCase.execute(args.previewedPlayerUuid)
+            unmarkPlayerAsFavoriteUseCase.execute(args.previewedPlayerUuid, previewedPlayerDetails.value!!.username)
                 .applyDefaultSchedulers(facade)
                 .subscribe(
                     {
-                        AnalyticsUtils.logUnfavorite(
-                            appUserPlayer.value!!.uuid,
-                            appUserPlayer.value!!.username,
-                            args.previewedPlayerUuid,
-                            previewedPlayerDetails.value!!.username,
-                        )
                         navigator.displayUnmarkedAsFavoriteSnackbar()
                     },
                     {

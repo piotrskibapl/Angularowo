@@ -14,6 +14,11 @@ private sealed class AnalyticsData {
             const val NAME = "player_name"
         }
 
+        object Target {
+            const val UUID = "target_uuid"
+            const val NAME = "target_name"
+        }
+
         object Error {
             const val MESSAGE = "error_message"
         }
@@ -22,6 +27,8 @@ private sealed class AnalyticsData {
     object Event {
         const val LOGIN = "login_success"
         const val LOGIN_ERROR = "login_failed"
+        const val FAVORITE = "action_favorite"
+        const val UNFAVORITE = "action_unfavorite"
     }
 }
 
@@ -42,5 +49,25 @@ class AnalyticsRepositoryImpl(
             val bundle = Bundle()
             bundle.putString(AnalyticsData.Key.Error.MESSAGE, message)
             firebaseAnalytics.logEvent(AnalyticsData.Event.LOGIN_ERROR, bundle)
+        }
+
+    override fun logFavorite(playerUuid: String, playerName: String, targetUuid: String, targetName: String): Completable =
+        Completable.fromAction {
+            val bundle = Bundle()
+            bundle.putString(AnalyticsData.Key.Player.UUID, playerUuid)
+            bundle.putString(AnalyticsData.Key.Player.NAME, playerName)
+            bundle.putString(AnalyticsData.Key.Target.UUID, targetUuid)
+            bundle.putString(AnalyticsData.Key.Target.NAME, targetName)
+            firebaseAnalytics.logEvent(AnalyticsData.Event.FAVORITE, bundle)
+        }
+
+    override fun logUnfavorite(playerUuid: String, playerName: String, targetUuid: String, targetName: String): Completable =
+        Completable.fromAction {
+            val bundle = Bundle()
+            bundle.putString(AnalyticsData.Key.Player.UUID, playerUuid)
+            bundle.putString(AnalyticsData.Key.Player.NAME, playerName)
+            bundle.putString(AnalyticsData.Key.Target.UUID, targetUuid)
+            bundle.putString(AnalyticsData.Key.Target.NAME, targetName)
+            firebaseAnalytics.logEvent(AnalyticsData.Event.UNFAVORITE, bundle)
         }
 }
