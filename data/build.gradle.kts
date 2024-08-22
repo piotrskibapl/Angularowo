@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.jetbrains.kotlin.kapt)
+    alias(libs.plugins.ksp)
 }
 
 kotlin {
@@ -49,7 +50,7 @@ dependencies {
     implementation(libs.firebase.config)
     implementation(libs.androidx.room)
     implementation(libs.androidx.room.rxjava)
-    kapt(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
     testImplementation(libs.junit)
     testImplementation(libs.mockk)
     testImplementation(libs.kluent)
