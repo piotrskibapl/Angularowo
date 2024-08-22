@@ -7,7 +7,6 @@ import pl.piotrskiba.angularowo.base.viewmodel.LifecycleViewModel
 import pl.piotrskiba.angularowo.domain.login.model.AccessTokenError
 import pl.piotrskiba.angularowo.domain.login.usecase.RegisterDeviceUseCase
 import pl.piotrskiba.angularowo.login.model.LoginState
-import pl.piotrskiba.angularowo.utils.AnalyticsUtils
 import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(
@@ -24,11 +23,9 @@ class LoginViewModel @Inject constructor(
                 .applyDefaultSchedulers(facade)
                 .subscribe(
                     { accessToken ->
-                        AnalyticsUtils.logLogin(accessToken.uuid, accessToken.username)
                         loginState.value = LoginState.Success
                     },
                     { error ->
-                        AnalyticsUtils.logLoginError(error::class.simpleName)
                         loginState.value = LoginState.Error(error as AccessTokenError)
                     },
                 ),

@@ -10,26 +10,10 @@ private const val PLAYER_NAME = "player_name"
 private const val TARGET_UUID = "target_uuid"
 private const val TARGET_NAME = "target_name"
 
-private const val EVENT_LOGIN = "login_success"
-private const val EVENT_LOGIN_ERROR = "login_failed"
 private const val EVENT_FAVORITE = "action_favorite"
 private const val EVENT_UNFAVORITE = "action_unfavorite"
-private const val EVENT_ERROR_MESSAGE = "error_message"
 
 object AnalyticsUtils {
-
-    fun logLogin(playerUuid: String, playerName: String) {
-        val bundle = Bundle()
-        bundle.putString(PLAYER_UUID, playerUuid)
-        bundle.putString(PLAYER_NAME, playerName)
-        Firebase.analytics.logEvent(EVENT_LOGIN, bundle)
-    }
-
-    fun logLoginError(message: String?) {
-        val bundle = Bundle()
-        bundle.putString(EVENT_ERROR_MESSAGE, message)
-        Firebase.analytics.logEvent(EVENT_LOGIN_ERROR, bundle)
-    }
 
     fun logScreenView(screenClass: String, screenName: String) {
         val bundle = Bundle()
