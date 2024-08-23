@@ -45,6 +45,7 @@ dependencies {
     implementation(libs.androidx.room)
     implementation(libs.androidx.room.rxjava)
     ksp(libs.androidx.room.compiler)
+    implementation(libs.firebase.analytics)
     testImplementation(libs.junit)
     testImplementation(libs.mockk)
     testImplementation(libs.kluent)
