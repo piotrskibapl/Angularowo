@@ -1,4 +1,3 @@
-def webhookUrl = 'https://discord.com/api/webhooks/1081761276797128754/0yXcIoxXm_aui4VhomSpuUXfOFNO1V12NGJQSGP0DsX-LGUuxXba9mLOj15F0iYdDWcY'
 pipeline {
     agent any
     options {
@@ -16,7 +15,9 @@ pipeline {
                         Branch: ${env.BRANCH_NAME}
                         Build: ${env.BUILD_NUMBER}
                     """.stripIndent()
-                    discordSend title: title, description: description, result: currentBuild.currentResult, link: env.JOB_DISPLAY_URL, webhookURL: webhookUrl
+                    withCredentials([string(credentialsId: 'angularowoDiscordWebhookUrl', variable: 'discord_webhook_url')]) {
+                        discordSend title: title, description: description, result: currentBuild.currentResult, link: env.JOB_DISPLAY_URL, webhookURL: discord_webhook_url
+                    }
                 }
                 checkout scm
                 sh 'chmod +x -R ${WORKSPACE}'
@@ -46,9 +47,7 @@ pipeline {
         }
         stage('Build debug') {
             steps {
-                withCredentials([
-                    string(credentialsId: 'angularowoDebugApiKey', variable: 'api_key'),
-                ]) {
+                withCredentials([string(credentialsId: 'angularowoDebugApiKey', variable: 'api_key')]) {
                     sh './gradlew assembleDebug -PapiKey=${api_key}'
                 }
             }
@@ -91,7 +90,9 @@ pipeline {
                     |Status: ${currentBuild.currentResult.toLowerCase().capitalize()}
                     |Changes: $changelog
                 """.stripMargin()
-                discordSend title: title, description: description, result: currentBuild.currentResult, link: env.JOB_DISPLAY_URL, webhookURL: webhookUrl
+                withCredentials([string(credentialsId: 'angularowoDiscordWebhookUrl', variable: 'discord_webhook_url')]) {
+                    discordSend title: title, description: description, result: currentBuild.currentResult, link: env.JOB_DISPLAY_URL, webhookURL: discord_webhook_url
+                }
             }
         }
         success {
